@@ -1,0 +1,23 @@
+targets:
+  $default:
+    sources:
+      - lib/**
+      - res/swaggers/**
+      - $package$
+      - test/**
+    builders:
+      drift_dev:
+        enabled: true
+        generate_for:
+          - lib/database/**
+      chopper_generator:
+        enabled: true
+        options:
+          header: "//Generated code"
+      swagger_dart_code_generator:
+        enabled: true
+        options:
+          input_folder: "res/swaggers/"
+          output_folder: 'lib/network/generated/'
+          separate_models: true
+          # overriden_models: [Map]
