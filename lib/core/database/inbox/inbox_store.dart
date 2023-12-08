@@ -10,11 +10,13 @@ class InboxStore extends DatabaseAccessor<AppDatabase> with _$InboxStoreMixin {
   InboxStore(super.database);
 
   MultiSelectable<InboxEntry> all() => (select(inboxTable)
+    ..where((tbl) => tbl.type.equals(InboxEntryType.group.name).not())
     ..orderBy([
       (u) => OrderingTerm(expression: u.name),
     ]));
 
   MultiSelectable<InboxEntry> autoComplete(String query) => (select(inboxTable)
+    ..where((tbl) => tbl.type.equals(InboxEntryType.group.name).not())
     ..where(
       (tbl) =>
           tbl.name.like("%$query%") |

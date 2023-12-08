@@ -4,21 +4,32 @@ import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:drift_dev/api/migrations.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart' show IconData;
 import 'package:path_provider/path_provider.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
 import 'package:path/path.dart' as p;
 
+import 'converter/icon_data_converter.dart';
 import 'converter/string_list_converter.dart';
 import 'inbox/inbox_store.dart';
 import 'inbox/inbox_table.dart';
+import 'items/item_type.dart';
+import 'items/items_store.dart';
+import 'items/items_table.dart';
+import 'rooms/rooms_store.dart';
+import 'rooms/rooms_table.dart';
 
 part 'app_database.g.dart';
 
 @DriftDatabase(tables: [
-  InboxTable
+  InboxTable,
+  RoomsTable,
+  ItemsTable,
 ], daos: [
-  InboxStore
+  InboxStore,
+  RoomsStore,
+  ItemsStore,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(constructDb());

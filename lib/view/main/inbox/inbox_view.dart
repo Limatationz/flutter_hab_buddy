@@ -5,6 +5,8 @@ import 'package:stacked/stacked.dart';
 import '../../../core/database/app_database.dart';
 import '../../../util/icons/icons.dart';
 import '../../util/constants.dart';
+import '../../util/general/bar_bottom_sheet.dart';
+import 'add/inbox_entry_add_sheet.dart';
 import 'inbox_list_item.dart';
 import 'inbox_viewmodel.dart';
 
@@ -105,7 +107,10 @@ class InboxView extends StatelessWidget {
                                 itemCount: snapshot.data!.length,
                                 itemBuilder: (context, index) {
                                   final entry = snapshot.data![index];
-                                  return InboxListItem(entry: entry);
+                                  return InboxListItem(
+                                    entry: entry,
+                                    onTap: () => _onEntryTap(context, entry),
+                                  );
                                 },
                               ));
                         } else {
@@ -120,5 +125,11 @@ class InboxView extends StatelessWidget {
             ));
       },
     );
+  }
+
+  void _onEntryTap(BuildContext context, InboxEntry entry) {
+    showBarModalBottomSheet(
+        context: context,
+        builder: (context) => InboxEntryAddSheet(entry: entry));
   }
 }

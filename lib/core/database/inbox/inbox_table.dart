@@ -18,6 +18,7 @@ class InboxTable extends Table {
 
   TextColumn get groups => text().map(const StringListConverter()).nullable()();
 
+  TextColumn get state => text()();
   @override
   Set<Column> get primaryKey => {name};
 }

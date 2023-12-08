@@ -8,17 +8,35 @@ import '../../locator.dart';
 
 class MainViewModel extends BaseViewModel {
   final _inboxStore = locator.get<AppDatabase>().inboxStore;
+  final _itemsStore = locator.get<AppDatabase>().itemsStore;
   final api = locator.get<OpenHAB>();
 
   Future<void> fetchData() async {
     final result = await api.itemsGet();
     if (result.isSuccessful) {
+      final storedItems = await _itemsStore.getAll();
       await _inboxStore.deleteData();
-      await _inboxStore.insertOrUpdate(result.body!
-          .map((e) => e.asDatabaseModel())
-          .toList()
-          .whereNotNull()
-          .toList());
+      final addToInbox = <InboxEntry>[];
+
+      for (final item in result.body!) {
+        if (storedItems
+                .firstWhereOrNull((element) => element.name == item.name) ==
+            null) {
+          // Item is not stored yet
+          final dbItem = item.asDatabaseModel();
+          if(dbItem != null) {
+            addToInbox.add(dbItem);
+          }
+        } else {
+          // Item is already stored -> update
+          final update = item.asItemUpdate();
+          if (update != null) {
+            await _itemsStore.insertOrUpdateSingle(update);
+          }
+        }
+      }
+
+      await _inboxStore.insertOrUpdate(addToInbox);
     } else {
       print(result.error);
     }
