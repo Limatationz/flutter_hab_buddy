@@ -9,15 +9,17 @@ targets:
       drift_dev:
         enabled: true
         generate_for:
-          - lib/database/**
+          - lib/core/database/**
       chopper_generator:
         enabled: true
+        generate_for:
+          - lib/core/network/**
         options:
           header: "//Generated code"
       swagger_dart_code_generator:
         enabled: true
         options:
           input_folder: "res/swaggers/"
-          output_folder: 'lib/network/generated/'
+          output_folder: 'lib/core/network/generated/'
           separate_models: true
           # overriden_models: [Map]

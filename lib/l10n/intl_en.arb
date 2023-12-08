@@ -1,1 +1,12 @@
-{}
+{
+  "errorHeadline": "An error occured",
+  "errorButtonHome": "Go to Home",
+  "navigationFavorites": "Favorites",
+  "navigationRooms": "Rooms",
+  "login": "Login",
+  "loginFailedTitle": "Login failed",
+  "loginFailedMessage": "Please try again",
+  "username": "Username",
+  "password": "Password",
+  "navigationInbox": "Inbox"
+}

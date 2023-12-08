@@ -23,8 +23,8 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.example.flutter_openhab"
-    compileSdkVersion flutter.compileSdkVersion
+    namespace "de.limatation.openhab"
+    compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {

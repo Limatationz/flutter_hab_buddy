@@ -49,6 +49,106 @@ class S {
   static S? maybeOf(BuildContext context) {
     return Localizations.of<S>(context, S);
   }
+
+  /// `An error occured`
+  String get errorHeadline {
+    return Intl.message(
+      'An error occured',
+      name: 'errorHeadline',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Go to Home`
+  String get errorButtonHome {
+    return Intl.message(
+      'Go to Home',
+      name: 'errorButtonHome',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Favorites`
+  String get navigationFavorites {
+    return Intl.message(
+      'Favorites',
+      name: 'navigationFavorites',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rooms`
+  String get navigationRooms {
+    return Intl.message(
+      'Rooms',
+      name: 'navigationRooms',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login`
+  String get login {
+    return Intl.message(
+      'Login',
+      name: 'login',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Login failed`
+  String get loginFailedTitle {
+    return Intl.message(
+      'Login failed',
+      name: 'loginFailedTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please try again`
+  String get loginFailedMessage {
+    return Intl.message(
+      'Please try again',
+      name: 'loginFailedMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Username`
+  String get username {
+    return Intl.message(
+      'Username',
+      name: 'username',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password`
+  String get password {
+    return Intl.message(
+      'Password',
+      name: 'password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inbox`
+  String get navigationInbox {
+    return Intl.message(
+      'Inbox',
+      name: 'navigationInbox',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

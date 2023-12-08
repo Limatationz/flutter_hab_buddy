@@ -1,0 +1,1 @@
+const paddingScaffold = 16.0;
