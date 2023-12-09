@@ -6,7 +6,7 @@ class IconDataConverter extends TypeConverter<IconData, String> {
 
   @override
   IconData fromSql(String fromDb) {
-    return IconData(int.parse(fromDb), fontFamily: 'LineIcons');
+    return IconData(int.parse(fromDb), fontFamily: 'MaterialIcons');
   }
 
   @override

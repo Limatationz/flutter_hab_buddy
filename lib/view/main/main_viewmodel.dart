@@ -20,7 +20,7 @@ class MainViewModel extends BaseViewModel {
 
       for (final item in result.body!) {
         if (storedItems
-                .firstWhereOrNull((element) => element.name == item.name) ==
+                .firstWhereOrNull((element) => element.ohName == item.name) ==
             null) {
           // Item is not stored yet
           final dbItem = item.asDatabaseModel();
@@ -33,13 +33,13 @@ class MainViewModel extends BaseViewModel {
           if (update != null) {
             await _itemsStore.insertOrUpdateSingle(update);
           }
-          storedItems.removeWhere((element) => element.name == item.name);
+          storedItems.removeWhere((element) => element.ohName == item.name);
         }
       }
 
       // Delete all items that are not available anymore
       for (final item in storedItems) {
-        await _itemsStore.deleteDataByName(item.name);
+        await _itemsStore.deleteDataByName(item.ohName);
       }
 
       await _inboxStore.insertOrUpdate(addToInbox);

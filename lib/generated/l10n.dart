@@ -159,6 +159,126 @@ class S {
       args: [],
     );
   }
+
+  /// `No results for:`
+  String get iconPickerNoResultsText {
+    return Intl.message(
+      'No results for:',
+      name: 'iconPickerNoResultsText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pick an icon`
+  String get iconPickerTitle {
+    return Intl.message(
+      'Pick an icon',
+      name: 'iconPickerTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Close`
+  String get close {
+    return Intl.message(
+      'Close',
+      name: 'close',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Icon`
+  String get icon {
+    return Intl.message(
+      'Icon',
+      name: 'icon',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select`
+  String get select {
+    return Intl.message(
+      'Select',
+      name: 'select',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Item Type`
+  String get itemType {
+    return Intl.message(
+      'Item Type',
+      name: 'itemType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The type of the item`
+  String get itemTypeHelp {
+    return Intl.message(
+      'The type of the item',
+      name: 'itemTypeHelp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Room`
+  String get room {
+    return Intl.message(
+      'Room',
+      name: 'room',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The room where the item is located`
+  String get roomHelp {
+    return Intl.message(
+      'The room where the item is located',
+      name: 'roomHelp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Custom Label`
+  String get customLabel {
+    return Intl.message(
+      'Custom Label',
+      name: 'customLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add a custom label for this item otherwise the label from OpenHAB will be used.`
+  String get customLabelHelp {
+    return Intl.message(
+      'Add a custom label for this item otherwise the label from OpenHAB will be used.',
+      name: 'customLabelHelp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add an icon to the item that describes its functionality.`
+  String get itemIconHelp {
+    return Intl.message(
+      'Add an icon to the item that describes its functionality.',
+      name: 'itemIconHelp',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

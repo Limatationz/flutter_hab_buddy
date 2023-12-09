@@ -613,23 +613,18 @@ abstract class OpenHAB extends ChopperService {
       {@Header('Accept-Language') String? acceptLanguage});
 
   ///Delete the session associated with a refresh token.
-  Future<chopper.Response> authLogoutPost({
-    String? refreshToken,
-    String? id,
-  }) {
-    return _authLogoutPost(refreshToken: refreshToken, id: id);
+  Future<chopper.Response> authLogoutPost({required Map<String, String> body}) {
+    return _authLogoutPost(body: body);
   }
 
   ///Delete the session associated with a refresh token.
   @Post(
     path: '/auth/logout',
-    optionalBody: true,
+    headers: {contentTypeKey: formEncodedHeaders},
   )
-  @Multipart()
-  Future<chopper.Response> _authLogoutPost({
-    @Part('refresh_token') String? refreshToken,
-    @Part('id') String? id,
-  });
+  @FactoryConverter(request: FormUrlEncodedConverter.requestFactory)
+  Future<chopper.Response> _authLogoutPost(
+      {@Body() required Map<String, String> body});
 
   ///List the API tokens associated to the authenticated user.
   Future<chopper.Response<List<UserApiTokenDTO>>> authApitokensGet() {
@@ -659,41 +654,24 @@ abstract class OpenHAB extends ChopperService {
   ///@param useCookie
   Future<chopper.Response<TokenResponseDTO>> authTokenPost({
     bool? useCookie,
-    String? grantType,
-    String? code,
-    String? redirectUri,
-    String? clientId,
-    String? refreshToken,
-    String? codeVerifier,
+    required Map<String, String> body,
   }) {
     generatedMapping.putIfAbsent(
         TokenResponseDTO, () => TokenResponseDTO.fromJsonFactory);
 
-    return _authTokenPost(
-        useCookie: useCookie,
-        grantType: grantType,
-        code: code,
-        redirectUri: redirectUri,
-        clientId: clientId,
-        refreshToken: refreshToken,
-        codeVerifier: codeVerifier);
+    return _authTokenPost(useCookie: useCookie, body: body);
   }
 
   ///Get access and refresh tokens.
   ///@param useCookie
   @Post(
     path: '/auth/token',
-    optionalBody: true,
+    headers: {contentTypeKey: formEncodedHeaders},
   )
-  @Multipart()
+  @FactoryConverter(request: FormUrlEncodedConverter.requestFactory)
   Future<chopper.Response<TokenResponseDTO>> _authTokenPost({
     @Query('useCookie') bool? useCookie,
-    @Part('grant_type') String? grantType,
-    @Part('code') String? code,
-    @Part('redirect_uri') String? redirectUri,
-    @Part('client_id') String? clientId,
-    @Part('refresh_token') String? refreshToken,
-    @Part('code_verifier') String? codeVerifier,
+    @Body() required Map<String, String> body,
   });
 
   ///Revoke a specified API token associated to the authenticated user.

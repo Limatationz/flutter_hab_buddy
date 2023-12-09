@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-
+import 'package:gap/gap.dart';
 
 class HeadlineValueIcon extends StatelessWidget {
   final String title;
   final String data;
   final IconData? icon;
   final Widget? prefix;
+  final bool withBottomPadding;
 
   const HeadlineValueIcon(
       {super.key,
       required this.title,
       required this.data,
       this.icon,
-      this.prefix});
+      this.prefix,
+      this.withBottomPadding = true});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,7 @@ class HeadlineValueIcon extends StatelessWidget {
         "$title:",
         style: Theme.of(context).textTheme.titleMedium,
       ),
-      const SizedBox(height: 8),
+      const Gap(6),
       Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -44,6 +46,7 @@ class HeadlineValueIcon extends StatelessWidget {
           )),
         ],
       ),
+      if (withBottomPadding) const Gap(12),
     ]);
   }
 }

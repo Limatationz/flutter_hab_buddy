@@ -464,29 +464,24 @@ final class _$OpenHAB extends OpenHAB {
   }
 
   @override
-  Future<Response<dynamic>> _authLogoutPost({
-    String? refreshToken,
-    String? id,
-  }) {
+  Future<Response<dynamic>> _authLogoutPost(
+      {required Map<String, String> body}) {
     final Uri $url = Uri.parse('/auth/logout');
-    final List<PartValue> $parts = <PartValue>[
-      PartValue<String?>(
-        'refresh_token',
-        refreshToken,
-      ),
-      PartValue<String?>(
-        'id',
-        id,
-      ),
-    ];
+    final Map<String, String> $headers = {
+      'content-type': 'application/x-www-form-urlencoded',
+    };
+    final $body = body;
     final Request $request = Request(
       'POST',
       $url,
       client.baseUrl,
-      parts: $parts,
-      multipart: true,
+      body: $body,
+      headers: $headers,
     );
-    return client.send<dynamic, dynamic>($request);
+    return client.send<dynamic, dynamic>(
+      $request,
+      requestConverter: FormUrlEncodedConverter.requestFactory,
+    );
   }
 
   @override
@@ -514,52 +509,28 @@ final class _$OpenHAB extends OpenHAB {
   @override
   Future<Response<TokenResponseDTO>> _authTokenPost({
     bool? useCookie,
-    String? grantType,
-    String? code,
-    String? redirectUri,
-    String? clientId,
-    String? refreshToken,
-    String? codeVerifier,
+    required Map<String, String> body,
   }) {
     final Uri $url = Uri.parse('/auth/token');
     final Map<String, dynamic> $params = <String, dynamic>{
       'useCookie': useCookie
     };
-    final List<PartValue> $parts = <PartValue>[
-      PartValue<String?>(
-        'grant_type',
-        grantType,
-      ),
-      PartValue<String?>(
-        'code',
-        code,
-      ),
-      PartValue<String?>(
-        'redirect_uri',
-        redirectUri,
-      ),
-      PartValue<String?>(
-        'client_id',
-        clientId,
-      ),
-      PartValue<String?>(
-        'refresh_token',
-        refreshToken,
-      ),
-      PartValue<String?>(
-        'code_verifier',
-        codeVerifier,
-      ),
-    ];
+    final Map<String, String> $headers = {
+      'content-type': 'application/x-www-form-urlencoded',
+    };
+    final $body = body;
     final Request $request = Request(
       'POST',
       $url,
       client.baseUrl,
-      parts: $parts,
-      multipart: true,
+      body: $body,
       parameters: $params,
+      headers: $headers,
     );
-    return client.send<TokenResponseDTO, TokenResponseDTO>($request);
+    return client.send<TokenResponseDTO, TokenResponseDTO>(
+      $request,
+      requestConverter: FormUrlEncodedConverter.requestFactory,
+    );
   }
 
   @override

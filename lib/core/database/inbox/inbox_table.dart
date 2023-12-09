@@ -2,6 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:flutter/material.dart' show IconData;
 
 import '../../../util/icons/icons.dart';
+import '../converter/state_description_converter.dart';
 import '../converter/string_list_converter.dart';
 
 @DataClassName("InboxEntry")
@@ -19,6 +20,12 @@ class InboxTable extends Table {
   TextColumn get groups => text().map(const StringListConverter()).nullable()();
 
   TextColumn get state => text()();
+
+  TextColumn get transformedState => text().nullable()();
+
+  TextColumn get stateDescription =>
+      text().map(const StateDescriptionConverter()).nullable()();
+
   @override
   Set<Column> get primaryKey => {name};
 }

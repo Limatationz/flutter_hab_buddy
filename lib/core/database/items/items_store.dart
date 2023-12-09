@@ -26,6 +26,31 @@ class ItemsStore extends DatabaseAccessor<AppDatabase> with _$ItemsStoreMixin {
 
   Future<List<Item>> getAll() => select(itemsTable).get();
 
+  MultiSelectable<Item> byRoomId(int roomId) =>
+      select(itemsTable)..where((tbl) => tbl.roomId.equals(roomId));
+
+  Stream<Map<Room, List<Item>>> watchGroupedByRoom() {
+    return select(itemsTable)
+        .join([
+          leftOuterJoin(roomsTable, roomsTable.id.equalsExp(itemsTable.roomId)),
+        ])
+        .watch()
+        .map((rows) {
+          return rows.fold<Map<Room, List<Item>>>({}, (map, row) {
+            final room = row.readTable(roomsTable);
+            final item = row.readTable(itemsTable);
+
+            if (map.containsKey(room)) {
+              map[room]!.add(item);
+            } else {
+              map[room] = [item];
+            }
+
+            return map;
+          });
+        });
+  }
+
   Future<void> insertOrUpdate(List<ItemsTableCompanion> data) async {
     await batch((batch) => batch.insertAllOnConflictUpdate(
           itemsTable,
@@ -42,6 +67,6 @@ class ItemsStore extends DatabaseAccessor<AppDatabase> with _$ItemsStoreMixin {
   }
 
   Future<void> deleteDataByName(String name) async {
-    await (delete(itemsTable)..where((tbl) => tbl.name.equals(name))).go();
+    await (delete(itemsTable)..where((tbl) => tbl.ohName.equals(name))).go();
   }
 }

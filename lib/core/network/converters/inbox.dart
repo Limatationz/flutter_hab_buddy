@@ -18,6 +18,8 @@ extension InboxDBConverter on EnrichedItemDTO {
       tags: (tags?.isEmptyCheck ?? true) ? null : tags,
       groups: (groupNames?.isEmptyCheck ?? true) ? null : groupNames,
       state: state!,
+      stateDescription: stateDescription,
+      transformedState: transformedState,
     );
   }
 
@@ -26,13 +28,15 @@ extension InboxDBConverter on EnrichedItemDTO {
       return null;
     }
     return ItemsTableCompanion(
-      type: Value(InboxEntryType.fromString(type!)),
-      name: Value(name!),
-      label: Value(label!),
-      category: category != null ? Value(category!) : const Value.absent(),
-      tags: (tags?.isEmptyCheck ?? true) ? const Value.absent() : Value(tags!),
-      groups: (groupNames?.isEmptyCheck ?? true) ? const Value.absent() : Value(groupNames!),
+      ohType: Value(InboxEntryType.fromString(type!)),
+      ohName: Value(name!),
+      ohLabel: Value(label!),
+      ohCategory: category != null ? Value(category!) : const Value.absent(),
+      ohTags: (tags?.isEmptyCheck ?? true) ? const Value.absent() : Value(tags!),
+      ohGroups: (groupNames?.isEmptyCheck ?? true) ? const Value.absent() : Value(groupNames!),
       state: Value(state!),
+      stateDescription: stateDescription != null ? Value(stateDescription!) : const Value.absent(),
+      transformedState: transformedState != null ? Value(transformedState!) : const Value.absent(),
     );
   }
 }

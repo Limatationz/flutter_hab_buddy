@@ -10,7 +10,10 @@ import 'package:sqlite3/sqlite3.dart';
 import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
 import 'package:path/path.dart' as p;
 
+import '../network/generated/openHAB.swagger.dart';
 import 'converter/icon_data_converter.dart';
+import 'converter/map_converter.dart';
+import 'converter/state_description_converter.dart';
 import 'converter/string_list_converter.dart';
 import 'inbox/inbox_store.dart';
 import 'inbox/inbox_table.dart';

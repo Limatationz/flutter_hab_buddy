@@ -37,4 +37,9 @@ class RoomAddViewModel extends BaseViewModel {
     }
     return false;
   }
+
+  void setIcon(IconData? icon) {
+    roomIcon = icon;
+    notifyListeners();
+  }
 }

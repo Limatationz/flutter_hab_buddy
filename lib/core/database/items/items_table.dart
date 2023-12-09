@@ -1,34 +1,47 @@
 import 'package:drift/drift.dart';
 
 import '../app_database.dart';
+import '../converter/icon_data_converter.dart';
+import '../converter/map_converter.dart';
+import '../converter/state_description_converter.dart';
 import '../converter/string_list_converter.dart';
 import '../inbox/inbox_table.dart';
 import 'item_type.dart';
 
 @DataClassName("Item")
 class ItemsTable extends Table {
-  TextColumn get itemType => textEnum<ItemType>()();
+  TextColumn get type => textEnum<ItemType>()();
 
-  TextColumn get type => textEnum<InboxEntryType>()();
+  TextColumn get ohType => textEnum<InboxEntryType>()();
 
-  TextColumn get name => text()();
+  TextColumn get ohName => text()();
 
-  TextColumn get label => text()();
+  TextColumn get ohLabel => text()();
 
-  TextColumn get category => text().nullable()();
+  TextColumn get customLabel => text().nullable()();
 
-  TextColumn get tags => text().map(const StringListConverter()).nullable()();
+  TextColumn get ohCategory => text().nullable()();
 
-  TextColumn get groups => text().map(const StringListConverter()).nullable()();
+  TextColumn get ohTags => text().map(const StringListConverter()).nullable()();
+
+  TextColumn get ohGroups =>
+      text().map(const StringListConverter()).nullable()();
 
   IntColumn get roomId => integer()();
 
   BoolColumn get isFavorite => boolean().withDefault(const Constant(false))();
 
+  TextColumn get icon => text().map(const IconDataConverter()).nullable()();
+
   TextColumn get state => text()();
 
+  TextColumn get transformedState => text().nullable()();
+
+  TextColumn get stateDescription =>
+      text().map(const StateDescriptionConverter()).nullable()();
+
   @override
-  Set<Column> get primaryKey => {name};
+  Set<Column> get primaryKey => {ohName};
 
   @override
   List<String> get customConstraints => [

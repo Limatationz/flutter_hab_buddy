@@ -22,9 +22,22 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "close": MessageLookupByLibrary.simpleMessage("Close"),
+        "customLabel": MessageLookupByLibrary.simpleMessage("Custom Label"),
+        "customLabelHelp": MessageLookupByLibrary.simpleMessage(
+            "Add a custom label for this item otherwise the label from OpenHAB will be used."),
         "errorButtonHome": MessageLookupByLibrary.simpleMessage("Go to Home"),
         "errorHeadline":
             MessageLookupByLibrary.simpleMessage("An error occured"),
+        "icon": MessageLookupByLibrary.simpleMessage("Icon"),
+        "iconPickerNoResultsText":
+            MessageLookupByLibrary.simpleMessage("No results for:"),
+        "iconPickerTitle": MessageLookupByLibrary.simpleMessage("Pick an icon"),
+        "itemIconHelp": MessageLookupByLibrary.simpleMessage(
+            "Add an icon to the item that describes its functionality."),
+        "itemType": MessageLookupByLibrary.simpleMessage("Item Type"),
+        "itemTypeHelp":
+            MessageLookupByLibrary.simpleMessage("The type of the item"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "loginFailedMessage":
             MessageLookupByLibrary.simpleMessage("Please try again"),
@@ -35,7 +48,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "navigationInbox": MessageLookupByLibrary.simpleMessage("Inbox"),
         "navigationRooms": MessageLookupByLibrary.simpleMessage("Rooms"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
+        "room": MessageLookupByLibrary.simpleMessage("Room"),
+        "roomHelp": MessageLookupByLibrary.simpleMessage(
+            "The room where the item is located"),
         "search": MessageLookupByLibrary.simpleMessage("Search"),
+        "select": MessageLookupByLibrary.simpleMessage("Select"),
         "username": MessageLookupByLibrary.simpleMessage("Username")
       };
 }
