@@ -9,8 +9,13 @@ import 'bottom_sheet_container.dart';
 class BarModal extends StatelessWidget {
   final Widget child;
   final Color? backgroundColor;
+  final bool expand;
 
-  const BarModal({super.key, required this.child, this.backgroundColor});
+  const BarModal(
+      {super.key,
+      required this.child,
+      this.backgroundColor,
+      this.expand = false});
 
   @override
   Widget build(BuildContext context) {
@@ -25,14 +30,27 @@ class BarModal extends StatelessWidget {
               borderRadius: BorderRadius.circular(6)),
         ),
         const SizedBox(height: 8),
-        Material(
-          color: backgroundColor,
-          clipBehavior: Clip.antiAlias,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-          child: Padding(
-              padding: EdgeInsets.only(bottom: Platform.isIOS ? 12 : 0),
-              child: child),
-        ),
+        if (expand)
+          Expanded(
+            child: Material(
+              color: backgroundColor,
+              clipBehavior: Clip.antiAlias,
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(12)),
+              child: Padding(
+                  padding: EdgeInsets.only(bottom: Platform.isIOS ? 12 : 0),
+                  child: child),
+            ),
+          )
+        else
+          Material(
+            color: backgroundColor,
+            clipBehavior: Clip.antiAlias,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+            child: Padding(
+                padding: EdgeInsets.only(bottom: Platform.isIOS ? 12 : 0),
+                child: child),
+          ),
       ],
     );
   }
@@ -41,15 +59,17 @@ class BarModal extends StatelessWidget {
 Future<T> showBarModalBottomSheet<T>({
   required BuildContext context,
   required WidgetBuilder builder,
+  bool expand = false,
 }) async {
   return await showCustomModalBottomSheet(
       useRootNavigator: true,
       context: context,
       builder: builder,
       containerWidget: (_, animation, child) => BarModal(
-            backgroundColor:
-                DynamicTheme.of(context)!.theme.colorScheme.surface,
-            child: BottomSheetContainer(child: child),
+          backgroundColor: DynamicTheme.of(context)!.theme.colorScheme.surface,
+          child: BottomSheetContainer(
+            child: child,
           ),
-      expand: false);
+          expand: expand),
+      expand: expand);
 }

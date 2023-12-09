@@ -8,5 +8,6 @@
   "loginFailedMessage": "Please try again",
   "username": "Username",
   "password": "Password",
-  "navigationInbox": "Inbox"
+  "navigationInbox": "Inbox",
+  "search": "Search"
 }

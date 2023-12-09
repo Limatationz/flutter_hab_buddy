@@ -1,4 +1,12 @@
+import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:stacked/stacked.dart';
+
+import '../../../util/icons/icons.dart';
+import '../inbox/inbox_action_button.dart';
+import '../inbox/inbox_view.dart';
+import 'rooms_viewmodel.dart';
 
 class RoomsView extends StatelessWidget {
   static const String routePath = '/rooms';
@@ -8,6 +16,19 @@ class RoomsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return ViewModelBuilder<RoomsViewModel>.reactive(
+        viewModelBuilder: () => RoomsViewModel(),
+        builder: (context, model, _) =>
+            Scaffold(
+              appBar: AppBar(
+                title: const Text('Rooms'),
+                actions: [
+                  InboxActionButton(countInbox: model.countInbox),
+                ],
+              ),
+              body: const Center(
+                child: Text('Rooms'),
+              ),
+            ));
   }
 }

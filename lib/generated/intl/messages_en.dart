@@ -35,6 +35,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "navigationInbox": MessageLookupByLibrary.simpleMessage("Inbox"),
         "navigationRooms": MessageLookupByLibrary.simpleMessage("Rooms"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
+        "search": MessageLookupByLibrary.simpleMessage("Search"),
         "username": MessageLookupByLibrary.simpleMessage("Username")
       };
 }

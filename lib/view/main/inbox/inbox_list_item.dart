@@ -11,6 +11,7 @@ class InboxListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      contentPadding: const EdgeInsets.only(right: 22),
       title: Text(entry.label),
       subtitle: Text(entry.name),
       trailing: entry.type.icon != null ? Icon(entry.type.icon) : null,

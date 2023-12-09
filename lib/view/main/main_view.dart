@@ -76,12 +76,6 @@ class _MainViewState extends State<MainView> with WidgetsBindingObserver {
               1,
               LineIconsLight.house_plan_alt_2,
               LineIcons.house_plan_alt_2),
-          _buildAndroidBottomNavigationItem(
-              context,
-              S.of(context).navigationInbox,
-              2,
-              LineIcons.inbox,
-              LineIconsFilled.inbox),
         ],
         selectedIndex: _calculateSelectedIndex(context),
         onDestinationSelected: (index) => setState(
@@ -102,8 +96,6 @@ class _MainViewState extends State<MainView> with WidgetsBindingObserver {
               LineIconsFilled.star),
           _buildIOSBottomNavigationItem(context, S.of(context).navigationRooms,
               1, LineIconsLight.house_plan_alt_2, LineIcons.house_plan_alt_2),
-          _buildIOSBottomNavigationItem(context, S.of(context).navigationInbox,
-              2, LineIcons.inbox, LineIconsFilled.inbox),
         ],
         currentIndex: _calculateSelectedIndex(context),
         onTap: (index) => setState(

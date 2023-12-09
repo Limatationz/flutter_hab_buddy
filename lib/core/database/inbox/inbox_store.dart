@@ -47,4 +47,11 @@ class InboxStore extends DatabaseAccessor<AppDatabase> with _$InboxStoreMixin {
   Future<void> deleteDataByName(String name) async {
     await (delete(inboxTable)..where((tbl) => tbl.name.equals(name))).go();
   }
+
+  Stream<int> count() {
+    return (select(inboxTable)
+          ..where((tbl) => tbl.type.equals(InboxEntryType.group.name).not()))
+        .watch()
+        .map((event) => event.length);
+  }
 }

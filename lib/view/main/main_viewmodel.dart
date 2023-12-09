@@ -33,7 +33,13 @@ class MainViewModel extends BaseViewModel {
           if (update != null) {
             await _itemsStore.insertOrUpdateSingle(update);
           }
+          storedItems.removeWhere((element) => element.name == item.name);
         }
+      }
+
+      // Delete all items that are not available anymore
+      for (final item in storedItems) {
+        await _itemsStore.deleteDataByName(item.name);
       }
 
       await _inboxStore.insertOrUpdate(addToInbox);
