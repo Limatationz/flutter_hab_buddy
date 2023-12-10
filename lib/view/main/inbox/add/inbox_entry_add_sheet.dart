@@ -15,6 +15,7 @@ import '../../../util/form/base_form_icon_picker.dart';
 import '../../../util/form/base_form_text_field.dart';
 import '../../../util/general/bar_bottom_sheet.dart';
 import '../../../util/general/base_elevated_button.dart';
+import '../../../util/general/headline_padding_box.dart';
 import '../../../util/general/headline_value_icon.dart';
 import '../../../util/icon_picker/icon_pack_items.dart';
 import '../../rooms/add/room_add_sheet.dart';
@@ -33,27 +34,60 @@ class InboxEntryAddSheet extends StatelessWidget {
           return FormBuilder(
               key: model.fbKey,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(S.of(context).addItemHeadline,
+                      style: DynamicTheme.of(context)!
+                          .theme
+                          .textTheme
+                          .headlineMedium),
+                  const HeadlinePaddingBox(),
                   HeadlineValueIcon(title: "Name", data: entry.name),
                   HeadlineValueIcon(title: "Label", data: entry.label),
                   if (entry.category != null)
                     HeadlineValueIcon(title: "Category", data: entry.category!),
-                  if (entry.groups?.isNotEmpty ?? false)
-                    HeadlineValueIcon(
-                        title: "Category", data: entry.groups!.join(", ")),
-                  if (entry.tags?.isNotEmpty ?? false)
-                    HeadlineValueIcon(
-                        title: "Tags", data: entry.tags!.join(", ")),
-                  BaseFormDropdown<ItemType>(
-                    name: "itemType",
-                    items: ItemType.forEntryType(entry.type)
-                        .map((e) => DropdownMenuItem(
-                            value: e, child: Text(e.toString())))
-                        .toList(),
-                    validator: FormBuilderValidators.required(),
-                    label: S.of(context).itemType,
-                    helperText: S.of(context).itemTypeHelp,
-                    hintText: S.current.select,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (entry.tags != null)
+                        Expanded(
+                            child: HeadlineValueIcon(
+                                title: "Tags", data: entry.tags!.join(", "))),
+                      if (entry.groups != null && entry.tags != null)
+                        const Gap(listSpacing),
+                      if (entry.groups != null)
+                        Expanded(
+                            child: HeadlineValueIcon(
+                                title: "Groups",
+                                data: entry.groups!.join(", "))),
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: BaseFormDropdown<ItemType>(
+                          name: "itemType",
+                          items: ItemType.forEntryType(entry.type)
+                              .map((e) => DropdownMenuItem(
+                                  value: e, child: Text(e.toString())))
+                              .toList(),
+                          validator: FormBuilderValidators.required(),
+                          label: S.of(context).itemType,
+                          helperText: S.of(context).itemTypeHelp,
+                          hintText: S.current.select,
+                        ),
+                      ),
+                      const Gap(listSpacing),
+                      Expanded(
+                        child: BaseFormIconPicker(
+                          iconPack: iconPackItems,
+                          onChange: model.setIcon,
+                          selectedIcon: model.itemIcon,
+                          helperText: S.of(context).optional,
+                        ),
+                      ),
+                    ],
                   ),
                   const Gap(listSpacing),
                   StreamBuilder<List<Room>>(
@@ -65,9 +99,10 @@ class InboxEntryAddSheet extends StatelessWidget {
                               label: S.of(context).room,
                               helperText: S.of(context).roomHelp,
                               hintText: S.current.select,
+                              initialValue: model.addRoomId,
                               suffixIcon: GestureDetector(
                                   onTap: () {
-                                    _onRoomAdd(context);
+                                    _onRoomAdd(context, model);
                                   },
                                   child: Icon(LineIcons.plus,
                                       color: DynamicTheme.of(context)!
@@ -89,13 +124,6 @@ class InboxEntryAddSheet extends StatelessWidget {
                     helperText: S.of(context).customLabelHelp,
                     hintText: entry.label,
                   ),
-                  const Gap(listSpacing),
-                  BaseFormIconPicker(
-                    iconPack: iconPackItems,
-                    onChange: model.setIcon,
-                    selectedIcon: model.itemIcon,
-                    helperText: S.of(context).itemIconHelp,
-                  ),
                   const SizedBox(height: 16),
                   BaseElevatedButton(
                       text: "Save",
@@ -111,8 +139,10 @@ class InboxEntryAddSheet extends StatelessWidget {
         });
   }
 
-  void _onRoomAdd(BuildContext context) {
-    showBarModalBottomSheet(
+  Future<void> _onRoomAdd(
+      BuildContext context, InboxEntryAddViewModel model) async {
+    final roomId = await showBarModalBottomSheet<int?>(
         context: context, builder: (context) => const RoomAddSheet());
+    model.onRoomAdd(roomId);
   }
 }

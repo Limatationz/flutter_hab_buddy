@@ -24,7 +24,6 @@ class BaseFormIconPicker extends StatefulWidget {
 }
 
 class _BaseFormIconPickerState extends State<BaseFormIconPicker> {
-  final FocusNode _focusNode = FocusNode();
   final TextEditingController _controller = TextEditingController();
 
   @override
@@ -56,7 +55,6 @@ class _BaseFormIconPickerState extends State<BaseFormIconPicker> {
                   color: DynamicTheme.of(context)!.theme.colorScheme.primary)),
       onTap: () => _pickIcon(context),
       readOnly: true,
-      focusNode: _focusNode,
     );
   }
 

@@ -13,6 +13,7 @@ import 'core/routing/router.dart';
 import 'generated/l10n.dart';
 import 'locator.dart';
 import 'repository/login_repository.dart';
+import 'view/util/text_styles.g.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -61,10 +62,10 @@ void main() async {
 
     //Theme
     final themeLight =
-        ThemeData.from(colorScheme: lightColorScheme, useMaterial3: true);
+        ThemeData.from(colorScheme: lightColorScheme, textTheme: textTheme, useMaterial3: true);
 
     final themeDark =
-        ThemeData.from(colorScheme: darkColorScheme, useMaterial3: true);
+        ThemeData.from(colorScheme: darkColorScheme, textTheme: textTheme, useMaterial3: true);
 
     final themeCollection = ThemeCollection(
       themes: {

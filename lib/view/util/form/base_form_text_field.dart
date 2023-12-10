@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
-import '../../../util/icons/icons.dart';
-
 class BaseFormTextField extends StatelessWidget {
   final String name;
   final String label;
   final String? helperText;
   final String? hintText;
-  final String? Function(dynamic)? validator;
+  final String? Function(String?)? validator;
   final String? Function(dynamic)? onChanged;
   final dynamic initialValue;
   final Widget? suffixIcon;
+  final TextInputType? keyboardType;
 
   const BaseFormTextField(
       {super.key,
@@ -22,7 +21,8 @@ class BaseFormTextField extends StatelessWidget {
       this.validator,
       this.onChanged,
       this.initialValue,
-      this.suffixIcon});
+      this.suffixIcon,
+      this.keyboardType});
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +39,7 @@ class BaseFormTextField extends StatelessWidget {
       initialValue: initialValue,
       validator: validator,
       onChanged: onChanged,
+      keyboardType: keyboardType,
     );
   }
 }

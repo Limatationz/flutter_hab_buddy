@@ -21,9 +21,7 @@ class BaseElevatedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: double.infinity),
-        child: SizedBox(
+    return SizedBox(
             width: width ?? double.infinity,
             child: ElevatedButton(
               onPressed: onPressed,
@@ -31,7 +29,7 @@ class BaseElevatedButton extends StatelessWidget {
                 backgroundColor: backgroundColor ??
                     DynamicTheme.of(context)!.theme.colorScheme.primary,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(8),
                 ),
                 padding:
                     const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -50,6 +48,6 @@ class BaseElevatedButton extends StatelessWidget {
                                 .colorScheme
                                 .onInverseSurface),
               ),
-            )));
+            ));
   }
 }

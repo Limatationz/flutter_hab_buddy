@@ -260,21 +260,121 @@ class S {
     );
   }
 
-  /// `Add a custom label for this item otherwise the label from OpenHAB will be used.`
+  /// `Add a custom label for this item otherwise the label from OpenHAB will be used (optional)`
   String get customLabelHelp {
     return Intl.message(
-      'Add a custom label for this item otherwise the label from OpenHAB will be used.',
+      'Add a custom label for this item otherwise the label from OpenHAB will be used (optional)',
       name: 'customLabelHelp',
       desc: '',
       args: [],
     );
   }
 
-  /// `Add an icon to the item that describes its functionality.`
-  String get itemIconHelp {
+  /// `Name`
+  String get roomNameLabel {
     return Intl.message(
-      'Add an icon to the item that describes its functionality.',
-      name: 'itemIconHelp',
+      'Name',
+      name: 'roomNameLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Description`
+  String get roomDescriptionLabel {
+    return Intl.message(
+      'Description',
+      name: 'roomDescriptionLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Color`
+  String get roomColorLabel {
+    return Intl.message(
+      'Color',
+      name: 'roomColorLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name of the room`
+  String get roomNameHelp {
+    return Intl.message(
+      'Name of the room',
+      name: 'roomNameHelp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Further description of the room (optional)`
+  String get roomDescriptionHelp {
+    return Intl.message(
+      'Further description of the room (optional)',
+      name: 'roomDescriptionHelp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Living Room`
+  String get roomNameHint {
+    return Intl.message(
+      'Living Room',
+      name: 'roomNameHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Level`
+  String get roomLevelLabel {
+    return Intl.message(
+      'Level',
+      name: 'roomLevelLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Optional`
+  String get optional {
+    return Intl.message(
+      'Optional',
+      name: 'optional',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save`
+  String get save {
+    return Intl.message(
+      'Save',
+      name: 'save',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Room`
+  String get addRoomHeadline {
+    return Intl.message(
+      'Add Room',
+      name: 'addRoomHeadline',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Item`
+  String get addItemHeadline {
+    return Intl.message(
+      'Add Item',
+      name: 'addItemHeadline',
       desc: '',
       args: [],
     );

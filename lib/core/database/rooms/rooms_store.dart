@@ -22,6 +22,10 @@ class RoomsStore extends DatabaseAccessor<AppDatabase> with _$RoomsStoreMixin {
     await insertOrUpdate([data]);
   }
 
+  Future<int> insertOrUpdateSingleWithId(RoomsTableCompanion data) async {
+    return await into(roomsTable).insertOnConflictUpdate(data);
+  }
+
   Future<void> deleteData() async {
     await delete(roomsTable).go();
   }

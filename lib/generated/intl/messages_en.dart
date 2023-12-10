@@ -22,10 +22,12 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "addItemHeadline": MessageLookupByLibrary.simpleMessage("Add Item"),
+        "addRoomHeadline": MessageLookupByLibrary.simpleMessage("Add Room"),
         "close": MessageLookupByLibrary.simpleMessage("Close"),
         "customLabel": MessageLookupByLibrary.simpleMessage("Custom Label"),
         "customLabelHelp": MessageLookupByLibrary.simpleMessage(
-            "Add a custom label for this item otherwise the label from OpenHAB will be used."),
+            "Add a custom label for this item otherwise the label from OpenHAB will be used (optional)"),
         "errorButtonHome": MessageLookupByLibrary.simpleMessage("Go to Home"),
         "errorHeadline":
             MessageLookupByLibrary.simpleMessage("An error occured"),
@@ -33,8 +35,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "iconPickerNoResultsText":
             MessageLookupByLibrary.simpleMessage("No results for:"),
         "iconPickerTitle": MessageLookupByLibrary.simpleMessage("Pick an icon"),
-        "itemIconHelp": MessageLookupByLibrary.simpleMessage(
-            "Add an icon to the item that describes its functionality."),
         "itemType": MessageLookupByLibrary.simpleMessage("Item Type"),
         "itemTypeHelp":
             MessageLookupByLibrary.simpleMessage("The type of the item"),
@@ -47,10 +47,22 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Favorites"),
         "navigationInbox": MessageLookupByLibrary.simpleMessage("Inbox"),
         "navigationRooms": MessageLookupByLibrary.simpleMessage("Rooms"),
+        "optional": MessageLookupByLibrary.simpleMessage("Optional"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "room": MessageLookupByLibrary.simpleMessage("Room"),
+        "roomColorLabel": MessageLookupByLibrary.simpleMessage("Color"),
+        "roomDescriptionHelp": MessageLookupByLibrary.simpleMessage(
+            "Further description of the room (optional)"),
+        "roomDescriptionLabel":
+            MessageLookupByLibrary.simpleMessage("Description"),
         "roomHelp": MessageLookupByLibrary.simpleMessage(
             "The room where the item is located"),
+        "roomLevelLabel": MessageLookupByLibrary.simpleMessage("Level"),
+        "roomNameHelp":
+            MessageLookupByLibrary.simpleMessage("Name of the room"),
+        "roomNameHint": MessageLookupByLibrary.simpleMessage("Living Room"),
+        "roomNameLabel": MessageLookupByLibrary.simpleMessage("Name"),
+        "save": MessageLookupByLibrary.simpleMessage("Save"),
         "search": MessageLookupByLibrary.simpleMessage("Search"),
         "select": MessageLookupByLibrary.simpleMessage("Select"),
         "username": MessageLookupByLibrary.simpleMessage("Username")

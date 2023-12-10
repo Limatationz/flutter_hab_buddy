@@ -17,6 +17,7 @@ class InboxEntryAddViewModel extends BaseViewModel {
   final InboxEntry entry;
   final fbKey = GlobalKey<FormBuilderState>();
   IconData? itemIcon;
+  int? addRoomId;
 
   InboxEntryAddViewModel(this.entry);
 
@@ -60,5 +61,12 @@ class InboxEntryAddViewModel extends BaseViewModel {
   void setIcon(IconData? icon) {
     itemIcon = icon;
     notifyListeners();
+  }
+
+  void onRoomAdd(int? roomId) {
+    if(roomId != null) {
+      addRoomId = roomId;
+      notifyListeners();
+    }
   }
 }

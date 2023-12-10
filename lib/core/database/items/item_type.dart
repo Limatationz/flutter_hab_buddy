@@ -3,8 +3,7 @@ import '../inbox/inbox_table.dart';
 enum ItemType {
   text,
   button,
-  lightBulb,
-  lightStrip,
+  light,
   rollerShutter,
   fan,
   heater,
@@ -24,14 +23,9 @@ enum ItemType {
   static List<ItemType> forEntryType(InboxEntryType type) {
     switch (type) {
       case InboxEntryType.button:
-        return [
-          ItemType.button,
-          ItemType.lightBulb,
-          ItemType.lightStrip,
-          ItemType.powerOutlet
-        ];
+        return [ItemType.button, ItemType.light, ItemType.powerOutlet];
       case InboxEntryType.dimmer:
-        return [ItemType.lightBulb, ItemType.lightStrip];
+        return [ItemType.light];
       case InboxEntryType.rollershutter:
         return [ItemType.rollerShutter];
       case InboxEntryType.contact:
@@ -49,7 +43,7 @@ enum ItemType {
       case InboxEntryType.dateTime:
         return [ItemType.text];
       case InboxEntryType.color:
-        return [ItemType.lightBulb, ItemType.lightStrip];
+        return [ItemType.light, ItemType.text];
       case InboxEntryType.player:
         return [ItemType.player];
       default:

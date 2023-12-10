@@ -15,7 +15,7 @@ class RoomAddViewModel extends BaseViewModel {
 
   RoomAddViewModel();
 
-  Future<bool> save() async {
+  Future<int?> save() async {
     if (fbKey.currentState?.saveAndValidate() ?? false) {
       final data = fbKey.currentState!.value;
 
@@ -26,16 +26,16 @@ class RoomAddViewModel extends BaseViewModel {
       final color = data["color"] as String?;
 
       final room = RoomsTableCompanion.insert(
-        name: data["name"],
+        name: name,
         description: description != null ? Value(description) : const Value.absent(),
         level: levelInt != null ? Value(levelInt) : const Value.absent(),
         color: color != null ? Value(color) : const Value.absent(),
         icon: roomIcon != null ? Value(roomIcon!) : const Value.absent(),
       );
-      await _roomsStore.insertOrUpdateSingle(room);
-      return true;
+      final id = await _roomsStore.insertOrUpdateSingleWithId(room);
+      return id;
     }
-    return false;
+    return null;
   }
 
   void setIcon(IconData? icon) {
