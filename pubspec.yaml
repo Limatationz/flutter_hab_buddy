@@ -48,7 +48,6 @@ dependencies:
   mockito: ^5.4.3
   modal_bottom_sheet: 3.0.0-pre
   multiple_stream_builder: ^3.0.2
-  oktoast: ^3.4.0
   package_info_plus: ^5.0.1
   path_provider: ^2.1.1
   permission_handler: ^11.1.0
@@ -74,6 +73,7 @@ dependencies:
   flutter_secure_storage: ^9.0.0
   flutter_iconpicker: ^3.2.4
   azlistview_plus: ^3.0.0
+  dropdown_button2: ^2.3.9
 
 dependency_overrides:
   flutter_native_timezone:

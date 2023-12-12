@@ -29,6 +29,10 @@ class ItemsStore extends DatabaseAccessor<AppDatabase> with _$ItemsStoreMixin {
   MultiSelectable<Item> byRoomId(int roomId) =>
       select(itemsTable)..where((tbl) => tbl.roomId.equals(roomId));
 
+
+  SingleOrNullSelectable<Item> byName(String name) =>
+      select(itemsTable)..where((tbl) => tbl.ohName.equals(name));
+
   Stream<Map<Room, List<Item>>> watchGroupedByRoom() {
     return select(itemsTable)
         .join([
@@ -60,6 +64,12 @@ class ItemsStore extends DatabaseAccessor<AppDatabase> with _$ItemsStoreMixin {
 
   Future<void> insertOrUpdateSingle(ItemsTableCompanion data) async {
     await insertOrUpdate([data]);
+  }
+
+  Future<void> updateByName(ItemsTableCompanion data) async {
+    await (update(itemsTable)
+          ..where((tbl) => tbl.ohName.equals(data.ohName.value)))
+        .write(data);
   }
 
   Future<void> deleteData() async {

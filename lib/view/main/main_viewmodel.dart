@@ -31,7 +31,7 @@ class MainViewModel extends BaseViewModel {
           // Item is already stored -> update
           final update = item.asItemUpdate();
           if (update != null) {
-            await _itemsStore.insertOrUpdateSingle(update);
+            await _itemsStore.updateByName(update);
           }
           storedItems.removeWhere((element) => element.ohName == item.name);
         }

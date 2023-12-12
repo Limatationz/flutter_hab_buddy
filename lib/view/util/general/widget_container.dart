@@ -7,20 +7,22 @@ class WidgetContainer extends StatelessWidget {
   final Widget child;
   final EdgeInsets margin;
   final EdgeInsets? padding;
-  final BuildContext context;
-  final Function? onTap;
+  final VoidCallback? onTap;
+  final VoidCallback? onLongTap;
   final double elevation;
   final Color? backgroundColor;
+  final double? width;
 
   const WidgetContainer(
       {super.key,
       required this.child,
-      required this.context,
       this.padding,
       this.margin = const EdgeInsets.all(0),
       this.onTap,
+      this.onLongTap,
       this.elevation = 2,
-      this.backgroundColor});
+      this.backgroundColor,
+      this.width});
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,7 @@ class WidgetContainer extends StatelessWidget {
             borderRadius:
                 const BorderRadius.all(Radius.circular(borderRadiusContainer)),
             child: Container(
+                width: width,
                 key: key,
                 decoration: BoxDecoration(
                   color: backgroundColor ??
@@ -48,13 +51,14 @@ class WidgetContainer extends StatelessWidget {
                 ),
                 padding: padding,
                 child: child)));
-    if (onTap != null) {
+    if (onTap != null || onLongTap != null) {
       return Padding(
           padding: margin,
           child: InkWell(
               borderRadius: const BorderRadius.all(
                   Radius.circular(borderRadiusContainer)),
-              onTap: () => onTap!.call(),
+              onTap: () => onTap?.call(),
+              onLongPress: () => onLongTap?.call(),
               child: widget));
     }
     return Padding(padding: margin, child: widget);

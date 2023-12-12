@@ -3,8 +3,8 @@ import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
 
-import '../../locator.dart';
-import '../../repository/login_repository.dart';
+import '../../../locator.dart';
+import '../../../repository/login_repository.dart';
 
 class AuthInterceptor implements RequestInterceptor {
   final _loginRepository = locator.get<LoginRepository>();

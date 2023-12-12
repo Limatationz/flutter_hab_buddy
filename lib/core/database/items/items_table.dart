@@ -55,3 +55,7 @@ class ItemWithRoom {
 
   ItemWithRoom(this.item, this.room);
 }
+
+extension ItemLabel on Item {
+  String get label => customLabel ?? ohLabel;
+}

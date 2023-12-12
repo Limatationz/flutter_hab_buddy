@@ -47,7 +47,7 @@ class SnackbarService {
   }
 
   void showSnackbar({
-    required String title,
+    String? title,
     required String message,
     required SnackbarType type,
     Duration? duration,

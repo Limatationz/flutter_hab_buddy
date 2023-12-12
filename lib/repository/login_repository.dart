@@ -1,10 +1,11 @@
+import 'dart:convert';
+
 import 'package:chopper/chopper.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:tuple/tuple.dart';
-
-import '../core/network/LoginInterceptor.dart';
 import '../core/network/generated/openHAB.swagger.dart';
+import '../core/network/interceptors/LoginInterceptor.dart';
 
 class LoginRepository {
   final _secureStorage = const FlutterSecureStorage();
@@ -16,6 +17,18 @@ class LoginRepository {
       BehaviorSubject.seeded(null);
 
   Stream<Tuple2<String, String>?> get loginData => _loginData.stream;
+
+  String? get basicAuth {
+    if (_loginData.value != null) {
+      final username = _loginData.value!.item1;
+      final password = _loginData.value!.item2;
+      final bytes = utf8.encode("$username:$password");
+      final base64Str = base64.encode(bytes);
+      return "Basic $base64Str";
+    } else {
+      return null;
+    }
+  }
 
   Future<void> checkLogin() async {
     final username = await _secureStorage.read(key: 'username');
@@ -38,7 +51,6 @@ class LoginRepository {
         baseUrl: Uri.parse("https://myopenhab.org/rest"),
         interceptors: [
           LoginInterceptor(username, password),
-          HttpLoggingInterceptor()
         ]);
     final result = await api.get();
     if (result.isSuccessful) {

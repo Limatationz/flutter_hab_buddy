@@ -3,13 +3,13 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/snackbar/snackbar_service.dart';
 import '../../generated/l10n.dart';
 import '../../locator.dart';
 import '../../repository/login_repository.dart';
 import '../main/favourite/favourite_view.dart';
 import '../util/constants.dart';
 import '../util/general/base_elevated_button.dart';
-import '../util/snackbar/snackbar_service.dart';
 
 class LoginView extends StatefulWidget {
   static const String routePath = '/login';

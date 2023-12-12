@@ -46,7 +46,7 @@ class AppDatabase extends _$AppDatabase {
   MigrationStrategy get migration {
     return MigrationStrategy(beforeOpen: (details) async {
       await customStatement("PRAGMA foreign_key = ON");
-      if (kDebugMode /* or some other flag */) {
+      if (kDebugMode && false) {
         final m = Migrator(this);
         for (final table in allTables) {
           await m.deleteTable(table.actualTableName);

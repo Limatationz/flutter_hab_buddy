@@ -1,4 +1,5 @@
 import 'package:azlistview_plus/azlistview_plus.dart';
+import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:stacked/stacked.dart';
@@ -91,6 +92,10 @@ class InboxView extends StatelessWidget {
                             const EdgeInsets.only(right: paddingScaffold * 2),
                         child: Material(
                           elevation: 4.0,
+                          color: DynamicTheme.of(context)!
+                              .theme
+                              .colorScheme
+                              .surfaceVariant,
                           child: SizedBox(
                             height: 200.0,
                             child: ListView.builder(

@@ -4,11 +4,13 @@ import 'package:get_it/get_it.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 
 import 'core/database/app_database.dart';
-import 'core/network/AuthInterceptor.dart';
+import 'core/network/interceptors/AuthInterceptor.dart';
 import 'core/network/generated/client_index.dart';
+import 'core/network/interceptors/ContentTypeInterceptor.dart';
 import 'core/routing/navigation_service.dart';
+import 'core/snackbar/snackbar_service.dart';
+import 'repository/item_repository.dart';
 import 'repository/login_repository.dart';
-import 'view/util/snackbar/snackbar_service.dart';
 
 final locator = GetIt.instance;
 
@@ -34,6 +36,11 @@ Future<void> setupLocator() async {
       baseUrl: Uri.parse("https://myopenhab.org/rest"),
       interceptors: [
         AuthInterceptor(),
+        ContentTypeInterceptor(),
         kDebugMode ? HttpLoggingInterceptor() : null
       ]));
+
+
+  // repositories
+  locator.registerSingleton(ItemRepository());
 }

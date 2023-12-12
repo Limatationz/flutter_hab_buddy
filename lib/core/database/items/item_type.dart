@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../inbox/inbox_table.dart';
 
 enum ItemType {
@@ -19,6 +21,15 @@ enum ItemType {
   windowContact,
   powerOutlet,
   player;
+
+  IconData get icon {
+    switch (this){
+      case ItemType.button:
+        return Icons.power_settings_new_outlined;
+      default:
+        return Icons.abc;
+    }
+  }
 
   static List<ItemType> forEntryType(InboxEntryType type) {
     switch (type) {
