@@ -29,7 +29,7 @@ class _SwitchItemDialogState extends State<SwitchItemDialog> {
         stream: _itemsStore.byName(widget.itemName).watchSingleOrNull(),
         builder: (context, snapshot) {
           if (snapshot.data == null) {
-            return SizedBox.shrink();
+            return const SizedBox.shrink();
           }
           final item = snapshot.data!;
           final isOn = item.state == "ON";

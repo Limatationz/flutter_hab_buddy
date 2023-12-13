@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 
@@ -16,13 +14,13 @@ class DimmableWidgetContainer extends StatefulWidget {
   final Color? accentBackgroundColor;
   final double? width;
   final double value;
-  final Function(double) onDragDone;
+  final Function(double)? onDragDone;
 
   const DimmableWidgetContainer(
       {super.key,
       required this.child,
       required this.value,
-      required this.onDragDone,
+      this.onDragDone,
       this.padding,
       this.margin = const EdgeInsets.all(0),
       this.onTap,
@@ -43,6 +41,8 @@ class _DimmableWidgetContainerState extends State<DimmableWidgetContainer> {
 
   double get currentValue => value + (dragAmount / 100);
 
+  bool get isDragEnabled => widget.onDragDone != null;
+
   @override
   void initState() {
     super.initState();
@@ -51,6 +51,7 @@ class _DimmableWidgetContainerState extends State<DimmableWidgetContainer> {
 
   @override
   Widget build(BuildContext context) {
+    print("currentValue: $currentValue");
     final child = Material(
         elevation: widget.elevation,
         borderRadius:
@@ -81,18 +82,22 @@ class _DimmableWidgetContainerState extends State<DimmableWidgetContainer> {
       return Padding(
           padding: widget.margin,
           child: GestureDetector(
-              onVerticalDragEnd: (details) {
-                widget.onDragDone.call(dragAmount);
-                setState(() {
-                  value = currentValue;
-                  dragAmount = 0;
-                });
-              },
-              onVerticalDragUpdate: (details) {
-                setState(() {
-                  dragAmount -= details.delta.dy;
-                });
-              },
+              onVerticalDragEnd: isDragEnabled
+                  ? (details) {
+                      widget.onDragDone!.call(currentValue * 100);
+                      setState(() {
+                        value = currentValue;
+                        dragAmount = 0;
+                      });
+                    }
+                  : null,
+              onVerticalDragUpdate: isDragEnabled
+                  ? (details) {
+                      setState(() {
+                        dragAmount -= details.delta.dy;
+                      });
+                    }
+                  : null,
               onTap: () => widget.onTap?.call(),
               onLongPress: () => widget.onLongTap?.call(),
               child: child));

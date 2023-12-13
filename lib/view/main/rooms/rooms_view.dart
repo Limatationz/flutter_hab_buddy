@@ -3,7 +3,6 @@ import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart' as modal;
-import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../core/database/app_database.dart';
@@ -39,45 +38,51 @@ class RoomsView extends StatelessWidget {
               stream: model.hasRoomsStream,
               builder: (context, hasRooms) {
                 if (hasRooms.data ?? false) {
-                  return StreamBuilder2(
-                      streams: StreamTuple2(
-                          model.roomsStream, model.currentRoomIdStream),
+                  return StreamBuilder(
+                      stream: model.roomsStream,
                       builder: (context, snapshot) {
-                        if (!snapshot.snapshot1.hasData ||
-                            !snapshot.snapshot2.hasData) {
+                        if (!snapshot.hasData) {
                           return const Center(
                             child: CircularProgressIndicator(),
                           );
                         } else {
-                          final rooms = snapshot.snapshot1.data ?? [];
-                          final selectedRoomId = snapshot.snapshot2.data ?? 0;
-                          final selectedRoom = rooms.firstWhere(
-                              (element) => element.id == selectedRoomId);
+                          final rooms = snapshot.data ?? [];
+                          final selectedRoomIndex = model.currentPage;
+                          final selectedRoom = rooms[selectedRoomIndex.toInt()];
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               _buildRoomSelection(context, selectedRoom, rooms,
                                   model.onRoomChange),
-                              // TODO: use pageview and a page for every room
-                              Expanded(
-                                  child: StreamBuilder(
-                                stream: model.itemsOfCurrentRoomStream,
-                                builder: (context, snapshot) {
-                                  if (!snapshot.hasData) {
-                                    return const Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  } else {
-                                    final items = snapshot.data ?? [];
-                                    if (items.isEmpty) {
-                                      return _buildEmptyItemsForRoomState(
-                                          context);
+                              StreamBuilder(
+                                  stream: model.itemsByRoomIdStream,
+                                  builder: (context, snapshot) {
+                                    if (!snapshot.hasData) {
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
                                     } else {
-                                      return _buildItemsView(context, items);
+                                      return Expanded(
+                                          child: PageView.builder(
+                                              key: model.pageViewKey,
+                                              controller: model.pageController,
+                                              onPageChanged: model.onRoomChange,
+                                              itemCount: rooms.length,
+                                              itemBuilder: (context, index) {
+                                                final room = rooms[index];
+                                                final items =
+                                                    snapshot.data?[room.id] ??
+                                                        [];
+                                                if (items.isEmpty) {
+                                                  return _buildEmptyItemsForRoomState(
+                                                      context);
+                                                } else {
+                                                  return _buildItemsView(
+                                                      context, items);
+                                                }
+                                              }));
                                     }
-                                  }
-                                },
-                              ))
+                                  })
                             ],
                           );
                         }
@@ -90,7 +95,7 @@ class RoomsView extends StatelessWidget {
   }
 
   Widget _buildRoomSelection(BuildContext context, Room selectedRoom,
-      List<Room> allRooms, Function(Room?) onRoomChange) {
+      List<Room> allRooms, Function(int) onRoomChange) {
     return Material(
         elevation: 4,
         child: DropdownButtonHideUnderline(
@@ -111,7 +116,12 @@ class RoomsView extends StatelessWidget {
                                   .colorScheme
                                   .onSurfaceVariant))))
               .toList(),
-          onChanged: onRoomChange,
+          onChanged: (room) {
+            if (room != null) {
+              final index = allRooms.indexOf(room);
+              onRoomChange(index);
+            }
+          },
           dropdownStyleData: DropdownStyleData(
             decoration: BoxDecoration(
               color: DynamicTheme.of(context)!.theme.colorScheme.surfaceVariant,
@@ -136,8 +146,6 @@ class RoomsView extends StatelessWidget {
         padding: const EdgeInsets.all(paddingScaffold),
         child: LayoutBuilder(
             builder: (context, constraints) => Wrap(
-                  alignment: WrapAlignment.start,
-                  crossAxisAlignment: WrapCrossAlignment.start,
                   runSpacing: listSpacing,
                   spacing: listSpacing,
                   children: items

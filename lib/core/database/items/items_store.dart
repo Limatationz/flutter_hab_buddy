@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:drift/drift.dart';
 
 import '../app_database.dart';
@@ -29,6 +30,11 @@ class ItemsStore extends DatabaseAccessor<AppDatabase> with _$ItemsStoreMixin {
   MultiSelectable<Item> byRoomId(int roomId) =>
       select(itemsTable)..where((tbl) => tbl.roomId.equals(roomId));
 
+  Stream<Map<int, List<Item>>> watchGroupedByRoomId() {
+    return select(itemsTable).watch().map((rows) {
+      return groupBy(rows, (e) => e.roomId);
+    });
+  }
 
   SingleOrNullSelectable<Item> byName(String name) =>
       select(itemsTable)..where((tbl) => tbl.ohName.equals(name));

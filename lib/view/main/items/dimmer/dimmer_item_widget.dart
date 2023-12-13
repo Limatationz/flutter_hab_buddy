@@ -1,6 +1,5 @@
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_openhab/view/main/items/switch/switch_item_dialog.dart';
 
 import '../../../../core/database/app_database.dart';
 import '../../../../core/database/items/items_table.dart';

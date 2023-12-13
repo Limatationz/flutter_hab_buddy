@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:logger/logger.dart';
+
 import '../core/database/app_database.dart';
 import '../core/network/converters/inbox.dart';
 import '../core/network/generated/client_index.dart';
@@ -22,16 +24,21 @@ class ItemRepository {
   }
 
   Future<void> _sendAction(String itemName, String body) async {
-    final dio = await Dio().post("https://myopenhab.org/rest/items/$itemName",
-        data: body,
-        options: Options(headers: {
-          "Authorization": "${_loginRepository.basicAuth}",
-          "Content-Type": "text/plain",
-        }));
-    if (dio.statusCode != 200) {
+    try {
+      final dio = await Dio().post("https://myopenhab.org/rest/items/$itemName",
+          data: body,
+          options: Options(headers: {
+            "Authorization": "${_loginRepository.basicAuth}",
+            "Content-Type": "text/plain",
+          }));
+      if (dio.statusCode != 200) {
+        showActionErrorToast();
+      }
+      getStatusOfItem(itemName);
+    } catch (e, s) {
+      Logger().e("Error on Item Action. Name: $itemName, Body: $body, Error: $e", stackTrace: s);
       showActionErrorToast();
     }
-    getStatusOfItem(itemName);
   }
 
   Future<void> getStatusOfItem(String itemName) async {

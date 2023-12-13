@@ -26,7 +26,7 @@ class ItemWidgetFactory extends StatelessWidget {
       case InboxEntryType.dimmer:
         return DimmerItemWidget(item: item, width: widthSmallWidget);
       default:
-        return Container();
+        return Text(item.ohName);
     }
   }
 

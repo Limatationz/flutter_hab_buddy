@@ -1,6 +1,6 @@
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_openhab/view/main/items/switch/switch_item_dialog.dart';
+import 'switch_item_dialog.dart';
 
 import '../../../../core/database/app_database.dart';
 import '../../../../core/database/items/items_table.dart';
@@ -8,7 +8,7 @@ import '../../../../locator.dart';
 import '../../../../repository/item_repository.dart';
 import '../../../util/constants.dart';
 import '../../../util/general/base_item_dialog.dart';
-import '../../../util/general/widget_container.dart';
+import '../../../util/general/dimmable_widget_container.dart';
 
 class SwitchItemWidget extends StatefulWidget {
   final Item item;
@@ -27,11 +27,13 @@ class _SwitchItemWidgetState extends State<SwitchItemWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return WidgetContainer(
+    return DimmableWidgetContainer(
+        key: ValueKey(isOn.toString()),
         width: widget.width,
         padding: const EdgeInsets.all(paddingContainer),
         onTap: onAction,
         onLongTap: () => onLongTap(context),
+        value: isOn ? 100 : 0,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
