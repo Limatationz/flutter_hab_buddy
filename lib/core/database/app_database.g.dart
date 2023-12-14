@@ -48,6 +48,12 @@ class $InboxTableTable extends InboxTable
   late final GeneratedColumn<String> state = GeneratedColumn<String>(
       'state', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _unitSymbolMeta =
+      const VerificationMeta('unitSymbol');
+  @override
+  late final GeneratedColumn<String> unitSymbol = GeneratedColumn<String>(
+      'unit_symbol', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _transformedStateMeta =
       const VerificationMeta('transformedState');
   @override
@@ -63,6 +69,15 @@ class $InboxTableTable extends InboxTable
               type: DriftSqlType.string, requiredDuringInsert: false)
           .withConverter<StateDescription?>(
               $InboxTableTable.$converterstateDescriptionn);
+  static const VerificationMeta _commandDescriptionMeta =
+      const VerificationMeta('commandDescription');
+  @override
+  late final GeneratedColumnWithTypeConverter<CommandDescription?, String>
+      commandDescription = GeneratedColumn<String>(
+              'command_description', aliasedName, true,
+              type: DriftSqlType.string, requiredDuringInsert: false)
+          .withConverter<CommandDescription?>(
+              $InboxTableTable.$convertercommandDescriptionn);
   @override
   List<GeneratedColumn> get $columns => [
         type,
@@ -72,8 +87,10 @@ class $InboxTableTable extends InboxTable
         tags,
         groups,
         state,
+        unitSymbol,
         transformedState,
-        stateDescription
+        stateDescription,
+        commandDescription
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -110,6 +127,12 @@ class $InboxTableTable extends InboxTable
     } else if (isInserting) {
       context.missing(_stateMeta);
     }
+    if (data.containsKey('unit_symbol')) {
+      context.handle(
+          _unitSymbolMeta,
+          unitSymbol.isAcceptableOrUnknown(
+              data['unit_symbol']!, _unitSymbolMeta));
+    }
     if (data.containsKey('transformed_state')) {
       context.handle(
           _transformedStateMeta,
@@ -117,6 +140,7 @@ class $InboxTableTable extends InboxTable
               data['transformed_state']!, _transformedStateMeta));
     }
     context.handle(_stateDescriptionMeta, const VerificationResult.success());
+    context.handle(_commandDescriptionMeta, const VerificationResult.success());
     return context;
   }
 
@@ -142,11 +166,16 @@ class $InboxTableTable extends InboxTable
           .read(DriftSqlType.string, data['${effectivePrefix}groups'])),
       state: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}state'])!,
+      unitSymbol: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}unit_symbol']),
       transformedState: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}transformed_state']),
       stateDescription: $InboxTableTable.$converterstateDescriptionn.fromSql(
           attachedDatabase.typeMapping.read(DriftSqlType.string,
               data['${effectivePrefix}state_description'])),
+      commandDescription: $InboxTableTable.$convertercommandDescriptionn
+          .fromSql(attachedDatabase.typeMapping.read(DriftSqlType.string,
+              data['${effectivePrefix}command_description'])),
     );
   }
 
@@ -169,6 +198,11 @@ class $InboxTableTable extends InboxTable
       const StateDescriptionConverter();
   static TypeConverter<StateDescription?, String?> $converterstateDescriptionn =
       NullAwareTypeConverter.wrap($converterstateDescription);
+  static TypeConverter<CommandDescription, String>
+      $convertercommandDescription = const CommandDescriptionConverter();
+  static TypeConverter<CommandDescription?, String?>
+      $convertercommandDescriptionn =
+      NullAwareTypeConverter.wrap($convertercommandDescription);
 }
 
 class InboxEntry extends DataClass implements Insertable<InboxEntry> {
@@ -179,8 +213,10 @@ class InboxEntry extends DataClass implements Insertable<InboxEntry> {
   final List<String>? tags;
   final List<String>? groups;
   final String state;
+  final String? unitSymbol;
   final String? transformedState;
   final StateDescription? stateDescription;
+  final CommandDescription? commandDescription;
   const InboxEntry(
       {required this.type,
       required this.name,
@@ -189,14 +225,16 @@ class InboxEntry extends DataClass implements Insertable<InboxEntry> {
       this.tags,
       this.groups,
       required this.state,
+      this.unitSymbol,
       this.transformedState,
-      this.stateDescription});
+      this.stateDescription,
+      this.commandDescription});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     {
-      final converter = $InboxTableTable.$convertertype;
-      map['type'] = Variable<String>(converter.toSql(type));
+      map['type'] =
+          Variable<String>($InboxTableTable.$convertertype.toSql(type));
     }
     map['name'] = Variable<String>(name);
     map['label'] = Variable<String>(label);
@@ -204,21 +242,28 @@ class InboxEntry extends DataClass implements Insertable<InboxEntry> {
       map['category'] = Variable<String>(category);
     }
     if (!nullToAbsent || tags != null) {
-      final converter = $InboxTableTable.$convertertagsn;
-      map['tags'] = Variable<String>(converter.toSql(tags));
+      map['tags'] =
+          Variable<String>($InboxTableTable.$convertertagsn.toSql(tags));
     }
     if (!nullToAbsent || groups != null) {
-      final converter = $InboxTableTable.$convertergroupsn;
-      map['groups'] = Variable<String>(converter.toSql(groups));
+      map['groups'] =
+          Variable<String>($InboxTableTable.$convertergroupsn.toSql(groups));
     }
     map['state'] = Variable<String>(state);
+    if (!nullToAbsent || unitSymbol != null) {
+      map['unit_symbol'] = Variable<String>(unitSymbol);
+    }
     if (!nullToAbsent || transformedState != null) {
       map['transformed_state'] = Variable<String>(transformedState);
     }
     if (!nullToAbsent || stateDescription != null) {
-      final converter = $InboxTableTable.$converterstateDescriptionn;
-      map['state_description'] =
-          Variable<String>(converter.toSql(stateDescription));
+      map['state_description'] = Variable<String>(
+          $InboxTableTable.$converterstateDescriptionn.toSql(stateDescription));
+    }
+    if (!nullToAbsent || commandDescription != null) {
+      map['command_description'] = Variable<String>($InboxTableTable
+          .$convertercommandDescriptionn
+          .toSql(commandDescription));
     }
     return map;
   }
@@ -235,12 +280,18 @@ class InboxEntry extends DataClass implements Insertable<InboxEntry> {
       groups:
           groups == null && nullToAbsent ? const Value.absent() : Value(groups),
       state: Value(state),
+      unitSymbol: unitSymbol == null && nullToAbsent
+          ? const Value.absent()
+          : Value(unitSymbol),
       transformedState: transformedState == null && nullToAbsent
           ? const Value.absent()
           : Value(transformedState),
       stateDescription: stateDescription == null && nullToAbsent
           ? const Value.absent()
           : Value(stateDescription),
+      commandDescription: commandDescription == null && nullToAbsent
+          ? const Value.absent()
+          : Value(commandDescription),
     );
   }
 
@@ -256,9 +307,12 @@ class InboxEntry extends DataClass implements Insertable<InboxEntry> {
       tags: serializer.fromJson<List<String>?>(json['tags']),
       groups: serializer.fromJson<List<String>?>(json['groups']),
       state: serializer.fromJson<String>(json['state']),
+      unitSymbol: serializer.fromJson<String?>(json['unitSymbol']),
       transformedState: serializer.fromJson<String?>(json['transformedState']),
       stateDescription:
           serializer.fromJson<StateDescription?>(json['stateDescription']),
+      commandDescription:
+          serializer.fromJson<CommandDescription?>(json['commandDescription']),
     );
   }
   @override
@@ -273,9 +327,12 @@ class InboxEntry extends DataClass implements Insertable<InboxEntry> {
       'tags': serializer.toJson<List<String>?>(tags),
       'groups': serializer.toJson<List<String>?>(groups),
       'state': serializer.toJson<String>(state),
+      'unitSymbol': serializer.toJson<String?>(unitSymbol),
       'transformedState': serializer.toJson<String?>(transformedState),
       'stateDescription':
           serializer.toJson<StateDescription?>(stateDescription),
+      'commandDescription':
+          serializer.toJson<CommandDescription?>(commandDescription),
     };
   }
 
@@ -287,8 +344,11 @@ class InboxEntry extends DataClass implements Insertable<InboxEntry> {
           Value<List<String>?> tags = const Value.absent(),
           Value<List<String>?> groups = const Value.absent(),
           String? state,
+          Value<String?> unitSymbol = const Value.absent(),
           Value<String?> transformedState = const Value.absent(),
-          Value<StateDescription?> stateDescription = const Value.absent()}) =>
+          Value<StateDescription?> stateDescription = const Value.absent(),
+          Value<CommandDescription?> commandDescription =
+              const Value.absent()}) =>
       InboxEntry(
         type: type ?? this.type,
         name: name ?? this.name,
@@ -297,12 +357,16 @@ class InboxEntry extends DataClass implements Insertable<InboxEntry> {
         tags: tags.present ? tags.value : this.tags,
         groups: groups.present ? groups.value : this.groups,
         state: state ?? this.state,
+        unitSymbol: unitSymbol.present ? unitSymbol.value : this.unitSymbol,
         transformedState: transformedState.present
             ? transformedState.value
             : this.transformedState,
         stateDescription: stateDescription.present
             ? stateDescription.value
             : this.stateDescription,
+        commandDescription: commandDescription.present
+            ? commandDescription.value
+            : this.commandDescription,
       );
   @override
   String toString() {
@@ -314,15 +378,27 @@ class InboxEntry extends DataClass implements Insertable<InboxEntry> {
           ..write('tags: $tags, ')
           ..write('groups: $groups, ')
           ..write('state: $state, ')
+          ..write('unitSymbol: $unitSymbol, ')
           ..write('transformedState: $transformedState, ')
-          ..write('stateDescription: $stateDescription')
+          ..write('stateDescription: $stateDescription, ')
+          ..write('commandDescription: $commandDescription')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(type, name, label, category, tags, groups,
-      state, transformedState, stateDescription);
+  int get hashCode => Object.hash(
+      type,
+      name,
+      label,
+      category,
+      tags,
+      groups,
+      state,
+      unitSymbol,
+      transformedState,
+      stateDescription,
+      commandDescription);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -334,8 +410,10 @@ class InboxEntry extends DataClass implements Insertable<InboxEntry> {
           other.tags == this.tags &&
           other.groups == this.groups &&
           other.state == this.state &&
+          other.unitSymbol == this.unitSymbol &&
           other.transformedState == this.transformedState &&
-          other.stateDescription == this.stateDescription);
+          other.stateDescription == this.stateDescription &&
+          other.commandDescription == this.commandDescription);
 }
 
 class InboxTableCompanion extends UpdateCompanion<InboxEntry> {
@@ -346,8 +424,10 @@ class InboxTableCompanion extends UpdateCompanion<InboxEntry> {
   final Value<List<String>?> tags;
   final Value<List<String>?> groups;
   final Value<String> state;
+  final Value<String?> unitSymbol;
   final Value<String?> transformedState;
   final Value<StateDescription?> stateDescription;
+  final Value<CommandDescription?> commandDescription;
   final Value<int> rowid;
   const InboxTableCompanion({
     this.type = const Value.absent(),
@@ -357,8 +437,10 @@ class InboxTableCompanion extends UpdateCompanion<InboxEntry> {
     this.tags = const Value.absent(),
     this.groups = const Value.absent(),
     this.state = const Value.absent(),
+    this.unitSymbol = const Value.absent(),
     this.transformedState = const Value.absent(),
     this.stateDescription = const Value.absent(),
+    this.commandDescription = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   InboxTableCompanion.insert({
@@ -369,8 +451,10 @@ class InboxTableCompanion extends UpdateCompanion<InboxEntry> {
     this.tags = const Value.absent(),
     this.groups = const Value.absent(),
     required String state,
+    this.unitSymbol = const Value.absent(),
     this.transformedState = const Value.absent(),
     this.stateDescription = const Value.absent(),
+    this.commandDescription = const Value.absent(),
     this.rowid = const Value.absent(),
   })  : type = Value(type),
         name = Value(name),
@@ -384,8 +468,10 @@ class InboxTableCompanion extends UpdateCompanion<InboxEntry> {
     Expression<String>? tags,
     Expression<String>? groups,
     Expression<String>? state,
+    Expression<String>? unitSymbol,
     Expression<String>? transformedState,
     Expression<String>? stateDescription,
+    Expression<String>? commandDescription,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -396,8 +482,10 @@ class InboxTableCompanion extends UpdateCompanion<InboxEntry> {
       if (tags != null) 'tags': tags,
       if (groups != null) 'groups': groups,
       if (state != null) 'state': state,
+      if (unitSymbol != null) 'unit_symbol': unitSymbol,
       if (transformedState != null) 'transformed_state': transformedState,
       if (stateDescription != null) 'state_description': stateDescription,
+      if (commandDescription != null) 'command_description': commandDescription,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -410,8 +498,10 @@ class InboxTableCompanion extends UpdateCompanion<InboxEntry> {
       Value<List<String>?>? tags,
       Value<List<String>?>? groups,
       Value<String>? state,
+      Value<String?>? unitSymbol,
       Value<String?>? transformedState,
       Value<StateDescription?>? stateDescription,
+      Value<CommandDescription?>? commandDescription,
       Value<int>? rowid}) {
     return InboxTableCompanion(
       type: type ?? this.type,
@@ -421,8 +511,10 @@ class InboxTableCompanion extends UpdateCompanion<InboxEntry> {
       tags: tags ?? this.tags,
       groups: groups ?? this.groups,
       state: state ?? this.state,
+      unitSymbol: unitSymbol ?? this.unitSymbol,
       transformedState: transformedState ?? this.transformedState,
       stateDescription: stateDescription ?? this.stateDescription,
+      commandDescription: commandDescription ?? this.commandDescription,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -431,9 +523,8 @@ class InboxTableCompanion extends UpdateCompanion<InboxEntry> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     if (type.present) {
-      final converter = $InboxTableTable.$convertertype;
-
-      map['type'] = Variable<String>(converter.toSql(type.value));
+      map['type'] =
+          Variable<String>($InboxTableTable.$convertertype.toSql(type.value));
     }
     if (name.present) {
       map['name'] = Variable<String>(name.value);
@@ -445,26 +536,31 @@ class InboxTableCompanion extends UpdateCompanion<InboxEntry> {
       map['category'] = Variable<String>(category.value);
     }
     if (tags.present) {
-      final converter = $InboxTableTable.$convertertagsn;
-
-      map['tags'] = Variable<String>(converter.toSql(tags.value));
+      map['tags'] =
+          Variable<String>($InboxTableTable.$convertertagsn.toSql(tags.value));
     }
     if (groups.present) {
-      final converter = $InboxTableTable.$convertergroupsn;
-
-      map['groups'] = Variable<String>(converter.toSql(groups.value));
+      map['groups'] = Variable<String>(
+          $InboxTableTable.$convertergroupsn.toSql(groups.value));
     }
     if (state.present) {
       map['state'] = Variable<String>(state.value);
+    }
+    if (unitSymbol.present) {
+      map['unit_symbol'] = Variable<String>(unitSymbol.value);
     }
     if (transformedState.present) {
       map['transformed_state'] = Variable<String>(transformedState.value);
     }
     if (stateDescription.present) {
-      final converter = $InboxTableTable.$converterstateDescriptionn;
-
-      map['state_description'] =
-          Variable<String>(converter.toSql(stateDescription.value));
+      map['state_description'] = Variable<String>($InboxTableTable
+          .$converterstateDescriptionn
+          .toSql(stateDescription.value));
+    }
+    if (commandDescription.present) {
+      map['command_description'] = Variable<String>($InboxTableTable
+          .$convertercommandDescriptionn
+          .toSql(commandDescription.value));
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -482,8 +578,10 @@ class InboxTableCompanion extends UpdateCompanion<InboxEntry> {
           ..write('tags: $tags, ')
           ..write('groups: $groups, ')
           ..write('state: $state, ')
+          ..write('unitSymbol: $unitSymbol, ')
           ..write('transformedState: $transformedState, ')
           ..write('stateDescription: $stateDescription, ')
+          ..write('commandDescription: $commandDescription, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -628,8 +726,8 @@ class Room extends DataClass implements Insertable<Room> {
       map['description'] = Variable<String>(description);
     }
     if (!nullToAbsent || icon != null) {
-      final converter = $RoomsTableTable.$convertericonn;
-      map['icon'] = Variable<String>(converter.toSql(icon));
+      map['icon'] =
+          Variable<String>($RoomsTableTable.$convertericonn.toSql(icon));
     }
     if (!nullToAbsent || color != null) {
       map['color'] = Variable<String>(color);
@@ -793,9 +891,8 @@ class RoomsTableCompanion extends UpdateCompanion<Room> {
       map['description'] = Variable<String>(description.value);
     }
     if (icon.present) {
-      final converter = $RoomsTableTable.$convertericonn;
-
-      map['icon'] = Variable<String>(converter.toSql(icon.value));
+      map['icon'] =
+          Variable<String>($RoomsTableTable.$convertericonn.toSql(icon.value));
     }
     if (color.present) {
       map['color'] = Variable<String>(color.value);
@@ -874,6 +971,12 @@ class $ItemsTableTable extends ItemsTable
       GeneratedColumn<String>('oh_groups', aliasedName, true,
               type: DriftSqlType.string, requiredDuringInsert: false)
           .withConverter<List<String>?>($ItemsTableTable.$converterohGroupsn);
+  static const VerificationMeta _ohUnitSymbolMeta =
+      const VerificationMeta('ohUnitSymbol');
+  @override
+  late final GeneratedColumn<String> ohUnitSymbol = GeneratedColumn<String>(
+      'oh_unit_symbol', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
   static const VerificationMeta _roomIdMeta = const VerificationMeta('roomId');
   @override
   late final GeneratedColumn<int> roomId = GeneratedColumn<int>(
@@ -915,6 +1018,15 @@ class $ItemsTableTable extends ItemsTable
               type: DriftSqlType.string, requiredDuringInsert: false)
           .withConverter<StateDescription?>(
               $ItemsTableTable.$converterstateDescriptionn);
+  static const VerificationMeta _commandDescriptionMeta =
+      const VerificationMeta('commandDescription');
+  @override
+  late final GeneratedColumnWithTypeConverter<CommandDescription?, String>
+      commandDescription = GeneratedColumn<String>(
+              'command_description', aliasedName, true,
+              type: DriftSqlType.string, requiredDuringInsert: false)
+          .withConverter<CommandDescription?>(
+              $ItemsTableTable.$convertercommandDescriptionn);
   @override
   List<GeneratedColumn> get $columns => [
         type,
@@ -925,12 +1037,14 @@ class $ItemsTableTable extends ItemsTable
         ohCategory,
         ohTags,
         ohGroups,
+        ohUnitSymbol,
         roomId,
         isFavorite,
         icon,
         state,
         transformedState,
-        stateDescription
+        stateDescription,
+        commandDescription
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -970,6 +1084,12 @@ class $ItemsTableTable extends ItemsTable
     }
     context.handle(_ohTagsMeta, const VerificationResult.success());
     context.handle(_ohGroupsMeta, const VerificationResult.success());
+    if (data.containsKey('oh_unit_symbol')) {
+      context.handle(
+          _ohUnitSymbolMeta,
+          ohUnitSymbol.isAcceptableOrUnknown(
+              data['oh_unit_symbol']!, _ohUnitSymbolMeta));
+    }
     if (data.containsKey('room_id')) {
       context.handle(_roomIdMeta,
           roomId.isAcceptableOrUnknown(data['room_id']!, _roomIdMeta));
@@ -996,6 +1116,7 @@ class $ItemsTableTable extends ItemsTable
               data['transformed_state']!, _transformedStateMeta));
     }
     context.handle(_stateDescriptionMeta, const VerificationResult.success());
+    context.handle(_commandDescriptionMeta, const VerificationResult.success());
     return context;
   }
 
@@ -1024,6 +1145,8 @@ class $ItemsTableTable extends ItemsTable
       ohGroups: $ItemsTableTable.$converterohGroupsn.fromSql(attachedDatabase
           .typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}oh_groups'])),
+      ohUnitSymbol: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}oh_unit_symbol']),
       roomId: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}room_id'])!,
       isFavorite: attachedDatabase.typeMapping
@@ -1038,6 +1161,9 @@ class $ItemsTableTable extends ItemsTable
       stateDescription: $ItemsTableTable.$converterstateDescriptionn.fromSql(
           attachedDatabase.typeMapping.read(DriftSqlType.string,
               data['${effectivePrefix}state_description'])),
+      commandDescription: $ItemsTableTable.$convertercommandDescriptionn
+          .fromSql(attachedDatabase.typeMapping.read(DriftSqlType.string,
+              data['${effectivePrefix}command_description'])),
     );
   }
 
@@ -1066,6 +1192,11 @@ class $ItemsTableTable extends ItemsTable
       const StateDescriptionConverter();
   static TypeConverter<StateDescription?, String?> $converterstateDescriptionn =
       NullAwareTypeConverter.wrap($converterstateDescription);
+  static TypeConverter<CommandDescription, String>
+      $convertercommandDescription = const CommandDescriptionConverter();
+  static TypeConverter<CommandDescription?, String?>
+      $convertercommandDescriptionn =
+      NullAwareTypeConverter.wrap($convertercommandDescription);
 }
 
 class Item extends DataClass implements Insertable<Item> {
@@ -1077,12 +1208,14 @@ class Item extends DataClass implements Insertable<Item> {
   final String? ohCategory;
   final List<String>? ohTags;
   final List<String>? ohGroups;
+  final String? ohUnitSymbol;
   final int roomId;
   final bool isFavorite;
   final IconData? icon;
   final String state;
   final String? transformedState;
   final StateDescription? stateDescription;
+  final CommandDescription? commandDescription;
   const Item(
       {required this.type,
       required this.ohType,
@@ -1092,22 +1225,24 @@ class Item extends DataClass implements Insertable<Item> {
       this.ohCategory,
       this.ohTags,
       this.ohGroups,
+      this.ohUnitSymbol,
       required this.roomId,
       required this.isFavorite,
       this.icon,
       required this.state,
       this.transformedState,
-      this.stateDescription});
+      this.stateDescription,
+      this.commandDescription});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     {
-      final converter = $ItemsTableTable.$convertertype;
-      map['type'] = Variable<String>(converter.toSql(type));
+      map['type'] =
+          Variable<String>($ItemsTableTable.$convertertype.toSql(type));
     }
     {
-      final converter = $ItemsTableTable.$converterohType;
-      map['oh_type'] = Variable<String>(converter.toSql(ohType));
+      map['oh_type'] =
+          Variable<String>($ItemsTableTable.$converterohType.toSql(ohType));
     }
     map['oh_name'] = Variable<String>(ohName);
     map['oh_label'] = Variable<String>(ohLabel);
@@ -1118,27 +1253,34 @@ class Item extends DataClass implements Insertable<Item> {
       map['oh_category'] = Variable<String>(ohCategory);
     }
     if (!nullToAbsent || ohTags != null) {
-      final converter = $ItemsTableTable.$converterohTagsn;
-      map['oh_tags'] = Variable<String>(converter.toSql(ohTags));
+      map['oh_tags'] =
+          Variable<String>($ItemsTableTable.$converterohTagsn.toSql(ohTags));
     }
     if (!nullToAbsent || ohGroups != null) {
-      final converter = $ItemsTableTable.$converterohGroupsn;
-      map['oh_groups'] = Variable<String>(converter.toSql(ohGroups));
+      map['oh_groups'] = Variable<String>(
+          $ItemsTableTable.$converterohGroupsn.toSql(ohGroups));
+    }
+    if (!nullToAbsent || ohUnitSymbol != null) {
+      map['oh_unit_symbol'] = Variable<String>(ohUnitSymbol);
     }
     map['room_id'] = Variable<int>(roomId);
     map['is_favorite'] = Variable<bool>(isFavorite);
     if (!nullToAbsent || icon != null) {
-      final converter = $ItemsTableTable.$convertericonn;
-      map['icon'] = Variable<String>(converter.toSql(icon));
+      map['icon'] =
+          Variable<String>($ItemsTableTable.$convertericonn.toSql(icon));
     }
     map['state'] = Variable<String>(state);
     if (!nullToAbsent || transformedState != null) {
       map['transformed_state'] = Variable<String>(transformedState);
     }
     if (!nullToAbsent || stateDescription != null) {
-      final converter = $ItemsTableTable.$converterstateDescriptionn;
-      map['state_description'] =
-          Variable<String>(converter.toSql(stateDescription));
+      map['state_description'] = Variable<String>(
+          $ItemsTableTable.$converterstateDescriptionn.toSql(stateDescription));
+    }
+    if (!nullToAbsent || commandDescription != null) {
+      map['command_description'] = Variable<String>($ItemsTableTable
+          .$convertercommandDescriptionn
+          .toSql(commandDescription));
     }
     return map;
   }
@@ -1160,6 +1302,9 @@ class Item extends DataClass implements Insertable<Item> {
       ohGroups: ohGroups == null && nullToAbsent
           ? const Value.absent()
           : Value(ohGroups),
+      ohUnitSymbol: ohUnitSymbol == null && nullToAbsent
+          ? const Value.absent()
+          : Value(ohUnitSymbol),
       roomId: Value(roomId),
       isFavorite: Value(isFavorite),
       icon: icon == null && nullToAbsent ? const Value.absent() : Value(icon),
@@ -1170,6 +1315,9 @@ class Item extends DataClass implements Insertable<Item> {
       stateDescription: stateDescription == null && nullToAbsent
           ? const Value.absent()
           : Value(stateDescription),
+      commandDescription: commandDescription == null && nullToAbsent
+          ? const Value.absent()
+          : Value(commandDescription),
     );
   }
 
@@ -1187,6 +1335,7 @@ class Item extends DataClass implements Insertable<Item> {
       ohCategory: serializer.fromJson<String?>(json['ohCategory']),
       ohTags: serializer.fromJson<List<String>?>(json['ohTags']),
       ohGroups: serializer.fromJson<List<String>?>(json['ohGroups']),
+      ohUnitSymbol: serializer.fromJson<String?>(json['ohUnitSymbol']),
       roomId: serializer.fromJson<int>(json['roomId']),
       isFavorite: serializer.fromJson<bool>(json['isFavorite']),
       icon: serializer.fromJson<IconData?>(json['icon']),
@@ -1194,6 +1343,8 @@ class Item extends DataClass implements Insertable<Item> {
       transformedState: serializer.fromJson<String?>(json['transformedState']),
       stateDescription:
           serializer.fromJson<StateDescription?>(json['stateDescription']),
+      commandDescription:
+          serializer.fromJson<CommandDescription?>(json['commandDescription']),
     );
   }
   @override
@@ -1210,6 +1361,7 @@ class Item extends DataClass implements Insertable<Item> {
       'ohCategory': serializer.toJson<String?>(ohCategory),
       'ohTags': serializer.toJson<List<String>?>(ohTags),
       'ohGroups': serializer.toJson<List<String>?>(ohGroups),
+      'ohUnitSymbol': serializer.toJson<String?>(ohUnitSymbol),
       'roomId': serializer.toJson<int>(roomId),
       'isFavorite': serializer.toJson<bool>(isFavorite),
       'icon': serializer.toJson<IconData?>(icon),
@@ -1217,6 +1369,8 @@ class Item extends DataClass implements Insertable<Item> {
       'transformedState': serializer.toJson<String?>(transformedState),
       'stateDescription':
           serializer.toJson<StateDescription?>(stateDescription),
+      'commandDescription':
+          serializer.toJson<CommandDescription?>(commandDescription),
     };
   }
 
@@ -1229,12 +1383,15 @@ class Item extends DataClass implements Insertable<Item> {
           Value<String?> ohCategory = const Value.absent(),
           Value<List<String>?> ohTags = const Value.absent(),
           Value<List<String>?> ohGroups = const Value.absent(),
+          Value<String?> ohUnitSymbol = const Value.absent(),
           int? roomId,
           bool? isFavorite,
           Value<IconData?> icon = const Value.absent(),
           String? state,
           Value<String?> transformedState = const Value.absent(),
-          Value<StateDescription?> stateDescription = const Value.absent()}) =>
+          Value<StateDescription?> stateDescription = const Value.absent(),
+          Value<CommandDescription?> commandDescription =
+              const Value.absent()}) =>
       Item(
         type: type ?? this.type,
         ohType: ohType ?? this.ohType,
@@ -1244,6 +1401,8 @@ class Item extends DataClass implements Insertable<Item> {
         ohCategory: ohCategory.present ? ohCategory.value : this.ohCategory,
         ohTags: ohTags.present ? ohTags.value : this.ohTags,
         ohGroups: ohGroups.present ? ohGroups.value : this.ohGroups,
+        ohUnitSymbol:
+            ohUnitSymbol.present ? ohUnitSymbol.value : this.ohUnitSymbol,
         roomId: roomId ?? this.roomId,
         isFavorite: isFavorite ?? this.isFavorite,
         icon: icon.present ? icon.value : this.icon,
@@ -1254,6 +1413,9 @@ class Item extends DataClass implements Insertable<Item> {
         stateDescription: stateDescription.present
             ? stateDescription.value
             : this.stateDescription,
+        commandDescription: commandDescription.present
+            ? commandDescription.value
+            : this.commandDescription,
       );
   @override
   String toString() {
@@ -1266,12 +1428,14 @@ class Item extends DataClass implements Insertable<Item> {
           ..write('ohCategory: $ohCategory, ')
           ..write('ohTags: $ohTags, ')
           ..write('ohGroups: $ohGroups, ')
+          ..write('ohUnitSymbol: $ohUnitSymbol, ')
           ..write('roomId: $roomId, ')
           ..write('isFavorite: $isFavorite, ')
           ..write('icon: $icon, ')
           ..write('state: $state, ')
           ..write('transformedState: $transformedState, ')
-          ..write('stateDescription: $stateDescription')
+          ..write('stateDescription: $stateDescription, ')
+          ..write('commandDescription: $commandDescription')
           ..write(')'))
         .toString();
   }
@@ -1286,12 +1450,14 @@ class Item extends DataClass implements Insertable<Item> {
       ohCategory,
       ohTags,
       ohGroups,
+      ohUnitSymbol,
       roomId,
       isFavorite,
       icon,
       state,
       transformedState,
-      stateDescription);
+      stateDescription,
+      commandDescription);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1304,12 +1470,14 @@ class Item extends DataClass implements Insertable<Item> {
           other.ohCategory == this.ohCategory &&
           other.ohTags == this.ohTags &&
           other.ohGroups == this.ohGroups &&
+          other.ohUnitSymbol == this.ohUnitSymbol &&
           other.roomId == this.roomId &&
           other.isFavorite == this.isFavorite &&
           other.icon == this.icon &&
           other.state == this.state &&
           other.transformedState == this.transformedState &&
-          other.stateDescription == this.stateDescription);
+          other.stateDescription == this.stateDescription &&
+          other.commandDescription == this.commandDescription);
 }
 
 class ItemsTableCompanion extends UpdateCompanion<Item> {
@@ -1321,12 +1489,14 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
   final Value<String?> ohCategory;
   final Value<List<String>?> ohTags;
   final Value<List<String>?> ohGroups;
+  final Value<String?> ohUnitSymbol;
   final Value<int> roomId;
   final Value<bool> isFavorite;
   final Value<IconData?> icon;
   final Value<String> state;
   final Value<String?> transformedState;
   final Value<StateDescription?> stateDescription;
+  final Value<CommandDescription?> commandDescription;
   final Value<int> rowid;
   const ItemsTableCompanion({
     this.type = const Value.absent(),
@@ -1337,12 +1507,14 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
     this.ohCategory = const Value.absent(),
     this.ohTags = const Value.absent(),
     this.ohGroups = const Value.absent(),
+    this.ohUnitSymbol = const Value.absent(),
     this.roomId = const Value.absent(),
     this.isFavorite = const Value.absent(),
     this.icon = const Value.absent(),
     this.state = const Value.absent(),
     this.transformedState = const Value.absent(),
     this.stateDescription = const Value.absent(),
+    this.commandDescription = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   ItemsTableCompanion.insert({
@@ -1354,12 +1526,14 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
     this.ohCategory = const Value.absent(),
     this.ohTags = const Value.absent(),
     this.ohGroups = const Value.absent(),
+    this.ohUnitSymbol = const Value.absent(),
     required int roomId,
     this.isFavorite = const Value.absent(),
     this.icon = const Value.absent(),
     required String state,
     this.transformedState = const Value.absent(),
     this.stateDescription = const Value.absent(),
+    this.commandDescription = const Value.absent(),
     this.rowid = const Value.absent(),
   })  : type = Value(type),
         ohType = Value(ohType),
@@ -1376,12 +1550,14 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
     Expression<String>? ohCategory,
     Expression<String>? ohTags,
     Expression<String>? ohGroups,
+    Expression<String>? ohUnitSymbol,
     Expression<int>? roomId,
     Expression<bool>? isFavorite,
     Expression<String>? icon,
     Expression<String>? state,
     Expression<String>? transformedState,
     Expression<String>? stateDescription,
+    Expression<String>? commandDescription,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -1393,12 +1569,14 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
       if (ohCategory != null) 'oh_category': ohCategory,
       if (ohTags != null) 'oh_tags': ohTags,
       if (ohGroups != null) 'oh_groups': ohGroups,
+      if (ohUnitSymbol != null) 'oh_unit_symbol': ohUnitSymbol,
       if (roomId != null) 'room_id': roomId,
       if (isFavorite != null) 'is_favorite': isFavorite,
       if (icon != null) 'icon': icon,
       if (state != null) 'state': state,
       if (transformedState != null) 'transformed_state': transformedState,
       if (stateDescription != null) 'state_description': stateDescription,
+      if (commandDescription != null) 'command_description': commandDescription,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -1412,12 +1590,14 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
       Value<String?>? ohCategory,
       Value<List<String>?>? ohTags,
       Value<List<String>?>? ohGroups,
+      Value<String?>? ohUnitSymbol,
       Value<int>? roomId,
       Value<bool>? isFavorite,
       Value<IconData?>? icon,
       Value<String>? state,
       Value<String?>? transformedState,
       Value<StateDescription?>? stateDescription,
+      Value<CommandDescription?>? commandDescription,
       Value<int>? rowid}) {
     return ItemsTableCompanion(
       type: type ?? this.type,
@@ -1428,12 +1608,14 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
       ohCategory: ohCategory ?? this.ohCategory,
       ohTags: ohTags ?? this.ohTags,
       ohGroups: ohGroups ?? this.ohGroups,
+      ohUnitSymbol: ohUnitSymbol ?? this.ohUnitSymbol,
       roomId: roomId ?? this.roomId,
       isFavorite: isFavorite ?? this.isFavorite,
       icon: icon ?? this.icon,
       state: state ?? this.state,
       transformedState: transformedState ?? this.transformedState,
       stateDescription: stateDescription ?? this.stateDescription,
+      commandDescription: commandDescription ?? this.commandDescription,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -1442,14 +1624,12 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     if (type.present) {
-      final converter = $ItemsTableTable.$convertertype;
-
-      map['type'] = Variable<String>(converter.toSql(type.value));
+      map['type'] =
+          Variable<String>($ItemsTableTable.$convertertype.toSql(type.value));
     }
     if (ohType.present) {
-      final converter = $ItemsTableTable.$converterohType;
-
-      map['oh_type'] = Variable<String>(converter.toSql(ohType.value));
+      map['oh_type'] = Variable<String>(
+          $ItemsTableTable.$converterohType.toSql(ohType.value));
     }
     if (ohName.present) {
       map['oh_name'] = Variable<String>(ohName.value);
@@ -1464,14 +1644,15 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
       map['oh_category'] = Variable<String>(ohCategory.value);
     }
     if (ohTags.present) {
-      final converter = $ItemsTableTable.$converterohTagsn;
-
-      map['oh_tags'] = Variable<String>(converter.toSql(ohTags.value));
+      map['oh_tags'] = Variable<String>(
+          $ItemsTableTable.$converterohTagsn.toSql(ohTags.value));
     }
     if (ohGroups.present) {
-      final converter = $ItemsTableTable.$converterohGroupsn;
-
-      map['oh_groups'] = Variable<String>(converter.toSql(ohGroups.value));
+      map['oh_groups'] = Variable<String>(
+          $ItemsTableTable.$converterohGroupsn.toSql(ohGroups.value));
+    }
+    if (ohUnitSymbol.present) {
+      map['oh_unit_symbol'] = Variable<String>(ohUnitSymbol.value);
     }
     if (roomId.present) {
       map['room_id'] = Variable<int>(roomId.value);
@@ -1480,9 +1661,8 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
       map['is_favorite'] = Variable<bool>(isFavorite.value);
     }
     if (icon.present) {
-      final converter = $ItemsTableTable.$convertericonn;
-
-      map['icon'] = Variable<String>(converter.toSql(icon.value));
+      map['icon'] =
+          Variable<String>($ItemsTableTable.$convertericonn.toSql(icon.value));
     }
     if (state.present) {
       map['state'] = Variable<String>(state.value);
@@ -1491,10 +1671,14 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
       map['transformed_state'] = Variable<String>(transformedState.value);
     }
     if (stateDescription.present) {
-      final converter = $ItemsTableTable.$converterstateDescriptionn;
-
-      map['state_description'] =
-          Variable<String>(converter.toSql(stateDescription.value));
+      map['state_description'] = Variable<String>($ItemsTableTable
+          .$converterstateDescriptionn
+          .toSql(stateDescription.value));
+    }
+    if (commandDescription.present) {
+      map['command_description'] = Variable<String>($ItemsTableTable
+          .$convertercommandDescriptionn
+          .toSql(commandDescription.value));
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -1513,12 +1697,14 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
           ..write('ohCategory: $ohCategory, ')
           ..write('ohTags: $ohTags, ')
           ..write('ohGroups: $ohGroups, ')
+          ..write('ohUnitSymbol: $ohUnitSymbol, ')
           ..write('roomId: $roomId, ')
           ..write('isFavorite: $isFavorite, ')
           ..write('icon: $icon, ')
           ..write('state: $state, ')
           ..write('transformedState: $transformedState, ')
           ..write('stateDescription: $stateDescription, ')
+          ..write('commandDescription: $commandDescription, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();

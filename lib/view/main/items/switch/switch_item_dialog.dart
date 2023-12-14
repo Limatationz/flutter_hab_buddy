@@ -33,28 +33,7 @@ class _SwitchItemDialogState extends State<SwitchItemDialog> {
           }
           final item = snapshot.data!;
           final isOn = item.state == "ON";
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(children: [
-                Expanded(
-                    child: Text(
-                  item.label,
-                  style:
-                      DynamicTheme.of(context)!.theme.textTheme.headlineMedium,
-                )),
-                const Gap(listSpacing),
-                IconButton(
-                    onPressed: () async {
-                      ItemWidgetFactory.openEditSheet(context, item);
-                    },
-                    icon: const Icon(LineIconsFilled.pencil))
-              ]),
-              const Gap(4),
-              Text(item.ohName),
-              const Gap(12),
-              Align(
+          return Align(
                   child: IconButton(
                       onPressed: () => onAction(!isOn),
                       icon: Icon(
@@ -66,9 +45,7 @@ class _SwitchItemDialogState extends State<SwitchItemDialog> {
                                 .primary
                             : Colors.grey,
                       ),
-                      iconSize: 60)),
-            ],
-          );
+                      iconSize: 60));
         });
   }
 

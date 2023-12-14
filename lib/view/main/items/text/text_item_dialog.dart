@@ -33,32 +33,10 @@ class _TextItemDialogState extends State<TextItemDialog> {
           }
           final item = snapshot.data!;
           final isOn = item.state == "ON";
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(children: [
-                Expanded(
-                    child: Text(
-                  item.label,
-                  style:
-                      DynamicTheme.of(context)!.theme.textTheme.headlineMedium,
-                )),
-                const Gap(listSpacing),
-                IconButton(
-                    onPressed: () async {
-                      ItemWidgetFactory.openEditSheet(context, item);
-                    },
-                    icon: const Icon(LineIconsFilled.pencil))
-              ]),
-              const Gap(4),
-              Text(item.ohName),
-              const Gap(12),
+          return
               Text(item.transformedState ?? item.state,
                   style:
-                      DynamicTheme.of(context)!.theme.textTheme.headlineLarge),
-            ],
-          );
+                      DynamicTheme.of(context)!.theme.textTheme.headlineLarge);
         });
   }
 

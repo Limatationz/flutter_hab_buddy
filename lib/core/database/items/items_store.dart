@@ -78,6 +78,11 @@ class ItemsStore extends DatabaseAccessor<AppDatabase> with _$ItemsStoreMixin {
         .write(data);
   }
 
+  Future<void> updateFavoriteByName(String name, bool favorite) async {
+    await (update(itemsTable)..where((tbl) => tbl.ohName.equals(name)))
+        .write(ItemsTableCompanion(isFavorite: Value(favorite)));
+  }
+
   Future<void> deleteData() async {
     await delete(itemsTable).go();
   }

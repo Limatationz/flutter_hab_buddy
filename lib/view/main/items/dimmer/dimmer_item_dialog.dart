@@ -35,27 +35,7 @@ class _DimmerItemDialogState extends State<DimmerItemDialog> {
           final item = snapshot.data!;
           final value = double.parse(item.state);
           final isOn = value > 0;
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(children: [
-                Expanded(
-                    child: Text(
-                  item.label,
-                  style:
-                      DynamicTheme.of(context)!.theme.textTheme.headlineMedium,
-                )),
-                const Gap(listSpacing),
-                IconButton(
-                    onPressed: () async {
-                      ItemWidgetFactory.openEditSheet(context, item);
-                    },
-                    icon: const Icon(LineIconsFilled.pencil))
-              ]),
-              const Gap(4),
-              Text(item.ohName),
-              const Gap(12),
+          return
               FormBuilderSlider(
                 name: "dimmer",
                 initialValue: value,
@@ -70,8 +50,6 @@ class _DimmerItemDialogState extends State<DimmerItemDialog> {
                 decoration: const InputDecoration(
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.symmetric(horizontal: 12)),
-              )
-            ],
           );
         });
   }

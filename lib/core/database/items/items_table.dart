@@ -1,8 +1,8 @@
 import 'package:drift/drift.dart';
 
 import '../app_database.dart';
+import '../converter/command_description_converter.dart';
 import '../converter/icon_data_converter.dart';
-import '../converter/map_converter.dart';
 import '../converter/state_description_converter.dart';
 import '../converter/string_list_converter.dart';
 import '../inbox/inbox_table.dart';
@@ -27,6 +27,8 @@ class ItemsTable extends Table {
   TextColumn get ohGroups =>
       text().map(const StringListConverter()).nullable()();
 
+  TextColumn get ohUnitSymbol => text().nullable()();
+
   IntColumn get roomId => integer()();
 
   BoolColumn get isFavorite => boolean().withDefault(const Constant(false))();
@@ -39,6 +41,9 @@ class ItemsTable extends Table {
 
   TextColumn get stateDescription =>
       text().map(const StateDescriptionConverter()).nullable()();
+
+  TextColumn get commandDescription =>
+      text().map(const CommandDescriptionConverter()).nullable()();
 
   @override
   Set<Column> get primaryKey => {ohName};
@@ -58,4 +63,7 @@ class ItemWithRoom {
 
 extension ItemLabel on Item {
   String get label => customLabel ?? ohLabel;
+  String get itemState => transformedState ?? (ohUnitSymbol != null ? '$state $ohUnitSymbol' : state);
+
+  bool get isReadOnly => stateDescription?.readOnly ?? false;
 }

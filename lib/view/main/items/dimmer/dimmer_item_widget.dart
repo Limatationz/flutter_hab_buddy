@@ -8,22 +8,18 @@ import '../../../../repository/item_repository.dart';
 import '../../../util/constants.dart';
 import '../../../util/general/base_item_dialog.dart';
 import '../../../util/general/dimmable_widget_container.dart';
+import '../item_widget_factory.dart';
 import 'dimmer_item_dialog.dart';
 
-class DimmerItemWidget extends StatefulWidget {
+class DimmerItemWidget extends StatelessWidget {
   final Item item;
   final double width;
 
-  const DimmerItemWidget({super.key, required this.item, required this.width});
+  DimmerItemWidget({super.key, required this.item, required this.width});
 
-  @override
-  State<DimmerItemWidget> createState() => _DimmerItemWidgetState();
-}
-
-class _DimmerItemWidgetState extends State<DimmerItemWidget> {
   final _itemRepository = locator<ItemRepository>();
 
-  double get dimmerState => double.parse(widget.item.state);
+  double get dimmerState => double.parse(item.state);
 
   bool get isOn => dimmerState > 0;
 
@@ -31,23 +27,23 @@ class _DimmerItemWidgetState extends State<DimmerItemWidget> {
   Widget build(BuildContext context) {
     return DimmableWidgetContainer(
         key: ValueKey(dimmerState.toString()),
-        width: widget.width,
+        width: width,
         padding: const EdgeInsets.all(paddingContainer),
-        onTap: onAction,
+        onTap: !item.isReadOnly ? onAction : null,
         onLongTap: () => onLongTap(context),
         value: dimmerState,
-        maxValue: widget.item.stateDescription?.maximum,
-        minValue: widget.item.stateDescription?.minimum,
-        onDragDone: onDragDone,
+        maxValue: item.stateDescription?.maximum,
+        minValue: item.stateDescription?.minimum,
+        onDragDone: !item.isReadOnly ? onDragDone : null,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(widget.item.label,
+            Text(item.label,
                 style: DynamicTheme.of(context)!.theme.textTheme.titleLarge),
             Align(
                 alignment: Alignment.bottomRight,
                 child: Icon(
-                  widget.item.icon ?? widget.item.type.icon,
+                  item.icon ?? item.type.icon,
                   size: 40,
                 )),
           ],
@@ -55,18 +51,14 @@ class _DimmerItemWidgetState extends State<DimmerItemWidget> {
   }
 
   Future<void> onAction() async {
-    await _itemRepository.switchAction(widget.item.ohName, !isOn);
+    await _itemRepository.switchAction(item.ohName, !isOn);
   }
 
   Future<void> onDragDone(double value) async {
-    await _itemRepository.dimmerAction(widget.item.ohName, value);
+    await _itemRepository.dimmerAction(item.ohName, value);
   }
 
-  Future<void> onLongTap(BuildContext context) async {
-    showDialog(
-        context: context,
-        builder: (_) => Dialog(
-            child: BaseItemDialog(
-                child: DimmerItemDialog(itemName: widget.item.ohName))));
-  }
+  void onLongTap(BuildContext context) =>
+      ItemWidgetFactory.openDialog(
+          context, DimmerItemDialog(itemName: item.ohName), item);
 }

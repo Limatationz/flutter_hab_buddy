@@ -15,20 +15,6 @@ class InboxStore extends DatabaseAccessor<AppDatabase> with _$InboxStoreMixin {
       (u) => OrderingTerm(expression: u.name),
     ]));
 
-  MultiSelectable<InboxEntry> autoComplete(String query) => (select(inboxTable)
-    ..where((tbl) => tbl.type.equals(InboxEntryType.group.name).not())
-    ..where(
-      (tbl) =>
-          tbl.name.like("%$query%") |
-          tbl.label.like("%$query%") |
-          tbl.category.like("%$query%") |
-          tbl.tags.like("%$query%") |
-          tbl.groups.like("%$query%"),
-    )
-    ..orderBy([
-      (u) => OrderingTerm(expression: u.name),
-    ]));
-
   Future<void> insertOrUpdate(List<InboxEntry> data) async {
     await batch((batch) => batch.insertAllOnConflictUpdate(
           inboxTable,

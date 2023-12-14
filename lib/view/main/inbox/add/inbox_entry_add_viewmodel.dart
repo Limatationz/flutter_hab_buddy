@@ -39,14 +39,20 @@ class InboxEntryAddViewModel extends BaseViewModel {
         ohTags: entry.tags != null ? Value(entry.tags!) : const Value.absent(),
         ohGroups:
             entry.groups != null ? Value(entry.groups!) : const Value.absent(),
-        roomId: roomId,
+        ohUnitSymbol: entry.unitSymbol != null
+            ? Value(entry.unitSymbol!)
+            : const Value.absent(),
         state: entry.state,
         stateDescription: entry.stateDescription != null
             ? Value(entry.stateDescription!)
             : const Value.absent(),
+        commandDescription: entry.commandDescription != null
+            ? Value(entry.commandDescription!)
+            : const Value.absent(),
         transformedState: entry.transformedState != null
             ? Value(entry.transformedState!)
             : const Value.absent(),
+        roomId: roomId,
         icon: itemIcon != null ? Value(itemIcon) : const Value.absent(),
         customLabel:
             customLabel != null ? Value(customLabel) : const Value.absent(),
@@ -64,7 +70,7 @@ class InboxEntryAddViewModel extends BaseViewModel {
   }
 
   void onRoomAdd(int? roomId) {
-    if(roomId != null) {
+    if (roomId != null) {
       addRoomId = roomId;
       notifyListeners();
     }

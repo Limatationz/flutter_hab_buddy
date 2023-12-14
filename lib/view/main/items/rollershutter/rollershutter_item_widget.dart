@@ -6,26 +6,19 @@ import '../../../../core/database/items/items_table.dart';
 import '../../../../locator.dart';
 import '../../../../repository/item_repository.dart';
 import '../../../util/constants.dart';
-import '../../../util/general/base_item_dialog.dart';
 import '../../../util/general/dimmable_widget_container.dart';
+import '../item_widget_factory.dart';
 import 'rollershutter_item_dialog.dart';
 
-class RollershutterItemWidget extends StatefulWidget {
+class RollershutterItemWidget extends StatelessWidget {
   final Item item;
   final double width;
 
-  const RollershutterItemWidget(
-      {super.key, required this.item, required this.width});
+  RollershutterItemWidget({super.key, required this.item, required this.width});
 
-  @override
-  State<RollershutterItemWidget> createState() =>
-      _RollershutterItemWidgetState();
-}
-
-class _RollershutterItemWidgetState extends State<RollershutterItemWidget> {
   final _itemRepository = locator<ItemRepository>();
 
-  double get numberState => double.parse(widget.item.state);
+  double get numberState => double.parse(item.state);
 
   bool get isDown => numberState == 0;
 
@@ -33,24 +26,24 @@ class _RollershutterItemWidgetState extends State<RollershutterItemWidget> {
   Widget build(BuildContext context) {
     return DimmableWidgetContainer(
         key: ValueKey(numberState.toString()),
-        width: widget.width,
+        width: width,
         padding: const EdgeInsets.all(paddingContainer),
-        onTap: onAction,
+        onTap: !item.isReadOnly ? onAction : null,
         onLongTap: () => onLongTap(context),
         value: numberState,
-        maxValue: widget.item.stateDescription?.maximum ?? 100,
-        minValue: widget.item.stateDescription?.minimum ?? 0,
-        onDragDone: onDragDone,
+        maxValue: item.stateDescription?.maximum ?? 100,
+        minValue: item.stateDescription?.minimum ?? 0,
+        onDragDone: !item.isReadOnly ? onDragDone : null,
         reversed: true,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(widget.item.label,
+            Text(item.label,
                 style: DynamicTheme.of(context)!.theme.textTheme.titleLarge),
             Align(
                 alignment: Alignment.bottomRight,
                 child: Icon(
-                  widget.item.icon ?? widget.item.type.icon,
+                  item.icon ?? item.type.icon,
                   size: 40,
                 )),
           ],
@@ -58,24 +51,20 @@ class _RollershutterItemWidgetState extends State<RollershutterItemWidget> {
   }
 
   Future<void> onAction() async {
-      await _itemRepository.rollershutterAction(
-          widget.item.ohName, !isDown);
+    await _itemRepository.rollershutterAction(item.ohName, !isDown);
   }
 
   Future<void> onDragDone(double value) async {
-    await _itemRepository.dimmerAction(widget.item.ohName, value);
+    await _itemRepository.dimmerAction(item.ohName, value);
   }
 
-  Future<void> onLongTap(BuildContext context) async {
-    showDialog(
-        context: context,
-        builder: (_) => Dialog(
-                child: BaseItemDialog(
-                    child: RollershutterItemDialog(
-              itemName: widget.item.ohName,
-              initialValue: numberState,
-            ))));
-  }
+  void onLongTap(BuildContext context) => ItemWidgetFactory.openDialog(
+      context,
+      RollershutterItemDialog(
+        itemName: item.ohName,
+        initialValue: numberState,
+      ),
+      item);
 }
 
 enum RollershutterState { up, down, half }

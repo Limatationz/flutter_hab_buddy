@@ -48,23 +48,6 @@ class _RollershutterItemDialogState extends State<RollershutterItemDialog> {
             children: [
               Row(children: [
                 Expanded(
-                    child: Text(
-                  item.label,
-                  style:
-                      DynamicTheme.of(context)!.theme.textTheme.headlineMedium,
-                )),
-                const Gap(listSpacing),
-                IconButton(
-                    onPressed: () async {
-                      ItemWidgetFactory.openEditSheet(context, item);
-                    },
-                    icon: const Icon(LineIconsFilled.pencil))
-              ]),
-              const Gap(4),
-              Text(item.ohName),
-              const Gap(12),
-              Row(children: [
-                Expanded(
                     child: Column(
                   children: [
                     IconButton(

@@ -107,4 +107,7 @@ class ItemRepository {
     await _snackbarService.showSnackbar(
         message: "Error", type: SnackbarType.error);
   }
+
+  Future<void> updateFavoriteByName(String name, bool favorite) =>
+      _itemsStore.updateFavoriteByName(name, favorite);
 }

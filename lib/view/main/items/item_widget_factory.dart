@@ -4,6 +4,7 @@ import '../../../core/database/app_database.dart';
 import '../../../core/database/inbox/inbox_table.dart';
 import '../../util/constants.dart';
 import '../../util/general/bar_bottom_sheet.dart';
+import '../../util/general/base_item_dialog.dart';
 import 'dimmer/dimmer_item_widget.dart';
 import 'edit/item_edit_view.dart';
 import 'rollershutter/rollershutter_item_widget.dart';
@@ -45,5 +46,13 @@ class ItemWidgetFactory extends StatelessWidget {
   static Future<void> openEditSheet(BuildContext context, Item item) {
     return showBarModalBottomSheet<Item>(
         context: context, builder: (context) => ItemEditView(item: item));
+  }
+
+  static Future<void> openDialog(
+      BuildContext context, Widget child, Item item) async {
+    showDialog(
+        context: context,
+        builder: (_) => Dialog(child: BaseItemDialog(item: item,
+        child: child)));
   }
 }

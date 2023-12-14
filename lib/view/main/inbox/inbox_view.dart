@@ -1,5 +1,4 @@
 import 'package:azlistview_plus/azlistview_plus.dart';
-import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:stacked/stacked.dart';
@@ -50,78 +49,26 @@ class InboxView extends StatelessWidget {
             Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: paddingScaffold),
-                child: Autocomplete<InboxEntry>(
-                    optionsBuilder: (TextEditingValue textEditingValue) async {
-                  if (textEditingValue.text == '') {
-                    return const Iterable<InboxEntry>.empty();
-                  }
-                  return model.autoComplete(textEditingValue.text);
-                }, onSelected: (InboxEntry selection) {
-                  _onEntryTap(context, selection);
-                }, fieldViewBuilder: (BuildContext context,
-                        TextEditingController textEditingController,
-                        FocusNode focusNode,
-                        VoidCallback onFieldSubmitted) {
-                  return TextField(
-                    controller: textEditingController,
-                    focusNode: focusNode,
-                    onSubmitted: (String value) {
-                      onFieldSubmitted();
-                    },
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 6),
-                      labelText: S.of(context).search,
-                      suffix: IconButton(
-                          onPressed: () {
-                            textEditingController.clear();
-                          },
-                          iconSize: 18,
-                          visualDensity: VisualDensity.compact,
-                          icon: const Icon(LineIcons.close)),
-                    ),
-                  );
-                }, optionsViewBuilder: (BuildContext context,
-                        AutocompleteOnSelected<InboxEntry> onSelected,
-                        Iterable<InboxEntry> options) {
-                  return Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding:
-                            const EdgeInsets.only(right: paddingScaffold * 2),
-                        child: Material(
-                          elevation: 4.0,
-                          color: DynamicTheme.of(context)!
-                              .theme
-                              .colorScheme
-                              .surfaceVariant,
-                          child: SizedBox(
-                            height: 200.0,
-                            child: ListView.builder(
-                              padding: const EdgeInsets.all(8.0),
-                              itemCount: options.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                final InboxEntry option =
-                                    options.elementAt(index);
-                                return GestureDetector(
-                                  onTap: () {
-                                    onSelected(option);
-                                  },
-                                  child: InboxListItem(entry: option),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ));
-                }, displayStringForOption: (InboxEntry option) {
-                  return option.label;
-                })),
+                child: TextField(
+                  controller: model.textEditingController,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    labelText: S.of(context).search,
+                    suffix: IconButton(
+                        onPressed: () {
+                          model.textEditingController.clear();
+                        },
+                        iconSize: 18,
+                        visualDensity: VisualDensity.compact,
+                        icon: const Icon(LineIcons.close)),
+                  ),
+                )),
             const Gap(12),
             Expanded(
               child: StreamBuilder<List<InboxListEntry>>(
-                stream: model.inbox,
+                stream: model.filteredInbox,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     final list = snapshot.data ?? [];
