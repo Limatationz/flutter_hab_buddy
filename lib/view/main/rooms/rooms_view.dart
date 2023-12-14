@@ -11,6 +11,7 @@ import '../../../util/icons/icons.dart';
 import '../../util/constants.dart';
 import '../../util/general/bar_bottom_sheet.dart';
 import '../../util/general/base_elevated_button.dart';
+import '../../util/general/base_refresh_indicator.dart';
 import '../inbox/inbox_action_button.dart';
 import '../inbox/inbox_view.dart';
 import '../items/item_widget_factory.dart';
@@ -22,6 +23,8 @@ class RoomsView extends StatelessWidget {
   static const String routeName = 'RoomsView';
 
   const RoomsView({super.key});
+
+  // TODO: Pull to refresh
 
   @override
   Widget build(BuildContext context) {
@@ -63,24 +66,29 @@ class RoomsView extends StatelessWidget {
                                       );
                                     } else {
                                       return Expanded(
-                                          child: PageView.builder(
-                                              key: model.pageViewKey,
-                                              controller: model.pageController,
-                                              onPageChanged: model.onRoomChange,
-                                              itemCount: rooms.length,
-                                              itemBuilder: (context, index) {
-                                                final room = rooms[index];
-                                                final items =
-                                                    snapshot.data?[room.id] ??
+                                          child: BaseRefreshIndicator(
+                                              onRefresh: model.onRefresh,
+                                              child: PageView.builder(
+                                                  key: model.pageViewKey,
+                                                  controller:
+                                                      model.pageController,
+                                                  onPageChanged:
+                                                      model.onRoomChange,
+                                                  itemCount: rooms.length,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    final room = rooms[index];
+                                                    final items = snapshot
+                                                            .data?[room.id] ??
                                                         [];
-                                                if (items.isEmpty) {
-                                                  return _buildEmptyItemsForRoomState(
-                                                      context);
-                                                } else {
-                                                  return _buildItemsView(
-                                                      context, items);
-                                                }
-                                              }));
+                                                    if (items.isEmpty) {
+                                                      return _buildEmptyItemsForRoomState(
+                                                          context);
+                                                    } else {
+                                                      return _buildItemsView(
+                                                          context, items);
+                                                    }
+                                                  })));
                                     }
                                   })
                             ],
@@ -127,8 +135,8 @@ class RoomsView extends StatelessWidget {
               color: DynamicTheme.of(context)!.theme.colorScheme.surfaceVariant,
             ),
           ),
-          buttonStyleData: ButtonStyleData(
-            padding: const EdgeInsets.only(right: 12),
+          buttonStyleData: const ButtonStyleData(
+            padding: EdgeInsets.only(right: 12),
           ),
           iconStyleData: IconStyleData(
             icon: Icon(LineIcons.chevron_down,

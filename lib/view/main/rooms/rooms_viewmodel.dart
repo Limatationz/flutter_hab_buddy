@@ -3,11 +3,13 @@ import 'package:stacked/stacked.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../locator.dart';
+import '../../../repository/item_repository.dart';
 
 class RoomsViewModel extends BaseViewModel {
   final _roomsStore = locator<AppDatabase>().roomsStore;
   final _itemsStore = locator<AppDatabase>().itemsStore;
   final _inboxStore = locator<AppDatabase>().inboxStore;
+  final _itemRepository = locator<ItemRepository>();
 
   Stream<int> get countInboxStream => _inboxStore.count();
 
@@ -23,7 +25,7 @@ class RoomsViewModel extends BaseViewModel {
   int currentPage = 0;
   Key pageViewKey = UniqueKey();
 
-  RoomsViewModel();
+  RoomsViewModel(){}
 
   void onRoomChange(int index) {
     pageController.animateToPage(index,
@@ -57,4 +59,6 @@ class RoomsViewModel extends BaseViewModel {
     currentPage = nextIndex;
     notifyListeners();
   }
+
+  Future<void> onRefresh() => _itemRepository.fetchData(insertToInbox: false);
 }

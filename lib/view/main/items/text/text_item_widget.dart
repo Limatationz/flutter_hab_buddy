@@ -1,6 +1,5 @@
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
-import 'switch_item_dialog.dart';
 
 import '../../../../core/database/app_database.dart';
 import '../../../../core/database/items/items_table.dart';
@@ -8,32 +7,29 @@ import '../../../../locator.dart';
 import '../../../../repository/item_repository.dart';
 import '../../../util/constants.dart';
 import '../../../util/general/base_item_dialog.dart';
-import '../../../util/general/dimmable_widget_container.dart';
+import '../../../util/general/widget_container.dart';
+import 'text_item_dialog.dart';
 
-class SwitchItemWidget extends StatefulWidget {
+class TextItemWidget extends StatefulWidget {
   final Item item;
   final double width;
 
-  const SwitchItemWidget({super.key, required this.item, required this.width});
+  const TextItemWidget({super.key, required this.item, required this.width});
 
   @override
-  State<SwitchItemWidget> createState() => _SwitchItemWidgetState();
+  State<TextItemWidget> createState() => _TextItemWidgetState();
 }
 
-class _SwitchItemWidgetState extends State<SwitchItemWidget> {
+class _TextItemWidgetState extends State<TextItemWidget> {
   final _itemRepository = locator<ItemRepository>();
-
-  bool get isOn => widget.item.state == "ON";
 
   @override
   Widget build(BuildContext context) {
-    return DimmableWidgetContainer(
-        key: ValueKey(isOn.toString()),
+    return WidgetContainer(
+        key: ValueKey(widget.item.state.toString()),
         width: widget.width,
         padding: const EdgeInsets.all(paddingContainer),
-        onTap: onAction,
         onLongTap: () => onLongTap(context),
-        value: isOn ? 100 : 0,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -41,16 +37,13 @@ class _SwitchItemWidgetState extends State<SwitchItemWidget> {
                 style: DynamicTheme.of(context)!.theme.textTheme.titleLarge),
             Align(
                 alignment: Alignment.bottomRight,
-                child: Icon(
-                  widget.item.icon ?? widget.item.type.icon,
-                  size: 40,
-                )),
+                child: Text(widget.item.state,
+                    style: DynamicTheme.of(context)!
+                        .theme
+                        .textTheme
+                        .headlineSmall)),
           ],
         ));
-  }
-
-  Future<void> onAction() async {
-    await _itemRepository.switchAction(widget.item.ohName, !isOn);
   }
 
   Future<void> onLongTap(BuildContext context) async {
@@ -58,6 +51,6 @@ class _SwitchItemWidgetState extends State<SwitchItemWidget> {
         context: context,
         builder: (_) => Dialog(
             child: BaseItemDialog(
-                child: SwitchItemDialog(itemName: widget.item.ohName))));
+                child: TextItemDialog(itemName: widget.item.ohName))));
   }
 }

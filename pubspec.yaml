@@ -74,6 +74,7 @@ dependencies:
   flutter_iconpicker: ^3.2.4
   azlistview_plus: ^3.0.0
   dropdown_button2: ^2.3.9
+  custom_refresh_indicator: ^3.0.0
 
 dependency_overrides:
   flutter_native_timezone:

@@ -36,8 +36,7 @@ Future<void> setupLocator() async {
       baseUrl: Uri.parse("https://myopenhab.org/rest"),
       interceptors: [
         AuthInterceptor(),
-        ContentTypeInterceptor(),
-        kDebugMode ? HttpLoggingInterceptor() : null
+        // kDebugMode ? HttpLoggingInterceptor() : null
       ]));
 
 

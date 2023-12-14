@@ -46,19 +46,18 @@ class SnackbarService {
     );
   }
 
-  void showSnackbar({
+  Future<dynamic>? showSnackbar({
     String? title,
     required String message,
     required SnackbarType type,
     Duration? duration,
-  }) {
+  }) =>
     _snackbarService.showCustomSnackBar(
       variant: type,
       title: title,
       message: message,
       duration: duration,
     );
-  }
 }
 
 enum SnackbarType { error, success, info, warning }

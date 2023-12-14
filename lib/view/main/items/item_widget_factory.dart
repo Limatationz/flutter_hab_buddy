@@ -6,7 +6,9 @@ import '../../util/constants.dart';
 import '../../util/general/bar_bottom_sheet.dart';
 import 'dimmer/dimmer_item_widget.dart';
 import 'edit/item_edit_view.dart';
+import 'rollershutter/rollershutter_item_widget.dart';
 import 'switch/switch_item_widget.dart';
+import 'text/text_item_widget.dart';
 
 class ItemWidgetFactory extends StatelessWidget {
   final Item item;
@@ -25,6 +27,11 @@ class ItemWidgetFactory extends StatelessWidget {
         );
       case InboxEntryType.dimmer:
         return DimmerItemWidget(item: item, width: widthSmallWidget);
+      case InboxEntryType.rollershutter:
+        return RollershutterItemWidget(item: item, width: widthSmallWidget);
+      case InboxEntryType.string:
+      case InboxEntryType.number:
+        return TextItemWidget(item: item, width: widthSmallWidget);
       default:
         return Text(item.ohName);
     }
@@ -32,7 +39,7 @@ class ItemWidgetFactory extends StatelessWidget {
 
   double get widthSmallWidget {
     final rows = (parentWidth / smallWidgetMaxWidthBreakpoint).ceil();
-    return parentWidth / rows;
+    return (parentWidth / rows) - ((listSpacing / 2) * ((rows - 1)));
   }
 
   static Future<void> openEditSheet(BuildContext context, Item item) {

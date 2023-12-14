@@ -1,6 +1,5 @@
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
-import 'switch_item_dialog.dart';
 
 import '../../../../core/database/app_database.dart';
 import '../../../../core/database/items/items_table.dart';
@@ -9,31 +8,40 @@ import '../../../../repository/item_repository.dart';
 import '../../../util/constants.dart';
 import '../../../util/general/base_item_dialog.dart';
 import '../../../util/general/dimmable_widget_container.dart';
+import 'rollershutter_item_dialog.dart';
 
-class SwitchItemWidget extends StatefulWidget {
+class RollershutterItemWidget extends StatefulWidget {
   final Item item;
   final double width;
 
-  const SwitchItemWidget({super.key, required this.item, required this.width});
+  const RollershutterItemWidget(
+      {super.key, required this.item, required this.width});
 
   @override
-  State<SwitchItemWidget> createState() => _SwitchItemWidgetState();
+  State<RollershutterItemWidget> createState() =>
+      _RollershutterItemWidgetState();
 }
 
-class _SwitchItemWidgetState extends State<SwitchItemWidget> {
+class _RollershutterItemWidgetState extends State<RollershutterItemWidget> {
   final _itemRepository = locator<ItemRepository>();
 
-  bool get isOn => widget.item.state == "ON";
+  double get numberState => double.parse(widget.item.state);
+
+  bool get isDown => numberState == 0;
 
   @override
   Widget build(BuildContext context) {
     return DimmableWidgetContainer(
-        key: ValueKey(isOn.toString()),
+        key: ValueKey(numberState.toString()),
         width: widget.width,
         padding: const EdgeInsets.all(paddingContainer),
         onTap: onAction,
         onLongTap: () => onLongTap(context),
-        value: isOn ? 100 : 0,
+        value: numberState,
+        maxValue: widget.item.stateDescription?.maximum ?? 100,
+        minValue: widget.item.stateDescription?.minimum ?? 0,
+        onDragDone: onDragDone,
+        reversed: true,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -50,14 +58,24 @@ class _SwitchItemWidgetState extends State<SwitchItemWidget> {
   }
 
   Future<void> onAction() async {
-    await _itemRepository.switchAction(widget.item.ohName, !isOn);
+      await _itemRepository.rollershutterAction(
+          widget.item.ohName, !isDown);
+  }
+
+  Future<void> onDragDone(double value) async {
+    await _itemRepository.dimmerAction(widget.item.ohName, value);
   }
 
   Future<void> onLongTap(BuildContext context) async {
     showDialog(
         context: context,
         builder: (_) => Dialog(
-            child: BaseItemDialog(
-                child: SwitchItemDialog(itemName: widget.item.ohName))));
+                child: BaseItemDialog(
+                    child: RollershutterItemDialog(
+              itemName: widget.item.ohName,
+              initialValue: numberState,
+            ))));
   }
 }
+
+enum RollershutterState { up, down, half }

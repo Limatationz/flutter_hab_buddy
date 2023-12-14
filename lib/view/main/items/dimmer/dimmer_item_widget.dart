@@ -8,8 +8,6 @@ import '../../../../repository/item_repository.dart';
 import '../../../util/constants.dart';
 import '../../../util/general/base_item_dialog.dart';
 import '../../../util/general/dimmable_widget_container.dart';
-import '../../../util/general/widget_container.dart';
-import '../../../util/general/dimmable_icon.dart';
 import 'dimmer_item_dialog.dart';
 
 class DimmerItemWidget extends StatefulWidget {
@@ -38,6 +36,8 @@ class _DimmerItemWidgetState extends State<DimmerItemWidget> {
         onTap: onAction,
         onLongTap: () => onLongTap(context),
         value: dimmerState,
+        maxValue: widget.item.stateDescription?.maximum,
+        minValue: widget.item.stateDescription?.minimum,
         onDragDone: onDragDone,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,9 +48,6 @@ class _DimmerItemWidgetState extends State<DimmerItemWidget> {
                 alignment: Alignment.bottomRight,
                 child: Icon(
                   widget.item.icon ?? widget.item.type.icon,
-                  color: isOn
-                      ? DynamicTheme.of(context)!.theme.colorScheme.primary
-                      : Colors.grey,
                   size: 40,
                 )),
           ],

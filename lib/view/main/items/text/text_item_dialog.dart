@@ -1,6 +1,5 @@
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:gap/gap.dart';
 
 import '../../../../core/database/app_database.dart';
@@ -11,16 +10,16 @@ import '../../../../util/icons/icons.dart';
 import '../../../util/constants.dart';
 import '../item_widget_factory.dart';
 
-class DimmerItemDialog extends StatefulWidget {
+class TextItemDialog extends StatefulWidget {
   final String itemName;
 
-  const DimmerItemDialog({super.key, required this.itemName});
+  const TextItemDialog({super.key, required this.itemName});
 
   @override
-  State<DimmerItemDialog> createState() => _DimmerItemDialogState();
+  State<TextItemDialog> createState() => _TextItemDialogState();
 }
 
-class _DimmerItemDialogState extends State<DimmerItemDialog> {
+class _TextItemDialogState extends State<TextItemDialog> {
   final _itemRepository = locator<ItemRepository>();
   final _itemsStore = locator<AppDatabase>().itemsStore;
 
@@ -33,8 +32,7 @@ class _DimmerItemDialogState extends State<DimmerItemDialog> {
             return const SizedBox.shrink();
           }
           final item = snapshot.data!;
-          final value = double.parse(item.state);
-          final isOn = value > 0;
+          final isOn = item.state == "ON";
           return Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,27 +54,15 @@ class _DimmerItemDialogState extends State<DimmerItemDialog> {
               const Gap(4),
               Text(item.ohName),
               const Gap(12),
-              FormBuilderSlider(
-                name: "dimmer",
-                initialValue: value,
-                onChangeEnd: onDragDone,
-                onChanged: (_) {},
-                min: item.stateDescription?.minimum ?? 0,
-                max: item.stateDescription?.maximum ?? 100,
-                divisions: item.stateDescription?.step != null
-                    ? (item.stateDescription?.maximum ?? 100) ~/
-                        item.stateDescription!.step!
-                    : null,
-                decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(horizontal: 12)),
-              )
+              Text(item.transformedState ?? item.state,
+                  style:
+                      DynamicTheme.of(context)!.theme.textTheme.headlineLarge),
             ],
           );
         });
   }
 
-  Future<void> onDragDone(double value) async {
-    await _itemRepository.dimmerAction(widget.itemName, value);
+  Future<void> onAction(bool on) async {
+    await _itemRepository.switchAction(widget.itemName, on);
   }
 }

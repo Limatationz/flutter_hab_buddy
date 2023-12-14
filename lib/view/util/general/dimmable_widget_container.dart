@@ -14,12 +14,17 @@ class DimmableWidgetContainer extends StatefulWidget {
   final Color? accentBackgroundColor;
   final double? width;
   final double value;
+  final double? maxValue;
+  final double? minValue;
   final Function(double)? onDragDone;
+  final bool reversed;
 
   const DimmableWidgetContainer(
       {super.key,
       required this.child,
       required this.value,
+      this.maxValue = 100,
+      this.minValue = 0,
       this.onDragDone,
       this.padding,
       this.margin = const EdgeInsets.all(0),
@@ -28,7 +33,8 @@ class DimmableWidgetContainer extends StatefulWidget {
       this.elevation = 2,
       this.backgroundColor,
       this.accentBackgroundColor,
-      this.width});
+      this.width,
+      this.reversed = false});
 
   @override
   State<DimmableWidgetContainer> createState() =>
@@ -51,7 +57,6 @@ class _DimmableWidgetContainerState extends State<DimmableWidgetContainer> {
 
   @override
   Widget build(BuildContext context) {
-    print("currentValue: $currentValue");
     final child = Material(
         elevation: widget.elevation,
         borderRadius:
@@ -63,17 +68,28 @@ class _DimmableWidgetContainerState extends State<DimmableWidgetContainer> {
                 width: widget.width,
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      stops: [0, currentValue, currentValue],
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      colors: [
-                        widget.accentBackgroundColor ??
-                            getAccentBackgroundColor(context),
-                        widget.accentBackgroundColor ??
-                            getAccentBackgroundColor(context),
-                        widget.backgroundColor ?? getBackgroundColor(context)
-                      ],
-                    ),
+                        stops: widget.reversed
+                            ? [0, 1 - currentValue, 1 - currentValue]
+                            : [0, currentValue, currentValue],
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        colors: !widget.reversed
+                            ? [
+                                widget.accentBackgroundColor ??
+                                    getAccentBackgroundColor(context),
+                                widget.accentBackgroundColor ??
+                                    getAccentBackgroundColor(context),
+                                widget.backgroundColor ??
+                                    getBackgroundColor(context)
+                              ]
+                            : [
+                                widget.backgroundColor ??
+                                    getBackgroundColor(context),
+                                widget.backgroundColor ??
+                                    getBackgroundColor(context),
+                                widget.accentBackgroundColor ??
+                                    getAccentBackgroundColor(context)
+                              ]),
                     color:
                         widget.backgroundColor ?? getBackgroundColor(context)),
                 padding: widget.padding,
@@ -84,17 +100,30 @@ class _DimmableWidgetContainerState extends State<DimmableWidgetContainer> {
           child: GestureDetector(
               onVerticalDragEnd: isDragEnabled
                   ? (details) {
-                      widget.onDragDone!.call(currentValue * 100);
                       setState(() {
-                        value = currentValue;
+                        print(currentValue);
+                        if (widget.maxValue != null &&
+                            currentValue > widget.maxValue! / 100) {
+                          value = widget.maxValue! / 100;
+                        } else if (widget.minValue != null &&
+                            currentValue < widget.minValue! / 100) {
+                          value = widget.minValue! / 100;
+                        } else {
+                          value = currentValue;
+                        }
                         dragAmount = 0;
+                        widget.onDragDone!.call(value * 100);
                       });
                     }
                   : null,
               onVerticalDragUpdate: isDragEnabled
                   ? (details) {
                       setState(() {
-                        dragAmount -= details.delta.dy;
+                        if (widget.reversed) {
+                          dragAmount += details.delta.dy;
+                        } else {
+                          dragAmount -= details.delta.dy;
+                        }
                       });
                     }
                   : null,
