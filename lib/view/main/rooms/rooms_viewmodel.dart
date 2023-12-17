@@ -25,7 +25,7 @@ class RoomsViewModel extends BaseViewModel {
   int currentPage = 0;
   Key pageViewKey = UniqueKey();
 
-  RoomsViewModel(){}
+  RoomsViewModel();
 
   void onRoomChange(int index) {
     pageController.animateToPage(index,

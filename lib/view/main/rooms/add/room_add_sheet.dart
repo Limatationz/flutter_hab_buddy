@@ -68,6 +68,10 @@ class RoomAddSheet extends StatelessWidget {
                           flex: 5,
                           child: FormBuilderColorPickerField(
                               name: "color",
+                              initialValue: DynamicTheme.of(context)!
+                                  .theme
+                                  .colorScheme
+                                  .primary,
                               decoration: InputDecoration(
                                 labelText: S.of(context).roomColorLabel,
                                 border: const OutlineInputBorder(),

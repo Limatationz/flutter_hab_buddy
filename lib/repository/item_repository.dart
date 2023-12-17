@@ -16,11 +16,15 @@ class ItemRepository {
   final _snackbarService = locator<SnackbarService>();
   final _api = locator<OpenHAB>();
 
+  ItemRepository();
+
   Future<void> fetchData({bool insertToInbox = true}) async {
     final result = await _api.itemsGet();
     if (result.isSuccessful) {
       final storedItems = await _itemsStore.getAll();
-      await _inboxStore.deleteData();
+      if (insertToInbox) {
+        await _inboxStore.deleteData();
+      }
       final addToInbox = <InboxEntry>[];
 
       for (final item in result.body!) {
@@ -74,6 +78,9 @@ class ItemRepository {
   }
 
   Future<void> _sendAction(String itemName, String body) async {
+    // increment score of item
+    _itemsStore.incrementScoreByName(itemName);
+
     try {
       final dio = await Dio().post("https://myopenhab.org/rest/items/$itemName",
           data: body,

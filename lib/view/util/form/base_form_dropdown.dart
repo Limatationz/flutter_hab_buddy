@@ -10,7 +10,7 @@ class BaseFormDropdown<T> extends StatelessWidget {
   final String? hintText;
   final List<DropdownMenuItem<T>> items;
   final String? Function(dynamic)? validator;
-  final String? Function(dynamic)? onChanged;
+  final void Function(T?)? onChanged;
   final dynamic initialValue;
   final Widget? suffixIcon;
 

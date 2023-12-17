@@ -11,7 +11,10 @@ part 'items_store.g.dart';
 class ItemsStore extends DatabaseAccessor<AppDatabase> with _$ItemsStoreMixin {
   ItemsStore(super.database);
 
-  Stream<List<ItemWithRoom>> watch() => select(itemsTable)
+  Stream<List<ItemWithRoom>> watch() => (select(itemsTable)
+        ..orderBy([
+          (tbl) => OrderingTerm(expression: tbl.score, mode: OrderingMode.desc)
+        ]))
       .join([
         leftOuterJoin(roomsTable, roomsTable.id.equalsExp(itemsTable.roomId)),
       ])
@@ -25,69 +28,91 @@ class ItemsStore extends DatabaseAccessor<AppDatabase> with _$ItemsStoreMixin {
         }).toList();
       });
 
-  Future<List<Item>> getAll() => select(itemsTable).get();
+  Future<List<Item>> getAll() => (select(itemsTable)
+        ..orderBy([
+          (tbl) => OrderingTerm(expression: tbl.score, mode: OrderingMode.desc)
+        ]))
+      .get();
 
-  MultiSelectable<Item> byRoomId(int roomId) =>
-      select(itemsTable)..where((tbl) => tbl.roomId.equals(roomId));
+  Stream<bool> hasFavorites() =>
+      (select(itemsTable)..where((tbl) => tbl.isFavorite.equals(true)))
+          .watch()
+          .map((event) => event.isNotEmpty);
 
-  Stream<Map<int, List<Item>>> watchGroupedByRoomId() {
-    return select(itemsTable).watch().map((rows) {
-      return groupBy(rows, (e) => e.roomId);
-    });
-  }
+  MultiSelectable<Item> byRoomId(int roomId) => select(itemsTable)
+    ..where((tbl) => tbl.roomId.equals(roomId))
+    ..orderBy([
+      (tbl) => OrderingTerm(expression: tbl.score, mode: OrderingMode.desc)
+    ]);
 
-  SingleOrNullSelectable<Item> byName(String name) =>
-      select(itemsTable)..where((tbl) => tbl.ohName.equals(name));
+  Stream<Map<int, List<Item>>> watchGroupedByRoomId(
+          {bool onlyFavorites = false}) =>
+      (select(itemsTable)
+            ..where((tbl) => onlyFavorites
+                ? tbl.isFavorite.equals(true)
+                : tbl.isFavorite.equals(true) | tbl.isFavorite.equals(false))
+            ..orderBy([
+              (tbl) =>
+                  OrderingTerm(expression: tbl.score, mode: OrderingMode.desc)
+            ]))
+          .watch()
+          .map((rows) {
+        return groupBy(rows, (e) => e.roomId);
+      });
 
-  Stream<Map<Room, List<Item>>> watchGroupedByRoom() {
-    return select(itemsTable)
-        .join([
-          leftOuterJoin(roomsTable, roomsTable.id.equalsExp(itemsTable.roomId)),
-        ])
-        .watch()
-        .map((rows) {
-          return rows.fold<Map<Room, List<Item>>>({}, (map, row) {
-            final room = row.readTable(roomsTable);
-            final item = row.readTable(itemsTable);
+  SingleOrNullSelectable<Item> byName(String name) => select(itemsTable)
+    ..where((tbl) => tbl.ohName.equals(name))
+    ..orderBy([
+      (tbl) => OrderingTerm(expression: tbl.score, mode: OrderingMode.desc)
+    ]);
 
-            if (map.containsKey(room)) {
-              map[room]!.add(item);
-            } else {
-              map[room] = [item];
-            }
+  Stream<Map<Room, List<Item>>> watchGroupedByRoom() => select(itemsTable)
+      .join([
+        leftOuterJoin(roomsTable, roomsTable.id.equalsExp(itemsTable.roomId)),
+      ])
+      .watch()
+      .map((rows) {
+        return rows.fold<Map<Room, List<Item>>>({}, (map, row) {
+          final room = row.readTable(roomsTable);
+          final item = row.readTable(itemsTable);
 
-            return map;
-          });
+          if (map.containsKey(room)) {
+            map[room]!.add(item);
+          } else {
+            map[room] = [item];
+          }
+
+          return map;
         });
-  }
+      });
 
-  Future<void> insertOrUpdate(List<ItemsTableCompanion> data) async {
-    await batch((batch) => batch.insertAllOnConflictUpdate(
-          itemsTable,
-          data,
-        ));
-  }
+  Future<void> insertOrUpdate(List<ItemsTableCompanion> data) =>
+      batch((batch) => batch.insertAllOnConflictUpdate(
+            itemsTable,
+            data,
+          ));
 
-  Future<void> insertOrUpdateSingle(ItemsTableCompanion data) async {
-    await insertOrUpdate([data]);
-  }
+  Future<void> insertOrUpdateSingle(ItemsTableCompanion data) =>
+      insertOrUpdate([data]);
 
-  Future<void> updateByName(ItemsTableCompanion data) async {
-    await (update(itemsTable)
-          ..where((tbl) => tbl.ohName.equals(data.ohName.value)))
-        .write(data);
-  }
+  Future<void> updateByName(ItemsTableCompanion data) =>
+      (update(itemsTable)..where((tbl) => tbl.ohName.equals(data.ohName.value)))
+          .write(data);
 
-  Future<void> updateFavoriteByName(String name, bool favorite) async {
-    await (update(itemsTable)..where((tbl) => tbl.ohName.equals(name)))
-        .write(ItemsTableCompanion(isFavorite: Value(favorite)));
-  }
+  Future<void> updateFavoriteByName(String name, bool favorite) =>
+      (update(itemsTable)..where((tbl) => tbl.ohName.equals(name)))
+          .write(ItemsTableCompanion(isFavorite: Value(favorite)));
 
-  Future<void> deleteData() async {
-    await delete(itemsTable).go();
-  }
+  Future<void> updateScoreByName(String name, double score) =>
+      (update(itemsTable)..where((tbl) => tbl.ohName.equals(name)))
+          .write(ItemsTableCompanion(score: Value(score)));
 
-  Future<void> deleteDataByName(String name) async {
-    await (delete(itemsTable)..where((tbl) => tbl.ohName.equals(name))).go();
-  }
+  Future<void> incrementScoreByName(String name) => executor.runCustom(
+      'UPDATE items_table SET new_score = new_score + 1 WHERE oh_name = ?',
+      [name]);
+
+  Future<void> deleteData() => delete(itemsTable).go();
+
+  Future<void> deleteDataByName(String name) =>
+      (delete(itemsTable)..where((tbl) => tbl.ohName.equals(name))).go();
 }

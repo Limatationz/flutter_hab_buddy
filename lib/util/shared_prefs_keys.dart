@@ -1,0 +1,1 @@
+const lastItemScoreResetKey = 'lastItemScoreReset';

@@ -11,10 +11,10 @@ class $InboxTableTable extends InboxTable
   $InboxTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _typeMeta = const VerificationMeta('type');
   @override
-  late final GeneratedColumnWithTypeConverter<InboxEntryType, String> type =
+  late final GeneratedColumnWithTypeConverter<OhItemType, String> type =
       GeneratedColumn<String>('type', aliasedName, false,
               type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<InboxEntryType>($InboxTableTable.$convertertype);
+          .withConverter<OhItemType>($InboxTableTable.$convertertype);
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
@@ -184,8 +184,8 @@ class $InboxTableTable extends InboxTable
     return $InboxTableTable(attachedDatabase, alias);
   }
 
-  static JsonTypeConverter2<InboxEntryType, String, String> $convertertype =
-      const EnumNameConverter<InboxEntryType>(InboxEntryType.values);
+  static JsonTypeConverter2<OhItemType, String, String> $convertertype =
+      const EnumNameConverter<OhItemType>(OhItemType.values);
   static TypeConverter<List<String>, String> $convertertags =
       const StringListConverter();
   static TypeConverter<List<String>?, String?> $convertertagsn =
@@ -206,7 +206,7 @@ class $InboxTableTable extends InboxTable
 }
 
 class InboxEntry extends DataClass implements Insertable<InboxEntry> {
-  final InboxEntryType type;
+  final OhItemType type;
   final String name;
   final String label;
   final String? category;
@@ -337,7 +337,7 @@ class InboxEntry extends DataClass implements Insertable<InboxEntry> {
   }
 
   InboxEntry copyWith(
-          {InboxEntryType? type,
+          {OhItemType? type,
           String? name,
           String? label,
           Value<String?> category = const Value.absent(),
@@ -417,7 +417,7 @@ class InboxEntry extends DataClass implements Insertable<InboxEntry> {
 }
 
 class InboxTableCompanion extends UpdateCompanion<InboxEntry> {
-  final Value<InboxEntryType> type;
+  final Value<OhItemType> type;
   final Value<String> name;
   final Value<String> label;
   final Value<String?> category;
@@ -444,7 +444,7 @@ class InboxTableCompanion extends UpdateCompanion<InboxEntry> {
     this.rowid = const Value.absent(),
   });
   InboxTableCompanion.insert({
-    required InboxEntryType type,
+    required OhItemType type,
     required String name,
     required String label,
     this.category = const Value.absent(),
@@ -491,7 +491,7 @@ class InboxTableCompanion extends UpdateCompanion<InboxEntry> {
   }
 
   InboxTableCompanion copyWith(
-      {Value<InboxEntryType>? type,
+      {Value<OhItemType>? type,
       Value<String>? name,
       Value<String>? label,
       Value<String?>? category,
@@ -931,10 +931,10 @@ class $ItemsTableTable extends ItemsTable
           .withConverter<ItemType>($ItemsTableTable.$convertertype);
   static const VerificationMeta _ohTypeMeta = const VerificationMeta('ohType');
   @override
-  late final GeneratedColumnWithTypeConverter<InboxEntryType, String> ohType =
+  late final GeneratedColumnWithTypeConverter<OhItemType, String> ohType =
       GeneratedColumn<String>('oh_type', aliasedName, false,
               type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<InboxEntryType>($ItemsTableTable.$converterohType);
+          .withConverter<OhItemType>($ItemsTableTable.$converterohType);
   static const VerificationMeta _ohNameMeta = const VerificationMeta('ohName');
   @override
   late final GeneratedColumn<String> ohName = GeneratedColumn<String>(
@@ -1027,6 +1027,21 @@ class $ItemsTableTable extends ItemsTable
               type: DriftSqlType.string, requiredDuringInsert: false)
           .withConverter<CommandDescription?>(
               $ItemsTableTable.$convertercommandDescriptionn);
+  static const VerificationMeta _scoreMeta = const VerificationMeta('score');
+  @override
+  late final GeneratedColumn<double> score = GeneratedColumn<double>(
+      'score', aliasedName, false,
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(0));
+  static const VerificationMeta _newScoreMeta =
+      const VerificationMeta('newScore');
+  @override
+  late final GeneratedColumn<double> newScore = GeneratedColumn<double>(
+      'new_score', aliasedName, false,
+      type: DriftSqlType.double,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(0));
   @override
   List<GeneratedColumn> get $columns => [
         type,
@@ -1044,7 +1059,9 @@ class $ItemsTableTable extends ItemsTable
         state,
         transformedState,
         stateDescription,
-        commandDescription
+        commandDescription,
+        score,
+        newScore
       ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1117,6 +1134,14 @@ class $ItemsTableTable extends ItemsTable
     }
     context.handle(_stateDescriptionMeta, const VerificationResult.success());
     context.handle(_commandDescriptionMeta, const VerificationResult.success());
+    if (data.containsKey('score')) {
+      context.handle(
+          _scoreMeta, score.isAcceptableOrUnknown(data['score']!, _scoreMeta));
+    }
+    if (data.containsKey('new_score')) {
+      context.handle(_newScoreMeta,
+          newScore.isAcceptableOrUnknown(data['new_score']!, _newScoreMeta));
+    }
     return context;
   }
 
@@ -1164,6 +1189,10 @@ class $ItemsTableTable extends ItemsTable
       commandDescription: $ItemsTableTable.$convertercommandDescriptionn
           .fromSql(attachedDatabase.typeMapping.read(DriftSqlType.string,
               data['${effectivePrefix}command_description'])),
+      score: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}score'])!,
+      newScore: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}new_score'])!,
     );
   }
 
@@ -1174,8 +1203,8 @@ class $ItemsTableTable extends ItemsTable
 
   static JsonTypeConverter2<ItemType, String, String> $convertertype =
       const EnumNameConverter<ItemType>(ItemType.values);
-  static JsonTypeConverter2<InboxEntryType, String, String> $converterohType =
-      const EnumNameConverter<InboxEntryType>(InboxEntryType.values);
+  static JsonTypeConverter2<OhItemType, String, String> $converterohType =
+      const EnumNameConverter<OhItemType>(OhItemType.values);
   static TypeConverter<List<String>, String> $converterohTags =
       const StringListConverter();
   static TypeConverter<List<String>?, String?> $converterohTagsn =
@@ -1201,7 +1230,7 @@ class $ItemsTableTable extends ItemsTable
 
 class Item extends DataClass implements Insertable<Item> {
   final ItemType type;
-  final InboxEntryType ohType;
+  final OhItemType ohType;
   final String ohName;
   final String ohLabel;
   final String? customLabel;
@@ -1216,6 +1245,8 @@ class Item extends DataClass implements Insertable<Item> {
   final String? transformedState;
   final StateDescription? stateDescription;
   final CommandDescription? commandDescription;
+  final double score;
+  final double newScore;
   const Item(
       {required this.type,
       required this.ohType,
@@ -1232,7 +1263,9 @@ class Item extends DataClass implements Insertable<Item> {
       required this.state,
       this.transformedState,
       this.stateDescription,
-      this.commandDescription});
+      this.commandDescription,
+      required this.score,
+      required this.newScore});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -1282,6 +1315,8 @@ class Item extends DataClass implements Insertable<Item> {
           .$convertercommandDescriptionn
           .toSql(commandDescription));
     }
+    map['score'] = Variable<double>(score);
+    map['new_score'] = Variable<double>(newScore);
     return map;
   }
 
@@ -1318,6 +1353,8 @@ class Item extends DataClass implements Insertable<Item> {
       commandDescription: commandDescription == null && nullToAbsent
           ? const Value.absent()
           : Value(commandDescription),
+      score: Value(score),
+      newScore: Value(newScore),
     );
   }
 
@@ -1345,6 +1382,8 @@ class Item extends DataClass implements Insertable<Item> {
           serializer.fromJson<StateDescription?>(json['stateDescription']),
       commandDescription:
           serializer.fromJson<CommandDescription?>(json['commandDescription']),
+      score: serializer.fromJson<double>(json['score']),
+      newScore: serializer.fromJson<double>(json['newScore']),
     );
   }
   @override
@@ -1371,12 +1410,14 @@ class Item extends DataClass implements Insertable<Item> {
           serializer.toJson<StateDescription?>(stateDescription),
       'commandDescription':
           serializer.toJson<CommandDescription?>(commandDescription),
+      'score': serializer.toJson<double>(score),
+      'newScore': serializer.toJson<double>(newScore),
     };
   }
 
   Item copyWith(
           {ItemType? type,
-          InboxEntryType? ohType,
+          OhItemType? ohType,
           String? ohName,
           String? ohLabel,
           Value<String?> customLabel = const Value.absent(),
@@ -1390,8 +1431,9 @@ class Item extends DataClass implements Insertable<Item> {
           String? state,
           Value<String?> transformedState = const Value.absent(),
           Value<StateDescription?> stateDescription = const Value.absent(),
-          Value<CommandDescription?> commandDescription =
-              const Value.absent()}) =>
+          Value<CommandDescription?> commandDescription = const Value.absent(),
+          double? score,
+          double? newScore}) =>
       Item(
         type: type ?? this.type,
         ohType: ohType ?? this.ohType,
@@ -1416,6 +1458,8 @@ class Item extends DataClass implements Insertable<Item> {
         commandDescription: commandDescription.present
             ? commandDescription.value
             : this.commandDescription,
+        score: score ?? this.score,
+        newScore: newScore ?? this.newScore,
       );
   @override
   String toString() {
@@ -1435,7 +1479,9 @@ class Item extends DataClass implements Insertable<Item> {
           ..write('state: $state, ')
           ..write('transformedState: $transformedState, ')
           ..write('stateDescription: $stateDescription, ')
-          ..write('commandDescription: $commandDescription')
+          ..write('commandDescription: $commandDescription, ')
+          ..write('score: $score, ')
+          ..write('newScore: $newScore')
           ..write(')'))
         .toString();
   }
@@ -1457,7 +1503,9 @@ class Item extends DataClass implements Insertable<Item> {
       state,
       transformedState,
       stateDescription,
-      commandDescription);
+      commandDescription,
+      score,
+      newScore);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1477,12 +1525,14 @@ class Item extends DataClass implements Insertable<Item> {
           other.state == this.state &&
           other.transformedState == this.transformedState &&
           other.stateDescription == this.stateDescription &&
-          other.commandDescription == this.commandDescription);
+          other.commandDescription == this.commandDescription &&
+          other.score == this.score &&
+          other.newScore == this.newScore);
 }
 
 class ItemsTableCompanion extends UpdateCompanion<Item> {
   final Value<ItemType> type;
-  final Value<InboxEntryType> ohType;
+  final Value<OhItemType> ohType;
   final Value<String> ohName;
   final Value<String> ohLabel;
   final Value<String?> customLabel;
@@ -1497,6 +1547,8 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
   final Value<String?> transformedState;
   final Value<StateDescription?> stateDescription;
   final Value<CommandDescription?> commandDescription;
+  final Value<double> score;
+  final Value<double> newScore;
   final Value<int> rowid;
   const ItemsTableCompanion({
     this.type = const Value.absent(),
@@ -1515,11 +1567,13 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
     this.transformedState = const Value.absent(),
     this.stateDescription = const Value.absent(),
     this.commandDescription = const Value.absent(),
+    this.score = const Value.absent(),
+    this.newScore = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   ItemsTableCompanion.insert({
     required ItemType type,
-    required InboxEntryType ohType,
+    required OhItemType ohType,
     required String ohName,
     required String ohLabel,
     this.customLabel = const Value.absent(),
@@ -1534,6 +1588,8 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
     this.transformedState = const Value.absent(),
     this.stateDescription = const Value.absent(),
     this.commandDescription = const Value.absent(),
+    this.score = const Value.absent(),
+    this.newScore = const Value.absent(),
     this.rowid = const Value.absent(),
   })  : type = Value(type),
         ohType = Value(ohType),
@@ -1558,6 +1614,8 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
     Expression<String>? transformedState,
     Expression<String>? stateDescription,
     Expression<String>? commandDescription,
+    Expression<double>? score,
+    Expression<double>? newScore,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -1577,13 +1635,15 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
       if (transformedState != null) 'transformed_state': transformedState,
       if (stateDescription != null) 'state_description': stateDescription,
       if (commandDescription != null) 'command_description': commandDescription,
+      if (score != null) 'score': score,
+      if (newScore != null) 'new_score': newScore,
       if (rowid != null) 'rowid': rowid,
     });
   }
 
   ItemsTableCompanion copyWith(
       {Value<ItemType>? type,
-      Value<InboxEntryType>? ohType,
+      Value<OhItemType>? ohType,
       Value<String>? ohName,
       Value<String>? ohLabel,
       Value<String?>? customLabel,
@@ -1598,6 +1658,8 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
       Value<String?>? transformedState,
       Value<StateDescription?>? stateDescription,
       Value<CommandDescription?>? commandDescription,
+      Value<double>? score,
+      Value<double>? newScore,
       Value<int>? rowid}) {
     return ItemsTableCompanion(
       type: type ?? this.type,
@@ -1616,6 +1678,8 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
       transformedState: transformedState ?? this.transformedState,
       stateDescription: stateDescription ?? this.stateDescription,
       commandDescription: commandDescription ?? this.commandDescription,
+      score: score ?? this.score,
+      newScore: newScore ?? this.newScore,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -1680,6 +1744,12 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
           .$convertercommandDescriptionn
           .toSql(commandDescription.value));
     }
+    if (score.present) {
+      map['score'] = Variable<double>(score.value);
+    }
+    if (newScore.present) {
+      map['new_score'] = Variable<double>(newScore.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -1705,6 +1775,8 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
           ..write('transformedState: $transformedState, ')
           ..write('stateDescription: $stateDescription, ')
           ..write('commandDescription: $commandDescription, ')
+          ..write('score: $score, ')
+          ..write('newScore: $newScore, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();

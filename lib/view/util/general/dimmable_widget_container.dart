@@ -13,11 +13,13 @@ class DimmableWidgetContainer extends StatefulWidget {
   final Color? backgroundColor;
   final Color? accentBackgroundColor;
   final double? width;
+  final double? height;
   final double value;
   final double? maxValue;
   final double? minValue;
   final Function(double)? onDragDone;
   final bool reversed;
+  final ColorScheme? colorScheme;
 
   const DimmableWidgetContainer(
       {super.key,
@@ -26,14 +28,16 @@ class DimmableWidgetContainer extends StatefulWidget {
       this.maxValue = 100,
       this.minValue = 0,
       this.onDragDone,
-      this.padding,
+      this.padding = const EdgeInsets.all(paddingContainer),
       this.margin = const EdgeInsets.all(0),
       this.onTap,
       this.onLongTap,
       this.elevation = 2,
       this.backgroundColor,
       this.accentBackgroundColor,
+      this.colorScheme,
       this.width,
+      this.height,
       this.reversed = false});
 
   @override
@@ -66,6 +70,7 @@ class _DimmableWidgetContainerState extends State<DimmableWidgetContainer> {
                 const BorderRadius.all(Radius.circular(borderRadiusContainer)),
             child: Container(
                 width: widget.width,
+                height: widget.height,
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                         stops: widget.reversed
@@ -101,7 +106,6 @@ class _DimmableWidgetContainerState extends State<DimmableWidgetContainer> {
               onVerticalDragEnd: isDragEnabled
                   ? (details) {
                       setState(() {
-                        print(currentValue);
                         if (widget.maxValue != null &&
                             currentValue > widget.maxValue! / 100) {
                           value = widget.maxValue! / 100;
@@ -137,10 +141,13 @@ class _DimmableWidgetContainerState extends State<DimmableWidgetContainer> {
   Color getBackgroundColor(BuildContext context) =>
       widget.backgroundColor ??
       ElevationOverlay.applySurfaceTint(
-          DynamicTheme.of(context)!.theme.colorScheme.background,
-          DynamicTheme.of(context)!.theme.colorScheme.surfaceTint,
+          widget.colorScheme?.background ??
+              DynamicTheme.of(context)!.theme.colorScheme.background,
+          widget.colorScheme?.surfaceTint ??
+              DynamicTheme.of(context)!.theme.colorScheme.surfaceTint,
           1);
 
   Color getAccentBackgroundColor(BuildContext context) =>
+      widget.colorScheme?.secondaryContainer ??
       DynamicTheme.of(context)!.theme.colorScheme.secondaryContainer;
 }

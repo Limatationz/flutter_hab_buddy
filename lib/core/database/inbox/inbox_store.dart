@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 
 import '../app_database.dart';
+import '../items/oh_item_type.dart';
 import 'inbox_table.dart';
 
 part 'inbox_store.g.dart';
@@ -10,7 +11,7 @@ class InboxStore extends DatabaseAccessor<AppDatabase> with _$InboxStoreMixin {
   InboxStore(super.database);
 
   MultiSelectable<InboxEntry> all() => (select(inboxTable)
-    ..where((tbl) => tbl.type.equals(InboxEntryType.group.name).not())
+    ..where((tbl) => tbl.type.equals(OhItemType.group.name).not())
     ..orderBy([
       (u) => OrderingTerm(expression: u.name),
     ]));
@@ -36,7 +37,7 @@ class InboxStore extends DatabaseAccessor<AppDatabase> with _$InboxStoreMixin {
 
   Stream<int> count() {
     return (select(inboxTable)
-          ..where((tbl) => tbl.type.equals(InboxEntryType.group.name).not()))
+          ..where((tbl) => tbl.type.equals(OhItemType.group.name).not()))
         .watch()
         .map((event) => event.length);
   }

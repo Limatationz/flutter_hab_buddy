@@ -37,10 +37,16 @@ class InboxViewModel extends BaseViewModel {
                 element.entry.name.toLowerCase().contains(search.toLowerCase()))
             .toList();
       });
+  final searchFocusNode = FocusNode();
 
   InboxViewModel() {
     textEditingController.addListener(() {
       _searchSubject.add(textEditingController.text);
     });
+  }
+
+  void resetSearch(){
+    textEditingController.clear();
+    searchFocusNode.unfocus();
   }
 }

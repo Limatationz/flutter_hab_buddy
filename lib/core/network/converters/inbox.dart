@@ -3,6 +3,7 @@ import 'package:drift/drift.dart';
 import '../../../util/list.dart';
 import '../../database/app_database.dart';
 import '../../database/inbox/inbox_table.dart';
+import '../../database/items/oh_item_type.dart';
 import '../generated/openHAB.models.swagger.dart';
 
 extension InboxDBConverter on EnrichedItemDTO {
@@ -11,7 +12,7 @@ extension InboxDBConverter on EnrichedItemDTO {
       return null;
     }
     return InboxEntry(
-      type: InboxEntryType.fromString(type!),
+      type: OhItemType.fromString(type!),
       name: name!,
       label: label!,
       category: category,
@@ -30,7 +31,7 @@ extension InboxDBConverter on EnrichedItemDTO {
       return null;
     }
     return ItemsTableCompanion(
-      ohType: Value(InboxEntryType.fromString(type!)),
+      ohType: Value(OhItemType.fromString(type!)),
       ohName: Value(name!),
       ohLabel: Value(label!),
       ohCategory: category != null ? Value(category!) : const Value.absent(),

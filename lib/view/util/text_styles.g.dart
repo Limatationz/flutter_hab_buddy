@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 const textTheme = TextTheme(
@@ -38,9 +37,9 @@ const textTheme = TextTheme(
     fontWeight: FontWeight.normal,
   ),
   titleMedium: TextStyle(
-    fontSize: 16,
-    height: 24 / 16,
-    fontWeight: FontWeight.w500,
+    fontSize: 18,
+    height: 24 / 20,
+    fontWeight: FontWeight.normal,
   ),
   titleSmall: TextStyle(
     fontSize: 14,

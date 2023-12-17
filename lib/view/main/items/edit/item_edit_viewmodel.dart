@@ -71,4 +71,7 @@ class ItemEditViewModel extends BaseViewModel {
       notifyListeners();
     }
   }
+
+  Future<void> onDelete() =>
+    _itemsStore.deleteDataByName(item.ohName);
 }

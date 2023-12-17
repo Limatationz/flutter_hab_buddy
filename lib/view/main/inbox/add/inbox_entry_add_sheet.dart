@@ -36,11 +36,28 @@ class InboxEntryAddSheet extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(S.of(context).addItemHeadline,
-                      style: DynamicTheme.of(context)!
-                          .theme
-                          .textTheme
-                          .headlineMedium),
+                  Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    Expanded(
+                        child: Text(S.of(context).addItemHeadline,
+                            style: DynamicTheme.of(context)!
+                                .theme
+                                .textTheme
+                                .headlineMedium)),
+                    const Gap(listSpacing),
+                    IconButton(
+                        onPressed: model.onFavoriteToggle,
+                        visualDensity: VisualDensity.compact,
+                        iconSize: 28,
+                        icon: Icon(
+                          model.isFavorite
+                              ? LineIconsFilled.heart
+                              : LineIcons.heart,
+                          color: DynamicTheme.of(context)!
+                              .theme
+                              .colorScheme
+                              .primary,
+                        )),
+                  ]),
                   const HeadlinePaddingBox(),
                   HeadlineValueIcon(title: "Name", data: entry.name),
                   HeadlineValueIcon(title: "Label", data: entry.label),
@@ -66,20 +83,31 @@ class InboxEntryAddSheet extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
+                        flex: 3,
                         child: BaseFormDropdown<ItemType>(
                           name: "itemType",
                           items: ItemType.forEntryType(entry.type)
                               .map((e) => DropdownMenuItem(
-                                  value: e, child: Text(e.toString())))
+                                  value: e, child: Text(e.description)))
                               .toList(),
+                          initialValue:
+                              ItemType.forEntryType(entry.type).length == 1
+                                  ? ItemType.forEntryType(entry.type).first
+                                  : null,
                           validator: FormBuilderValidators.required(),
                           label: S.of(context).itemType,
                           helperText: S.of(context).itemTypeHelp,
                           hintText: S.current.select,
+                          onChanged: (value) {
+                            if(value != null) {
+                              model.setIconOnTypeChange(value);
+                            }
+                          },
                         ),
                       ),
                       const Gap(listSpacing),
                       Expanded(
+                        flex: 2,
                         child: BaseFormIconPicker(
                           iconPack: iconPackItems,
                           onChange: model.setIcon,
@@ -123,6 +151,7 @@ class InboxEntryAddSheet extends StatelessWidget {
                     label: S.of(context).customLabel,
                     helperText: S.of(context).customLabelHelp,
                     hintText: entry.label,
+                    validator: FormBuilderValidators.maxLength(50),
                   ),
                   const SizedBox(height: 16),
                   BaseElevatedButton(
@@ -130,7 +159,7 @@ class InboxEntryAddSheet extends StatelessWidget {
                       onPressed: () {
                         model.save().then((value) {
                           if (value) {
-                            Navigator.pop(context);
+                            Navigator.of(context).pop(true);
                           }
                         });
                       })

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../inbox/inbox_table.dart';
+import '../../../generated/l10n.dart';
+import 'oh_item_type.dart';
 
 enum ItemType {
   text,
@@ -20,45 +21,200 @@ enum ItemType {
   doorContact,
   windowContact,
   powerOutlet,
-  player;
+  energy,
+  player,
+  color,
+  number,
+  dimmer,
+  dateTime,
+  image,
+  location,
+  call,
+  presence,
+  unknown;
 
   IconData get icon {
-    switch (this){
-      case ItemType.button:
-        return Icons.power_settings_new_outlined;
-      default:
+    switch (this) {
+      case ItemType.number:
+        return Icons.numbers;
+      case ItemType.text:
         return Icons.abc;
+      case ItemType.dimmer:
+        return Icons.linear_scale;
+      case ItemType.button:
+        return Icons.power_settings_new;
+      case ItemType.rollerShutter:
+        return Icons.roller_shades;
+      case ItemType.dateTime:
+        return Icons.event;
+      case ItemType.color:
+        return Icons.pallet;
+      case ItemType.player:
+        return Icons.play_circle;
+      case ItemType.image:
+        return Icons.image;
+      case ItemType.location:
+        return Icons.location_on;
+      case ItemType.call:
+        return Icons.phone;
+      case ItemType.windowContact:
+        return Icons.sensor_window;
+      case ItemType.doorContact:
+        return Icons.sensor_door;
+      case ItemType.unknown:
+        return Icons.help;
+      case ItemType.light:
+        return Icons.lightbulb;
+      case ItemType.powerOutlet:
+        return Icons.power;
+      case ItemType.temperature:
+        return Icons.thermostat;
+      case ItemType.humidity:
+        return Icons.water;
+      case ItemType.airPressure:
+        return Icons.air;
+      case ItemType.airQuality:
+        return Icons.air;
+      case ItemType.smokeDetector:
+        return Icons.smoke_free;
+      case ItemType.waterDetector:
+        return Icons.water;
+      case ItemType.motionDetector:
+        return Icons.online_prediction;
+      case ItemType.fan:
+        return Icons.mode_fan_off;
+      case ItemType.heater:
+        return Icons.fireplace;
+      case ItemType.thermostat:
+        return Icons.thermostat;
+      case ItemType.presence:
+        return Icons.person;
+      case ItemType.energy:
+        return Icons.bolt;
+    }
+  }
+  
+  String get description {
+    switch (this){
+      case ItemType.number:
+        return S.current.itemTypeNumber;
+      case ItemType.text:
+        return S.current.itemTypeText;
+      case ItemType.dimmer:
+        return S.current.itemTypeDimmer;
+      case ItemType.button:
+        return S.current.itemTypeButton;
+      case ItemType.rollerShutter:
+        return S.current.itemTypeRollerShutter;
+      case ItemType.dateTime:
+        return S.current.itemTypeDateTime;
+      case ItemType.color:
+        return S.current.itemTypeColor;
+      case ItemType.player:
+        return S.current.itemTypePlayer;
+      case ItemType.image:
+        return S.current.itemTypeImage;
+      case ItemType.location:
+        return S.current.itemTypeLocation;
+      case ItemType.call:
+        return S.current.itemTypeCall;
+      case ItemType.windowContact:
+        return S.current.itemTypeWindowContact;
+      case ItemType.doorContact:
+        return S.current.itemTypeDoorContact;
+      case ItemType.unknown:
+        return S.current.itemTypeUnknown;
+      case ItemType.light:
+        return S.current.itemTypeLight;
+      case ItemType.powerOutlet:
+        return S.current.itemTypePowerOutlet;
+      case ItemType.temperature:
+        return S.current.itemTypeTemperature;
+      case ItemType.humidity:
+        return S.current.itemTypeHumidity;
+      case ItemType.airPressure:
+        return S.current.itemTypeAirPressure;
+      case ItemType.airQuality:
+        return S.current.itemTypeAirQuality;
+      case ItemType.smokeDetector:
+        return S.current.itemTypeSmokeDetector;
+      case ItemType.waterDetector:
+        return S.current.itemTypeWaterDetector;
+      case ItemType.motionDetector:
+        return S.current.itemTypeMotionDetector;
+      case ItemType.fan:
+        return S.current.itemTypeFan;
+      case ItemType.heater:
+        return S.current.itemTypeHeater;
+      case ItemType.thermostat:
+        return S.current.itemTypeThermostat;
+      case ItemType.presence:
+        return S.current.itemTypePresence;
+      case ItemType.energy:
+        return S.current.itemTypeEnergy;
     }
   }
 
-  static List<ItemType> forEntryType(InboxEntryType type) {
+  static Set<ItemType> forEntryType(OhItemType type) {
     switch (type) {
-      case InboxEntryType.button:
-        return [ItemType.button, ItemType.light, ItemType.powerOutlet];
-      case InboxEntryType.dimmer:
-        return [ItemType.light];
-      case InboxEntryType.rollershutter:
-        return [ItemType.rollerShutter];
-      case InboxEntryType.contact:
-        return [ItemType.doorContact, ItemType.windowContact];
-      case InboxEntryType.number:
-        return [
+      case OhItemType.button:
+        return {
+          ItemType.button,
+          ItemType.light,
+          ItemType.powerOutlet,
+          ItemType.fan,
+          ItemType.smokeDetector,
+          ItemType.waterDetector,
+          ItemType.motionDetector,
+          ItemType.heater,
+          ItemType.thermostat,
+          ItemType.doorContact,
+          ItemType.windowContact,
+          ItemType.presence,
+        };
+      case OhItemType.dimmer:
+        return {
+          ItemType.light,
+          ItemType.fan,
+          ItemType.heater,
+          ItemType.thermostat,
+          ItemType.dimmer
+        };
+      case OhItemType.rollershutter:
+        return {ItemType.rollerShutter};
+      case OhItemType.contact:
+        return {
+          ItemType.doorContact,
+          ItemType.windowContact,
+        };
+      case OhItemType.number:
+        return {
           ItemType.temperature,
           ItemType.humidity,
           ItemType.airPressure,
           ItemType.airQuality,
+          ItemType.energy,
           ItemType.text,
-        ];
-      case InboxEntryType.string:
-        return [ItemType.text];
-      case InboxEntryType.dateTime:
-        return [ItemType.text];
-      case InboxEntryType.color:
-        return [ItemType.light, ItemType.text];
-      case InboxEntryType.player:
-        return [ItemType.player];
-      default:
-        return [];
+          ItemType.number,
+        };
+      case OhItemType.string:
+        return {ItemType.text};
+      case OhItemType.dateTime:
+        return {ItemType.dateTime};
+      case OhItemType.color:
+        return {ItemType.light, ItemType.text, ItemType.color};
+      case OhItemType.player:
+        return {ItemType.player};
+      case OhItemType.image:
+        return {ItemType.image};
+      case OhItemType.location:
+        return {ItemType.location};
+      case OhItemType.call:
+        return {ItemType.call};
+      case OhItemType.unknown:
+        return {ItemType.unknown};
+      case OhItemType.group:
+        return {};
     }
   }
 }

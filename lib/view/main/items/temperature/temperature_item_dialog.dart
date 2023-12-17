@@ -10,16 +10,16 @@ import '../../../../util/icons/icons.dart';
 import '../../../util/constants.dart';
 import '../item_widget_factory.dart';
 
-class TextItemDialog extends StatefulWidget {
+class SwitchItemDialog extends StatefulWidget {
   final String itemName;
 
-  const TextItemDialog({super.key, required this.itemName});
+  const SwitchItemDialog({super.key, required this.itemName});
 
   @override
-  State<TextItemDialog> createState() => _TextItemDialogState();
+  State<SwitchItemDialog> createState() => _SwitchItemDialogState();
 }
 
-class _TextItemDialogState extends State<TextItemDialog> {
+class _SwitchItemDialogState extends State<SwitchItemDialog> {
   final _itemRepository = locator<ItemRepository>();
   final _itemsStore = locator<AppDatabase>().itemsStore;
 
@@ -32,10 +32,20 @@ class _TextItemDialogState extends State<TextItemDialog> {
             return const SizedBox.shrink();
           }
           final item = snapshot.data!;
-          return
-              Text(item.itemState,
-                  style:
-                      DynamicTheme.of(context)!.theme.textTheme.headlineLarge);
+          final isOn = item.state == "ON";
+          return Align(
+                  child: IconButton(
+                      onPressed: () => onAction(!isOn),
+                      icon: Icon(
+                        item.icon ?? item.type.icon,
+                        color: isOn
+                            ? DynamicTheme.of(context)!
+                                .theme
+                                .colorScheme
+                                .primary
+                            : Colors.grey,
+                      ),
+                      iconSize: 60));
         });
   }
 

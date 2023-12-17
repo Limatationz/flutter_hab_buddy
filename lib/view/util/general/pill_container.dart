@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../constants.dart';
 
-class WidgetContainer extends StatelessWidget {
+class PillContainer extends StatelessWidget {
   final Widget child;
   final EdgeInsets margin;
   final EdgeInsets? padding;
@@ -15,10 +15,10 @@ class WidgetContainer extends StatelessWidget {
   final double? width;
   final double? height;
 
-  const WidgetContainer(
+  const PillContainer(
       {super.key,
       required this.child,
-      this.padding = const EdgeInsets.all(paddingContainer),
+      this.padding,
       this.margin = const EdgeInsets.all(0),
       this.onTap,
       this.onLongTap,
@@ -33,10 +33,10 @@ class WidgetContainer extends StatelessWidget {
     final widget = Material(
         elevation: elevation,
         borderRadius:
-            const BorderRadius.all(Radius.circular(borderRadiusContainer)),
+            const BorderRadius.all(Radius.circular(borderRadiusPillContainer)),
         child: ClipRRect(
-            borderRadius:
-                const BorderRadius.all(Radius.circular(borderRadiusContainer)),
+            borderRadius: const BorderRadius.all(
+                Radius.circular(borderRadiusPillContainer)),
             child: Container(
                 width: width,
                 height: height,

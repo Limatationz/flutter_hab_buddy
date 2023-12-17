@@ -1,3 +1,4 @@
+import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
 import 'package:collection/collection.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
@@ -12,6 +13,7 @@ import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'core/routing/router.dart';
 import 'generated/l10n.dart';
 import 'locator.dart';
+import 'repository/item_repository.dart';
 import 'repository/login_repository.dart';
 import 'view/util/text_styles.g.dart';
 
@@ -39,7 +41,8 @@ void main() async {
       break;
   }
 
-  await locator.isReady<StreamingSharedPreferences>();
+  await locator.allReady();
+  await initHyphenation();
 
   runApp(DynamicColorBuilder(
       builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {

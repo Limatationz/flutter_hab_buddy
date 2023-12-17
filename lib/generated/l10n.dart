@@ -379,6 +379,346 @@ class S {
       args: [],
     );
   }
+
+  /// `Number`
+  String get itemTypeNumber {
+    return Intl.message(
+      'Number',
+      name: 'itemTypeNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Text`
+  String get itemTypeText {
+    return Intl.message(
+      'Text',
+      name: 'itemTypeText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dimmer`
+  String get itemTypeDimmer {
+    return Intl.message(
+      'Dimmer',
+      name: 'itemTypeDimmer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Switch`
+  String get itemTypeButton {
+    return Intl.message(
+      'Switch',
+      name: 'itemTypeButton',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Roller Shutter`
+  String get itemTypeRollerShutter {
+    return Intl.message(
+      'Roller Shutter',
+      name: 'itemTypeRollerShutter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Date and Time`
+  String get itemTypeDateTime {
+    return Intl.message(
+      'Date and Time',
+      name: 'itemTypeDateTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Color`
+  String get itemTypeColor {
+    return Intl.message(
+      'Color',
+      name: 'itemTypeColor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Player`
+  String get itemTypePlayer {
+    return Intl.message(
+      'Player',
+      name: 'itemTypePlayer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Image`
+  String get itemTypeImage {
+    return Intl.message(
+      'Image',
+      name: 'itemTypeImage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location`
+  String get itemTypeLocation {
+    return Intl.message(
+      'Location',
+      name: 'itemTypeLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Call`
+  String get itemTypeCall {
+    return Intl.message(
+      'Call',
+      name: 'itemTypeCall',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Window Contact`
+  String get itemTypeWindowContact {
+    return Intl.message(
+      'Window Contact',
+      name: 'itemTypeWindowContact',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Door Contact`
+  String get itemTypeDoorContact {
+    return Intl.message(
+      'Door Contact',
+      name: 'itemTypeDoorContact',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unknown`
+  String get itemTypeUnknown {
+    return Intl.message(
+      'Unknown',
+      name: 'itemTypeUnknown',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Light`
+  String get itemTypeLight {
+    return Intl.message(
+      'Light',
+      name: 'itemTypeLight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Power Outlet`
+  String get itemTypePowerOutlet {
+    return Intl.message(
+      'Power Outlet',
+      name: 'itemTypePowerOutlet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Temperature`
+  String get itemTypeTemperature {
+    return Intl.message(
+      'Temperature',
+      name: 'itemTypeTemperature',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Humidity`
+  String get itemTypeHumidity {
+    return Intl.message(
+      'Humidity',
+      name: 'itemTypeHumidity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Air Pressure`
+  String get itemTypeAirPressure {
+    return Intl.message(
+      'Air Pressure',
+      name: 'itemTypeAirPressure',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Air Quality`
+  String get itemTypeAirQuality {
+    return Intl.message(
+      'Air Quality',
+      name: 'itemTypeAirQuality',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Smoke Detector`
+  String get itemTypeSmokeDetector {
+    return Intl.message(
+      'Smoke Detector',
+      name: 'itemTypeSmokeDetector',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Water Detector`
+  String get itemTypeWaterDetector {
+    return Intl.message(
+      'Water Detector',
+      name: 'itemTypeWaterDetector',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Motion Detector`
+  String get itemTypeMotionDetector {
+    return Intl.message(
+      'Motion Detector',
+      name: 'itemTypeMotionDetector',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fan`
+  String get itemTypeFan {
+    return Intl.message(
+      'Fan',
+      name: 'itemTypeFan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Heater`
+  String get itemTypeHeater {
+    return Intl.message(
+      'Heater',
+      name: 'itemTypeHeater',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Thermostat`
+  String get itemTypeThermostat {
+    return Intl.message(
+      'Thermostat',
+      name: 'itemTypeThermostat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Presence`
+  String get itemTypePresence {
+    return Intl.message(
+      'Presence',
+      name: 'itemTypePresence',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Energy`
+  String get itemTypeEnergy {
+    return Intl.message(
+      'Energy',
+      name: 'itemTypeEnergy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Complex Item`
+  String get addComplexItem {
+    return Intl.message(
+      'Add Complex Item',
+      name: 'addComplexItem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Item`
+  String get editItem {
+    return Intl.message(
+      'Edit Item',
+      name: 'editItem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm`
+  String get confirm {
+    return Intl.message(
+      'Confirm',
+      name: 'confirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete item?`
+  String get deleteItemDialogHeadline {
+    return Intl.message(
+      'Delete item?',
+      name: 'deleteItemDialogHeadline',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Do you really want to delete item`
+  String get deleteItemDialogText {
+    return Intl.message(
+      'Do you really want to delete item',
+      name: 'deleteItemDialogText',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

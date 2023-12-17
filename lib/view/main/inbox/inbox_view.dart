@@ -5,6 +5,7 @@ import 'package:stacked/stacked.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/database/inbox/inbox_list_entry.dart';
+import '../../../core/database/items/item_type.dart';
 import '../../../generated/l10n.dart';
 import '../../../util/icons/icons.dart';
 import '../../util/constants.dart';
@@ -51,6 +52,7 @@ class InboxView extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: paddingScaffold),
                 child: TextField(
                   controller: model.textEditingController,
+                  focusNode: model.searchFocusNode,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     contentPadding:
@@ -83,7 +85,8 @@ class InboxView extends StatelessWidget {
                         final entry = snapshot.data![index].entry;
                         return InboxListItem(
                           entry: entry,
-                          onTap: () => _onEntryTap(context, entry),
+                          onTap: () =>
+                              _onEntryTap(context, entry, model.resetSearch),
                         );
                       },
                     );
@@ -99,9 +102,13 @@ class InboxView extends StatelessWidget {
     );
   }
 
-  void _onEntryTap(BuildContext context, InboxEntry entry) {
-    showBarModalBottomSheet(
+  void _onEntryTap(
+      BuildContext context, InboxEntry entry, VoidCallback resetSearch) async {
+    final result = await showBarModalBottomSheet<bool>(
         context: context,
         builder: (context) => InboxEntryAddSheet(entry: entry));
+    if (result) {
+      resetSearch();
+    }
   }
 }

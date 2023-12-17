@@ -18,8 +18,13 @@ class InboxEntryAddViewModel extends BaseViewModel {
   final fbKey = GlobalKey<FormBuilderState>();
   IconData? itemIcon;
   int? addRoomId;
+  bool isFavorite = false;
 
-  InboxEntryAddViewModel(this.entry);
+  InboxEntryAddViewModel(this.entry){
+    if(ItemType.forEntryType(entry.type).length == 1){
+      itemIcon = ItemType.forEntryType(entry.type).first.icon;
+    }
+  }
 
   Future<bool> save() async {
     if (fbKey.currentState?.saveAndValidate() ?? false) {
@@ -56,6 +61,7 @@ class InboxEntryAddViewModel extends BaseViewModel {
         icon: itemIcon != null ? Value(itemIcon) : const Value.absent(),
         customLabel:
             customLabel != null ? Value(customLabel) : const Value.absent(),
+        isFavorite: Value(isFavorite),
       );
       await _itemsStore.insertOrUpdateSingle(item);
       await _inboxStore.deleteDataByName(entry.name);
@@ -74,5 +80,15 @@ class InboxEntryAddViewModel extends BaseViewModel {
       addRoomId = roomId;
       notifyListeners();
     }
+  }
+
+  void onFavoriteToggle() {
+    isFavorite = !isFavorite;
+    notifyListeners();
+  }
+
+  void setIconOnTypeChange(ItemType type){
+    itemIcon = type.icon;
+    notifyListeners();
   }
 }

@@ -37,6 +37,7 @@ class _BaseFormIconPickerState extends State<BaseFormIconPicker> {
           helperText: widget.helperText,
           helperMaxLines: 3,
           isDense: true,
+          floatingLabelBehavior: FloatingLabelBehavior.always,
           prefixIcon: widget.selectedIcon != null
               ? Icon(widget.selectedIcon, size: 30)
               : null,

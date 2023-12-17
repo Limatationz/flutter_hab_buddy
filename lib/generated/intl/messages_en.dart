@@ -22,12 +22,21 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "addComplexItem":
+            MessageLookupByLibrary.simpleMessage("Add Complex Item"),
         "addItemHeadline": MessageLookupByLibrary.simpleMessage("Add Item"),
         "addRoomHeadline": MessageLookupByLibrary.simpleMessage("Add Room"),
+        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "close": MessageLookupByLibrary.simpleMessage("Close"),
+        "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
         "customLabel": MessageLookupByLibrary.simpleMessage("Custom Label"),
         "customLabelHelp": MessageLookupByLibrary.simpleMessage(
             "Add a custom label for this item otherwise the label from OpenHAB will be used (optional)"),
+        "deleteItemDialogHeadline":
+            MessageLookupByLibrary.simpleMessage("Delete item?"),
+        "deleteItemDialogText": MessageLookupByLibrary.simpleMessage(
+            "Do you really want to delete item"),
+        "editItem": MessageLookupByLibrary.simpleMessage("Edit Item"),
         "errorButtonHome": MessageLookupByLibrary.simpleMessage("Go to Home"),
         "errorHeadline":
             MessageLookupByLibrary.simpleMessage("An error occured"),
@@ -36,8 +45,48 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("No results for:"),
         "iconPickerTitle": MessageLookupByLibrary.simpleMessage("Pick an icon"),
         "itemType": MessageLookupByLibrary.simpleMessage("Item Type"),
+        "itemTypeAirPressure":
+            MessageLookupByLibrary.simpleMessage("Air Pressure"),
+        "itemTypeAirQuality":
+            MessageLookupByLibrary.simpleMessage("Air Quality"),
+        "itemTypeButton": MessageLookupByLibrary.simpleMessage("Switch"),
+        "itemTypeCall": MessageLookupByLibrary.simpleMessage("Call"),
+        "itemTypeColor": MessageLookupByLibrary.simpleMessage("Color"),
+        "itemTypeDateTime":
+            MessageLookupByLibrary.simpleMessage("Date and Time"),
+        "itemTypeDimmer": MessageLookupByLibrary.simpleMessage("Dimmer"),
+        "itemTypeDoorContact":
+            MessageLookupByLibrary.simpleMessage("Door Contact"),
+        "itemTypeEnergy": MessageLookupByLibrary.simpleMessage("Energy"),
+        "itemTypeFan": MessageLookupByLibrary.simpleMessage("Fan"),
+        "itemTypeHeater": MessageLookupByLibrary.simpleMessage("Heater"),
         "itemTypeHelp":
             MessageLookupByLibrary.simpleMessage("The type of the item"),
+        "itemTypeHumidity": MessageLookupByLibrary.simpleMessage("Humidity"),
+        "itemTypeImage": MessageLookupByLibrary.simpleMessage("Image"),
+        "itemTypeLight": MessageLookupByLibrary.simpleMessage("Light"),
+        "itemTypeLocation": MessageLookupByLibrary.simpleMessage("Location"),
+        "itemTypeMotionDetector":
+            MessageLookupByLibrary.simpleMessage("Motion Detector"),
+        "itemTypeNumber": MessageLookupByLibrary.simpleMessage("Number"),
+        "itemTypePlayer": MessageLookupByLibrary.simpleMessage("Player"),
+        "itemTypePowerOutlet":
+            MessageLookupByLibrary.simpleMessage("Power Outlet"),
+        "itemTypePresence": MessageLookupByLibrary.simpleMessage("Presence"),
+        "itemTypeRollerShutter":
+            MessageLookupByLibrary.simpleMessage("Roller Shutter"),
+        "itemTypeSmokeDetector":
+            MessageLookupByLibrary.simpleMessage("Smoke Detector"),
+        "itemTypeTemperature":
+            MessageLookupByLibrary.simpleMessage("Temperature"),
+        "itemTypeText": MessageLookupByLibrary.simpleMessage("Text"),
+        "itemTypeThermostat":
+            MessageLookupByLibrary.simpleMessage("Thermostat"),
+        "itemTypeUnknown": MessageLookupByLibrary.simpleMessage("Unknown"),
+        "itemTypeWaterDetector":
+            MessageLookupByLibrary.simpleMessage("Water Detector"),
+        "itemTypeWindowContact":
+            MessageLookupByLibrary.simpleMessage("Window Contact"),
         "login": MessageLookupByLibrary.simpleMessage("Login"),
         "loginFailedMessage":
             MessageLookupByLibrary.simpleMessage("Please try again"),

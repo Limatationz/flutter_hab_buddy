@@ -14,6 +14,7 @@ import '../../../util/constants.dart';
 import '../../../util/form/base_form_dropdown.dart';
 import '../../../util/form/base_form_icon_picker.dart';
 import '../../../util/form/base_form_text_field.dart';
+import '../../../util/general/alert_dialog_action.dart';
 import '../../../util/general/bar_bottom_sheet.dart';
 import '../../../util/general/base_elevated_button.dart';
 import '../../../util/general/headline_padding_box.dart';
@@ -37,11 +38,59 @@ class ItemEditView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Edit Item",
-                      style: DynamicTheme.of(context)!
-                          .theme
-                          .textTheme
-                          .headlineMedium),
+                  Row(children: [
+                    Expanded(
+                        child: Text(S.of(context).editItem,
+                            style: DynamicTheme.of(context)!
+                                .theme
+                                .textTheme
+                                .headlineMedium)),
+                    const Gap(listSpacing),
+                    IconButton(
+                        onPressed: () async {
+                          final result = await showAdaptiveDialog<bool?>(
+                              context: context,
+                              builder: (context) => AlertDialog.adaptive(
+                                    title: Text(
+                                        S.of(context).deleteItemDialogHeadline),
+                                    content: Text.rich(TextSpan(children: [
+                                      TextSpan(
+                                          text: S
+                                              .of(context)
+                                              .deleteItemDialogText),
+                                      TextSpan(
+                                          text: " ${item.label}",
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                      const TextSpan(
+                                        text: "?",
+                                      ),
+                                    ])),
+                                    actions: [
+                                      AlertDialogAction(
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(false),
+                                          child: Text(S.of(context).cancel)),
+                                      AlertDialogAction(
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(true),
+                                          child: Text(S.of(context).confirm))
+                                    ],
+                                  ));
+                          if (result == true) {
+                            model.onDelete().then((value) {
+                              Navigator.of(context).pop();
+                            });
+                          }
+                        },
+                        visualDensity: VisualDensity.compact,
+                        iconSize: 28,
+                        icon: Icon(
+                          LineIconsFilled.trash_can,
+                          color:
+                              DynamicTheme.of(context)!.theme.colorScheme.error,
+                        )),
+                  ]),
                   const HeadlinePaddingBox(),
                   HeadlineValueIcon(title: "Name", data: item.ohName),
                   HeadlineValueIcon(title: "Label", data: item.ohLabel),
@@ -68,12 +117,13 @@ class ItemEditView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
+                        flex: 3,
                         child: BaseFormDropdown<ItemType>(
                           name: "itemType",
                           initialValue: item.type,
                           items: ItemType.forEntryType(item.ohType)
                               .map((e) => DropdownMenuItem(
-                                  value: e, child: Text(e.toString())))
+                                  value: e, child: Text(e.description)))
                               .toList(),
                           validator: FormBuilderValidators.required(),
                           label: S.of(context).itemType,
@@ -83,6 +133,7 @@ class ItemEditView extends StatelessWidget {
                       ),
                       const Gap(listSpacing),
                       Expanded(
+                        flex: 2,
                         child: BaseFormIconPicker(
                           iconPack: iconPackItems,
                           onChange: model.setIcon,

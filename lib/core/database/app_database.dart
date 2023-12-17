@@ -9,7 +9,10 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
 import 'package:path/path.dart' as p;
+import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 
+import '../../locator.dart';
+import '../../util/shared_prefs_keys.dart';
 import '../network/generated/openHAB.swagger.dart';
 import 'converter/command_description_converter.dart';
 import 'converter/icon_data_converter.dart';
@@ -21,6 +24,7 @@ import 'inbox/inbox_table.dart';
 import 'items/item_type.dart';
 import 'items/items_store.dart';
 import 'items/items_table.dart';
+import 'items/oh_item_type.dart';
 import 'rooms/rooms_store.dart';
 import 'rooms/rooms_table.dart';
 
@@ -36,7 +40,7 @@ part 'app_database.g.dart';
   ItemsStore,
 ])
 class AppDatabase extends _$AppDatabase {
-  AppDatabase() : super(constructDb());
+  AppDatabase() : super(_openConnection());
 
   // you should bump this number whenever you change or add a table definition.
   // Migrations are covered later in the documentation.
@@ -54,11 +58,38 @@ class AppDatabase extends _$AppDatabase {
           await m.createTable(table);
         }
       }
-    }, onCreate: (Migrator m) async {
+
+      await initScores();
+      }, onCreate: (Migrator m) async {
       await m.createAll();
     }, onUpgrade: (Migrator m, int from, int to) async {
 
     });
+  }
+
+  Future<void> initScores() async {
+    // set score of items to new score
+    await customStatement("UPDATE items_table SET score = new_score");
+
+    // reset score if time is over
+    final prefs = locator<StreamingSharedPreferences>();
+    final lastScoreReset =
+    prefs.getInt(lastItemScoreResetKey, defaultValue: 0).getValue();
+    if (lastScoreReset == 0) {
+      // First start
+      prefs.setInt(
+          lastItemScoreResetKey, DateTime.now().millisecondsSinceEpoch);
+    } else {
+      final lastScoreResetDate =
+      DateTime.fromMillisecondsSinceEpoch(lastScoreReset);
+      if (DateTime.now().difference(lastScoreResetDate).inDays > 14) {
+        // Reset all scores after 14 days
+        prefs.setInt(
+            lastItemScoreResetKey, DateTime.now().millisecondsSinceEpoch);
+        await customStatement('UPDATE items_table SET score = score / 10 WHERE score > 0');
+        await customStatement('UPDATE items_table SET new_score = score');
+      }
+    }
   }
 
   Future<void> deleteAllData() async {
@@ -69,35 +100,26 @@ class AppDatabase extends _$AppDatabase {
   }
 }
 
-DatabaseConnection constructDb() {
-  return DatabaseConnection.delayed(Future(() async {
+LazyDatabase _openConnection() {
+  // the LazyDatabase util lets us find the right location for the file async.
+  return LazyDatabase(() async {
+    // put the database file, called db.sqlite here, into the documents folder
+    // for your app.
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(p.join(dbFolder.path, 'db.sqlite'));
 
+    // Also work around limitations on old Android versions
     if (Platform.isAndroid) {
       await applyWorkaroundToOpenSqlite3OnOldAndroidVersions();
-
-      final cachebase = (await getTemporaryDirectory()).path;
-
-      // We can't access /tmp on Android, which sqlite3 would try by default.
-      // Explicitly tell it about the correct temporary directory.
-      sqlite3.tempDirectory = cachebase;
     }
 
-    return NativeDatabase.createBackgroundConnection(file);
-  }));
-}
+    // Make sqlite3 pick a more suitable location for temporary files - the
+    // one from the system may be inaccessible due to sandboxing.
+    final cachebase = (await getTemporaryDirectory()).path;
+    // We can't access /tmp on Android, which sqlite3 would try by default.
+    // Explicitly tell it about the correct temporary directory.
+    sqlite3.tempDirectory = cachebase;
 
-Future<void> validateDatabaseSchema(GeneratedDatabase database) async {
-  // This method validates that the actual schema of the opened database matches
-  // the tables, views, triggers and indices for which drift_dev has generated
-  // code.
-  // Validating the database's schema after opening it is generally a good idea,
-  // since it allows us to get an early warning if we change a table definition
-  // without writing a schema migration for it.
-  //
-  // For details, see: https://drift.simonbinder.eu/docs/advanced-features/migrations/#verifying-a-database-schema-at-runtime
-  if (kDebugMode) {
-    await VerifySelf(database).validateDatabaseSchema();
-  }
+    return NativeDatabase.createInBackground(file);
+  });
 }
