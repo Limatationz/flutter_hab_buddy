@@ -7,14 +7,13 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:logging/logging.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 
 import 'core/routing/router.dart';
 import 'generated/l10n.dart';
 import 'locator.dart';
-import 'repository/item_repository.dart';
-import 'repository/login_repository.dart';
 import 'view/util/text_styles.g.dart';
 
 void main() async {
@@ -22,6 +21,9 @@ void main() async {
 
   // Splash Screen
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  // Hive
+  await Hive.initFlutter();
 
   _setupLogging();
   setupLocator();
@@ -41,8 +43,10 @@ void main() async {
       break;
   }
 
-  await locator.allReady();
-  await initHyphenation();
+  await Future.wait([
+    locator.allReady(),
+    initHyphenation(),
+  ]);
 
   runApp(DynamicColorBuilder(
       builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {

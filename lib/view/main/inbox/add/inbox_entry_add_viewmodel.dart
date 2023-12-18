@@ -6,11 +6,11 @@ import 'package:stacked/stacked.dart';
 import '../../../../core/database/app_database.dart';
 import '../../../../core/database/items/item_type.dart';
 import '../../../../locator.dart';
+import '../../../../repository/item_repository.dart';
 
 class InboxEntryAddViewModel extends BaseViewModel {
   final _roomsStore = locator<AppDatabase>().roomsStore;
-  final _itemsStore = locator<AppDatabase>().itemsStore;
-  final _inboxStore = locator<AppDatabase>().inboxStore;
+  final _itemsRepository = locator<ItemRepository>();
 
   Stream<List<Room>> get roomsStream => _roomsStore.all().watch();
 
@@ -63,8 +63,7 @@ class InboxEntryAddViewModel extends BaseViewModel {
             customLabel != null ? Value(customLabel) : const Value.absent(),
         isFavorite: Value(isFavorite),
       );
-      await _itemsStore.insertOrUpdateSingle(item);
-      await _inboxStore.deleteDataByName(entry.name);
+      await _itemsRepository.addItemToInbox(item);
       return true;
     }
     return false;

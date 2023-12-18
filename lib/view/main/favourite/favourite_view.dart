@@ -154,7 +154,7 @@ class FavouriteView extends StatelessWidget {
         Padding(
             padding: const EdgeInsets.symmetric(vertical: smallListSpacing),
             child: Divider(
-              color: colorScheme.onPrimary,
+              color: colorScheme.onBackground.withOpacity(0.2),
             )),
       LayoutBuilder(
           builder: (context, constraints) => StaggeredGrid.count(

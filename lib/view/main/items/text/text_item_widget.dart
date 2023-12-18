@@ -37,5 +37,5 @@ class TextItemWidget extends SmallItemWidget {
   }
 
   void onLongTap(BuildContext context) => ItemWidgetFactory.openDialog(
-      context, TextItemDialog(itemName: item.ohName), item);
+      context, TextItemDialog(itemName: item.ohName), item, colorScheme);
 }

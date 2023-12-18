@@ -203,10 +203,12 @@ class RoomsView extends StatelessWidget {
                         runSpacing: listSpacing,
                         children: sensors),
                   if (sensors.isNotEmpty && items.isNotEmpty)
-                    const Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: smallListSpacing),
-                        child: Divider()),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: smallListSpacing),
+                        child: Divider(
+                          color: colorScheme.onBackground.withOpacity(0.2),
+                        )),
                   LayoutBuilder(
                       builder: (context, constraints) => StaggeredGrid.count(
                             crossAxisCount:
@@ -214,12 +216,10 @@ class RoomsView extends StatelessWidget {
                             mainAxisSpacing: listSpacing,
                             crossAxisSpacing: listSpacing,
                             children: [
-                              ...items
-                                  .map((e) => StaggeredGridTile.count(
-                                      crossAxisCellCount: e.crossAxisCount,
-                                      mainAxisCellCount: e.mainAxisCount,
-                                      child: e))
-                                  .toList(),
+                              ...items.map((e) => StaggeredGridTile.count(
+                                  crossAxisCellCount: e.crossAxisCount,
+                                  mainAxisCellCount: e.mainAxisCount,
+                                  child: e)),
                               AddComplexItemWidget(
                                 colorScheme: colorScheme,
                               )

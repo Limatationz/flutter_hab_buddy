@@ -43,11 +43,15 @@ class ItemWidgetFactory {
         context: context, builder: (context) => ItemEditView(item: item));
   }
 
-  static Future<void> openDialog(
-      BuildContext context, Widget child, Item item) async {
+  static Future<void> openDialog(BuildContext context, Widget child, Item item,
+      ColorScheme colorScheme) async {
     showDialog(
         context: context,
-        builder: (_) =>
-            Dialog(child: BaseItemDialog(item: item, child: child)));
+        builder: (_) => Dialog(
+                child: BaseItemDialog(
+              item: item,
+              colorScheme: colorScheme,
+              child: child,
+            )));
   }
 }

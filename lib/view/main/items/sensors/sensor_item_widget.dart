@@ -6,7 +6,7 @@ import '../../../../core/database/items/items_table.dart';
 import '../../../util/constants.dart';
 import '../../../util/general/pill_container.dart';
 import '../item_widget_factory.dart';
-import '../text/text_item_dialog.dart';
+import 'sensor_item_dialog.dart';
 
 class SensorItemWidget extends StatefulWidget {
   final Item item;
@@ -55,7 +55,11 @@ class _SensorItemWidgetState extends State<SensorItemWidget> {
     });
   }
 
-  void onLongTap(){
-    ItemWidgetFactory.openDialog(context, TextItemDialog(itemName: widget.item.ohName), widget.item);
+  void onLongTap() {
+    ItemWidgetFactory.openDialog(
+        context,
+        SensorItemDialog(
+            itemName: widget.item.ohName, colorScheme: widget.colorScheme),
+        widget.item, widget.colorScheme);
   }
 }

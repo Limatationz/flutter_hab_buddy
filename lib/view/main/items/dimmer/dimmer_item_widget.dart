@@ -40,12 +40,13 @@ class DimmerItemWidget extends SmallItemWidget {
                 style: DynamicTheme.of(context)!.theme.textTheme.titleMedium),
             Align(
                 alignment: Alignment.bottomRight,
-                child: Icon(item.icon ?? item.type.icon,
-                    size: iconSize,
-                    color: DynamicTheme.of(context)!
-                        .theme
-                        .colorScheme
-                        .onBackground)),
+                child: Icon(
+                  item.icon ?? item.type.icon,
+                  size: iconSize,
+                  color: isOn
+                      ? DynamicTheme.of(context)!.theme.colorScheme.onBackground
+                      : Colors.grey,
+                )),
           ],
         ));
   }
@@ -59,5 +60,5 @@ class DimmerItemWidget extends SmallItemWidget {
   }
 
   void onLongTap(BuildContext context) => ItemWidgetFactory.openDialog(
-      context, DimmerItemDialog(itemName: item.ohName), item);
+      context, DimmerItemDialog(itemName: item.ohName), item, colorScheme);
 }

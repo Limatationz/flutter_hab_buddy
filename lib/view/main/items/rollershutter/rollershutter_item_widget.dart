@@ -45,8 +45,9 @@ class RollershutterItemWidget extends SmallItemWidget {
                 child: Icon(
                   item.icon ?? item.type.icon,
                   size: iconSize,
-                  color:
-                      DynamicTheme.of(context)!.theme.colorScheme.onBackground,
+                  color: !isDown
+                      ? DynamicTheme.of(context)!.theme.colorScheme.onBackground
+                      : Colors.grey,
                 )),
           ],
         ));
@@ -66,7 +67,8 @@ class RollershutterItemWidget extends SmallItemWidget {
         itemName: item.ohName,
         initialValue: numberState,
       ),
-      item);
+      item,
+      colorScheme);
 }
 
 enum RollershutterState { up, down, half }

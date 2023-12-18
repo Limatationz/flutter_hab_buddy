@@ -40,10 +40,9 @@ class SwitchItemWidget extends SmallItemWidget {
                 alignment: Alignment.bottomRight,
                 child: Icon(item.icon ?? item.type.icon,
                     size: iconSize,
-                    color: DynamicTheme.of(context)!
-                        .theme
-                        .colorScheme
-                        .onBackground)),
+                    color: isOn
+                        ? DynamicTheme.of(context)!.theme.colorScheme.onBackground
+                        : Colors.grey,)),
           ],
         ));
   }
@@ -53,5 +52,5 @@ class SwitchItemWidget extends SmallItemWidget {
   }
 
   void onLongTap(BuildContext context) => ItemWidgetFactory.openDialog(
-      context, SwitchItemDialog(itemName: item.ohName), item);
+      context, SwitchItemDialog(itemName: item.ohName), item, colorScheme);
 }

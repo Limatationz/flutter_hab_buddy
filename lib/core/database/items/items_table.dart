@@ -1,7 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:sprintf/sprintf.dart';
 
-import '../../../view/util/constants.dart';
 import '../app_database.dart';
 import '../converter/command_description_converter.dart';
 import '../converter/icon_data_converter.dart';
@@ -70,23 +69,26 @@ class ItemWithRoom {
 extension ItemLabel on Item {
   String get label => customLabel ?? ohLabel;
 
-  String get itemState {
+  String get itemState => transformState(state);
+
+  String transformState(String state) {
     if (transformedState != null) {
       return transformedState!;
-    } else if (ohUnitSymbol != null) {
-      return '$state $ohUnitSymbol';
     } else if (stateDescription?.pattern != null) {
       try {
-        return sprintf(stateDescription!.pattern!, [typeState]);
+        return sprintf(stateDescription!.pattern!, [getTypeState(state)]);
       } catch (e) {
         return stateDescription!.pattern!.replaceFirst(RegExp(r'(\S+)'), state);
       }
-    } else {
+    } else if (ohUnitSymbol != null) {
+      return "$state ${ohUnitSymbol!}";
+    }
+    else {
       return state;
     }
   }
 
-  dynamic get typeState {
+  dynamic getTypeState(String state) {
     final doubleValue = double.tryParse(state);
     if (doubleValue != null) {
       return doubleValue;

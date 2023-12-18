@@ -6,6 +6,10 @@ targets:
       - $package$
       - test/**
     builders:
+      hive_generator:
+        enabled: true
+        generate_for:
+          - lib/core/**
       drift_dev:
         enabled: true
         generate_for:

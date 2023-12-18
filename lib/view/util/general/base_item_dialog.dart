@@ -1,3 +1,4 @@
+import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
 import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -13,8 +14,13 @@ import '../constants.dart';
 class BaseItemDialog extends StatefulWidget {
   final Widget child;
   final Item item;
+  final ColorScheme colorScheme;
 
-  const BaseItemDialog({super.key, required this.child, required this.item});
+  const BaseItemDialog(
+      {super.key,
+      required this.child,
+      required this.item,
+      required this.colorScheme});
 
   @override
   State<BaseItemDialog> createState() => _BaseItemDialogState();
@@ -35,7 +41,7 @@ class _BaseItemDialogState extends State<BaseItemDialog> {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-            color: DynamicTheme.of(context)!.theme.colorScheme.background,
+            color: widget.colorScheme.background,
             borderRadius: const BorderRadius.all(Radius.circular(10))),
         padding: const EdgeInsets.all(paddingScaffold),
         child: Column(
@@ -44,18 +50,20 @@ class _BaseItemDialogState extends State<BaseItemDialog> {
             children: [
               Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Expanded(
-                    child: Text(
+                    child: AutoHyphenatingText(
                   widget.item.label,
                   style:
                       DynamicTheme.of(context)!.theme.textTheme.headlineMedium,
                 )),
                 const Gap(listSpacing),
                 IconButton(
+                  color: widget.colorScheme.primary,
                     onPressed: toggleFavorite,
                     visualDensity: VisualDensity.compact,
                     icon: Icon(
                         isFavorite ? LineIconsFilled.heart : LineIcons.heart)),
                 IconButton(
+                    color: widget.colorScheme.primary,
                     onPressed: () =>
                         ItemWidgetFactory.openEditSheet(context, widget.item),
                     visualDensity: VisualDensity.compact,

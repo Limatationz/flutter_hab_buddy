@@ -7,10 +7,12 @@ import '../core/network/converters/inbox.dart';
 import '../core/network/generated/client_index.dart';
 import '../core/snackbar/snackbar_service.dart';
 import '../locator.dart';
+import 'chart_repository.dart';
 import 'login_repository.dart';
 
 class ItemRepository {
   final _loginRepository = locator<LoginRepository>();
+  final _chartRepository = locator<ChartRepository>();
   final _itemsStore = locator<AppDatabase>().itemsStore;
   final _inboxStore = locator<AppDatabase>().inboxStore;
   final _snackbarService = locator<SnackbarService>();
@@ -42,6 +44,12 @@ class ItemRepository {
           if (update != null) {
             await _itemsStore.updateByName(update);
           }
+
+          // get new chart data if item is readonly
+          if ((item.stateDescription?.readOnly ?? false) && item.name != null) {
+            _chartRepository.fetchChartDataByName(item.name!);
+          }
+
           storedItems.removeWhere((element) => element.ohName == item.name);
         }
       }
@@ -57,6 +65,15 @@ class ItemRepository {
     } else {
       print(result.error);
     }
+  }
+
+  Future<void> addItemToInbox(ItemsTableCompanion item) async {
+    // db things
+    await _itemsStore.insertOrUpdateSingle(item);
+    await _inboxStore.deleteDataByName(item.ohName.value);
+
+    // fetch chart data
+    _chartRepository.fetchChartDataByName(item.ohName.value);
   }
 
   Future<void> switchAction(String itemName, bool on) async {

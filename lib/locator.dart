@@ -6,6 +6,7 @@ import 'core/network/generated/client_index.dart';
 import 'core/network/interceptors/AuthInterceptor.dart';
 import 'core/routing/navigation_service.dart';
 import 'core/snackbar/snackbar_service.dart';
+import 'repository/chart_repository.dart';
 import 'repository/item_repository.dart';
 import 'repository/login_repository.dart';
 
@@ -25,7 +26,6 @@ void setupLocator() {
   // database
   locator.registerLazySingleton(() => AppDatabase());
 
-  // repositories
   locator.registerSingleton(LoginRepository());
 
   // API
@@ -37,6 +37,7 @@ void setupLocator() {
       ]));
 
   // repositories
+  locator.registerSingleton(ChartRepository());
   locator.registerSingleton(
     ItemRepository(),
   );
