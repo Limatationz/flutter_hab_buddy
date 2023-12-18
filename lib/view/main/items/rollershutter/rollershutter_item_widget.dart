@@ -11,7 +11,7 @@ import '../general/item_widget.dart';
 import '../item_widget_factory.dart';
 import 'rollershutter_item_dialog.dart';
 
-class RollershutterItemWidget extends ItemWidget {
+class RollershutterItemWidget extends SmallItemWidget {
   RollershutterItemWidget(
       {super.key, required super.item, required super.colorScheme});
 

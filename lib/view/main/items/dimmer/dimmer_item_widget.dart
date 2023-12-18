@@ -11,7 +11,7 @@ import '../general/item_widget.dart';
 import '../item_widget_factory.dart';
 import 'dimmer_item_dialog.dart';
 
-class DimmerItemWidget extends ItemWidget {
+class DimmerItemWidget extends SmallItemWidget {
   DimmerItemWidget(
       {super.key, required super.item, required super.colorScheme});
 

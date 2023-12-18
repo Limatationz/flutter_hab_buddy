@@ -106,38 +106,4 @@ extension ItemLabel on Item {
       type == ItemType.airPressure ||
       type == ItemType.airQuality ||
       type == ItemType.presence;
-
-  int get crossAxisCount {
-    if(isSensor) {
-      return 1;
-    }
-
-    switch (ohType) {
-      case OhItemType.button:
-      case OhItemType.dimmer:
-      case OhItemType.rollershutter:
-      case OhItemType.string:
-      case OhItemType.number:
-        return smallGridCrossAxisCount;
-      default:
-        return 1;
-    }
-  }
-
-  double get mainAxisCount {
-    if(isSensor) {
-      return 0.5;
-    }
-
-    switch (ohType) {
-      case OhItemType.button:
-      case OhItemType.dimmer:
-      case OhItemType.rollershutter:
-      case OhItemType.string:
-      case OhItemType.number:
-        return smallGridMainAxisCount;
-      default:
-        return 1;
-    }
-  }
 }

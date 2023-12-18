@@ -55,8 +55,7 @@ class _SensorItemWidgetState extends State<SensorItemWidget> {
     });
   }
 
-  void onLongTap() {
-    ItemWidgetFactory.openDialog(
-        context, TextItemDialog(itemName: widget.item.ohName), widget.item);
+  void onLongTap(){
+    ItemWidgetFactory.openDialog(context, TextItemDialog(itemName: widget.item.ohName), widget.item);
   }
 }

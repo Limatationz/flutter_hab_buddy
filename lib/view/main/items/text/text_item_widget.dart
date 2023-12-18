@@ -8,7 +8,7 @@ import '../general/item_widget.dart';
 import '../item_widget_factory.dart';
 import 'text_item_dialog.dart';
 
-class TextItemWidget extends ItemWidget {
+class TextItemWidget extends SmallItemWidget {
   const TextItemWidget(
       {super.key, required super.item, required super.colorScheme});
 

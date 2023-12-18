@@ -7,13 +7,12 @@ import 'package:stacked/stacked.dart';
 import 'package:tuple/tuple.dart';
 
 import '../../../core/database/app_database.dart';
-import '../../../core/database/items/items_table.dart';
 import '../../../util/color.dart';
 import '../../util/constants.dart';
 import '../../util/general/base_refresh_indicator.dart';
 import '../../util/general/widget_container.dart';
 import '../inbox/inbox_action_button.dart';
-import '../items/item_widget_factory.dart';
+import '../items/general/item_widget.dart';
 import '../items/sensors/sensor_item_widget.dart';
 import 'favourite_viewmodel.dart';
 
@@ -41,9 +40,7 @@ class FavouriteView extends StatelessWidget {
                   stream: model.hasItemsStream,
                   builder: (context, hasItems) {
                     if (hasItems.data ?? false) {
-                      return StreamBuilder2<
-                              Tuple2<Map<int, List<Item>>, Map<int, Size>>,
-                              List<Room>>(
+                      return StreamBuilder2<Map<int, List<Item>>, List<Room>>(
                           streams: StreamTuple2(
                               model.itemsByRoomIdStream, model.roomsStream),
                           builder: (context, snapshot) {
@@ -53,18 +50,30 @@ class FavouriteView extends StatelessWidget {
                                 child: CircularProgressIndicator(),
                               );
                             } else {
-                              final groupedItems =
-                                  snapshot.snapshot1.data!.item1;
-                              final roomSizes = snapshot.snapshot1.data!.item2;
+                              final groupedItems = snapshot.snapshot1.data!;
                               final rooms = snapshot.snapshot2.data!;
+
+                              final itemWidgetsByRoomId =
+                                  model.buildItemWidgetsByRoomId(
+                                      groupedItems,
+                                      rooms,
+                                      DynamicTheme.of(context)!
+                                          .theme
+                                          .colorScheme,
+                                      DynamicTheme.of(context)!
+                                          .theme
+                                          .brightness);
 
                               return BaseRefreshIndicator(
                                   onRefresh: model.onRefresh,
                                   child: LayoutBuilder(
                                       builder: (context, constraints) {
                                     final roomsCrossAxisCount =
-                                        getRoomListCount(constraints.maxWidth,
-                                            roomSizes.values.toList());
+                                        getRoomListCount(constraints.maxWidth);
+
+                                    final layout = getGridLayout(
+                                        roomsCrossAxisCount,
+                                        itemWidgetsByRoomId);
 
                                     return MasonryGridView.count(
                                       padding: const EdgeInsets.all(
@@ -74,15 +83,22 @@ class FavouriteView extends StatelessWidget {
                                       mainAxisSpacing: paddingScaffold,
                                       itemCount: groupedItems.keys.length,
                                       itemBuilder: (context, index) {
-                                        final mapIndex =
-                                            roomsCrossAxisCount == 1
-                                                ? index
-                                                : (index % roomsCrossAxisCount);
+                                        final layoutIndex =
+                                            index % layout.keys.length;
+                                        final roomIndex = index -
+                                            layoutIndex *
+                                                (roomsCrossAxisCount - 1);
                                         print(
-                                            "mapIndex: $mapIndex, index: $index, roomsCrossAxisCount: $roomsCrossAxisCount");
-                                        final roomId = groupedItems.keys
-                                            .toList()[mapIndex];
-                                        final items = groupedItems[roomId]!;
+                                            "layoutIndex: $layoutIndex, roomIndex: $roomIndex, index: $index, roomsCrossAxisCount: $roomsCrossAxisCount");
+                                        final roomId = layout.entries
+                                            .elementAt(layoutIndex)
+                                            .value
+                                            .elementAt(roomIndex);
+                                        final items =
+                                            itemWidgetsByRoomId[roomId]!;
+                                        final sensors = items.item2;
+                                        final realItems = items.item1;
+
                                         final room = rooms.firstWhere(
                                             (element) => element.id == roomId);
                                         final roomColorScheme = room.color !=
@@ -96,7 +112,6 @@ class FavouriteView extends StatelessWidget {
                                             : DynamicTheme.of(context)!
                                                 .theme
                                                 .colorScheme;
-                                        final roomSize = roomSizes[roomId]!;
 
                                         return WidgetContainer(
                                             backgroundColor: roomColorScheme
@@ -114,8 +129,8 @@ class FavouriteView extends StatelessWidget {
                                                         .headlineMedium),
                                                 const Gap(listSpacing),
                                                 // items
-                                                _buildItemsView(context, items,
-                                                    roomColorScheme),
+                                                _buildItemsView(realItems,
+                                                    sensors, roomColorScheme),
                                               ],
                                             ));
                                       },
@@ -130,23 +145,12 @@ class FavouriteView extends StatelessWidget {
                 ))));
   }
 
-  Widget _buildItemsView(
-      BuildContext context, List<Item> items, ColorScheme colorScheme) {
-    final senors = items.where((e) => e.isSensor).toList();
-    final realItems = items.where((e) => !e.isSensor).toList();
-
+  Widget _buildItemsView(List<ItemWidget> items, List<SensorItemWidget> sensors,
+      ColorScheme colorScheme) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      if (senors.isNotEmpty)
-        Wrap(
-            spacing: listSpacing,
-            runSpacing: listSpacing,
-            children: senors
-                .map((e) => SensorItemWidget(
-                      item: e,
-                      colorScheme: colorScheme,
-                    ))
-                .toList()),
-      if (senors.isNotEmpty)
+      if (sensors.isNotEmpty)
+        Wrap(spacing: listSpacing, runSpacing: listSpacing, children: sensors),
+      if (sensors.isNotEmpty)
         Padding(
             padding: const EdgeInsets.symmetric(vertical: smallListSpacing),
             child: Divider(
@@ -157,11 +161,11 @@ class FavouriteView extends StatelessWidget {
                 crossAxisCount: getItemListCount(constraints.maxWidth),
                 mainAxisSpacing: listSpacing,
                 crossAxisSpacing: listSpacing,
-                children: realItems
-                    .map((e) => ItemWidgetFactory(
-                          item: e,
-                          colorScheme: colorScheme,
-                        ))
+                children: items
+                    .map((e) => StaggeredGridTile.count(
+                        crossAxisCellCount: e.crossAxisCount,
+                        mainAxisCellCount: e.mainAxisCount,
+                        child: e))
                     .toList(),
               ))
     ]);
@@ -171,5 +175,49 @@ class FavouriteView extends StatelessWidget {
     return const Center(
       child: Text("No favorites available"),
     );
+  }
+
+  Map<int, List<int>> getGridLayout(int crossAxisCount,
+      Map<int, Tuple2<List<ItemWidget>, List<SensorItemWidget>>> itemsByRoom) {
+    if (crossAxisCount == 1) {
+      return {0: itemsByRoom.keys.toList()};
+    } else {
+      final realItemsByRoom =
+          itemsByRoom.map((key, value) => MapEntry(key, value.item1));
+      final Map<int, int> sensorCountByRoom =
+          itemsByRoom.map((key, value) => MapEntry(key, value.item2.length));
+
+      // get height of each room
+      final roomsByHeight = Map.fromEntries(realItemsByRoom.entries.map((e) =>
+          MapEntry(
+              e.key,
+              e.value.fold<double>(
+                      0,
+                      (previousValue, element) =>
+                          previousValue + element.mainAxisCount) +
+                  sensorCountByRoom[e.key]!)));
+      // sort by height
+      final sortedRoomsByHeight = roomsByHeight.entries.toList()
+        ..sort((a, b) => b.value.compareTo(a.value));
+      final sortedRoomsByHeightMap =
+          Map.fromEntries(sortedRoomsByHeight.map((e) => MapEntry(e.key, e)));
+
+      // calculate layout by height of the rooms with the cross axis count
+      final layout = <int, List<int>>{};
+      int currentCrossAxisIndex = 0;
+      double currentMainAxisIndex = 0;
+      for (final entry in sortedRoomsByHeightMap.values) {
+        final room = entry.key;
+        final height = entry.value;
+        if (currentMainAxisIndex + height > crossAxisCount) {
+          currentCrossAxisIndex++;
+          currentMainAxisIndex = 0;
+        }
+        layout.putIfAbsent(currentCrossAxisIndex, () => []);
+        layout[currentCrossAxisIndex]!.add(room);
+        currentMainAxisIndex += height;
+      }
+      return layout;
+    }
   }
 }

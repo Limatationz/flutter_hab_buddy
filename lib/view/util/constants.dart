@@ -22,12 +22,7 @@ int getItemListCount(double width) {
 }
 
 // room list
-int getRoomListCount(double width, List<Size> roomSizes) {
-  // TODO: calculate with room sizes
+int getRoomListCount(double width) {
   final count = (width / roomListCountBreakpoint).floor() + 1;
-
-  final List<double> roomMainAxisSizes =
-      roomSizes.map((e) => e.height * e.width).toList();
-
   return count;
 }

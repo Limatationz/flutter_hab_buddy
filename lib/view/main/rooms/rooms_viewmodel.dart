@@ -1,9 +1,12 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../locator.dart';
 import '../../../repository/item_repository.dart';
+import '../items/general/item_widget.dart';
+import '../items/item_widget_factory.dart';
+import '../items/sensors/sensor_item_widget.dart';
 
 class RoomsViewModel extends BaseViewModel {
   final _roomsStore = locator<AppDatabase>().roomsStore;
@@ -61,4 +64,17 @@ class RoomsViewModel extends BaseViewModel {
   }
 
   Future<void> onRefresh() => _itemRepository.fetchData(insertToInbox: false);
+
+  List<ItemWidget> buildItemWidgets(
+          BuildContext context, List<Item> items, ColorScheme colorScheme) =>
+      items
+          .map((e) =>
+              ItemWidgetFactory.buildItem(item: e, colorScheme: colorScheme))
+          .toList();
+
+  List<SensorItemWidget> buildSensorItemWidgets(
+          BuildContext context, List<Item> items, ColorScheme colorScheme) =>
+      items
+          .map((e) => SensorItemWidget(item: e, colorScheme: colorScheme))
+          .toList();
 }

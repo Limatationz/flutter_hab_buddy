@@ -7,6 +7,10 @@ import '../../../core/database/app_database.dart';
 import '../../../core/database/items/items_table.dart';
 import '../../../locator.dart';
 import '../../../repository/item_repository.dart';
+import '../../../util/color.dart';
+import '../items/general/item_widget.dart';
+import '../items/item_widget_factory.dart';
+import '../items/sensors/sensor_item_widget.dart';
 
 class FavouriteViewModel extends BaseViewModel {
   final _roomsStore = locator<AppDatabase>().roomsStore;
@@ -18,11 +22,11 @@ class FavouriteViewModel extends BaseViewModel {
 
   Stream<bool> get hasItemsStream => _itemsStore.hasFavorites();
 
-  final BehaviorSubject<Tuple2<Map<int, List<Item>>, Map<int, Size>>>
-      _itemsByRoomIdSubject = BehaviorSubject.seeded(Tuple2({}, {}));
+  final BehaviorSubject<Map<int, List<Item>>> _itemsByRoomIdSubject =
+      BehaviorSubject.seeded({});
 
-  Stream<Tuple2<Map<int, List<Item>>, Map<int, Size>>>
-      get itemsByRoomIdStream => _itemsByRoomIdSubject.stream;
+  Stream<Map<int, List<Item>>> get itemsByRoomIdStream =>
+      _itemsByRoomIdSubject.stream;
 
   Stream<List<Room>> get roomsStream => _roomsStore.all().watch();
 
@@ -47,20 +51,45 @@ class FavouriteViewModel extends BaseViewModel {
         return MapEntry(roomId, items);
       }));
 
-      // get room sizes
-      final roomSizes = Map.fromEntries(itemsByRoomId.entries.map((entry) {
-        final crossAxisSize = entry.value.fold(0,
-            (previousValue, element) => previousValue + element.crossAxisCount);
-        final mainAxisSize = entry.value.fold(0.0,
-            (previousValue, element) => previousValue + element.mainAxisCount);
-        return MapEntry(
-            entry.key, Size(crossAxisSize.toDouble(), mainAxisSize));
-      }));
-
       // add to subject
-      _itemsByRoomIdSubject.add(Tuple2(itemsByRoomId, roomSizes));
+      _itemsByRoomIdSubject.add(itemsByRoomId);
     });
   }
 
   Future<void> onRefresh() => _itemsRepository.fetchData(insertToInbox: false);
+
+  List<ItemWidget> buildItemWidgets(
+          List<Item> items, ColorScheme colorScheme) =>
+      items
+          .map((e) =>
+              ItemWidgetFactory.buildItem(item: e, colorScheme: colorScheme))
+          .toList();
+
+  List<SensorItemWidget> buildSensorItemWidgets(
+          List<Item> items, ColorScheme colorScheme) =>
+      items
+          .map((e) => SensorItemWidget(item: e, colorScheme: colorScheme))
+          .toList();
+
+  Map<int, Tuple2<List<ItemWidget>, List<SensorItemWidget>>>
+      buildItemWidgetsByRoomId(
+              Map<int, List<Item>> itemsByRoomId,
+              List<Room> rooms,
+              ColorScheme defaultColorScheme,
+              Brightness brightness) =>
+          itemsByRoomId.map((key, value) {
+            final room = rooms.firstWhere((element) => element.id == key);
+            final realItems =
+                value.where((element) => !element.isSensor).toList();
+            final sensorItems =
+                value.where((element) => element.isSensor).toList();
+            final colorScheme = room.color != null
+                ? ColorScheme.fromSeed(
+                    seedColor: fromHex(room.color!), brightness: brightness)
+                : defaultColorScheme;
+            final itemWidgets = buildItemWidgets(realItems, colorScheme);
+            final sensorItemWidgets =
+                buildSensorItemWidgets(sensorItems, colorScheme);
+            return MapEntry(key, Tuple2(itemWidgets, sensorItemWidgets));
+          });
 }

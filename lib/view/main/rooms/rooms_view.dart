@@ -18,7 +18,7 @@ import '../../util/general/base_refresh_indicator.dart';
 import '../inbox/inbox_action_button.dart';
 import '../inbox/inbox_view.dart';
 import '../items/add_complex/add_complex_item_widget.dart';
-import '../items/item_widget_factory.dart';
+import '../items/general/item_widget.dart';
 import '../items/sensors/sensor_item_widget.dart';
 import 'add/room_add_sheet.dart';
 import 'rooms_viewmodel.dart';
@@ -100,9 +100,22 @@ class RoomsView extends StatelessWidget {
                                                   return _buildEmptyItemsForRoomState(
                                                       context);
                                                 } else {
+                                                  final senors = items
+                                                      .where((e) => e.isSensor)
+                                                      .toList();
+                                                  final realItems = items
+                                                      .where((e) => !e.isSensor)
+                                                      .toList();
                                                   return _buildItemsView(
                                                       context,
-                                                      items,
+                                                      model.buildItemWidgets(
+                                                          context,
+                                                          realItems,
+                                                          selectedRoomColorScheme),
+                                                      model.buildSensorItemWidgets(
+                                                          context,
+                                                          senors,
+                                                          selectedRoomColorScheme),
                                                       model.onRefresh,
                                                       selectedRoomColorScheme);
                                                 }
@@ -169,11 +182,12 @@ class RoomsView extends StatelessWidget {
         )));
   }
 
-  Widget _buildItemsView(BuildContext context, List<Item> items,
-      Future<void> Function() onRefresh, ColorScheme colorScheme) {
-    final senors = items.where((e) => e.isSensor).toList();
-    final realItems = items.where((e) => !e.isSensor).toList();
-
+  Widget _buildItemsView(
+      BuildContext context,
+      List<ItemWidget> items,
+      List<SensorItemWidget> sensors,
+      Future<void> Function() onRefresh,
+      ColorScheme colorScheme) {
     return Container(
         color: colorScheme.surface,
         padding: const EdgeInsets.all(paddingScaffold),
@@ -183,17 +197,12 @@ class RoomsView extends StatelessWidget {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                  if (senors.isNotEmpty)
+                  if (sensors.isNotEmpty)
                     Wrap(
                         spacing: listSpacing,
                         runSpacing: listSpacing,
-                        children: senors
-                            .map((e) => SensorItemWidget(
-                                  item: e,
-                                  colorScheme: colorScheme,
-                                ))
-                            .toList()),
-                  if (senors.isNotEmpty && realItems.isNotEmpty)
+                        children: sensors),
+                  if (sensors.isNotEmpty && items.isNotEmpty)
                     const Padding(
                         padding:
                             EdgeInsets.symmetric(vertical: smallListSpacing),
@@ -205,10 +214,12 @@ class RoomsView extends StatelessWidget {
                             mainAxisSpacing: listSpacing,
                             crossAxisSpacing: listSpacing,
                             children: [
-                              ...realItems.map((e) => ItemWidgetFactory(
-                                    item: e,
-                                    colorScheme: colorScheme,
-                                  )),
+                              ...items
+                                  .map((e) => StaggeredGridTile.count(
+                                      crossAxisCellCount: e.crossAxisCount,
+                                      mainAxisCellCount: e.mainAxisCount,
+                                      child: e))
+                                  .toList(),
                               AddComplexItemWidget(
                                 colorScheme: colorScheme,
                               )

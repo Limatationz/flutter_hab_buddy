@@ -13,7 +13,7 @@ import '../general/item_widget.dart';
 import '../item_widget_factory.dart';
 import 'switch_item_dialog.dart';
 
-class SwitchItemWidget extends ItemWidget {
+class SwitchItemWidget extends SmallItemWidget {
 
   SwitchItemWidget({super.key, required super.item, required super.colorScheme});
 
