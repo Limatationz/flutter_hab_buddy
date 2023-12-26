@@ -1,55 +1,37 @@
-import 'package:dynamic_themes/dynamic_themes.dart';
-import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 
-import '../../../../core/database/app_database.dart';
-import '../../../../core/database/items/items_table.dart';
+import 'package:flutter/material.dart';
+
 import '../../../../locator.dart';
 import '../../../../repository/item_repository.dart';
-import '../../../../util/icons/icons.dart';
-import '../../../util/constants.dart';
-import '../item_widget_factory.dart';
+import '../general/item_state_combined_injector.dart';
 
-class SwitchItemDialog extends StatefulWidget {
+class SwitchItemDialog extends StatelessWidget {
   final String itemName;
 
-  const SwitchItemDialog({super.key, required this.itemName});
+  SwitchItemDialog({super.key, required this.itemName});
 
-  @override
-  State<SwitchItemDialog> createState() => _SwitchItemDialogState();
-}
-
-class _SwitchItemDialogState extends State<SwitchItemDialog> {
   final _itemRepository = locator<ItemRepository>();
-  final _itemsStore = locator<AppDatabase>().itemsStore;
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<Item?>(
-        stream: _itemsStore.byName(widget.itemName).watchSingleOrNull(),
-        builder: (context, snapshot) {
-          if (snapshot.data == null) {
-            return const SizedBox.shrink();
-          }
-          final item = snapshot.data!;
-          final isOn = item.state == "ON";
+    return ItemStateCombinedInjector(
+        itemName: itemName,
+        builder: (item, itemState) {
+          final isOn = itemState.state == "ON";
           return Align(
-                  child: IconButton(
-                      onPressed: () => onAction(!isOn),
-                      icon: Icon(
-                        item.icon ?? item.type.icon,
-                        color: isOn
-                            ? DynamicTheme.of(context)!
-                                .theme
-                                .colorScheme
-                                .primary
-                            : Colors.grey,
-                      ),
-                      iconSize: 60));
+              child: IconButton(
+                  onPressed: () => onAction(!isOn),
+                  icon: Icon(
+                    item.icon ?? item.type.icon,
+                    color: isOn
+                        ? Theme.of(context).colorScheme.primary
+                        : Colors.grey,
+                  ),
+                  iconSize: 60));
         });
   }
 
   Future<void> onAction(bool on) async {
-    await _itemRepository.switchAction(widget.itemName, on);
+    await _itemRepository.switchAction(itemName, on);
   }
 }

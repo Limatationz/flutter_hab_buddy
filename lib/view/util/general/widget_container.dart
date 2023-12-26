@@ -1,4 +1,3 @@
-import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -45,13 +44,11 @@ class WidgetContainer extends StatelessWidget {
                   color: backgroundColor ??
                       ElevationOverlay.applySurfaceTint(
                           colorScheme?.background ??
-                              DynamicTheme.of(context)!
-                                  .theme
+                              Theme.of(context)
                                   .colorScheme
                                   .background,
                           colorScheme?.surfaceTint ??
-                              DynamicTheme.of(context)!
-                                  .theme
+                              Theme.of(context)
                                   .colorScheme
                                   .surfaceTint,
                           1),

@@ -16,6 +16,15 @@ class InboxStore extends DatabaseAccessor<AppDatabase> with _$InboxStoreMixin {
       (u) => OrderingTerm(expression: u.name),
     ]));
 
+  MultiSelectable<InboxEntry> byType(OhItemType type) => (select(inboxTable)
+    ..where((tbl) => tbl.type.equalsValue(type))
+    ..orderBy([
+      (u) => OrderingTerm(expression: u.name),
+    ]));
+
+  SingleOrNullSelectable<InboxEntry> byName(String name) => (select(inboxTable)
+    ..where((tbl) => tbl.name.equals(name)));
+
   Future<void> insertOrUpdate(List<InboxEntry> data) async {
     await batch((batch) => batch.insertAllOnConflictUpdate(
           inboxTable,

@@ -8,10 +8,10 @@ class SnackbarService {
     _snackbarService.registerCustomSnackbarConfig(
       variant: SnackbarType.error,
       config: stacked.SnackbarConfig(
-        backgroundColor: const Color(0xFFE57373),
+        backgroundColor: const Color(0xFFE55555),
         borderRadius: 8,
         margin: const EdgeInsets.all(16),
-        duration: const Duration(seconds: 5),
+        duration: const Duration(seconds: 7),
       ),
     );
 

@@ -1,4 +1,4 @@
-import 'package:dynamic_themes/dynamic_themes.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_extra_fields/form_builder_extra_fields.dart';
@@ -31,8 +31,7 @@ class RoomAddSheet extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(S.of(context).addRoomHeadline,
-                      style: DynamicTheme.of(context)!
-                          .theme
+                      style: Theme.of(context)
                           .textTheme
                           .headlineMedium),
                   const HeadlinePaddingBox(),
@@ -47,6 +46,7 @@ class RoomAddSheet extends StatelessWidget {
                     name: "description",
                     label: S.of(context).roomDescriptionLabel,
                     helperText: S.of(context).roomDescriptionHelp,
+                    required: false,
                   ),
                   const Gap(listSpacing),
                   Row(
@@ -56,8 +56,8 @@ class RoomAddSheet extends StatelessWidget {
                           child: BaseFormTextField(
                               name: "level",
                               label: S.of(context).roomLevelLabel,
-                              helperText: S.of(context).optional,
                               keyboardType: TextInputType.number,
+                              required: false,
                               validator: FormBuilderValidators.compose([
                                 FormBuilderValidators.numeric(),
                                 FormBuilderValidators.max(100),
@@ -68,14 +68,12 @@ class RoomAddSheet extends StatelessWidget {
                           flex: 5,
                           child: FormBuilderColorPickerField(
                               name: "color",
-                              initialValue: DynamicTheme.of(context)!
-                                  .theme
+                              initialValue: Theme.of(context)
                                   .colorScheme
                                   .primary,
                               decoration: InputDecoration(
                                 labelText: S.of(context).roomColorLabel,
                                 border: const OutlineInputBorder(),
-                                helperText: S.of(context).optional,
                                 isDense: true,
                               ))),
                     ],
@@ -85,7 +83,7 @@ class RoomAddSheet extends StatelessWidget {
                     iconPack: iconPackRoom,
                     onChange: model.setIcon,
                     selectedIcon: model.roomIcon,
-                    helperText: S.of(context).optional,
+                    required: false,
                   ),
                   const SizedBox(height: 16),
                   BaseElevatedButton(

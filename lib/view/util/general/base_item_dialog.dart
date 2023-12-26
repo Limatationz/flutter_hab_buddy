@@ -1,5 +1,4 @@
 import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
-import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -8,7 +7,7 @@ import '../../../core/database/items/items_table.dart';
 import '../../../locator.dart';
 import '../../../repository/item_repository.dart';
 import '../../../util/icons/icons.dart';
-import '../../main/items/item_widget_factory.dart';
+import '../../main/items/general/item_widget_factory.dart';
 import '../constants.dart';
 
 class BaseItemDialog extends StatefulWidget {
@@ -53,7 +52,7 @@ class _BaseItemDialogState extends State<BaseItemDialog> {
                     child: AutoHyphenatingText(
                   widget.item.label,
                   style:
-                      DynamicTheme.of(context)!.theme.textTheme.headlineMedium,
+                  Theme.of(context)!.textTheme.headlineMedium,
                 )),
                 const Gap(listSpacing),
                 IconButton(

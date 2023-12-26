@@ -1,4 +1,3 @@
-import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 
 class DimmableIcon extends StatelessWidget {
@@ -42,5 +41,5 @@ class DimmableIcon extends StatelessWidget {
   }
 
   Color getFallbackAccentColor(BuildContext context) =>
-      DynamicTheme.of(context)!.theme.colorScheme.primary;
+      Theme.of(context).colorScheme.primary;
 }

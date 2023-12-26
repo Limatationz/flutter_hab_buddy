@@ -9,7 +9,7 @@ import '../../../locator.dart';
 import '../../../repository/item_repository.dart';
 import '../../../util/color.dart';
 import '../items/general/item_widget.dart';
-import '../items/item_widget_factory.dart';
+import '../items/general/item_widget_factory.dart';
 import '../items/sensors/sensor_item_widget.dart';
 
 class FavouriteViewModel extends BaseViewModel {

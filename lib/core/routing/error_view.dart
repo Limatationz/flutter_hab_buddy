@@ -1,4 +1,4 @@
-import 'package:dynamic_themes/dynamic_themes.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -21,7 +21,7 @@ class ErrorView extends StatelessWidget {
               children: [
                 
                 Text(S.of(context).errorHeadline,
-                    style: DynamicTheme.of(context)!.theme.textTheme.headlineLarge),
+                    style: Theme.of(context).textTheme.headlineLarge),
                 if (kDebugMode) Text(state.error.toString()),
                 const Gap(22),
                 BaseElevatedButton(

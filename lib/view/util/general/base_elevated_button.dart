@@ -1,4 +1,3 @@
-import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 
 class BaseElevatedButton extends StatelessWidget {
@@ -27,7 +26,7 @@ class BaseElevatedButton extends StatelessWidget {
               onPressed: onPressed,
               style: ElevatedButton.styleFrom(
                 backgroundColor: backgroundColor ??
-                    DynamicTheme.of(context)!.theme.colorScheme.primary,
+                    Theme.of(context).colorScheme.primary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -37,14 +36,12 @@ class BaseElevatedButton extends StatelessWidget {
               ),
               child: Text(
                 text,
-                style: DynamicTheme.of(context)!
-                    .theme
+                style: Theme.of(context)
                     .textTheme
                     .bodyLarge
                     ?.copyWith(
                         color: textColor ??
-                            DynamicTheme.of(context)!
-                                .theme
+                            Theme.of(context)
                                 .colorScheme
                                 .onInverseSurface),
               ),

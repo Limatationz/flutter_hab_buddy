@@ -1,8 +1,19 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:collection/collection.dart';
 import 'package:dio/dio.dart';
+import 'package:drift/drift.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_client_sse/constants/sse_request_type_enum.dart';
+import 'package:flutter_client_sse/flutter_client_sse.dart';
 import 'package:logger/logger.dart';
+import 'package:rxdart/rxdart.dart';
+import 'package:tuple/tuple.dart';
 
 import '../core/database/app_database.dart';
+import '../core/database/items/item_type.dart';
+import '../core/database/items/oh_item_type.dart';
 import '../core/network/converters/inbox.dart';
 import '../core/network/generated/client_index.dart';
 import '../core/snackbar/snackbar_service.dart';
@@ -18,21 +29,23 @@ class ItemRepository {
   final _snackbarService = locator<SnackbarService>();
   final _api = locator<OpenHAB>();
 
-  ItemRepository();
+  ItemRepository() {
+    observeEvents();
+  }
 
   Future<void> fetchData({bool insertToInbox = true}) async {
     final result = await _api.itemsGet();
     if (result.isSuccessful) {
-      final storedItems = await _itemsStore.getAll();
+      final storedItems = await _itemsStore.all().get();
       if (insertToInbox) {
         await _inboxStore.deleteData();
       }
       final addToInbox = <InboxEntry>[];
 
       for (final item in result.body!) {
-        if (storedItems
-                .firstWhereOrNull((element) => element.ohName == item.name) ==
-            null) {
+        final storedItem = storedItems
+            .firstWhereOrNull((element) => element.ohName == item.name);
+        if (storedItem == null) {
           // Item is not stored yet
           final dbItem = item.asDatabaseModel();
           if (dbItem != null && insertToInbox) {
@@ -45,8 +58,16 @@ class ItemRepository {
             await _itemsStore.updateByName(update);
           }
 
+          // state update
+          final stateUpdate = item.asItemStateUpdate();
+          if (stateUpdate != null) {
+            await _itemsStore.updateStateByName(stateUpdate);
+          }
+
           // get new chart data if item is readonly
-          if ((item.stateDescription?.readOnly ?? false) && item.name != null) {
+          if ((item.stateDescription?.readOnly ?? false) &&
+              item.name != null &&
+              storedItem.type != ItemType.complexComponent) {
             _chartRepository.fetchChartDataByName(item.name!);
           }
 
@@ -67,13 +88,123 @@ class ItemRepository {
     }
   }
 
-  Future<void> addItemToInbox(ItemsTableCompanion item) async {
+  Future<void> fetchDataByName(String itemName) async {
+    final result = await _api.itemsItemnameGet(itemname: itemName);
+    if (result.isSuccessful && result.body != null) {
+      final item = result.body!.asDatabaseModel();
+      if (item != null) {
+        await _inboxStore.insertOrUpdateSingle(item);
+      }
+    }
+  }
+
+  Future<List<String>> getItemNamesByOhType(OhItemType type,
+      {bool onlyInbox = false}) async {
+    final inboxItems = await _inboxStore.byType(type).get();
+    if (!onlyInbox) {
+      final items = await _itemsStore.byType(type).get();
+      return [...inboxItems.map((e) => e.name), ...items.map((e) => e.ohName)];
+    } else {
+      return inboxItems.map((e) => e.name).toList();
+    }
+  }
+
+  Future<bool> addItemFromInbox(
+      {required String itemName,
+      required ItemType type,
+      required int roomId,
+      IconData? icon,
+      String? customLabel,
+      bool? isFavorite}) async {
+    // get item from inbox
+    final inboxItem = await _inboxStore.byName(itemName).getSingleOrNull();
+    if (inboxItem == null) {
+      return false;
+    }
+
+    // create item
+    final item = ItemsTableCompanion.insert(
+      type: type,
+      ohType: inboxItem.type,
+      ohName: inboxItem.name,
+      ohLabel: inboxItem.label,
+      ohCategory: inboxItem.category != null
+          ? Value(inboxItem.category!)
+          : const Value.absent(),
+      ohTags: inboxItem.tags != null
+          ? Value(inboxItem.tags!)
+          : const Value.absent(),
+      ohGroups: inboxItem.groups != null
+          ? Value(inboxItem.groups!)
+          : const Value.absent(),
+      roomId: roomId,
+      icon: icon != null ? Value(icon) : const Value.absent(),
+      customLabel:
+          customLabel != null ? Value(customLabel) : const Value.absent(),
+      isFavorite: Value(isFavorite ?? false),
+    );
+
+    // create state
+    final state = ItemStatesTableCompanion.insert(
+      ohName: inboxItem.name,
+      state: inboxItem.state,
+      stateDescription: inboxItem.stateDescription != null
+          ? Value(inboxItem.stateDescription!)
+          : const Value.absent(),
+      commandDescription: inboxItem.commandDescription != null
+          ? Value(inboxItem.commandDescription!)
+          : const Value.absent(),
+      transformedState: inboxItem.transformedState != null
+          ? Value(inboxItem.transformedState!)
+          : const Value.absent(),
+      ohUnitSymbol: inboxItem.unitSymbol != null
+          ? Value(inboxItem.unitSymbol!)
+          : const Value.absent(),
+    );
+
     // db things
     await _itemsStore.insertOrUpdateSingle(item);
+    await _itemsStore.insertOrUpdateState(state);
     await _inboxStore.deleteDataByName(item.ohName.value);
 
     // fetch chart data
     _chartRepository.fetchChartDataByName(item.ohName.value);
+
+    return true;
+  }
+
+  Future<bool> removeItems(List<String> itemNames) async {
+    for (final itemName in itemNames) {
+      final result = await removeItem(itemName);
+      if (!result) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  Future<bool> removeItem(String itemName) async {
+    final storedItem = await _itemsStore.byName(itemName).getSingleOrNull();
+    if (storedItem == null) {
+      return false;
+    }
+
+    await Future.wait([
+      // remove item
+      _itemsStore.deleteDataByName(itemName),
+
+      // remove state
+      _itemsStore.deleteStateDataByName(itemName),
+
+      // remove chart data
+      _chartRepository.deleteChartDataByName(itemName),
+
+      // re add to inbox
+      fetchDataByName(itemName),
+    ]);
+
+    return true;
   }
 
   Future<void> switchAction(String itemName, bool on) async {
@@ -91,6 +222,10 @@ class ItemRepository {
   }
 
   Future<void> rollershutterStringAction(String itemName, String body) async {
+    return _sendAction(itemName, body);
+  }
+
+  Future<void> playerStringAction(String itemName, String body) async {
     return _sendAction(itemName, body);
   }
 
@@ -125,6 +260,54 @@ class ItemRepository {
         _itemsStore.updateByName(update);
       }
     }
+  }
+
+  Future<String?> fetchStatusOfItem(String itemName) async {
+    final result = await _api.itemsItemnameGet(itemname: itemName);
+    if (result.isSuccessful && result.body != null) {
+      return result.body!.state;
+    }
+    return null;
+  }
+
+  // TODO!!!!
+  Future<void> observeEvents() async {
+    await _loginRepository.loginComplete.future;
+    SSEClient.subscribeToSSE(
+      method: SSERequestType.GET,
+      url: 'https://myopenhab.org/rest/events?topics=*/items/*/statechanged',
+      header: {
+        "Authorization": "${_loginRepository.basicAuth}",
+      },
+    )
+        .withLatestFrom(_itemsStore.watchAllOhNames(),
+            (event, names) => Tuple2(event, names))
+        .listen(
+      (tuple) {
+        final event = tuple.item1;
+        final names = tuple.item2;
+
+        // Alive
+        if (event.event == "alive") {
+          // just ignore
+          return;
+        }
+
+        // Message
+        if (event.data != null && event.event == "message") {
+          final jsonData = json.decode(event.data!);
+          final topic = jsonData["topic"] as String;
+          final itemName = topic.split("/")[2];
+          if (jsonData["type"] == "ItemStateChangedEvent" &&
+              names.contains(itemName)) {
+            final payload = jsonData["payload"];
+            final payloadJson = json.decode(payload);
+            final state = payloadJson["value"].toString();
+            _itemsStore.updateStateValueByName(itemName, state);
+          }
+        }
+      },
+    );
   }
 
   Future<void> showActionErrorToast() async {

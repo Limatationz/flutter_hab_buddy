@@ -21,7 +21,8 @@ class ChartRepository {
     final lastDate = _sensorDataLastUpdateBox.get('$itemName-lastDate') ??
         DateTime.now().subtract(const Duration(days: 7));
     print('Fetching new data for $itemName since $lastDate');
-    final lastDateString = lastDate.add(const Duration(seconds: 1)).toIso8601String();
+    final lastDateString =
+        lastDate.add(const Duration(seconds: 1)).toIso8601String();
 
     final result = await _api.persistenceItemsItemnameGet(
         itemname: itemName, starttime: lastDateString);
@@ -46,6 +47,11 @@ class ChartRepository {
       }
     }
   }
+
+  Future<void> deleteChartDataByName(String itemName) => Future.wait([
+        _sensorDataBox.delete(itemName),
+        _sensorDataLastUpdateBox.delete('$itemName-lastDate')
+      ]);
 
   List<SensorHistoryDataBean> getChartDataStreamByName(String itemName) =>
       (_sensorDataBox

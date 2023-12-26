@@ -28,14 +28,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "addRoomHeadline": MessageLookupByLibrary.simpleMessage("Add Room"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "close": MessageLookupByLibrary.simpleMessage("Close"),
+        "complex_player_add_item_error":
+            MessageLookupByLibrary.simpleMessage("Player Item not found"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
         "customLabel": MessageLookupByLibrary.simpleMessage("Custom Label"),
         "customLabelHelp": MessageLookupByLibrary.simpleMessage(
-            "Add a custom label for this item otherwise the label from OpenHAB will be used (optional)"),
+            "Add a custom label for this item otherwise the label from OpenHAB will be used"),
         "deleteItemDialogHeadline":
             MessageLookupByLibrary.simpleMessage("Delete item?"),
         "deleteItemDialogText": MessageLookupByLibrary.simpleMessage(
             "Do you really want to delete item"),
+        "done": MessageLookupByLibrary.simpleMessage("Done"),
         "editItem": MessageLookupByLibrary.simpleMessage("Edit Item"),
         "errorButtonHome": MessageLookupByLibrary.simpleMessage("Go to Home"),
         "errorHeadline":
@@ -52,6 +55,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "itemTypeButton": MessageLookupByLibrary.simpleMessage("Switch"),
         "itemTypeCall": MessageLookupByLibrary.simpleMessage("Call"),
         "itemTypeColor": MessageLookupByLibrary.simpleMessage("Color"),
+        "itemTypeComplexPlayer":
+            MessageLookupByLibrary.simpleMessage("Advanced Player"),
         "itemTypeDateTime":
             MessageLookupByLibrary.simpleMessage("Date and Time"),
         "itemTypeDimmer": MessageLookupByLibrary.simpleMessage("Dimmer"),
@@ -96,12 +101,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Favorites"),
         "navigationInbox": MessageLookupByLibrary.simpleMessage("Inbox"),
         "navigationRooms": MessageLookupByLibrary.simpleMessage("Rooms"),
-        "optional": MessageLookupByLibrary.simpleMessage("Optional"),
+        "navigationSettings": MessageLookupByLibrary.simpleMessage("Settings"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "room": MessageLookupByLibrary.simpleMessage("Room"),
         "roomColorLabel": MessageLookupByLibrary.simpleMessage("Color"),
         "roomDescriptionHelp": MessageLookupByLibrary.simpleMessage(
-            "Further description of the room (optional)"),
+            "Further description of the room"),
         "roomDescriptionLabel":
             MessageLookupByLibrary.simpleMessage("Description"),
         "roomHelp": MessageLookupByLibrary.simpleMessage(
@@ -114,6 +119,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "search": MessageLookupByLibrary.simpleMessage("Search"),
         "select": MessageLookupByLibrary.simpleMessage("Select"),
+        "themeDark": MessageLookupByLibrary.simpleMessage("Dark"),
+        "themeLight": MessageLookupByLibrary.simpleMessage("Light"),
+        "themeSystem": MessageLookupByLibrary.simpleMessage("System"),
+        "updateFailedError": MessageLookupByLibrary.simpleMessage(
+            "Update failed. Please try again."),
         "username": MessageLookupByLibrary.simpleMessage("Username")
       };
 }

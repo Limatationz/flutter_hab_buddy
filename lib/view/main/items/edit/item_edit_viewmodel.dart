@@ -6,10 +6,12 @@ import 'package:stacked/stacked.dart';
 import '../../../../core/database/app_database.dart';
 import '../../../../core/database/items/item_type.dart';
 import '../../../../locator.dart';
+import '../../../../repository/item_repository.dart';
 
 class ItemEditViewModel extends BaseViewModel {
   final _roomsStore = locator<AppDatabase>().roomsStore;
   final _itemsStore = locator<AppDatabase>().itemsStore;
+  final _itemsRepository = locator<ItemRepository>();
 
   Stream<List<Room>> get roomsStream => _roomsStore.all().watch();
 
@@ -43,13 +45,6 @@ class ItemEditViewModel extends BaseViewModel {
             ? Value(item.ohGroups!)
             : const Value.absent(),
         roomId: roomId,
-        state: item.state,
-        stateDescription: item.stateDescription != null
-            ? Value(item.stateDescription!)
-            : const Value.absent(),
-        transformedState: item.transformedState != null
-            ? Value(item.transformedState!)
-            : const Value.absent(),
         icon: itemIcon != null ? Value(itemIcon) : const Value.absent(),
         customLabel:
             customLabel != null ? Value(customLabel) : const Value.absent(),
@@ -72,6 +67,5 @@ class ItemEditViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> onDelete() =>
-    _itemsStore.deleteDataByName(item.ohName);
+  Future<void> onDelete() => _itemsRepository.removeItem(item.ohName);
 }

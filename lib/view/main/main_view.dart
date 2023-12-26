@@ -3,7 +3,7 @@
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:dynamic_themes/dynamic_themes.dart';
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -37,7 +37,11 @@ class _MainViewState extends State<MainView> with WidgetsBindingObserver {
     super.didChangePlatformBrightness();
 
     var brightness = View.of(context).platformDispatcher.platformBrightness;
-    DynamicTheme.of(context)!.setTheme(brightness == Brightness.dark ? 1 : 0);
+    if(brightness == Brightness.dark) {
+      AdaptiveTheme.of(context).setDark();
+    } else {
+      AdaptiveTheme.of(context).setLight();
+    }
   }
 
   @override
@@ -76,6 +80,12 @@ class _MainViewState extends State<MainView> with WidgetsBindingObserver {
               1,
               LineIconsLight.house_plan_alt_2,
               LineIcons.house_plan_alt_2),
+          _buildAndroidBottomNavigationItem(
+              context,
+              S.of(context).navigationSettings,
+              2,
+              LineIconsLight.cog,
+              LineIcons.cog),
         ],
         selectedIndex: _calculateSelectedIndex(context),
         onDestinationSelected: (index) => setState(
@@ -96,6 +106,12 @@ class _MainViewState extends State<MainView> with WidgetsBindingObserver {
               LineIconsFilled.star),
           _buildIOSBottomNavigationItem(context, S.of(context).navigationRooms,
               1, LineIconsLight.house_plan_alt_2, LineIcons.house_plan_alt_2),
+          _buildIOSBottomNavigationItem(
+              context,
+              S.of(context).navigationSettings,
+              2,
+              LineIconsLight.cog,
+              LineIcons.cog),
         ],
         currentIndex: _calculateSelectedIndex(context),
         onTap: (index) => setState(

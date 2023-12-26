@@ -1,4 +1,4 @@
-import 'package:dynamic_themes/dynamic_themes.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:gap/gap.dart';
@@ -57,11 +57,9 @@ class FavouriteView extends StatelessWidget {
                                   model.buildItemWidgetsByRoomId(
                                       groupedItems,
                                       rooms,
-                                      DynamicTheme.of(context)!
-                                          .theme
+                                      Theme.of(context)
                                           .colorScheme,
-                                      DynamicTheme.of(context)!
-                                          .theme
+                                      Theme.of(context)
                                           .brightness);
 
                               return BaseRefreshIndicator(
@@ -106,11 +104,9 @@ class FavouriteView extends StatelessWidget {
                                             ? ColorScheme.fromSeed(
                                                 seedColor: fromHex(room.color!),
                                                 brightness:
-                                                    DynamicTheme.of(context)!
-                                                        .theme
+                                                    Theme.of(context)
                                                         .brightness)
-                                            : DynamicTheme.of(context)!
-                                                .theme
+                                            : Theme.of(context)
                                                 .colorScheme;
 
                                         return WidgetContainer(
@@ -122,9 +118,8 @@ class FavouriteView extends StatelessWidget {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(room.name,
-                                                    style: DynamicTheme.of(
-                                                            context)!
-                                                        .theme
+                                                    style: Theme.of(
+                                                            context)
                                                         .textTheme
                                                         .headlineMedium),
                                                 const Gap(listSpacing),

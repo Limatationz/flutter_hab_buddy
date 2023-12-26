@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
@@ -17,6 +18,16 @@ class LoginRepository {
       BehaviorSubject.seeded(null);
 
   Stream<Tuple2<String, String>?> get loginData => _loginData.stream;
+
+  Completer<bool> loginComplete = Completer();
+
+  LoginRepository() {
+    _loginData.listen((event) {
+      if (event != null) {
+        loginComplete.complete(true);
+      }
+    });
+  }
 
   String? get basicAuth {
     if (_loginData.value != null) {

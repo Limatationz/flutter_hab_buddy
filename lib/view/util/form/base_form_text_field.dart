@@ -11,6 +11,7 @@ class BaseFormTextField extends StatelessWidget {
   final dynamic initialValue;
   final Widget? suffixIcon;
   final TextInputType? keyboardType;
+  final bool required;
 
   const BaseFormTextField(
       {super.key,
@@ -22,14 +23,15 @@ class BaseFormTextField extends StatelessWidget {
       this.onChanged,
       this.initialValue,
       this.suffixIcon,
-      this.keyboardType});
+      this.keyboardType,
+      this.required = true});
 
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
       name: name,
       decoration: InputDecoration(
-          labelText: label,
+          labelText: required ? "$label*" : label,
           border: const OutlineInputBorder(),
           helperText: helperText,
           helperMaxLines: 3,

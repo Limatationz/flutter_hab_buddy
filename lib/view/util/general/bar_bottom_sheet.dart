@@ -1,6 +1,6 @@
+import 'dart:async';
 import 'dart:io';
 
-import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
@@ -26,7 +26,7 @@ class BarModal extends StatelessWidget {
           height: 6,
           width: 40,
           decoration: BoxDecoration(
-              color: DynamicTheme.of(context)!.theme.colorScheme.surface,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(6)),
         ),
         const SizedBox(height: 8),
@@ -56,7 +56,7 @@ class BarModal extends StatelessWidget {
   }
 }
 
-Future<T> showBarModalBottomSheet<T>({
+Future<T?> showBarModalBottomSheet<T>({
   required BuildContext context,
   required WidgetBuilder builder,
   bool expand = false,
@@ -66,10 +66,10 @@ Future<T> showBarModalBottomSheet<T>({
       context: context,
       builder: builder,
       containerWidget: (_, animation, child) => BarModal(
-          backgroundColor: DynamicTheme.of(context)!.theme.colorScheme.surface,
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          expand: expand,
           child: BottomSheetContainer(
             child: child,
-          ),
-          expand: expand),
+          )),
       expand: expand);
 }

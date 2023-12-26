@@ -1,10 +1,10 @@
-import 'package:dynamic_themes/dynamic_themes.dart';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/database/app_database.dart';
-import '../../../../core/database/items/items_table.dart';
+import '../../../../core/database/state/item_states_table.dart';
 import '../../../../core/network/converters/persistence.dart';
 import '../../../../locator.dart';
 import '../../../../repository/chart_repository.dart';
@@ -12,11 +12,15 @@ import '../../../util/constants.dart';
 
 class SensorItemDialogChart extends StatelessWidget {
   final Item item;
+  final ItemState itemState;
   final ColorScheme colorScheme;
   final _chartRepository = locator<ChartRepository>();
 
   SensorItemDialogChart(
-      {super.key, required this.item, required this.colorScheme});
+      {super.key,
+      required this.item,
+      required this.itemState,
+      required this.colorScheme});
 
   @override
   Widget build(BuildContext context) {
@@ -74,11 +78,13 @@ class SensorItemDialogChart extends StatelessWidget {
                           return RotatedBox(
                               quarterTurns: 3,
                               child: Text(
-                                xDiffInDays > 1 ? DateFormat.Md().format(
-                                    DateTime.fromMillisecondsSinceEpoch(
-                                        value.toInt())) : DateFormat.Hm().format(
-                                    DateTime.fromMillisecondsSinceEpoch(
-                                        value.toInt())),
+                                xDiffInDays > 1
+                                    ? DateFormat.Md().format(
+                                        DateTime.fromMillisecondsSinceEpoch(
+                                            value.toInt()))
+                                    : DateFormat.Hm().format(
+                                        DateTime.fromMillisecondsSinceEpoch(
+                                            value.toInt())),
                               ));
                         })),
                 rightTitles: const AxisTitles(),
@@ -89,7 +95,7 @@ class SensorItemDialogChart extends StatelessWidget {
                         showTitles: true,
                         getTitlesWidget: (value, _) {
                           return Text(
-                            item.transformState(value.toString()),
+                            itemState.transformState(value.toString()),
                           );
                         }))),
             lineTouchData: LineTouchData(
@@ -100,8 +106,7 @@ class SensorItemDialogChart extends StatelessWidget {
                     getTooltipItems: (touchedSpots) => touchedSpots
                         .map((e) => LineTooltipItem(
                                 '${DateFormat.yMd().add_Hm().format(DateTime.fromMillisecondsSinceEpoch(e.x.toInt()))}\n',
-                                DynamicTheme.of(context)!
-                                    .theme
+                                Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
                                     .copyWith(
@@ -109,9 +114,9 @@ class SensorItemDialogChart extends StatelessWidget {
                                     ),
                                 children: [
                                   TextSpan(
-                                      text: item.transformState(e.y.toString()),
-                                      style: DynamicTheme.of(context)!
-                                          .theme
+                                      text: itemState
+                                          .transformState(e.y.toString()),
+                                      style: Theme.of(context)
                                           .textTheme
                                           .bodyLarge
                                           ?.copyWith(

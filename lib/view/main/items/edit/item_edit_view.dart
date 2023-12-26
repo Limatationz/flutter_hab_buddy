@@ -1,4 +1,4 @@
-import 'package:dynamic_themes/dynamic_themes.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -14,9 +14,9 @@ import '../../../util/constants.dart';
 import '../../../util/form/base_form_dropdown.dart';
 import '../../../util/form/base_form_icon_picker.dart';
 import '../../../util/form/base_form_text_field.dart';
-import '../../../util/general/alert_dialog_action.dart';
 import '../../../util/general/bar_bottom_sheet.dart';
 import '../../../util/general/base_elevated_button.dart';
+import '../../../util/general/delete_dialog.dart';
 import '../../../util/general/headline_padding_box.dart';
 import '../../../util/general/headline_value_icon.dart';
 import '../../../util/icon_picker/icon_pack_items.dart';
@@ -41,42 +41,14 @@ class ItemEditView extends StatelessWidget {
                   Row(children: [
                     Expanded(
                         child: Text(S.of(context).editItem,
-                            style: DynamicTheme.of(context)!
-                                .theme
+                            style: Theme.of(context)
                                 .textTheme
                                 .headlineMedium)),
                     const Gap(listSpacing),
                     IconButton(
                         onPressed: () async {
-                          final result = await showAdaptiveDialog<bool?>(
-                              context: context,
-                              builder: (context) => AlertDialog.adaptive(
-                                    title: Text(
-                                        S.of(context).deleteItemDialogHeadline),
-                                    content: Text.rich(TextSpan(children: [
-                                      TextSpan(
-                                          text: S
-                                              .of(context)
-                                              .deleteItemDialogText),
-                                      TextSpan(
-                                          text: " ${item.label}",
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold)),
-                                      const TextSpan(
-                                        text: "?",
-                                      ),
-                                    ])),
-                                    actions: [
-                                      AlertDialogAction(
-                                          onPressed: () =>
-                                              Navigator.of(context).pop(false),
-                                          child: Text(S.of(context).cancel)),
-                                      AlertDialogAction(
-                                          onPressed: () =>
-                                              Navigator.of(context).pop(true),
-                                          child: Text(S.of(context).confirm))
-                                    ],
-                                  ));
+                          final result = await showDeleteDialog(
+                              context: context, itemLabel: item.ohLabel);
                           if (result == true) {
                             model.onDelete().then((value) {
                               Navigator.of(context).pop();
@@ -88,7 +60,7 @@ class ItemEditView extends StatelessWidget {
                         icon: Icon(
                           LineIconsFilled.trash_can,
                           color:
-                              DynamicTheme.of(context)!.theme.colorScheme.error,
+                              Theme.of(context).colorScheme.error,
                         )),
                   ]),
                   const HeadlinePaddingBox(),
@@ -138,7 +110,7 @@ class ItemEditView extends StatelessWidget {
                           iconPack: iconPackItems,
                           onChange: model.setIcon,
                           selectedIcon: model.itemIcon,
-                          helperText: S.of(context).optional,
+                          required: false,
                         ),
                       ),
                     ],
@@ -159,8 +131,7 @@ class ItemEditView extends StatelessWidget {
                                     _onRoomAdd(context, model);
                                   },
                                   child: Icon(LineIcons.plus,
-                                      color: DynamicTheme.of(context)!
-                                          .theme
+                                      color: Theme.of(context)
                                           .colorScheme
                                           .primary)),
                               items: snapshot.data!

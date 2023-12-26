@@ -5,7 +5,6 @@ import 'package:stacked/stacked.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/database/inbox/inbox_list_entry.dart';
-import '../../../core/database/items/item_type.dart';
 import '../../../generated/l10n.dart';
 import '../../../util/icons/icons.dart';
 import '../../util/constants.dart';
@@ -19,7 +18,9 @@ class InboxView extends StatelessWidget {
   static const routeName = 'InboxView';
   static const routePath = '/inbox';
 
-  const InboxView({super.key});
+  final int? roomId;
+
+  const InboxView({super.key, this.roomId});
 
   @override
   Widget build(BuildContext context) {
@@ -85,8 +86,8 @@ class InboxView extends StatelessWidget {
                         final entry = snapshot.data![index].entry;
                         return InboxListItem(
                           entry: entry,
-                          onTap: () =>
-                              _onEntryTap(context, entry, model.resetSearch),
+                          onTap: () => _onEntryTap(
+                              context, entry, model.resetSearch, roomId),
                         );
                       },
                     );
@@ -102,12 +103,15 @@ class InboxView extends StatelessWidget {
     );
   }
 
-  void _onEntryTap(
-      BuildContext context, InboxEntry entry, VoidCallback resetSearch) async {
+  void _onEntryTap(BuildContext context, InboxEntry entry,
+      VoidCallback resetSearch, int? roomId) async {
     final result = await showBarModalBottomSheet<bool>(
         context: context,
-        builder: (context) => InboxEntryAddSheet(entry: entry));
-    if (result) {
+        builder: (context) => InboxEntryAddSheet(
+              entry: entry,
+              roomId: roomId,
+            ));
+    if (result ?? false) {
       resetSearch();
     }
   }

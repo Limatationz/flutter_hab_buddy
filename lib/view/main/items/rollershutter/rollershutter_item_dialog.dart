@@ -1,30 +1,30 @@
-import 'package:dynamic_themes/dynamic_themes.dart';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-import '../../../../core/database/app_database.dart';
-import '../../../../core/database/items/items_table.dart';
 import '../../../../locator.dart';
 import '../../../../repository/item_repository.dart';
 import '../../../../util/icons/icons.dart';
-import '../../../util/constants.dart';
-import '../item_widget_factory.dart';
+import '../general/item_state_injector.dart';
 
-class RollershutterItemDialog extends StatefulWidget {
+class RollerShutterItemDialog extends StatefulWidget {
   final String itemName;
   final double initialValue;
+  final ColorScheme colorScheme;
 
-  const RollershutterItemDialog(
-      {super.key, required this.itemName, required this.initialValue});
+  const RollerShutterItemDialog(
+      {super.key,
+      required this.itemName,
+      required this.initialValue,
+      required this.colorScheme});
 
   @override
-  State<RollershutterItemDialog> createState() =>
-      _RollershutterItemDialogState();
+  State<RollerShutterItemDialog> createState() =>
+      _RollerShutterItemDialogState();
 }
 
-class _RollershutterItemDialogState extends State<RollershutterItemDialog> {
+class _RollerShutterItemDialogState extends State<RollerShutterItemDialog> {
   final _itemRepository = locator<ItemRepository>();
-  final _itemsStore = locator<AppDatabase>().itemsStore;
   double sliderValue = 0;
 
   @override
@@ -35,13 +35,9 @@ class _RollershutterItemDialogState extends State<RollershutterItemDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<Item?>(
-        stream: _itemsStore.byName(widget.itemName).watchSingleOrNull(),
-        builder: (context, snapshot) {
-          if (snapshot.data == null) {
-            return const SizedBox.shrink();
-          }
-          final item = snapshot.data!;
+    return ItemStateInjector(
+        itemName: widget.itemName,
+        builder: (itemState) {
           return Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,40 +72,44 @@ class _RollershutterItemDialogState extends State<RollershutterItemDialog> {
                                 sliderValue = value;
                               });
                             },
-                            min: item.stateDescription?.minimum ?? 0,
-                            max: item.stateDescription?.maximum ?? 100,
-                            divisions: item.stateDescription?.step != null
-                                ? (item.stateDescription?.maximum ?? 100) ~/
-                                    item.stateDescription!.step!
+                            min: itemState.stateDescription?.minimum ?? 0,
+                            max: itemState.stateDescription?.maximum ?? 100,
+                            divisions: itemState.stateDescription?.step != null
+                                ? (itemState.stateDescription?.maximum ??
+                                        100) ~/
+                                    itemState.stateDescription!.step!
                                 : null,
+                            activeColor: widget.colorScheme.primary,
+                            inactiveColor:
+                                widget.colorScheme.primary.withOpacity(0.24),
                           )),
                       const Gap(8),
                       Padding(
                           padding: const EdgeInsets.symmetric(vertical: 14),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                             children: [
                               Text(
-                                item.stateDescription?.maximum?.toString() ??
+                                itemState.stateDescription?.maximum
+                                        ?.round()
+                                        .toString() ??
                                     "100",
-                                style: DynamicTheme.of(context)!
-                                    .theme
+                                style: Theme.of(context)
                                     .textTheme
                                     .bodyLarge,
                               ),
                               Text(
                                 "${(sliderValue).round()}",
-                                style: DynamicTheme.of(context)!
-                                    .theme
+                                style: Theme.of(context)
                                     .textTheme
                                     .bodyLarge,
                               ),
                               Text(
-                                item.stateDescription?.minimum?.toString() ??
+                                itemState.stateDescription?.minimum
+                                        ?.round()
+                                        .toString() ??
                                     "0",
-                                style: DynamicTheme.of(context)!
-                                    .theme
+                                style: Theme.of(context)
                                     .textTheme
                                     .bodyLarge,
                               ),

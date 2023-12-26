@@ -7,6 +7,7 @@ import '../../view/main/favourite/favourite_view.dart';
 import '../../view/main/inbox/inbox_view.dart';
 import '../../view/main/main_view.dart';
 import '../../view/main/rooms/rooms_view.dart';
+import '../../view/main/settings/settings_view.dart';
 import '../../view/start_view.dart';
 import 'error_view.dart';
 import 'navigation_service.dart';
@@ -45,10 +46,10 @@ final router = GoRouter(
             StatefulShellBranch(
               routes: [
                 GoRoute(
-                  path: InboxView.routePath,
-                  name: InboxView.routeName,
+                  path: SettingsView.routePath,
+                  name: SettingsView.routeName,
                   pageBuilder: (context, state) =>
-                  const NoTransitionPage(child: InboxView()),
+                  const NoTransitionPage(child: SettingsView()),
                 ),
               ],
             ),

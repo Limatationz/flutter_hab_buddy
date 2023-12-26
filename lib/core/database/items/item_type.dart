@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:tuple/tuple.dart';
 
 import '../../../generated/l10n.dart';
+import '../../../view/main/items/general/item_widget.dart';
+import '../../../view/main/items/player/complex/complex_player_item_base_widget.dart';
 import 'oh_item_type.dart';
 
 enum ItemType {
@@ -22,6 +25,7 @@ enum ItemType {
   windowContact,
   powerOutlet,
   energy,
+  complexPlayer,
   player,
   color,
   number,
@@ -31,6 +35,7 @@ enum ItemType {
   location,
   call,
   presence,
+  complexComponent,
   unknown;
 
   IconData get icon {
@@ -49,6 +54,7 @@ enum ItemType {
         return Icons.event;
       case ItemType.color:
         return Icons.pallet;
+      case ItemType.complexPlayer:
       case ItemType.player:
         return Icons.play_circle;
       case ItemType.image:
@@ -91,11 +97,13 @@ enum ItemType {
         return Icons.person;
       case ItemType.energy:
         return Icons.bolt;
+      case ItemType.complexComponent:
+        return Icons.widgets;
     }
   }
-  
+
   String get description {
-    switch (this){
+    switch (this) {
       case ItemType.number:
         return S.current.itemTypeNumber;
       case ItemType.text:
@@ -110,6 +118,8 @@ enum ItemType {
         return S.current.itemTypeDateTime;
       case ItemType.color:
         return S.current.itemTypeColor;
+      case ItemType.complexPlayer:
+        return S.current.itemTypeComplexPlayer;
       case ItemType.player:
         return S.current.itemTypePlayer;
       case ItemType.image:
@@ -152,6 +162,8 @@ enum ItemType {
         return S.current.itemTypePresence;
       case ItemType.energy:
         return S.current.itemTypeEnergy;
+      case ItemType.complexComponent:
+        return "";
     }
   }
 
@@ -216,5 +228,18 @@ enum ItemType {
       case OhItemType.group:
         return {};
     }
+  }
+
+  static List<ItemType> get complexTypes => [
+        ItemType.complexPlayer,
+      ];
+
+  static List<Tuple2<ItemType, ItemWidget>> getComplexWidgets(
+      BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return [
+      Tuple2(ItemType.complexPlayer,
+          ComplexPlayerItemBaseWidget(item: null, colorScheme: colorScheme)),
+    ];
   }
 }

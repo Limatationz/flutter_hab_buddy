@@ -4,7 +4,7 @@ import '../../../../core/database/app_database.dart';
 import '../../../util/constants.dart';
 
 abstract class ItemWidget extends StatelessWidget {
-  final Item item;
+  final Item? item;
   final ColorScheme colorScheme;
   final int crossAxisCount;
   final double mainAxisCount;
@@ -18,9 +18,23 @@ abstract class ItemWidget extends StatelessWidget {
 }
 
 abstract class SmallItemWidget extends ItemWidget {
+  static const double width = smallGridCrossAxisCount * itemListCountBreakpoint;
+  static const double height = smallGridMainAxisCount * itemListCountBreakpoint;
+
   const SmallItemWidget(
       {super.key, required super.item, required super.colorScheme})
       : super(
             crossAxisCount: smallGridCrossAxisCount,
             mainAxisCount: smallGridMainAxisCount);
+}
+
+abstract class LargeWidthItemWidget extends ItemWidget {
+  static const double width = smallGridCrossAxisCount * 2 * itemListCountBreakpoint;
+  static const double height = smallGridMainAxisCount * itemListCountBreakpoint;
+
+  const LargeWidthItemWidget(
+      {super.key, required super.item, required super.colorScheme})
+      : super(
+      crossAxisCount: smallGridCrossAxisCount * 2,
+      mainAxisCount: smallGridMainAxisCount);
 }

@@ -1,4 +1,3 @@
-import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
@@ -142,12 +141,12 @@ class _DimmableWidgetContainerState extends State<DimmableWidgetContainer> {
       widget.backgroundColor ??
       ElevationOverlay.applySurfaceTint(
           widget.colorScheme?.background ??
-              DynamicTheme.of(context)!.theme.colorScheme.background,
+              Theme.of(context).colorScheme.background,
           widget.colorScheme?.surfaceTint ??
-              DynamicTheme.of(context)!.theme.colorScheme.surfaceTint,
+              Theme.of(context).colorScheme.surfaceTint,
           1);
 
   Color getAccentBackgroundColor(BuildContext context) =>
       widget.colorScheme?.secondaryContainer ??
-      DynamicTheme.of(context)!.theme.colorScheme.secondaryContainer;
+      Theme.of(context).colorScheme.secondaryContainer;
 }

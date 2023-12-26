@@ -1,7 +1,6 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
-import 'package:collection/collection.dart';
 import 'package:dynamic_color/dynamic_color.dart';
-import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -9,7 +8,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:logging/logging.dart';
-import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 
 import 'core/routing/router.dart';
 import 'generated/l10n.dart';
@@ -28,25 +26,21 @@ void main() async {
   _setupLogging();
   setupLocator();
 
-  // Set Theme
-  StreamingSharedPreferences prefs = await StreamingSharedPreferences.instance;
-  var systemBrightness = SchedulerBinding.instance.window.platformBrightness;
-  var selectedBrightness =
-      prefs.getInt('appTheme', defaultValue: -1).getValue();
-  bool isDarkMode = systemBrightness == Brightness.dark;
-  switch (selectedBrightness) {
-    case 0:
-      isDarkMode = false;
-      break;
-    case 1:
-      isDarkMode = true;
-      break;
-  }
-
   await Future.wait([
     locator.allReady(),
     initHyphenation(),
   ]);
+
+  final themeMode = await AdaptiveTheme.getThemeMode();
+  bool isDark = themeMode == AdaptiveThemeMode.dark;
+  if (themeMode == AdaptiveThemeMode.system) {
+    final brightness = SchedulerBinding.instance!.window.platformBrightness;
+    if (brightness == Brightness.dark) {
+      isDark = true;
+    } else {
+      isDark = false;
+    }
+  }
 
   runApp(DynamicColorBuilder(
       builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
@@ -68,46 +62,22 @@ void main() async {
     }
 
     //Theme
-    final themeLight =
-        ThemeData.from(colorScheme: lightColorScheme, textTheme: textTheme, useMaterial3: true);
+    final themeLight = ThemeData.from(
+        colorScheme: lightColorScheme,
+        textTheme: textTheme,
+        useMaterial3: true);
 
-    final themeDark =
-        ThemeData.from(colorScheme: darkColorScheme, textTheme: textTheme, useMaterial3: true);
+    final themeDark = ThemeData.from(
+        colorScheme: darkColorScheme, textTheme: textTheme, useMaterial3: true);
 
-    final themeCollection = ThemeCollection(
-      themes: {
-        0: themeLight,
-        1: themeDark,
-      },
-      fallbackTheme: ThemeData.light(
-          useMaterial3:
-              true), // optional fallback theme, default value is ThemeData.light()
-    );
+    return AdaptiveTheme(
+        light: themeLight,
+        dark: themeDark,
+        initial: AdaptiveThemeMode.system,
+        builder: (theme, darkTheme) {
+          final currentTheme = isDark ? darkTheme : theme;
 
-    return DynamicTheme(
-        themeCollection: themeCollection,
-        defaultThemeId: isDarkMode ? 1 : 0,
-        builder: (context, theme) {
-          final locale = S.delegate.supportedLocales.firstWhereOrNull(
-              (element) =>
-                  element.languageCode ==
-                  prefs.getString('language', defaultValue: '').getValue());
-
-          final systemNavigationBarColor = ElevationOverlay.applySurfaceTint(
-              theme.colorScheme.surface, theme.colorScheme.surfaceTint, 3);
-
-          SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-              statusBarColor: Colors.transparent,
-              statusBarIconBrightness: theme.brightness == Brightness.dark
-                  ? Brightness.light
-                  : Brightness.dark,
-              statusBarBrightness: theme.brightness,
-              systemNavigationBarColor: systemNavigationBarColor,
-              systemNavigationBarIconBrightness:
-                  theme.brightness == Brightness.dark
-                      ? Brightness.light
-                      : Brightness.dark,
-              systemNavigationBarDividerColor: theme.colorScheme.background));
+          setSystemOverlay(currentTheme);
 
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
@@ -120,8 +90,8 @@ void main() async {
               GlobalCupertinoLocalizations.delegate,
             ],
             supportedLocales: S.delegate.supportedLocales,
-            locale: locale,
             theme: theme,
+            darkTheme: darkTheme,
           );
         });
   }));
@@ -132,4 +102,21 @@ void _setupLogging() {
   Logger.root.onRecord.listen((rec) {
     debugPrint('${rec.level.name}: ${rec.time}: ${rec.message}');
   });
+}
+
+void setSystemOverlay(ThemeData theme) {
+  final systemNavigationBarColor = ElevationOverlay.applySurfaceTint(
+      theme.colorScheme.surface, theme.colorScheme.surfaceTint, 3);
+
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: theme.brightness == Brightness.dark
+          ? Brightness.light
+          : Brightness.dark,
+      statusBarBrightness: theme.brightness,
+      systemNavigationBarColor: systemNavigationBarColor,
+      systemNavigationBarIconBrightness: theme.brightness == Brightness.dark
+          ? Brightness.light
+          : Brightness.dark,
+      systemNavigationBarDividerColor: theme.colorScheme.background));
 }

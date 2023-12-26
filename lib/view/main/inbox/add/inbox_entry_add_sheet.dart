@@ -1,4 +1,4 @@
-import 'package:dynamic_themes/dynamic_themes.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -23,8 +23,9 @@ import 'inbox_entry_add_viewmodel.dart';
 
 class InboxEntryAddSheet extends StatelessWidget {
   final InboxEntry entry;
+  final int? roomId;
 
-  const InboxEntryAddSheet({super.key, required this.entry});
+  const InboxEntryAddSheet({super.key, required this.entry, this.roomId});
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +40,7 @@ class InboxEntryAddSheet extends StatelessWidget {
                   Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
                     Expanded(
                         child: Text(S.of(context).addItemHeadline,
-                            style: DynamicTheme.of(context)!
-                                .theme
+                            style: Theme.of(context)
                                 .textTheme
                                 .headlineMedium)),
                     const Gap(listSpacing),
@@ -52,8 +52,7 @@ class InboxEntryAddSheet extends StatelessWidget {
                           model.isFavorite
                               ? LineIconsFilled.heart
                               : LineIcons.heart,
-                          color: DynamicTheme.of(context)!
-                              .theme
+                          color: Theme.of(context)
                               .colorScheme
                               .primary,
                         )),
@@ -112,7 +111,7 @@ class InboxEntryAddSheet extends StatelessWidget {
                           iconPack: iconPackItems,
                           onChange: model.setIcon,
                           selectedIcon: model.itemIcon,
-                          helperText: S.of(context).optional,
+                          required: false,
                         ),
                       ),
                     ],
@@ -127,14 +126,13 @@ class InboxEntryAddSheet extends StatelessWidget {
                               label: S.of(context).room,
                               helperText: S.of(context).roomHelp,
                               hintText: S.current.select,
-                              initialValue: model.addRoomId,
+                              initialValue: roomId ?? model.addRoomId,
                               suffixIcon: GestureDetector(
                                   onTap: () {
                                     _onRoomAdd(context, model);
                                   },
                                   child: Icon(LineIcons.plus,
-                                      color: DynamicTheme.of(context)!
-                                          .theme
+                                      color: Theme.of(context)
                                           .colorScheme
                                           .primary)),
                               items: snapshot.data!
@@ -152,6 +150,7 @@ class InboxEntryAddSheet extends StatelessWidget {
                     helperText: S.of(context).customLabelHelp,
                     hintText: entry.label,
                     validator: FormBuilderValidators.maxLength(50),
+                    required: false,
                   ),
                   const SizedBox(height: 16),
                   BaseElevatedButton(

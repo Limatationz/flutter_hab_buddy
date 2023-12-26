@@ -13,6 +13,7 @@ class BaseFormDropdown<T> extends StatelessWidget {
   final void Function(T?)? onChanged;
   final dynamic initialValue;
   final Widget? suffixIcon;
+  final bool required;
 
   const BaseFormDropdown(
       {super.key,
@@ -24,14 +25,14 @@ class BaseFormDropdown<T> extends StatelessWidget {
       this.validator,
       this.onChanged,
       this.initialValue,
-      this.suffixIcon});
+      this.suffixIcon, this.required = true});
 
   @override
   Widget build(BuildContext context) {
     return FormBuilderDropdown<T>(
       name: name,
       decoration: InputDecoration(
-          labelText: label,
+          labelText: required ? "$label*" : label,
           border: const OutlineInputBorder(),
           helperText: helperText,
           helperMaxLines: 3,

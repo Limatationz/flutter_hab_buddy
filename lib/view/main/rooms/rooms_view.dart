@@ -1,5 +1,4 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:dynamic_themes/dynamic_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:gap/gap.dart';
@@ -17,6 +16,7 @@ import '../../util/general/base_elevated_button.dart';
 import '../../util/general/base_refresh_indicator.dart';
 import '../inbox/inbox_action_button.dart';
 import '../inbox/inbox_view.dart';
+import '../items/add_complex/add_complex_item_selection_sheet.dart';
 import '../items/add_complex/add_complex_item_widget.dart';
 import '../items/general/item_widget.dart';
 import '../items/sensors/sensor_item_widget.dart';
@@ -61,10 +61,8 @@ class RoomsView extends StatelessWidget {
                               selectedRoom.color != null
                                   ? ColorScheme.fromSeed(
                                       seedColor: fromHex(selectedRoom.color!),
-                                      brightness: DynamicTheme.of(context)!
-                                          .theme
-                                          .brightness)
-                                  : DynamicTheme.of(context)!.theme.colorScheme;
+                                      brightness: Theme.of(context).brightness)
+                                  : Theme.of(context).colorScheme;
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -98,7 +96,7 @@ class RoomsView extends StatelessWidget {
                                                         [];
                                                 if (items.isEmpty) {
                                                   return _buildEmptyItemsForRoomState(
-                                                      context);
+                                                      context, room.id);
                                                 } else {
                                                   final senors = items
                                                       .where((e) => e.isSensor)
@@ -117,6 +115,7 @@ class RoomsView extends StatelessWidget {
                                                           senors,
                                                           selectedRoomColorScheme),
                                                       model.onRefresh,
+                                                      room.id,
                                                       selectedRoomColorScheme);
                                                 }
                                               }));
@@ -153,8 +152,7 @@ class RoomsView extends StatelessWidget {
               .map((e) => DropdownMenuItem(
                   value: e,
                   child: Text(e.name,
-                      style: DynamicTheme.of(context)!
-                          .theme
+                      style: Theme.of(context)
                           .textTheme
                           .bodyLarge
                           ?.copyWith(color: colorScheme.onSurfaceVariant))))
@@ -187,6 +185,7 @@ class RoomsView extends StatelessWidget {
       List<ItemWidget> items,
       List<SensorItemWidget> sensors,
       Future<void> Function() onRefresh,
+      int roomId,
       ColorScheme colorScheme) {
     return Container(
         color: colorScheme.surface,
@@ -222,6 +221,7 @@ class RoomsView extends StatelessWidget {
                                   child: e)),
                               AddComplexItemWidget(
                                 colorScheme: colorScheme,
+                                roomId: roomId,
                               )
                             ],
                           ))
@@ -245,7 +245,7 @@ class RoomsView extends StatelessWidget {
     );
   }
 
-  Widget _buildEmptyItemsForRoomState(BuildContext context) {
+  Widget _buildEmptyItemsForRoomState(BuildContext context, int roomId) {
     return Center(
       child: Column(mainAxisSize: MainAxisSize.min, children: [
         const Text("No items for the selected room available"),
@@ -262,7 +262,17 @@ class RoomsView extends StatelessWidget {
                         BorderRadius.vertical(top: Radius.circular(12))),
                 builder: (_) => SizedBox(
                     height: MediaQuery.of(context).size.height * 0.95,
-                    child: const InboxView()));
+                    child: InboxView(
+                      roomId: roomId,
+                    )));
+          },
+        ),
+        const Gap(paddingScaffold),
+        BaseElevatedButton(
+          width: 200,
+          text: S.current.addComplexItem,
+          onPressed: () {
+            AddComplexItemSelectionSheet.openSheet(context, roomId);
           },
         ),
       ]),

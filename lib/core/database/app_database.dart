@@ -16,7 +16,7 @@ import '../../util/shared_prefs_keys.dart';
 import '../network/generated/openHAB.swagger.dart';
 import 'converter/command_description_converter.dart';
 import 'converter/icon_data_converter.dart';
-import 'converter/map_converter.dart';
+import 'converter/json_converter.dart';
 import 'converter/state_description_converter.dart';
 import 'converter/string_list_converter.dart';
 import 'inbox/inbox_store.dart';
@@ -27,6 +27,7 @@ import 'items/items_table.dart';
 import 'items/oh_item_type.dart';
 import 'rooms/rooms_store.dart';
 import 'rooms/rooms_table.dart';
+import 'state/item_states_table.dart';
 
 part 'app_database.g.dart';
 
@@ -34,6 +35,7 @@ part 'app_database.g.dart';
   InboxTable,
   RoomsTable,
   ItemsTable,
+  ItemStatesTable
 ], daos: [
   InboxStore,
   RoomsStore,

@@ -40,6 +40,15 @@ extension InboxDBConverter on EnrichedItemDTO {
       ohGroups: (groupNames?.isEmptyCheck ?? true)
           ? const Value.absent()
           : Value(groupNames!),
+    );
+  }
+
+  ItemStatesTableCompanion? asItemStateUpdate() {
+    if (name == null || label == null || type == null || state == null) {
+      return null;
+    }
+    return ItemStatesTableCompanion(
+      ohName: Value(name!),
       state: Value(state!),
       stateDescription: stateDescription != null
           ? Value(stateDescription!)
@@ -51,7 +60,7 @@ extension InboxDBConverter on EnrichedItemDTO {
           ? Value(commandDescription!)
           : const Value.absent(),
       ohUnitSymbol:
-          unitSymbol != null ? Value(unitSymbol!) : const Value.absent(),
+      unitSymbol != null ? Value(unitSymbol!) : const Value.absent(),
     );
   }
 }

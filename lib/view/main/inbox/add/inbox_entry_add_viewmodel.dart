@@ -1,4 +1,3 @@
-import 'package:drift/drift.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:stacked/stacked.dart';
@@ -20,8 +19,8 @@ class InboxEntryAddViewModel extends BaseViewModel {
   int? addRoomId;
   bool isFavorite = false;
 
-  InboxEntryAddViewModel(this.entry){
-    if(ItemType.forEntryType(entry.type).length == 1){
+  InboxEntryAddViewModel(this.entry) {
+    if (ItemType.forEntryType(entry.type).length == 1) {
       itemIcon = ItemType.forEntryType(entry.type).first.icon;
     }
   }
@@ -33,38 +32,13 @@ class InboxEntryAddViewModel extends BaseViewModel {
       final int roomId = data["roomId"];
       final String? customLabel = data["customLabel"];
 
-      final item = ItemsTableCompanion.insert(
-        type: itemType,
-        ohType: entry.type,
-        ohName: entry.name,
-        ohLabel: entry.label,
-        ohCategory: entry.category != null
-            ? Value(entry.category!)
-            : const Value.absent(),
-        ohTags: entry.tags != null ? Value(entry.tags!) : const Value.absent(),
-        ohGroups:
-            entry.groups != null ? Value(entry.groups!) : const Value.absent(),
-        ohUnitSymbol: entry.unitSymbol != null
-            ? Value(entry.unitSymbol!)
-            : const Value.absent(),
-        state: entry.state,
-        stateDescription: entry.stateDescription != null
-            ? Value(entry.stateDescription!)
-            : const Value.absent(),
-        commandDescription: entry.commandDescription != null
-            ? Value(entry.commandDescription!)
-            : const Value.absent(),
-        transformedState: entry.transformedState != null
-            ? Value(entry.transformedState!)
-            : const Value.absent(),
-        roomId: roomId,
-        icon: itemIcon != null ? Value(itemIcon) : const Value.absent(),
-        customLabel:
-            customLabel != null ? Value(customLabel) : const Value.absent(),
-        isFavorite: Value(isFavorite),
-      );
-      await _itemsRepository.addItemToInbox(item);
-      return true;
+      return _itemsRepository.addItemFromInbox(
+          itemName: entry.name,
+          type: itemType,
+          roomId: roomId,
+          customLabel: customLabel,
+          icon: itemIcon,
+          isFavorite: isFavorite);
     }
     return false;
   }
@@ -86,7 +60,7 @@ class InboxEntryAddViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void setIconOnTypeChange(ItemType type){
+  void setIconOnTypeChange(ItemType type) {
     itemIcon = type.icon;
     notifyListeners();
   }

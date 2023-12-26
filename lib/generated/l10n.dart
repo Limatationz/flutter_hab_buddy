@@ -260,10 +260,10 @@ class S {
     );
   }
 
-  /// `Add a custom label for this item otherwise the label from OpenHAB will be used (optional)`
+  /// `Add a custom label for this item otherwise the label from OpenHAB will be used`
   String get customLabelHelp {
     return Intl.message(
-      'Add a custom label for this item otherwise the label from OpenHAB will be used (optional)',
+      'Add a custom label for this item otherwise the label from OpenHAB will be used',
       name: 'customLabelHelp',
       desc: '',
       args: [],
@@ -310,10 +310,10 @@ class S {
     );
   }
 
-  /// `Further description of the room (optional)`
+  /// `Further description of the room`
   String get roomDescriptionHelp {
     return Intl.message(
-      'Further description of the room (optional)',
+      'Further description of the room',
       name: 'roomDescriptionHelp',
       desc: '',
       args: [],
@@ -335,16 +335,6 @@ class S {
     return Intl.message(
       'Level',
       name: 'roomLevelLabel',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Optional`
-  String get optional {
-    return Intl.message(
-      'Optional',
-      name: 'optional',
       desc: '',
       args: [],
     );
@@ -715,6 +705,86 @@ class S {
     return Intl.message(
       'Do you really want to delete item',
       name: 'deleteItemDialogText',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Advanced Player`
+  String get itemTypeComplexPlayer {
+    return Intl.message(
+      'Advanced Player',
+      name: 'itemTypeComplexPlayer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Settings`
+  String get navigationSettings {
+    return Intl.message(
+      'Settings',
+      name: 'navigationSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Player Item not found`
+  String get complex_player_add_item_error {
+    return Intl.message(
+      'Player Item not found',
+      name: 'complex_player_add_item_error',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update failed. Please try again.`
+  String get updateFailedError {
+    return Intl.message(
+      'Update failed. Please try again.',
+      name: 'updateFailedError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Done`
+  String get done {
+    return Intl.message(
+      'Done',
+      name: 'done',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Light`
+  String get themeLight {
+    return Intl.message(
+      'Light',
+      name: 'themeLight',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dark`
+  String get themeDark {
+    return Intl.message(
+      'Dark',
+      name: 'themeDark',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `System`
+  String get themeSystem {
+    return Intl.message(
+      'System',
+      name: 'themeSystem',
       desc: '',
       args: [],
     );

@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 
+import '../app_database.dart';
 import '../converter/command_description_converter.dart';
 import '../converter/state_description_converter.dart';
 import '../converter/string_list_converter.dart';

@@ -1,74 +1,85 @@
 import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
-import 'package:dynamic_themes/dynamic_themes.dart';
+
 import 'package:flutter/material.dart';
 
 import '../../../../core/database/items/items_table.dart';
+import '../../../../core/database/state/item_states_table.dart';
 import '../../../../locator.dart';
 import '../../../../repository/item_repository.dart';
 import '../../../util/constants.dart';
 import '../../../util/general/dimmable_widget_container.dart';
+import '../general/item_state_injector.dart';
 import '../general/item_widget.dart';
-import '../item_widget_factory.dart';
+import '../general/item_widget_factory.dart';
 import 'rollershutter_item_dialog.dart';
 
 class RollershutterItemWidget extends SmallItemWidget {
   RollershutterItemWidget(
-      {super.key, required super.item, required super.colorScheme});
+      {super.key, required super.item, required super.colorScheme}) : assert(item != null);
 
   final _itemRepository = locator<ItemRepository>();
 
-  double get numberState => double.parse(item.state);
-
-  bool get isDown => numberState == 0;
-
   @override
   Widget build(BuildContext context) {
-    return DimmableWidgetContainer(
-        key: ValueKey(numberState.toString()),
-        onTap: !item.isReadOnly ? onAction : null,
-        onLongTap: () => onLongTap(context),
-        value: numberState,
-        maxValue: item.stateDescription?.maximum ?? 100,
-        minValue: item.stateDescription?.minimum ?? 0,
-        onDragDone: !item.isReadOnly ? onDragDone : null,
-        colorScheme: colorScheme,
-        reversed: true,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            AutoHyphenatingText(item.label,
-                maxLines: 3,
-                style: DynamicTheme.of(context)!.theme.textTheme.titleMedium),
-            Align(
-                alignment: Alignment.bottomRight,
-                child: Icon(
-                  item.icon ?? item.type.icon,
-                  size: iconSize,
-                  color: !isDown
-                      ? DynamicTheme.of(context)!.theme.colorScheme.onBackground
-                      : Colors.grey,
-                )),
-          ],
-        ));
+    return ItemStateInjector(
+        itemName: item!.ohName,
+        builder: (itemState) {
+          final numberState = double.parse(itemState.state);
+
+          final isDown = numberState == 0;
+          return DimmableWidgetContainer(
+              key: ValueKey(numberState.toString()),
+              onTap: () => !itemState.isReadOnly ? onAction(isDown) : null,
+              onLongTap: () => onLongTap(context, numberState),
+              value: numberState,
+              maxValue: itemState.stateDescription?.maximum ?? 100,
+              minValue: itemState.stateDescription?.minimum ?? 0,
+              onDragDone: !itemState.isReadOnly ? onDragDone : null,
+              colorScheme: colorScheme,
+              reversed: true,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  AutoHyphenatingText(item!.label,
+                      maxLines: 3,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium),
+                  Align(
+                      alignment: Alignment.bottomRight,
+                      child: Icon(
+                        item!.icon ?? item!.type.icon,
+                        size: iconSize,
+                        color: !isDown
+                            ? Theme.of(context)
+                                .colorScheme
+                                .onBackground
+                            : Colors.grey,
+                      )),
+                ],
+              ));
+        });
   }
 
-  Future<void> onAction() async {
-    await _itemRepository.rollershutterAction(item.ohName, !isDown);
+  Future<void> onAction(bool isDown) async {
+    await _itemRepository.rollershutterAction(item!.ohName, !isDown);
   }
 
   Future<void> onDragDone(double value) async {
-    await _itemRepository.dimmerAction(item.ohName, value);
+    await _itemRepository.dimmerAction(item!.ohName, value);
   }
 
-  void onLongTap(BuildContext context) => ItemWidgetFactory.openDialog(
-      context,
-      RollershutterItemDialog(
-        itemName: item.ohName,
-        initialValue: numberState,
-      ),
-      item,
-      colorScheme);
+  void onLongTap(BuildContext context, double initialValue) =>
+      ItemWidgetFactory.openDialog(
+          context,
+          RollerShutterItemDialog(
+            itemName: item!.ohName,
+            initialValue: initialValue,
+            colorScheme: colorScheme,
+          ),
+          item!,
+          colorScheme);
 }
 
 enum RollershutterState { up, down, half }

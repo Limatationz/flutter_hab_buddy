@@ -5,7 +5,7 @@ import '../../../core/database/app_database.dart';
 import '../../../locator.dart';
 import '../../../repository/item_repository.dart';
 import '../items/general/item_widget.dart';
-import '../items/item_widget_factory.dart';
+import '../items/general/item_widget_factory.dart';
 import '../items/sensors/sensor_item_widget.dart';
 
 class RoomsViewModel extends BaseViewModel {
@@ -77,4 +77,12 @@ class RoomsViewModel extends BaseViewModel {
       items
           .map((e) => SensorItemWidget(item: e, colorScheme: colorScheme))
           .toList();
+
+  Future<int?> currentRoomId() async {
+    final rooms = await _roomsStore.all().get();
+    if (rooms.isEmpty) {
+      return null;
+    }
+    return rooms[currentPage].id;
+  }
 }
