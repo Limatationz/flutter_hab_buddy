@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:adaptive_theme/adaptive_theme.dart';
@@ -9,6 +8,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../generated/l10n.dart';
 import '../../util/icons/icons.dart';
+import '../util/platform.dart';
 import 'main_viewmodel.dart';
 
 class MainView extends StatefulWidget {
@@ -37,7 +37,7 @@ class _MainViewState extends State<MainView> with WidgetsBindingObserver {
     super.didChangePlatformBrightness();
 
     var brightness = View.of(context).platformDispatcher.platformBrightness;
-    if(brightness == Brightness.dark) {
+    if (brightness == Brightness.dark) {
       AdaptiveTheme.of(context).setDark();
     } else {
       AdaptiveTheme.of(context).setLight();
@@ -55,12 +55,21 @@ class _MainViewState extends State<MainView> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: Platform.isAndroid
-          ? _buildAndroidNavigationBar()
-          : _buildIOSNavigationBar(),
-      body: SizedBox.expand(
-        child: _buildContent(),
-      ),
+      bottomNavigationBar: isDesktop()
+          ? null
+          : isAndroid()
+              ? _buildAndroidNavigationBar()
+              : _buildIOSNavigationBar(),
+      body: isDesktop()
+          ? Row(children: [
+              _buildDesktopSideBar(context),
+              const VerticalDivider(thickness: 1, width: 1),
+              // This is the main content.
+              Expanded(child: _buildContent())
+            ])
+          : SizedBox.expand(
+              child: _buildContent(),
+            ),
     );
   }
 
@@ -148,6 +157,52 @@ class _MainViewState extends State<MainView> with WidgetsBindingObserver {
         label: title,
         tooltip: "",
       );
+
+  Widget _buildDesktopSideBar(BuildContext context) => NavigationRail(
+      labelType: NavigationRailLabelType.all,
+      leading: isMacOS()
+          ? const SizedBox(
+              height: 35,
+            )
+          : null,
+      destinations: <NavigationRailDestination>[
+        NavigationRailDestination(
+          icon: const Icon(
+            LineIcons.star,
+          ),
+          selectedIcon: const Icon(
+            LineIconsFilled.star,
+          ),
+          label: Text(S.current.navigationFavorites),
+        ),
+        NavigationRailDestination(
+          icon: const Icon(
+            LineIconsLight.house_plan_alt_2,
+          ),
+          selectedIcon: const Icon(
+            LineIcons.house_plan_alt_2,
+          ),
+          label: Text(S.current.navigationRooms),
+        ),
+        NavigationRailDestination(
+          icon: const Icon(
+            LineIconsLight.cog,
+          ),
+          selectedIcon: const Icon(
+            LineIcons.cog,
+          ),
+          label: Text(S.current.navigationSettings),
+        )
+      ],
+      selectedIndex: _calculateSelectedIndex(context),
+      onDestinationSelected: (index) => setState(
+            () {
+              _navigateToIndex(index);
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
+          ));
+
+  Widget _buildWindowsSideBar() => Container();
 
   _navigateToIndex(int index) {
     widget.navigationShell.goBranch(index,
