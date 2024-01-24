@@ -52,12 +52,12 @@ class LoginRepository {
     }
   }
 
+  /// checks if login is valid and stores it in secure storage
+  /// returns true if login is valid
+  /// returns false if login is invalid or server is not reachable
   Future<bool> storeLogin(
       {required String username, required String password}) async {
-    await _secureStorage.write(key: 'username', value: username);
-    await _secureStorage.write(key: 'password', value: password);
-
-    // TODO: check login
+    // check login
     final api = OpenHAB.create(
         baseUrl: Uri.parse("https://myopenhab.org/rest"),
         interceptors: [
@@ -65,6 +65,9 @@ class LoginRepository {
         ]);
     final result = await api.get();
     if (result.isSuccessful) {
+      await _secureStorage.write(key: 'username', value: username);
+      await _secureStorage.write(key: 'password', value: password);
+
       _loggedIn.add(true);
       _loginData.add(Tuple2(username, password));
       return true;
@@ -73,5 +76,12 @@ class LoginRepository {
       _loginData.add(null);
       return false;
     }
+  }
+
+  Future<void> logout() async {
+    await _secureStorage.delete(key: 'username');
+    await _secureStorage.delete(key: 'password');
+    _loggedIn.add(false);
+    _loginData.add(null);
   }
 }

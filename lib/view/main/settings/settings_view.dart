@@ -1,5 +1,6 @@
 import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../generated/l10n.dart';
@@ -38,6 +39,76 @@ class SettingsView extends StatelessWidget {
                 child: ListView(
                   padding: const EdgeInsets.all(paddingScaffold),
                   children: [
+                    SettingsGroup(
+                        settingsGroupTitle: "Connection",
+                        settingsGroupTitleStyle:
+                            Theme.of(context).textTheme.titleMedium,
+                        items: [
+                          SettingsItem(
+                            icons: LineIcons.wifi,
+                            iconStyle: IconStyle(
+                              backgroundColor: Colors.grey,),
+                            title: "Connection Status",
+                            trailing: StreamBuilder<bool>(
+                              stream: model.connectionStatus,
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return Icon(
+                                    snapshot.data!
+                                        ? LineIcons.checkmark
+                                        : LineIcons.minus,
+                                  );
+                                } else {
+                                  return CircularProgressIndicator();
+                                }
+                              },
+                            ),
+                          ),
+                          SettingsItem(
+                            icons: LineIcons.wifi_alt_1,
+                            iconStyle: IconStyle(
+                              backgroundColor: Colors.grey,
+                            ),
+                            title: "Connection Start",
+                            trailing: StreamBuilder<DateTime?>(
+                              stream: model.lastConnectionStart,
+                              builder: (context, snapshot) {
+                                if (snapshot.data != null) {
+                                  return Text(DateFormat.yMd()
+                                      .add_Hms()
+                                      .format(snapshot.data!));
+                                } else {
+                                  return Text("Never");
+                                }
+                              },
+                            ),
+                          ),
+                          SettingsItem(
+                            icons: LineIcons.wifi_alt_2,
+                            iconStyle: IconStyle(
+                              backgroundColor: Colors.grey,),
+                            title: "Last Update",
+                            trailing: StreamBuilder<DateTime?>(
+                              stream: model.lastUpdate,
+                              builder: (context, snapshot) {
+                                if (snapshot.data != null) {
+                                  return Text(DateFormat.yMd()
+                                      .add_Hms()
+                                      .format(snapshot.data!));
+                                } else {
+                                  return Text("Never");
+                                }
+                              },
+                            ),
+                          ),
+                          SettingsItem(
+                            icons: LineIcons.exit,
+                            iconStyle: IconStyle(backgroundColor: Colors.red),
+                            title: "Logout",
+                            onTap: () => model.logout(context),
+                            trailing: SizedBox.shrink(),
+                          ),
+                        ]),
                     SettingsGroup(
                         settingsGroupTitle: "App",
                         settingsGroupTitleStyle:

@@ -789,6 +789,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Enter your credentials from myOpenHAB.org`
+  String get loginInfo {
+    return Intl.message(
+      'Enter your credentials from myOpenHAB.org',
+      name: 'loginInfo',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

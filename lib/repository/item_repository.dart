@@ -29,6 +29,20 @@ class ItemRepository {
   final _snackbarService = locator<SnackbarService>();
   final _api = locator<OpenHAB>();
 
+  // SSE Connection
+  final BehaviorSubject<bool?> _sseConnection = BehaviorSubject.seeded(null);
+
+  Stream<bool?> get sseConnection => _sseConnection.stream;
+  final BehaviorSubject<DateTime?> _sseLastConnection =
+      BehaviorSubject.seeded(null);
+
+  Stream<DateTime?> get sseLastConnection => _sseLastConnection.stream;
+
+  final BehaviorSubject<DateTime?> _sseLastMessage =
+      BehaviorSubject.seeded(null);
+
+  Stream<DateTime?> get sseLastMessage => _sseLastMessage.stream;
+
   ItemRepository() {
     observeEvents();
   }
@@ -284,6 +298,15 @@ class ItemRepository {
             (event, names) => Tuple2(event, names))
         .listen(
       (tuple) {
+        // Connection
+        if (_sseConnection.value != true) {
+          _sseConnection.add(true);
+        }
+        if (_sseLastConnection.value == null) {
+          _sseLastConnection.add(DateTime.now());
+        }
+        _sseLastMessage.add(DateTime.now());
+
         final event = tuple.item1;
         final names = tuple.item2;
 

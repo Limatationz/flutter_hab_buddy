@@ -97,6 +97,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Please try again"),
         "loginFailedTitle":
             MessageLookupByLibrary.simpleMessage("Login failed"),
+        "loginInfo": MessageLookupByLibrary.simpleMessage(
+            "Enter your credentials from myOpenHAB.org"),
         "navigationFavorites":
             MessageLookupByLibrary.simpleMessage("Favorites"),
         "navigationInbox": MessageLookupByLibrary.simpleMessage("Inbox"),

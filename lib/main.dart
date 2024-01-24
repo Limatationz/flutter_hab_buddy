@@ -67,10 +67,33 @@ void main() async {
     final themeLight = ThemeData.from(
         colorScheme: lightColorScheme,
         textTheme: textTheme,
-        useMaterial3: true);
+        useMaterial3: true).copyWith(
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: lightColorScheme.secondaryContainer
+            .withOpacity(0.4),
+        border: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(12.0),
+          ),
+        ),
+        isDense: true,
+      ),
+    );
 
     final themeDark = ThemeData.from(
-        colorScheme: darkColorScheme, textTheme: textTheme, useMaterial3: true);
+        colorScheme: darkColorScheme, textTheme: textTheme, useMaterial3: true).copyWith(
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: darkColorScheme.secondaryContainer
+            .withOpacity(0.4),
+        border: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(12.0),
+          ),
+        ),
+      ),
+    );
 
     return AdaptiveTheme(
         light: themeLight,

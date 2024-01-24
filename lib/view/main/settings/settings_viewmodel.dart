@@ -1,6 +1,7 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../core/database/app_database.dart';
@@ -8,10 +9,21 @@ import '../../../core/database/items/item_type.dart';
 import '../../../locator.dart';
 import '../../../main.dart';
 import '../../../repository/item_repository.dart';
+import '../../../repository/login_repository.dart';
+import '../../login/login_view.dart';
 
 class SettingsViewModel extends BaseViewModel {
   final _db = locator<AppDatabase>();
   final _itemsRepository = locator<ItemRepository>();
+  final _loginRepository = locator<LoginRepository>();
+
+  Stream<bool> get connectionStatus =>
+      _itemsRepository.sseConnection.map((event) => event ?? false);
+
+  Stream<DateTime?> get lastConnectionStart =>
+      _itemsRepository.sseLastConnection;
+
+  Stream<DateTime?> get lastUpdate => _itemsRepository.sseLastMessage;
 
   int getThemeIndex(BuildContext context) {
     return AdaptiveTheme.of(context).mode.index;
@@ -21,6 +33,12 @@ class SettingsViewModel extends BaseViewModel {
     AdaptiveTheme.of(context).setThemeMode(AdaptiveThemeMode.values[index]);
     final theme = AdaptiveTheme.of(context).theme;
     setSystemOverlay(theme);
+  }
+
+  Future<void> logout(BuildContext context) async {
+    await _db.deleteAllData();
+    await _loginRepository.logout();
+    context.goNamed(LoginView.routeName);
   }
 
   Future<void> clearDatabase() async {

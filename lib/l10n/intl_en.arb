@@ -72,5 +72,6 @@
   "done": "Done",
   "themeLight": "Light",
   "themeDark": "Dark",
-  "themeSystem": "System"
+  "themeSystem": "System",
+  "loginInfo": "Enter your credentials from myOpenHAB.org"
 }
