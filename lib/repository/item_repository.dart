@@ -43,6 +43,9 @@ class ItemRepository {
 
   Stream<DateTime?> get sseLastMessage => _sseLastMessage.stream;
 
+  Stream<DateTime> get clockStream =>
+    Stream.periodic(const Duration(seconds: 1), (_) => DateTime.now());
+
   ItemRepository() {
     observeEvents();
   }
@@ -184,6 +187,11 @@ class ItemRepository {
     // fetch chart data
     _chartRepository.fetchChartDataByName(item.ohName.value);
 
+    return true;
+  }
+
+  Future<bool> addItem(ItemsTableCompanion item) async {
+    await _itemsStore.insertOrUpdateSingle(item);
     return true;
   }
 

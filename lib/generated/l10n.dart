@@ -799,6 +799,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Time format`
+  String get timeFormat {
+    return Intl.message(
+      'Time format',
+      name: 'timeFormat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clock`
+  String get clock {
+    return Intl.message(
+      'Clock',
+      name: 'clock',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

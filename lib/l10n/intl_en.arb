@@ -73,5 +73,7 @@
   "themeLight": "Light",
   "themeDark": "Dark",
   "themeSystem": "System",
-  "loginInfo": "Enter your credentials from myOpenHAB.org"
+  "loginInfo": "Enter your credentials from myOpenHAB.org",
+  "timeFormat": "Time format",
+  "clock": "Clock"
 }

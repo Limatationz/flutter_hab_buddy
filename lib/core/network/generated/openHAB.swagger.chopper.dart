@@ -6,6 +6,7 @@ part of 'openHAB.swagger.dart';
 // ChopperGenerator
 // **************************************************************************
 
+// coverage:ignore-file
 // ignore_for_file: type=lint
 final class _$OpenHAB extends OpenHAB {
   _$OpenHAB([ChopperClient? client]) {
@@ -14,7 +15,7 @@ final class _$OpenHAB extends OpenHAB {
   }
 
   @override
-  final definitionType = OpenHAB;
+  final Type definitionType = OpenHAB;
 
   @override
   Future<Response<List<ModuleTypeDTO>>> _moduleTypesGet({

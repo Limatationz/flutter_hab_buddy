@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 
 import '../../../generated/l10n.dart';
+import '../../../view/main/items/clock/clock_item_base_widget.dart';
 import '../../../view/main/items/general/item_widget.dart';
 import '../../../view/main/items/player/complex/complex_player_item_base_widget.dart';
 import 'oh_item_type.dart';
@@ -26,6 +27,7 @@ enum ItemType {
   powerOutlet,
   energy,
   complexPlayer,
+  clock,
   player,
   color,
   number,
@@ -99,6 +101,8 @@ enum ItemType {
         return Icons.bolt;
       case ItemType.complexComponent:
         return Icons.widgets;
+      case ItemType.clock:
+        return Icons.access_time;
     }
   }
 
@@ -162,6 +166,8 @@ enum ItemType {
         return S.current.itemTypePresence;
       case ItemType.energy:
         return S.current.itemTypeEnergy;
+      case ItemType.clock:
+        return S.current.clock;
       case ItemType.complexComponent:
         return "";
     }
@@ -240,6 +246,8 @@ enum ItemType {
     return [
       Tuple2(ItemType.complexPlayer,
           ComplexPlayerItemBaseWidget(item: null, colorScheme: colorScheme)),
+      Tuple2(ItemType.clock,
+          ClockItemBaseWidget(item: null, colorScheme: colorScheme)),
     ];
   }
 }

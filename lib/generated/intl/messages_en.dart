@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addItemHeadline": MessageLookupByLibrary.simpleMessage("Add Item"),
         "addRoomHeadline": MessageLookupByLibrary.simpleMessage("Add Room"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "clock": MessageLookupByLibrary.simpleMessage("Clock"),
         "close": MessageLookupByLibrary.simpleMessage("Close"),
         "complex_player_add_item_error":
             MessageLookupByLibrary.simpleMessage("Player Item not found"),
@@ -124,6 +125,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "themeDark": MessageLookupByLibrary.simpleMessage("Dark"),
         "themeLight": MessageLookupByLibrary.simpleMessage("Light"),
         "themeSystem": MessageLookupByLibrary.simpleMessage("System"),
+        "timeFormat": MessageLookupByLibrary.simpleMessage("Time format"),
         "updateFailedError": MessageLookupByLibrary.simpleMessage(
             "Update failed. Please try again."),
         "username": MessageLookupByLibrary.simpleMessage("Username")

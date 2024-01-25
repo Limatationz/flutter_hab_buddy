@@ -5,6 +5,8 @@ import '../../../../core/database/items/item_type.dart';
 import '../../../../core/database/items/oh_item_type.dart';
 import '../../../util/general/bar_bottom_sheet.dart';
 import '../../../util/general/base_item_dialog.dart';
+import '../clock/clock_add_sheet.dart';
+import '../clock/clock_item_widget.dart';
 import '../dimmer/dimmer_item_widget.dart';
 import '../edit/item_edit_view.dart';
 import '../player/base/player_item_widget.dart';
@@ -46,6 +48,8 @@ class ItemWidgetFactory {
           item: item,
           colorScheme: colorScheme,
         );
+      case OhItemType.dateTime:
+        return ClockItemWidget(item: item, colorScheme: colorScheme);
       default:
         return TextItemWidget(
           item: item,
@@ -60,6 +64,11 @@ class ItemWidgetFactory {
       child = ComplexPlayerAddSheet(
           roomId: item.roomId,
           complexPlayerData: ComplexPlayerData.fromJson(item.complexJson!));
+    } else if (item.type == ItemType.clock) {
+      child = ClockAddSheet(
+        roomId: item.roomId,
+        item: item,
+      );
     } else {
       child = ItemEditView(item: item);
     }
@@ -72,6 +81,10 @@ class ItemWidgetFactory {
     Widget? child;
     if (itemType == ItemType.complexPlayer) {
       child = ComplexPlayerAddSheet(
+        roomId: roomId,
+      );
+    } else if (itemType == ItemType.clock) {
+      child = ClockAddSheet(
         roomId: roomId,
       );
     }
