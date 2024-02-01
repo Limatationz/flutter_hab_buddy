@@ -5,10 +5,12 @@ import 'core/database/app_database.dart';
 import 'core/network/generated/client_index.dart';
 import 'core/network/interceptors/AuthInterceptor.dart';
 import 'core/routing/navigation_service.dart';
-import 'core/snackbar/snackbar_service.dart';
+import 'core/services/wakelock_service.dart';
+import 'core/services/snackbar_service.dart';
 import 'repository/chart_repository.dart';
 import 'repository/item_repository.dart';
 import 'repository/login_repository.dart';
+import 'repository/weather_repository.dart';
 
 final locator = GetIt.instance;
 
@@ -22,6 +24,10 @@ void setupLocator() {
 
   // snackbar service
   locator.registerSingleton(SnackbarService());
+
+  // other services
+  locator.registerSingletonWithDependencies(() => WakelockService(),
+      dependsOn: [StreamingSharedPreferences]);
 
   // database
   locator.registerLazySingleton(() => AppDatabase());
@@ -41,4 +47,5 @@ void setupLocator() {
   locator.registerSingleton(
     ItemRepository(),
   );
+  locator.registerSingleton(WeatherRepository());
 }

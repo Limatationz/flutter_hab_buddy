@@ -75,5 +75,12 @@
   "themeSystem": "System",
   "loginInfo": "Enter your credentials from myOpenHAB.org",
   "timeFormat": "Time format",
-  "clock": "Clock"
+  "clock": "Clock",
+  "weather": "Weather",
+  "weatherForecast": "Weather Forecast",
+  "wakelockEnabledSnackbar": "Wakelock enabled",
+  "wakelockDisabledSnackbar": "Wakelock disabled",
+  "disableWakelockTooltip": "Disable Wakelock",
+  "enableWakelockTooltip": "Enable Wakelock",
+  "feelsLike": "Feels like {temp}"
 }

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:gap/gap.dart';
@@ -10,6 +9,7 @@ import '../../../core/database/app_database.dart';
 import '../../../util/color.dart';
 import '../../util/constants.dart';
 import '../../util/general/base_refresh_indicator.dart';
+import '../../util/general/wakelock_indicator.dart';
 import '../../util/general/widget_container.dart';
 import '../inbox/inbox_action_button.dart';
 import '../items/general/item_widget.dart';
@@ -32,6 +32,7 @@ class FavouriteView extends StatelessWidget {
                       SliverAppBar.medium(
                         title: const Text("Favorites"),
                         actions: [
+                          WakelockIndicator(),
                           InboxActionButton(countInbox: model.countInboxStream),
                         ],
                       )
@@ -57,10 +58,8 @@ class FavouriteView extends StatelessWidget {
                                   model.buildItemWidgetsByRoomId(
                                       groupedItems,
                                       rooms,
-                                      Theme.of(context)
-                                          .colorScheme,
-                                      Theme.of(context)
-                                          .brightness);
+                                      Theme.of(context).colorScheme,
+                                      Theme.of(context).brightness);
 
                               return BaseRefreshIndicator(
                                   onRefresh: model.onRefresh,
@@ -103,11 +102,9 @@ class FavouriteView extends StatelessWidget {
                                                 null
                                             ? ColorScheme.fromSeed(
                                                 seedColor: fromHex(room.color!),
-                                                brightness:
-                                                    Theme.of(context)
-                                                        .brightness)
-                                            : Theme.of(context)
-                                                .colorScheme;
+                                                brightness: Theme.of(context)
+                                                    .brightness)
+                                            : Theme.of(context).colorScheme;
 
                                         return WidgetContainer(
                                             backgroundColor: roomColorScheme
@@ -118,8 +115,7 @@ class FavouriteView extends StatelessWidget {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(room.name,
-                                                    style: Theme.of(
-                                                            context)
+                                                    style: Theme.of(context)
                                                         .textTheme
                                                         .headlineMedium),
                                                 const Gap(listSpacing),

@@ -34,8 +34,11 @@ class ItemsStore extends DatabaseAccessor<AppDatabase> with _$ItemsStoreMixin {
       (tbl) => OrderingTerm(expression: tbl.score, mode: OrderingMode.desc)
     ]);
 
-  MultiSelectable<Item> byType(OhItemType type) =>
+  MultiSelectable<Item> byOhType(OhItemType type) =>
       (select(itemsTable)..where((tbl) => tbl.ohType.equalsValue(type)));
+
+  MultiSelectable<Item> byTypes(List<ItemType> types) =>
+      (select(itemsTable)..where((tbl) => tbl.type.isInValues(types)));
 
   Stream<Map<int, List<Item>>> watchGroupedByRoomId(
           {bool onlyFavorites = false}) =>

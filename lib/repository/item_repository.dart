@@ -16,7 +16,7 @@ import '../core/database/items/item_type.dart';
 import '../core/database/items/oh_item_type.dart';
 import '../core/network/converters/inbox.dart';
 import '../core/network/generated/client_index.dart';
-import '../core/snackbar/snackbar_service.dart';
+import '../core/services/snackbar_service.dart';
 import '../locator.dart';
 import 'chart_repository.dart';
 import 'login_repository.dart';
@@ -44,7 +44,7 @@ class ItemRepository {
   Stream<DateTime?> get sseLastMessage => _sseLastMessage.stream;
 
   Stream<DateTime> get clockStream =>
-    Stream.periodic(const Duration(seconds: 1), (_) => DateTime.now());
+      Stream.periodic(const Duration(seconds: 1), (_) => DateTime.now());
 
   ItemRepository() {
     observeEvents();
@@ -92,9 +92,11 @@ class ItemRepository {
         }
       }
 
-      // Delete all items that are not available anymore
+      // Delete all items that are not available anymore if they are not complex
       for (final item in storedItems) {
-        await _itemsStore.deleteDataByName(item.ohName);
+        if (!ItemType.complexTypes.contains(item.type)) {
+          await _itemsStore.deleteDataByName(item.ohName);
+        }
       }
 
       if (insertToInbox) {
@@ -119,11 +121,17 @@ class ItemRepository {
       {bool onlyInbox = false}) async {
     final inboxItems = await _inboxStore.byType(type).get();
     if (!onlyInbox) {
-      final items = await _itemsStore.byType(type).get();
+      final items = await _itemsStore.byOhType(type).get();
       return [...inboxItems.map((e) => e.name), ...items.map((e) => e.ohName)];
     } else {
       return inboxItems.map((e) => e.name).toList();
     }
+  }
+
+  Future<List<Item>> getItemsByTypes(
+    List<ItemType> types,
+  ) {
+    return _itemsStore.byTypes(types).get();
   }
 
   Future<bool> addItemFromInbox(
@@ -348,4 +356,7 @@ class ItemRepository {
 
   Future<void> updateFavoriteByName(String name, bool favorite) =>
       _itemsStore.updateFavoriteByName(name, favorite);
+
+  Future<void> insertOrUpdateState(ItemStatesTableCompanion state) =>
+      _itemsStore.insertOrUpdateState(state);
 }

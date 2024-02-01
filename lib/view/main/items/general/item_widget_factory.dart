@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart' show ModalScrollController;
 
 import '../../../../core/database/app_database.dart';
 import '../../../../core/database/items/item_type.dart';
@@ -16,6 +17,8 @@ import '../player/complex/complex_player_item_widget.dart';
 import '../rollershutter/rollershutter_item_widget.dart';
 import '../switch/switch_item_widget.dart';
 import '../text/text_item_widget.dart';
+import '../weather/weather_add_sheet.dart';
+import '../weather/weather_item_widget.dart';
 import 'item_widget.dart';
 
 class ItemWidgetFactory {
@@ -32,6 +35,13 @@ class ItemWidgetFactory {
       case OhItemType.rollershutter:
         return RollershutterItemWidget(item: item, colorScheme: colorScheme);
       case OhItemType.string:
+        if (item.type == ItemType.weather) {
+          return WeatherItemWidget(item: item, colorScheme: colorScheme);
+        }
+        return TextItemWidget(
+          item: item,
+          colorScheme: colorScheme,
+        );
       case OhItemType.number:
         return TextItemWidget(
           item: item,
@@ -69,6 +79,11 @@ class ItemWidgetFactory {
         roomId: item.roomId,
         item: item,
       );
+    } else if (item.type == ItemType.weather) {
+      child = WeatherAddSheet(
+        roomId: item.roomId,
+        item: item,
+      );
     } else {
       child = ItemEditView(item: item);
     }
@@ -87,23 +102,31 @@ class ItemWidgetFactory {
       child = ClockAddSheet(
         roomId: roomId,
       );
+    } else if (itemType == ItemType.weather) {
+      child = WeatherAddSheet(roomId: roomId);
     }
     if (child != null) {
-      await showBarModalBottomSheet(
-          context: context, builder: (context) => child!);
-      return true;
+      final result = await showBarModalBottomSheet<Item?>(
+          context: context,
+          builder: (context) => SingleChildScrollView(
+              controller: ModalScrollController.of(context),
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: child!));
+      return result != null;
     }
     return false;
   }
 
   static Future<void> openDialog(BuildContext context, Widget child, Item item,
-      ColorScheme colorScheme) async {
+      ColorScheme colorScheme, {bool hideItemName = false}) async {
     showDialog(
         context: context,
         builder: (_) => Dialog(
                 child: BaseItemDialog(
               item: item,
               colorScheme: colorScheme,
+                hideItemName: hideItemName,
               child: child,
             )));
   }

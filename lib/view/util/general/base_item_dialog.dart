@@ -14,12 +14,14 @@ class BaseItemDialog extends StatefulWidget {
   final Widget child;
   final Item item;
   final ColorScheme colorScheme;
+  final bool hideItemName;
 
   const BaseItemDialog(
       {super.key,
       required this.child,
       required this.item,
-      required this.colorScheme});
+      required this.colorScheme,
+      this.hideItemName = false});
 
   @override
   State<BaseItemDialog> createState() => _BaseItemDialogState();
@@ -51,12 +53,11 @@ class _BaseItemDialogState extends State<BaseItemDialog> {
                 Expanded(
                     child: AutoHyphenatingText(
                   widget.item.label,
-                  style:
-                  Theme.of(context)!.textTheme.headlineMedium,
+                  style: Theme.of(context).textTheme.headlineMedium,
                 )),
                 const Gap(listSpacing),
                 IconButton(
-                  color: widget.colorScheme.primary,
+                    color: widget.colorScheme.primary,
                     onPressed: toggleFavorite,
                     visualDensity: VisualDensity.compact,
                     icon: Icon(
@@ -68,7 +69,9 @@ class _BaseItemDialogState extends State<BaseItemDialog> {
                     visualDensity: VisualDensity.compact,
                     icon: const Icon(LineIconsFilled.pencil))
               ]),
+              if(!widget.hideItemName)
               const Gap(4),
+              if(!widget.hideItemName)
               Text(widget.item.ohName),
               const Gap(12),
               widget.child

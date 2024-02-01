@@ -4,7 +4,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../core/snackbar/snackbar_service.dart';
+import '../../core/services/snackbar_service.dart';
 import '../../generated/l10n.dart';
 import '../../locator.dart';
 import '../../repository/login_repository.dart';

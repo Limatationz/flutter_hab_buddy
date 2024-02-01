@@ -20,6 +20,8 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(temp) => "Feels like ${temp}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "addComplexItem":
@@ -39,11 +41,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Delete item?"),
         "deleteItemDialogText": MessageLookupByLibrary.simpleMessage(
             "Do you really want to delete item"),
+        "disableWakelockTooltip":
+            MessageLookupByLibrary.simpleMessage("Disable Wakelock"),
         "done": MessageLookupByLibrary.simpleMessage("Done"),
         "editItem": MessageLookupByLibrary.simpleMessage("Edit Item"),
+        "enableWakelockTooltip":
+            MessageLookupByLibrary.simpleMessage("Enable Wakelock"),
         "errorButtonHome": MessageLookupByLibrary.simpleMessage("Go to Home"),
         "errorHeadline":
             MessageLookupByLibrary.simpleMessage("An error occured"),
+        "feelsLike": m0,
         "icon": MessageLookupByLibrary.simpleMessage("Icon"),
         "iconPickerNoResultsText":
             MessageLookupByLibrary.simpleMessage("No results for:"),
@@ -128,6 +135,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "timeFormat": MessageLookupByLibrary.simpleMessage("Time format"),
         "updateFailedError": MessageLookupByLibrary.simpleMessage(
             "Update failed. Please try again."),
-        "username": MessageLookupByLibrary.simpleMessage("Username")
+        "username": MessageLookupByLibrary.simpleMessage("Username"),
+        "wakelockDisabledSnackbar":
+            MessageLookupByLibrary.simpleMessage("Wakelock disabled"),
+        "wakelockEnabledSnackbar":
+            MessageLookupByLibrary.simpleMessage("Wakelock enabled"),
+        "weather": MessageLookupByLibrary.simpleMessage("Weather"),
+        "weatherForecast":
+            MessageLookupByLibrary.simpleMessage("Weather Forecast")
       };
 }

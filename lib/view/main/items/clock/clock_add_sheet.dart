@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:uuid/uuid.dart';
 
-import '../../../../../../core/snackbar/snackbar_service.dart';
+import '../../../../core/services/snackbar_service.dart';
 import '../../../../../core/database/app_database.dart';
 import '../../../../../core/database/items/item_type.dart';
 import '../../../../../core/database/items/oh_item_type.dart';

@@ -819,6 +819,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Weather`
+  String get weather {
+    return Intl.message(
+      'Weather',
+      name: 'weather',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Weather Forecast`
+  String get weatherForecast {
+    return Intl.message(
+      'Weather Forecast',
+      name: 'weatherForecast',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wakelock enabled`
+  String get wakelockEnabledSnackbar {
+    return Intl.message(
+      'Wakelock enabled',
+      name: 'wakelockEnabledSnackbar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wakelock disabled`
+  String get wakelockDisabledSnackbar {
+    return Intl.message(
+      'Wakelock disabled',
+      name: 'wakelockDisabledSnackbar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Disable Wakelock`
+  String get disableWakelockTooltip {
+    return Intl.message(
+      'Disable Wakelock',
+      name: 'disableWakelockTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enable Wakelock`
+  String get enableWakelockTooltip {
+    return Intl.message(
+      'Enable Wakelock',
+      name: 'enableWakelockTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Feels like {temp}`
+  String feelsLike(Object temp) {
+    return Intl.message(
+      'Feels like $temp',
+      name: 'feelsLike',
+      desc: '',
+      args: [temp],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -5,6 +5,7 @@ import '../../../generated/l10n.dart';
 import '../../../view/main/items/clock/clock_item_base_widget.dart';
 import '../../../view/main/items/general/item_widget.dart';
 import '../../../view/main/items/player/complex/complex_player_item_base_widget.dart';
+import '../../../view/main/items/weather/weather_item_base_widget.dart';
 import 'oh_item_type.dart';
 
 enum ItemType {
@@ -38,6 +39,8 @@ enum ItemType {
   call,
   presence,
   complexComponent,
+  weather,
+  weatherForecast,
   unknown;
 
   IconData get icon {
@@ -103,6 +106,10 @@ enum ItemType {
         return Icons.widgets;
       case ItemType.clock:
         return Icons.access_time;
+      case ItemType.weather:
+        return Icons.cloud;
+      case ItemType.weatherForecast:
+        return Icons.cloud_queue;
     }
   }
 
@@ -168,6 +175,10 @@ enum ItemType {
         return S.current.itemTypeEnergy;
       case ItemType.clock:
         return S.current.clock;
+      case ItemType.weather:
+        return S.current.weather;
+      case ItemType.weatherForecast:
+        return S.current.weatherForecast;
       case ItemType.complexComponent:
         return "";
     }
@@ -238,6 +249,10 @@ enum ItemType {
 
   static List<ItemType> get complexTypes => [
         ItemType.complexPlayer,
+        ItemType.complexComponent,
+        ItemType.clock,
+        ItemType.weather,
+        ItemType.weatherForecast,
       ];
 
   static List<Tuple2<ItemType, ItemWidget>> getComplexWidgets(
@@ -248,6 +263,8 @@ enum ItemType {
           ComplexPlayerItemBaseWidget(item: null, colorScheme: colorScheme)),
       Tuple2(ItemType.clock,
           ClockItemBaseWidget(item: null, colorScheme: colorScheme)),
+      Tuple2(ItemType.weather,
+          WeatherItemBaseWidget(item: null, colorScheme: colorScheme)),
     ];
   }
 }

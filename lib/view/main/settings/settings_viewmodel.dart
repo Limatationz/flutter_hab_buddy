@@ -6,6 +6,7 @@ import 'package:stacked/stacked.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/database/items/item_type.dart';
+import '../../../core/services/wakelock_service.dart';
 import '../../../locator.dart';
 import '../../../main.dart';
 import '../../../repository/item_repository.dart';
@@ -16,6 +17,7 @@ class SettingsViewModel extends BaseViewModel {
   final _db = locator<AppDatabase>();
   final _itemsRepository = locator<ItemRepository>();
   final _loginRepository = locator<LoginRepository>();
+  final wakelockService = locator<WakelockService>();
 
   Stream<bool> get connectionStatus =>
       _itemsRepository.sseConnection.map((event) => event ?? false);

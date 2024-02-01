@@ -14,6 +14,7 @@ import '../../util/constants.dart';
 import '../../util/general/bar_bottom_sheet.dart';
 import '../../util/general/base_elevated_button.dart';
 import '../../util/general/base_refresh_indicator.dart';
+import '../../util/general/wakelock_indicator.dart';
 import '../inbox/inbox_action_button.dart';
 import '../inbox/inbox_view.dart';
 import '../items/add_complex/add_complex_item_selection_sheet.dart';
@@ -39,6 +40,7 @@ class RoomsView extends StatelessWidget {
             appBar: AppBar(
               title: const Text('Rooms'),
               actions: [
+                WakelockIndicator(),
                 InboxActionButton(countInbox: model.countInboxStream),
               ],
             ),
@@ -189,43 +191,49 @@ class RoomsView extends StatelessWidget {
       ColorScheme colorScheme) {
     return Container(
         color: colorScheme.surface,
-        padding: const EdgeInsets.all(paddingScaffold),
         child: BaseRefreshIndicator(
             onRefresh: onRefresh,
             child: SingleChildScrollView(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                  if (sensors.isNotEmpty)
-                    Wrap(
-                        spacing: listSpacing,
-                        runSpacing: listSpacing,
-                        children: sensors),
-                  if (sensors.isNotEmpty && items.isNotEmpty)
-                    Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: smallListSpacing),
-                        child: Divider(
-                          color: colorScheme.onBackground.withOpacity(0.2),
-                        )),
-                  LayoutBuilder(
-                      builder: (context, constraints) => StaggeredGrid.count(
-                            crossAxisCount:
-                                getItemListCount(constraints.maxWidth),
-                            mainAxisSpacing: listSpacing,
-                            crossAxisSpacing: listSpacing,
-                            children: [
-                              ...items.map((e) => StaggeredGridTile.count(
-                                  crossAxisCellCount: e.crossAxisCount,
-                                  mainAxisCellCount: e.mainAxisCount,
-                                  child: e)),
-                              AddComplexItemWidget(
-                                colorScheme: colorScheme,
-                                roomId: roomId,
-                              )
-                            ],
-                          ))
-                ]))));
+                child: Padding(
+                    padding: const EdgeInsets.all(paddingScaffold),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (sensors.isNotEmpty)
+                            Wrap(
+                                spacing: listSpacing,
+                                runSpacing: listSpacing,
+                                children: sensors),
+                          if (sensors.isNotEmpty && items.isNotEmpty)
+                            Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: smallListSpacing),
+                                child: Divider(
+                                  color:
+                                      colorScheme.onBackground.withOpacity(0.2),
+                                )),
+                          LayoutBuilder(
+                              builder: (context, constraints) =>
+                                  StaggeredGrid.count(
+                                    crossAxisCount:
+                                        getItemListCount(constraints.maxWidth),
+                                    mainAxisSpacing: listSpacing,
+                                    crossAxisSpacing: listSpacing,
+                                    children: [
+                                      ...items.map((e) =>
+                                          StaggeredGridTile.count(
+                                              crossAxisCellCount:
+                                                  e.crossAxisCount,
+                                              mainAxisCellCount:
+                                                  e.mainAxisCount,
+                                              child: e)),
+                                      AddComplexItemWidget(
+                                        colorScheme: colorScheme,
+                                        roomId: roomId,
+                                      )
+                                    ],
+                                  ))
+                        ])))));
   }
 
   Widget _buildEmptyRoomState(BuildContext context) {

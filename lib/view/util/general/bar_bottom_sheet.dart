@@ -60,10 +60,12 @@ Future<T?> showBarModalBottomSheet<T>({
   required BuildContext context,
   required WidgetBuilder builder,
   bool expand = false,
+  bool bounce = false,
 }) async {
   return await showCustomModalBottomSheet(
       useRootNavigator: true,
       context: context,
+      bounce: bounce,
       builder: builder,
       containerWidget: (_, animation, child) => BarModal(
           backgroundColor: Theme.of(context).colorScheme.surface,

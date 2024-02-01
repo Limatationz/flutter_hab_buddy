@@ -25,8 +25,8 @@ class SettingsView extends StatelessWidget {
           return NestedScrollView(
               headerSliverBuilder: (context, innerBoxIsScrolled) {
                 return [
-                  SliverAppBar.medium(
-                    title: const Text("Settings"),
+                  const SliverAppBar.medium(
+                    title: Text("Settings"),
                   )
                 ];
               },
@@ -134,6 +134,28 @@ class SettingsView extends StatelessWidget {
                                 ),
                               );
                             },
+                          ),
+                          SettingsItem(
+                            icons: LineIcons.locked_window,
+                            iconStyle: IconStyle(),
+                            title: "Wakelock",
+                            subtitle: "Automatically enable wakelock",
+                            trailing: StreamBuilder<bool>(
+                              stream: model.wakelockService.autoEnabledStream,
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return Switch.adaptive(
+                                    value: snapshot.data!,
+                                    onChanged: (value) {
+                                      model.wakelockService
+                                          .toggleAutoEnabled();
+                                    },
+                                  );
+                                } else {
+                                  return const CircularProgressIndicator();
+                                }
+                              },
+                            ),
                           ),
                         ]),
                     SettingsGroup(

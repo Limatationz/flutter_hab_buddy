@@ -51,13 +51,18 @@ class SnackbarService {
     required String message,
     required SnackbarType type,
     Duration? duration,
-  }) =>
-    _snackbarService.showCustomSnackBar(
+    bool dismissCurrent = true,
+  }) async {
+    if(dismissCurrent) {
+      await _snackbarService.closeSnackbar();
+    }
+    return _snackbarService.showCustomSnackBar(
       variant: type,
       title: title,
       message: message,
       duration: duration,
     );
+  }
 }
 
 enum SnackbarType { error, success, info, warning }
