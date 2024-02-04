@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../general/item_widget.dart';
 import 'clock_item_base_widget.dart';
 
-class ClockItemWidget extends LargeWidthItemWidget {
+class ClockItemWidget extends MediumWidthItemWidget {
   const ClockItemWidget({
     super.key,
     required super.item,

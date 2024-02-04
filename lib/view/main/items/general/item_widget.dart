@@ -28,13 +28,35 @@ abstract class SmallItemWidget extends ItemWidget {
             mainAxisCount: smallGridMainAxisCount);
 }
 
-abstract class LargeWidthItemWidget extends ItemWidget {
+abstract class MediumWidthItemWidget extends ItemWidget {
   static const double width = smallGridCrossAxisCount * 2 * itemListCountBreakpoint;
+  static const double height = smallGridMainAxisCount * itemListCountBreakpoint;
+
+  const MediumWidthItemWidget(
+      {super.key, required super.item, required super.colorScheme})
+      : super(
+      crossAxisCount: smallGridCrossAxisCount * 2,
+      mainAxisCount: smallGridMainAxisCount);
+}
+
+abstract class LargeWidthItemWidget extends ItemWidget {
+  static const double width = smallGridCrossAxisCount * 3 * itemListCountBreakpoint;
   static const double height = smallGridMainAxisCount * itemListCountBreakpoint;
 
   const LargeWidthItemWidget(
       {super.key, required super.item, required super.colorScheme})
       : super(
-      crossAxisCount: smallGridCrossAxisCount * 2,
+      crossAxisCount: smallGridCrossAxisCount * 3,
       mainAxisCount: smallGridMainAxisCount);
+}
+
+abstract class LargeWidthMediumHeightItemWidget extends ItemWidget {
+  static const double width = smallGridCrossAxisCount * 3 * itemListCountBreakpoint;
+  static const double height = smallGridMainAxisCount * 2 * itemListCountBreakpoint;
+
+  const LargeWidthMediumHeightItemWidget(
+      {super.key, required super.item, required super.colorScheme})
+      : super(
+      crossAxisCount: smallGridCrossAxisCount * 3,
+      mainAxisCount: smallGridMainAxisCount * 2);
 }

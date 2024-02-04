@@ -15,13 +15,15 @@ class BaseItemDialog extends StatefulWidget {
   final Item item;
   final ColorScheme colorScheme;
   final bool hideItemName;
+  final bool scrollable;
 
   const BaseItemDialog(
       {super.key,
       required this.child,
       required this.item,
       required this.colorScheme,
-      this.hideItemName = false});
+      this.hideItemName = false,
+      this.scrollable = false});
 
   @override
   State<BaseItemDialog> createState() => _BaseItemDialogState();
@@ -69,12 +71,10 @@ class _BaseItemDialogState extends State<BaseItemDialog> {
                     visualDensity: VisualDensity.compact,
                     icon: const Icon(LineIconsFilled.pencil))
               ]),
-              if(!widget.hideItemName)
-              const Gap(4),
-              if(!widget.hideItemName)
-              Text(widget.item.ohName),
+              if (!widget.hideItemName) const Gap(4),
+              if (!widget.hideItemName) Text(widget.item.ohName),
               const Gap(12),
-              widget.child
+              widget.scrollable ? Expanded(child: widget.child) : widget.child
             ]));
   }
 

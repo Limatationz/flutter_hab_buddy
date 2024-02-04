@@ -12,7 +12,7 @@ import '../../general/item_widget.dart';
 import '../../general/item_widget_factory.dart';
 import 'player_item_dialog.dart';
 
-class PlayerItemWidget extends LargeWidthItemWidget {
+class PlayerItemWidget extends MediumWidthItemWidget {
   PlayerItemWidget(
       {super.key, required super.item, required super.colorScheme}) : assert(item != null);
 

@@ -8,23 +8,22 @@ import 'package:tuple/tuple.dart';
 import 'package:weather_icons/weather_icons.dart';
 import 'package:weather_pack/weather_pack.dart';
 
-import '../../../../../locator.dart';
-import '../../../../../repository/item_repository.dart';
-import '../../../../generated/l10n.dart';
-import '../../../../repository/weather_repository.dart';
-import '../../../../util/icons/icons.dart';
-import '../../../util/general/widget_container.dart';
-import '../../../util/weather_icons.dart';
-import '../general/item_state_injector.dart';
-import '../general/item_widget.dart';
-import '../general/item_widget_factory.dart';
-import 'weather_data.dart';
-import 'weather_item_dialog.dart';
+import '../../../../../../locator.dart';
+import '../../../../../generated/l10n.dart';
+import '../../../../../repository/weather_repository.dart';
+import '../../../../../util/icons/icons.dart';
+import '../../../../util/general/widget_container.dart';
+import '../../../../util/weather_icons.dart';
+import '../../general/item_state_injector.dart';
+import '../../general/item_widget.dart';
+import '../../general/item_widget_factory.dart';
+import '../weather_data.dart';
+import 'weather_current_dialog.dart';
 
-class WeatherItemBaseWidget extends LargeWidthItemWidget {
+class WeatherCurrentWidget extends MediumWidthItemWidget {
   final Stream<WeatherLocationData?>? locationStream;
 
-  WeatherItemBaseWidget({
+  WeatherCurrentWidget({
     super.key,
     required super.item,
     required super.colorScheme,
@@ -33,7 +32,6 @@ class WeatherItemBaseWidget extends LargeWidthItemWidget {
 
   @override
   bool get isMock => item == null;
-  final _itemRepository = locator<ItemRepository>();
   final _weatherRepository = locator<WeatherRepository>();
 
   @override
@@ -177,7 +175,7 @@ class WeatherItemBaseWidget extends LargeWidthItemWidget {
 
   void onTap(BuildContext context) => ItemWidgetFactory.openDialog(
       context,
-      WeatherItemDialog(itemName: item!.ohName, colorScheme: colorScheme),
+      WeatherCurrentDialog(itemName: item!.ohName, colorScheme: colorScheme),
       item!,
       colorScheme,
       hideItemName: true);

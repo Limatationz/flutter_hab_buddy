@@ -1,7 +1,6 @@
 import 'package:drift/drift.dart' show Value;
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:gap/gap.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:uuid/uuid.dart';
@@ -21,14 +20,21 @@ import '../../../util/general/better_divider.dart';
 import '../../../util/general/delete_dialog.dart';
 import '../../../util/general/headline_padding_box.dart';
 import '../general/item_widget.dart';
+import 'current/weather_current_widget.dart';
+import 'forecast/weather_forecast_widget.dart';
 import 'weather_data.dart';
-import 'weather_item_base_widget.dart';
 
 class WeatherAddSheet extends StatefulWidget {
   final int roomId;
   final Item? item;
+  final WeatherRequestType type;
 
-  const WeatherAddSheet({super.key, required this.roomId, this.item});
+  WeatherAddSheet(
+      {super.key, required this.roomId, this.item, WeatherRequestType? type})
+      : type = type ??
+            (item?.type == ItemType.weatherForecast
+                ? WeatherRequestType.forecast
+                : WeatherRequestType.current);
 
   @override
   State<WeatherAddSheet> createState() => _WeatherAddSheetState();
@@ -47,6 +53,7 @@ class _WeatherAddSheetState extends State<WeatherAddSheet> {
 
   bool isSearchingPosition = false;
   bool hasPosition = false;
+  bool isForecast = false;
 
   @override
   void initState() {
@@ -54,10 +61,12 @@ class _WeatherAddSheetState extends State<WeatherAddSheet> {
     if (widget.item != null) {
       final config = WeatherData.fromJson(widget.item!.complexJson!);
       _locationSubject.add(config.location);
-      if(config.location.lat != null && config.location.lon != null) {
+      if (config.location.lat != null && config.location.lon != null) {
         hasPosition = true;
       }
     }
+
+    isForecast = widget.type == WeatherRequestType.forecast;
   }
 
   @override
@@ -72,8 +81,8 @@ class _WeatherAddSheetState extends State<WeatherAddSheet> {
             Row(
               children: [
                 Expanded(
-                    child: Text(isAdd ? "Add Weather" : "Edit Weather",
-                        style: Theme.of(context)!.textTheme.headlineMedium)),
+                    child: Text(isForecast ? (isAdd ? "Add Weather Forecast" : "Edit Weather Forecast") : (isAdd ? "Add Weather" : "Edit Weather"),
+                        style: Theme.of(context).textTheme.headlineMedium)),
                 if (!isAdd)
                   IconButton(
                       onPressed: () async {
@@ -102,15 +111,20 @@ class _WeatherAddSheetState extends State<WeatherAddSheet> {
               ],
             ),
             const HeadlinePaddingBox(),
-            // TODO: Mock
             SizedBox(
-                height: LargeWidthItemWidget.height,
-                width: LargeWidthItemWidget.width,
-                child: WeatherItemBaseWidget(
-                  item: null,
-                  colorScheme: Theme.of(context).colorScheme,
-                  locationStream: _locationSubject,
-                )),
+                height: MediumWidthItemWidget.height,
+                width: isForecast ? LargeWidthItemWidget.width : MediumWidthItemWidget.width,
+                child: widget.type == WeatherRequestType.current
+                    ? WeatherCurrentWidget(
+                        item: null,
+                        colorScheme: Theme.of(context).colorScheme,
+                        locationStream: _locationSubject,
+                      )
+                    : WeatherForecastWidget(
+                        item: null,
+                        colorScheme: Theme.of(context).colorScheme,
+                        locationStream: _locationSubject,
+                      )),
             const Gap(24),
             FormBuilderTextField(
               name: "city",
@@ -158,32 +172,37 @@ class _WeatherAddSheetState extends State<WeatherAddSheet> {
                       visible: !isSearchingPosition,
                       child: IconButton.filled(
                           tooltip: "Request current position from GPS",
-                          onPressed: hasPosition ? (){
-                            _formKey.currentState!.patchValue({
-                              "lat": "",
-                              "lon": "",
-                            });
-                            setState(() {
-                              hasPosition = false;
-                            });
-                          } : () {
-                            setState(() {
-                              isSearchingPosition = true;
-                            });
-                            LocationService.determinePositionOneTime()
-                                .then((value) async {
-                                  final city = await _weatherRepository.getCityByLocation(latitude: value.latitude, longitude: value.longitude);
-                              _formKey.currentState!.patchValue({
-                                "lat": value.latitude.toString(),
-                                "lon": value.longitude.toString(),
-                                "city": city ?? "",
-                              });
-                              setState(() {
-                                isSearchingPosition = false;
-                                hasPosition = true;
-                              });
-                            });
-                          },
+                          onPressed: hasPosition
+                              ? () {
+                                  _formKey.currentState!.patchValue({
+                                    "lat": "",
+                                    "lon": "",
+                                  });
+                                  setState(() {
+                                    hasPosition = false;
+                                  });
+                                }
+                              : () {
+                                  setState(() {
+                                    isSearchingPosition = true;
+                                  });
+                                  LocationService.determinePositionOneTime()
+                                      .then((value) async {
+                                    final city = await _weatherRepository
+                                        .getCityByLocation(
+                                            latitude: value.latitude,
+                                            longitude: value.longitude);
+                                    _formKey.currentState!.patchValue({
+                                      "lat": value.latitude.toString(),
+                                      "lon": value.longitude.toString(),
+                                      "city": city ?? "",
+                                    });
+                                    setState(() {
+                                      isSearchingPosition = false;
+                                      hasPosition = true;
+                                    });
+                                  });
+                                },
                           icon: Icon(
                               !hasPosition
                                   ? LineIcons.search_location
@@ -214,7 +233,8 @@ class _WeatherAddSheetState extends State<WeatherAddSheet> {
         final lat = values["lat"] as String?;
         final lon = values["lon"] as String?;
 
-        if ((city?.isEmpty ?? true) && ((lat?.isEmpty ?? true) || (lon?.isEmpty ?? true))) {
+        if ((city?.isEmpty ?? true) &&
+            ((lat?.isEmpty ?? true) || (lon?.isEmpty ?? true))) {
           _snackBarService.showSnackbar(
             message: "Please enter a city or request your current position",
             type: SnackbarType.error,
@@ -227,7 +247,7 @@ class _WeatherAddSheetState extends State<WeatherAddSheet> {
         final lonDouble = double.tryParse(lon ?? "");
 
         WeatherData weatherData;
-        if(latDouble != null && lonDouble != null) {
+        if (latDouble != null && lonDouble != null) {
           weatherData = WeatherData(
             itemName: itemName,
             location: WeatherLocationData(
@@ -235,18 +255,18 @@ class _WeatherAddSheetState extends State<WeatherAddSheet> {
               lon: lonDouble,
               city: city,
             ),
-            type: WeatherRequestType.current,
+            type: widget.type,
           );
         } else {
           weatherData = WeatherData(
             itemName: itemName,
             location: WeatherLocationData(city: city),
-            type: WeatherRequestType.current,
+            type: widget.type,
           );
         }
 
         final clockItem = ItemsTableCompanion.insert(
-          type: ItemType.weather,
+          type: isForecast ? ItemType.weatherForecast : ItemType.weather,
           ohType: OhItemType.string,
           ohName: itemName,
           ohLabel: city ?? "Weather",
@@ -265,7 +285,8 @@ class _WeatherAddSheetState extends State<WeatherAddSheet> {
         final lat = values["lat"] as String?;
         final lon = values["lon"] as String?;
 
-        if ((city?.isEmpty ?? true) && ((lat?.isEmpty ?? true) || (lon?.isEmpty ?? true))) {
+        if ((city?.isEmpty ?? true) &&
+            ((lat?.isEmpty ?? true) || (lon?.isEmpty ?? true))) {
           _snackBarService.showSnackbar(
             message: "Please enter a city or request your current position",
             type: SnackbarType.error,
@@ -277,7 +298,7 @@ class _WeatherAddSheetState extends State<WeatherAddSheet> {
         final lonDouble = double.tryParse(lon ?? "");
 
         WeatherData newWeatherData;
-        if(latDouble != null && lonDouble != null) {
+        if (latDouble != null && lonDouble != null) {
           newWeatherData = WeatherData(
             itemName: widget.item!.ohName,
             location: WeatherLocationData(
@@ -285,13 +306,13 @@ class _WeatherAddSheetState extends State<WeatherAddSheet> {
               lon: lonDouble,
               city: city,
             ),
-            type: WeatherRequestType.current,
+            type: widget.type,
           );
         } else {
           newWeatherData = WeatherData(
             itemName: widget.item!.ohName,
             location: WeatherLocationData(city: city),
-            type: WeatherRequestType.current,
+            type: widget.type,
           );
         }
 

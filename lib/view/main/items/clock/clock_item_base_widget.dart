@@ -11,7 +11,7 @@ import '../general/item_widget.dart';
 import '../general/item_widget_factory.dart';
 import 'clock_data.dart';
 
-class ClockItemBaseWidget extends LargeWidthItemWidget {
+class ClockItemBaseWidget extends MediumWidthItemWidget {
   final Stream<String>? clockFormatStream;
 
   ClockItemBaseWidget({

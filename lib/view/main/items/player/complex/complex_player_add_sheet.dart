@@ -127,8 +127,8 @@ class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
             ),
             const HeadlinePaddingBox(),
             SizedBox(
-                height: LargeWidthItemWidget.height,
-                width: LargeWidthItemWidget.width,
+                height: MediumWidthItemWidget.height,
+                width: MediumWidthItemWidget.width,
                 child: ComplexPlayerItemBaseWidget(
                   item: null,
                   colorScheme: Theme.of(context).colorScheme,

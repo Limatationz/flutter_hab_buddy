@@ -5,7 +5,8 @@ import '../../../generated/l10n.dart';
 import '../../../view/main/items/clock/clock_item_base_widget.dart';
 import '../../../view/main/items/general/item_widget.dart';
 import '../../../view/main/items/player/complex/complex_player_item_base_widget.dart';
-import '../../../view/main/items/weather/weather_item_base_widget.dart';
+import '../../../view/main/items/weather/current/weather_current_widget.dart';
+import '../../../view/main/items/weather/forecast/weather_forecast_widget.dart';
 import 'oh_item_type.dart';
 
 enum ItemType {
@@ -264,7 +265,9 @@ enum ItemType {
       Tuple2(ItemType.clock,
           ClockItemBaseWidget(item: null, colorScheme: colorScheme)),
       Tuple2(ItemType.weather,
-          WeatherItemBaseWidget(item: null, colorScheme: colorScheme)),
+          WeatherCurrentWidget(item: null, colorScheme: colorScheme)),
+      Tuple2(ItemType.weatherForecast,
+          WeatherForecastWidget(item: null, colorScheme: colorScheme)),
     ];
   }
 }

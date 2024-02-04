@@ -6,32 +6,25 @@ import 'package:intl/intl.dart';
 import 'package:weather_icons/weather_icons.dart';
 import 'package:weather_pack/weather_pack.dart';
 
-import '../../../../generated/l10n.dart';
-import '../../../../locator.dart';
-import '../../../../repository/item_repository.dart';
-import '../../../../util/icons/icons.dart';
-import '../../../util/weather_icons.dart';
-import '../general/item_state_injector.dart';
-import 'weather_data.dart';
+import '../../../../../generated/l10n.dart';
+import '../../../../../locator.dart';
+import '../../../../../repository/item_repository.dart';
+import '../../../../../util/icons/icons.dart';
+import '../../../../util/weather_icons.dart';
+import '../../general/item_state_injector.dart';
+import '../weather_data.dart';
 
-class WeatherItemDialog extends StatefulWidget {
+class WeatherCurrentDialog extends StatelessWidget {
   final String itemName;
   final ColorScheme colorScheme;
 
-  const WeatherItemDialog(
+  const WeatherCurrentDialog(
       {super.key, required this.itemName, required this.colorScheme});
-
-  @override
-  State<WeatherItemDialog> createState() => _WeatherItemDialogState();
-}
-
-class _WeatherItemDialogState extends State<WeatherItemDialog> {
-  final _itemRepository = locator<ItemRepository>();
 
   @override
   Widget build(BuildContext context) {
     return ItemStateInjector(
-        itemName: widget.itemName,
+        itemName: itemName,
         builder: (itemState) {
           final stateJson = jsonDecode(itemState.state) as Map<String, dynamic>;
           final type = WeatherRequestType.values
@@ -86,7 +79,7 @@ class _WeatherItemDialogState extends State<WeatherItemDialog> {
             Text(
                 "${S.current.feelsLike(worksTempUnits(temp: data.tempFeelsLike!)!)}°C",
                 style: Theme.of(context).textTheme.bodyLarge),
-          Gap(12),
+          const Gap(12),
           Wrap(
             spacing: 8,
             runSpacing: 4,
@@ -109,8 +102,8 @@ class _WeatherItemDialogState extends State<WeatherItemDialog> {
               if (data.cloudiness != null)
                 _buildDataItem(
                     LineIcons.clouds, "${data.cloudiness}%", context),
-              if (data.uvi != null)
-                _buildDataItem(LineIcons.sun, "${data.uvi}%", context),
+              if (data.uvi != null && data.uvi! >= 3)
+                _buildDataItem(LineIcons.sun, "${data.uvi}", context),
             ],
           )
         ],

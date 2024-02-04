@@ -18,7 +18,7 @@ import '../../general/item_widget_factory.dart';
 import 'complex_player_data.dart';
 import 'complex_player_item_dialog.dart';
 
-class ComplexPlayerItemBaseWidget extends LargeWidthItemWidget {
+class ComplexPlayerItemBaseWidget extends MediumWidthItemWidget {
   final Stream<ItemState>? playerStateStream;
   final Stream<ItemState>? imageStateStream;
   final Stream<ItemState>? currentDurationStateStream;

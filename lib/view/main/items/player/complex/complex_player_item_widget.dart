@@ -7,7 +7,7 @@ import '../../general/item_widget.dart';
 import 'complex_player_data.dart';
 import 'complex_player_item_base_widget.dart';
 
-class ComplexPlayerItemWidget extends LargeWidthItemWidget {
+class ComplexPlayerItemWidget extends MediumWidthItemWidget {
   ComplexPlayerItemWidget({
     super.key,
     required super.item,

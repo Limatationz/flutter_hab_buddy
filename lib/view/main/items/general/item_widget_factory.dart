@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart' show ModalScrollController;
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart'
+    show ModalScrollController;
 
 import '../../../../core/database/app_database.dart';
 import '../../../../core/database/items/item_type.dart';
@@ -17,8 +18,10 @@ import '../player/complex/complex_player_item_widget.dart';
 import '../rollershutter/rollershutter_item_widget.dart';
 import '../switch/switch_item_widget.dart';
 import '../text/text_item_widget.dart';
+import '../weather/current/weather_current_widget.dart';
+import '../weather/forecast/weather_forecast_widget.dart';
 import '../weather/weather_add_sheet.dart';
-import '../weather/weather_item_widget.dart';
+import '../weather/weather_data.dart';
 import 'item_widget.dart';
 
 class ItemWidgetFactory {
@@ -36,7 +39,9 @@ class ItemWidgetFactory {
         return RollershutterItemWidget(item: item, colorScheme: colorScheme);
       case OhItemType.string:
         if (item.type == ItemType.weather) {
-          return WeatherItemWidget(item: item, colorScheme: colorScheme);
+          return WeatherCurrentWidget(item: item, colorScheme: colorScheme);
+        } else if (item.type == ItemType.weatherForecast) {
+          return WeatherForecastWidget(item: item, colorScheme: colorScheme);
         }
         return TextItemWidget(
           item: item,
@@ -83,6 +88,13 @@ class ItemWidgetFactory {
       child = WeatherAddSheet(
         roomId: item.roomId,
         item: item,
+        type: WeatherRequestType.current,
+      );
+    } else if (item.type == ItemType.weatherForecast) {
+      child = WeatherAddSheet(
+        roomId: item.roomId,
+        item: item,
+        type: WeatherRequestType.forecast,
       );
     } else {
       child = ItemEditView(item: item);
@@ -103,7 +115,15 @@ class ItemWidgetFactory {
         roomId: roomId,
       );
     } else if (itemType == ItemType.weather) {
-      child = WeatherAddSheet(roomId: roomId);
+      child = WeatherAddSheet(
+        roomId: roomId,
+        type: WeatherRequestType.current,
+      );
+    } else if (itemType == ItemType.weatherForecast) {
+      child = WeatherAddSheet(
+        roomId: roomId,
+        type: WeatherRequestType.forecast,
+      );
     }
     if (child != null) {
       final result = await showBarModalBottomSheet<Item?>(
@@ -118,15 +138,17 @@ class ItemWidgetFactory {
     return false;
   }
 
-  static Future<void> openDialog(BuildContext context, Widget child, Item item,
-      ColorScheme colorScheme, {bool hideItemName = false}) async {
+  static Future<void> openDialog(
+      BuildContext context, Widget child, Item item, ColorScheme colorScheme,
+      {bool hideItemName = false, bool scrollable = false}) async {
     showDialog(
         context: context,
         builder: (_) => Dialog(
                 child: BaseItemDialog(
               item: item,
               colorScheme: colorScheme,
-                hideItemName: hideItemName,
+              hideItemName: hideItemName,
+              scrollable: scrollable,
               child: child,
             )));
   }

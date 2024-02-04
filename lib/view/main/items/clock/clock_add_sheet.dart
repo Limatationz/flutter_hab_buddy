@@ -150,8 +150,8 @@ class _ClockAddSheetState extends State<ClockAddSheet> {
             ),
             const HeadlinePaddingBox(),
             SizedBox(
-                height: LargeWidthItemWidget.height,
-                width: LargeWidthItemWidget.width,
+                height: MediumWidthItemWidget.height,
+                width: MediumWidthItemWidget.width,
                 child: ClockItemBaseWidget(
                   item: null,
                   colorScheme: Theme

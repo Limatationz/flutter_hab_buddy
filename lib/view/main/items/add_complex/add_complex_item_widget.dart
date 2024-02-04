@@ -22,6 +22,7 @@ class AddComplexItemWidget extends StatelessWidget {
         mainAxisCellCount: smallGridMainAxisCount,
         child: WidgetContainer(
           colorScheme: colorScheme,
+          backgroundColor: colorScheme.secondaryContainer,
           onTap: () => onTap(context),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
