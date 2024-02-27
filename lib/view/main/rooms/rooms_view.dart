@@ -73,7 +73,7 @@ class RoomsView extends StatelessWidget {
                                   selectedRoom,
                                   selectedRoomColorScheme,
                                   rooms,
-                                  model.onRoomChange),
+                                  (index) => model.onRoomChange(index, animate: true)),
                               StreamBuilder(
                                   stream: model.itemsByRoomIdStream,
                                   builder: (context, snapshot) {

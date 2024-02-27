@@ -62,7 +62,7 @@ class _BaseFormIconPickerState extends State<BaseFormIconPicker> {
   void _pickIcon(
     BuildContext context,
   ) async {
-    IconData? icon = await FlutterIconPicker.showIconPicker(
+    IconData? icon = await showIconPicker(
       context,
       customIconPack: widget.iconPack,
       iconPackModes: [IconPack.custom],

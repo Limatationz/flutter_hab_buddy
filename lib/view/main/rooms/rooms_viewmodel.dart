@@ -30,9 +30,12 @@ class RoomsViewModel extends BaseViewModel {
 
   RoomsViewModel();
 
-  void onRoomChange(int index) {
-    pageController.animateToPage(index,
-        duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+  void onRoomChange(int index, {bool animate = false}) {
+    print('onRoomChange: $index, animate: $animate');
+    if (animate) {
+      pageController.animateToPage(index,
+          duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+    }
     currentPage = index;
     notifyListeners();
   }

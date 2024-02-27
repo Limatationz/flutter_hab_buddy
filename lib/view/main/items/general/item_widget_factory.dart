@@ -11,6 +11,7 @@ import '../clock/clock_add_sheet.dart';
 import '../clock/clock_item_widget.dart';
 import '../dimmer/dimmer_item_widget.dart';
 import '../edit/item_edit_view.dart';
+import '../image/image_item_widget.dart';
 import '../player/base/player_item_widget.dart';
 import '../player/complex/complex_player_add_sheet.dart';
 import '../player/complex/complex_player_data.dart';
@@ -65,6 +66,8 @@ class ItemWidgetFactory {
         );
       case OhItemType.dateTime:
         return ClockItemWidget(item: item, colorScheme: colorScheme);
+      case OhItemType.image:
+        return ImageItemWidget(item: item, colorScheme: colorScheme);
       default:
         return TextItemWidget(
           item: item,

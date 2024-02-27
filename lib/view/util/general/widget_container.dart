@@ -10,6 +10,7 @@ class WidgetContainer extends StatelessWidget {
   final VoidCallback? onLongTap;
   final double elevation;
   final Color? backgroundColor;
+  final DecorationImage? backgroundImage;
   final ColorScheme? colorScheme;
   final double? width;
   final double? height;
@@ -23,6 +24,7 @@ class WidgetContainer extends StatelessWidget {
       this.onLongTap,
       this.elevation = 2,
       this.backgroundColor,
+      this.backgroundImage,
       this.colorScheme,
       this.width,
       this.height});
@@ -41,6 +43,7 @@ class WidgetContainer extends StatelessWidget {
                 height: height,
                 key: key,
                 decoration: BoxDecoration(
+                  image: backgroundImage,
                   color: backgroundColor ??
                       ElevationOverlay.applySurfaceTint(
                           colorScheme?.background ??

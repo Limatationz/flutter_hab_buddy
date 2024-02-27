@@ -1,5 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
+import 'core/network/client/http_client_factory.dart'
+  if (dart.library.js_interop) 'core/network/client/http_client_factory_web.dart';
 
 import 'core/database/app_database.dart';
 import 'core/network/generated/client_index.dart';
@@ -37,6 +39,7 @@ void setupLocator() {
   // API
   locator.registerSingleton<OpenHAB>(OpenHAB.create(
       baseUrl: Uri.parse("https://myopenhab.org/rest"),
+      httpClient: getHttpClient(),
       interceptors: [
         AuthInterceptor(),
         // kDebugMode ? HttpLoggingInterceptor() : null
