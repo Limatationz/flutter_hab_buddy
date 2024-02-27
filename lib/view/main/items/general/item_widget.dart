@@ -39,6 +39,17 @@ abstract class MediumWidthItemWidget extends ItemWidget {
       mainAxisCount: smallGridMainAxisCount);
 }
 
+abstract class MediumItemWidget extends ItemWidget {
+  static const double width = smallGridCrossAxisCount * 2 * itemListCountBreakpoint;
+  static const double height = smallGridMainAxisCount * 2 * itemListCountBreakpoint;
+
+  const MediumItemWidget(
+      {super.key, required super.item, required super.colorScheme})
+      : super(
+      crossAxisCount: smallGridCrossAxisCount * 2,
+      mainAxisCount: smallGridMainAxisCount * 2);
+}
+
 abstract class LargeWidthItemWidget extends ItemWidget {
   static const double width = smallGridCrossAxisCount * 3 * itemListCountBreakpoint;
   static const double height = smallGridMainAxisCount * itemListCountBreakpoint;

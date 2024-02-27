@@ -19,6 +19,9 @@ import '../player/complex/complex_player_item_widget.dart';
 import '../rollershutter/rollershutter_item_widget.dart';
 import '../switch/switch_item_widget.dart';
 import '../text/text_item_widget.dart';
+import '../thermostat/thermostat_add_sheet.dart';
+import '../thermostat/thermostat_data.dart';
+import '../thermostat/thermostat_item_widget.dart';
 import '../weather/current/weather_current_widget.dart';
 import '../weather/forecast/weather_forecast_widget.dart';
 import '../weather/weather_add_sheet.dart';
@@ -49,6 +52,12 @@ class ItemWidgetFactory {
           colorScheme: colorScheme,
         );
       case OhItemType.number:
+        if (item.type == ItemType.thermostat) {
+          return ThermostatItemWidget(
+            item: item,
+            colorScheme: colorScheme,
+          );
+        }
         return TextItemWidget(
           item: item,
           colorScheme: colorScheme,
@@ -99,6 +108,13 @@ class ItemWidgetFactory {
         item: item,
         type: WeatherRequestType.forecast,
       );
+    } else if (item.type == ItemType.thermostat) {
+      child = ThermostatAddSheet(
+        roomId: item.roomId,
+        thermostatData: item.complexJson != null
+            ? ThermostatData.fromJson(item.complexJson!)
+            : null,
+      );
     } else {
       child = ItemEditView(item: item);
     }
@@ -126,6 +142,10 @@ class ItemWidgetFactory {
       child = WeatherAddSheet(
         roomId: roomId,
         type: WeatherRequestType.forecast,
+      );
+    } else if (itemType == ItemType.thermostat) {
+      child = ThermostatAddSheet(
+        roomId: roomId,
       );
     }
     if (child != null) {

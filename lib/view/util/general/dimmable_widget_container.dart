@@ -55,7 +55,7 @@ class _DimmableWidgetContainerState extends State<DimmableWidgetContainer> {
   @override
   void initState() {
     super.initState();
-    value = widget.value / 100;
+    value = widget.value / (widget.maxValue ?? 100);
   }
 
   @override
@@ -105,17 +105,17 @@ class _DimmableWidgetContainerState extends State<DimmableWidgetContainer> {
               onVerticalDragEnd: isDragEnabled
                   ? (details) {
                       setState(() {
-                        if (widget.maxValue != null &&
-                            currentValue > widget.maxValue! / 100) {
-                          value = widget.maxValue! / 100;
+                        if (widget.maxValue != null && currentValue > 1) {
+                          value = 1;
                         } else if (widget.minValue != null &&
-                            currentValue < widget.minValue! / 100) {
-                          value = widget.minValue! / 100;
+                            currentValue < 0) {
+                          value = 0;
                         } else {
                           value = currentValue;
                         }
                         dragAmount = 0;
-                        widget.onDragDone!.call(value * 100);
+                        widget.onDragDone!
+                            .call(value * (widget.maxValue ?? 100));
                       });
                     }
                   : null,

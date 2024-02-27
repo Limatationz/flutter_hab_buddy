@@ -29,3 +29,5 @@ doc/api/
 
 # FVM Version Cache
 .fvm/
+/lib/util/secrets.dart
+/lib/util/secrets.dart

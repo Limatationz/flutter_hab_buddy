@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../platform.dart';
+
 class BaseElevatedButton extends StatelessWidget {
   final Function()? onPressed;
   final String text;
@@ -31,7 +33,7 @@ class BaseElevatedButton extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    EdgeInsets.symmetric(vertical: isDesktop() ? 14 : 8, horizontal: 16),
                 minimumSize: const Size(0, 0),
               ),
               child: Text(

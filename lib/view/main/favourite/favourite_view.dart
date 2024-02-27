@@ -85,8 +85,8 @@ class FavouriteView extends StatelessWidget {
                                         final roomIndex = index -
                                             layoutIndex *
                                                 (roomsCrossAxisCount - 1);
-                                        print(
-                                            "layoutIndex: $layoutIndex, roomIndex: $roomIndex, index: $index, roomsCrossAxisCount: $roomsCrossAxisCount");
+                                        // print(
+                                        //     "layoutIndex: $layoutIndex, roomIndex: $roomIndex, index: $index, roomsCrossAxisCount: $roomsCrossAxisCount");
                                         final roomId = layout.entries
                                             .elementAt(layoutIndex)
                                             .value

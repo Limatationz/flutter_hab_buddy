@@ -295,7 +295,7 @@ extension $ConfigDescriptionParameterDTOExtension
 @JsonSerializable(explicitToJson: true)
 class FilterCriteriaDTO {
   const FilterCriteriaDTO({
-    this.value,
+    this.$value,
     this.name,
   });
 
@@ -306,7 +306,7 @@ class FilterCriteriaDTO {
   Map<String, dynamic> toJson() => _$FilterCriteriaDTOToJson(this);
 
   @JsonKey(name: 'value')
-  final String? value;
+  final String? $value;
   @JsonKey(name: 'name')
   final String? name;
   static const fromJsonFactory = _$FilterCriteriaDTOFromJson;
@@ -315,8 +315,8 @@ class FilterCriteriaDTO {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is FilterCriteriaDTO &&
-            (identical(other.value, value) ||
-                const DeepCollectionEquality().equals(other.value, value)) &&
+            (identical(other.$value, $value) ||
+                const DeepCollectionEquality().equals(other.$value, $value)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)));
   }
@@ -326,21 +326,21 @@ class FilterCriteriaDTO {
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(value) ^
+      const DeepCollectionEquality().hash($value) ^
       const DeepCollectionEquality().hash(name) ^
       runtimeType.hashCode;
 }
 
 extension $FilterCriteriaDTOExtension on FilterCriteriaDTO {
-  FilterCriteriaDTO copyWith({String? value, String? name}) {
+  FilterCriteriaDTO copyWith({String? $value, String? name}) {
     return FilterCriteriaDTO(
-        value: value ?? this.value, name: name ?? this.name);
+        $value: $value ?? this.$value, name: name ?? this.name);
   }
 
   FilterCriteriaDTO copyWithWrapped(
-      {Wrapped<String?>? value, Wrapped<String?>? name}) {
+      {Wrapped<String?>? $value, Wrapped<String?>? name}) {
     return FilterCriteriaDTO(
-        value: (value != null ? value.value : this.value),
+        $value: ($value != null ? $value.value : this.$value),
         name: (name != null ? name.value : this.name));
   }
 }
@@ -458,7 +458,7 @@ extension $ModuleTypeDTOExtension on ModuleTypeDTO {
 class ParameterOptionDTO {
   const ParameterOptionDTO({
     this.label,
-    this.value,
+    this.$value,
   });
 
   factory ParameterOptionDTO.fromJson(Map<String, dynamic> json) =>
@@ -470,7 +470,7 @@ class ParameterOptionDTO {
   @JsonKey(name: 'label')
   final String? label;
   @JsonKey(name: 'value')
-  final String? value;
+  final String? $value;
   static const fromJsonFactory = _$ParameterOptionDTOFromJson;
 
   @override
@@ -479,8 +479,8 @@ class ParameterOptionDTO {
         (other is ParameterOptionDTO &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
-            (identical(other.value, value) ||
-                const DeepCollectionEquality().equals(other.value, value)));
+            (identical(other.$value, $value) ||
+                const DeepCollectionEquality().equals(other.$value, $value)));
   }
 
   @override
@@ -489,21 +489,21 @@ class ParameterOptionDTO {
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(label) ^
-      const DeepCollectionEquality().hash(value) ^
+      const DeepCollectionEquality().hash($value) ^
       runtimeType.hashCode;
 }
 
 extension $ParameterOptionDTOExtension on ParameterOptionDTO {
-  ParameterOptionDTO copyWith({String? label, String? value}) {
+  ParameterOptionDTO copyWith({String? label, String? $value}) {
     return ParameterOptionDTO(
-        label: label ?? this.label, value: value ?? this.value);
+        label: label ?? this.label, $value: $value ?? this.$value);
   }
 
   ParameterOptionDTO copyWithWrapped(
-      {Wrapped<String?>? label, Wrapped<String?>? value}) {
+      {Wrapped<String?>? label, Wrapped<String?>? $value}) {
     return ParameterOptionDTO(
         label: (label != null ? label.value : this.label),
-        value: (value != null ? value.value : this.value));
+        $value: ($value != null ? $value.value : this.$value));
   }
 }
 
@@ -1858,7 +1858,7 @@ extension $ConfigurationExtension on Configuration {
 @JsonSerializable(explicitToJson: true)
 class FilterCriteria {
   const FilterCriteria({
-    this.value,
+    this.$value,
     this.name,
   });
 
@@ -1869,7 +1869,7 @@ class FilterCriteria {
   Map<String, dynamic> toJson() => _$FilterCriteriaToJson(this);
 
   @JsonKey(name: 'value')
-  final String? value;
+  final String? $value;
   @JsonKey(name: 'name')
   final String? name;
   static const fromJsonFactory = _$FilterCriteriaFromJson;
@@ -1878,8 +1878,8 @@ class FilterCriteria {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is FilterCriteria &&
-            (identical(other.value, value) ||
-                const DeepCollectionEquality().equals(other.value, value)) &&
+            (identical(other.$value, $value) ||
+                const DeepCollectionEquality().equals(other.$value, $value)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)));
   }
@@ -1889,20 +1889,21 @@ class FilterCriteria {
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(value) ^
+      const DeepCollectionEquality().hash($value) ^
       const DeepCollectionEquality().hash(name) ^
       runtimeType.hashCode;
 }
 
 extension $FilterCriteriaExtension on FilterCriteria {
-  FilterCriteria copyWith({String? value, String? name}) {
-    return FilterCriteria(value: value ?? this.value, name: name ?? this.name);
+  FilterCriteria copyWith({String? $value, String? name}) {
+    return FilterCriteria(
+        $value: $value ?? this.$value, name: name ?? this.name);
   }
 
   FilterCriteria copyWithWrapped(
-      {Wrapped<String?>? value, Wrapped<String?>? name}) {
+      {Wrapped<String?>? $value, Wrapped<String?>? name}) {
     return FilterCriteria(
-        value: (value != null ? value.value : this.value),
+        $value: ($value != null ? $value.value : this.$value),
         name: (name != null ? name.value : this.name));
   }
 }
@@ -2002,7 +2003,7 @@ extension $ModuleExtension on Module {
 class ParameterOption {
   const ParameterOption({
     this.label,
-    this.value,
+    this.$value,
   });
 
   factory ParameterOption.fromJson(Map<String, dynamic> json) =>
@@ -2014,7 +2015,7 @@ class ParameterOption {
   @JsonKey(name: 'label')
   final String? label;
   @JsonKey(name: 'value')
-  final String? value;
+  final String? $value;
   static const fromJsonFactory = _$ParameterOptionFromJson;
 
   @override
@@ -2023,8 +2024,8 @@ class ParameterOption {
         (other is ParameterOption &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
-            (identical(other.value, value) ||
-                const DeepCollectionEquality().equals(other.value, value)));
+            (identical(other.$value, $value) ||
+                const DeepCollectionEquality().equals(other.$value, $value)));
   }
 
   @override
@@ -2033,21 +2034,21 @@ class ParameterOption {
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(label) ^
-      const DeepCollectionEquality().hash(value) ^
+      const DeepCollectionEquality().hash($value) ^
       runtimeType.hashCode;
 }
 
 extension $ParameterOptionExtension on ParameterOption {
-  ParameterOption copyWith({String? label, String? value}) {
+  ParameterOption copyWith({String? label, String? $value}) {
     return ParameterOption(
-        label: label ?? this.label, value: value ?? this.value);
+        label: label ?? this.label, $value: $value ?? this.$value);
   }
 
   ParameterOption copyWithWrapped(
-      {Wrapped<String?>? label, Wrapped<String?>? value}) {
+      {Wrapped<String?>? label, Wrapped<String?>? $value}) {
     return ParameterOption(
         label: (label != null ? label.value : this.label),
-        value: (value != null ? value.value : this.value));
+        $value: ($value != null ? $value.value : this.$value));
   }
 }
 
@@ -4032,7 +4033,7 @@ extension $StateDescriptionExtension on StateDescription {
 @JsonSerializable(explicitToJson: true)
 class StateOption {
   const StateOption({
-    this.value,
+    this.$value,
     this.label,
   });
 
@@ -4043,7 +4044,7 @@ class StateOption {
   Map<String, dynamic> toJson() => _$StateOptionToJson(this);
 
   @JsonKey(name: 'value')
-  final String? value;
+  final String? $value;
   @JsonKey(name: 'label')
   final String? label;
   static const fromJsonFactory = _$StateOptionFromJson;
@@ -4052,8 +4053,8 @@ class StateOption {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is StateOption &&
-            (identical(other.value, value) ||
-                const DeepCollectionEquality().equals(other.value, value)) &&
+            (identical(other.$value, $value) ||
+                const DeepCollectionEquality().equals(other.$value, $value)) &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)));
   }
@@ -4063,20 +4064,21 @@ class StateOption {
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(value) ^
+      const DeepCollectionEquality().hash($value) ^
       const DeepCollectionEquality().hash(label) ^
       runtimeType.hashCode;
 }
 
 extension $StateOptionExtension on StateOption {
-  StateOption copyWith({String? value, String? label}) {
-    return StateOption(value: value ?? this.value, label: label ?? this.label);
+  StateOption copyWith({String? $value, String? label}) {
+    return StateOption(
+        $value: $value ?? this.$value, label: label ?? this.label);
   }
 
   StateOption copyWithWrapped(
-      {Wrapped<String?>? value, Wrapped<String?>? label}) {
+      {Wrapped<String?>? $value, Wrapped<String?>? label}) {
     return StateOption(
-        value: (value != null ? value.value : this.value),
+        $value: ($value != null ? $value.value : this.$value),
         label: (label != null ? label.value : this.label));
   }
 }
@@ -4277,7 +4279,7 @@ extension $DiscoveryResultDTOExtension on DiscoveryResultDTO {
 @JsonSerializable(explicitToJson: true)
 class MetadataDTO {
   const MetadataDTO({
-    this.value,
+    this.$value,
     this.config,
   });
 
@@ -4288,7 +4290,7 @@ class MetadataDTO {
   Map<String, dynamic> toJson() => _$MetadataDTOToJson(this);
 
   @JsonKey(name: 'value')
-  final String? value;
+  final String? $value;
   @JsonKey(name: 'config')
   final Map<String, dynamic>? config;
   static const fromJsonFactory = _$MetadataDTOFromJson;
@@ -4297,8 +4299,8 @@ class MetadataDTO {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is MetadataDTO &&
-            (identical(other.value, value) ||
-                const DeepCollectionEquality().equals(other.value, value)) &&
+            (identical(other.$value, $value) ||
+                const DeepCollectionEquality().equals(other.$value, $value)) &&
             (identical(other.config, config) ||
                 const DeepCollectionEquality().equals(other.config, config)));
   }
@@ -4308,21 +4310,21 @@ class MetadataDTO {
 
   @override
   int get hashCode =>
-      const DeepCollectionEquality().hash(value) ^
+      const DeepCollectionEquality().hash($value) ^
       const DeepCollectionEquality().hash(config) ^
       runtimeType.hashCode;
 }
 
 extension $MetadataDTOExtension on MetadataDTO {
-  MetadataDTO copyWith({String? value, Map<String, dynamic>? config}) {
+  MetadataDTO copyWith({String? $value, Map<String, dynamic>? config}) {
     return MetadataDTO(
-        value: value ?? this.value, config: config ?? this.config);
+        $value: $value ?? this.$value, config: config ?? this.config);
   }
 
   MetadataDTO copyWithWrapped(
-      {Wrapped<String?>? value, Wrapped<Map<String, dynamic>?>? config}) {
+      {Wrapped<String?>? $value, Wrapped<Map<String, dynamic>?>? config}) {
     return MetadataDTO(
-        value: (value != null ? value.value : this.value),
+        $value: ($value != null ? $value.value : this.$value),
         config: (config != null ? config.value : this.config));
   }
 }
@@ -5038,7 +5040,7 @@ extension $PersistenceCronStrategyDTOExtension on PersistenceCronStrategyDTO {
 class PersistenceFilterDTO {
   const PersistenceFilterDTO({
     this.name,
-    this.value,
+    this.$value,
     this.relative,
     this.unit,
     this.lower,
@@ -5056,7 +5058,7 @@ class PersistenceFilterDTO {
   @JsonKey(name: 'name')
   final String? name;
   @JsonKey(name: 'value')
-  final double? value;
+  final double? $value;
   @JsonKey(name: 'relative')
   final bool? relative;
   @JsonKey(name: 'unit')
@@ -5077,8 +5079,8 @@ class PersistenceFilterDTO {
         (other is PersistenceFilterDTO &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.value, value) ||
-                const DeepCollectionEquality().equals(other.value, value)) &&
+            (identical(other.$value, $value) ||
+                const DeepCollectionEquality().equals(other.$value, $value)) &&
             (identical(other.relative, relative) ||
                 const DeepCollectionEquality()
                     .equals(other.relative, relative)) &&
@@ -5101,7 +5103,7 @@ class PersistenceFilterDTO {
   @override
   int get hashCode =>
       const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(value) ^
+      const DeepCollectionEquality().hash($value) ^
       const DeepCollectionEquality().hash(relative) ^
       const DeepCollectionEquality().hash(unit) ^
       const DeepCollectionEquality().hash(lower) ^
@@ -5114,7 +5116,7 @@ class PersistenceFilterDTO {
 extension $PersistenceFilterDTOExtension on PersistenceFilterDTO {
   PersistenceFilterDTO copyWith(
       {String? name,
-      double? value,
+      double? $value,
       bool? relative,
       String? unit,
       double? lower,
@@ -5123,7 +5125,7 @@ extension $PersistenceFilterDTOExtension on PersistenceFilterDTO {
       bool? inverted}) {
     return PersistenceFilterDTO(
         name: name ?? this.name,
-        value: value ?? this.value,
+        $value: $value ?? this.$value,
         relative: relative ?? this.relative,
         unit: unit ?? this.unit,
         lower: lower ?? this.lower,
@@ -5134,7 +5136,7 @@ extension $PersistenceFilterDTOExtension on PersistenceFilterDTO {
 
   PersistenceFilterDTO copyWithWrapped(
       {Wrapped<String?>? name,
-      Wrapped<double?>? value,
+      Wrapped<double?>? $value,
       Wrapped<bool?>? relative,
       Wrapped<String?>? unit,
       Wrapped<double?>? lower,
@@ -5143,7 +5145,7 @@ extension $PersistenceFilterDTOExtension on PersistenceFilterDTO {
       Wrapped<bool?>? inverted}) {
     return PersistenceFilterDTO(
         name: (name != null ? name.value : this.name),
-        value: (value != null ? value.value : this.value),
+        $value: ($value != null ? $value.value : this.$value),
         relative: (relative != null ? relative.value : this.relative),
         unit: (unit != null ? unit.value : this.unit),
         lower: (lower != null ? lower.value : this.lower),
@@ -9606,9 +9608,8 @@ enums.ConfigDescriptionParameterDTOType
   Object? configDescriptionParameterDTOType, [
   enums.ConfigDescriptionParameterDTOType? defaultValue,
 ]) {
-  return enums.ConfigDescriptionParameterDTOType.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          configDescriptionParameterDTOType?.toString().toLowerCase()) ??
+  return enums.ConfigDescriptionParameterDTOType.values.firstWhereOrNull(
+          (e) => e.value == configDescriptionParameterDTOType) ??
       defaultValue ??
       enums.ConfigDescriptionParameterDTOType.swaggerGeneratedUnknown;
 }
@@ -9685,9 +9686,8 @@ enums.ModuleTypeDTOVisibility moduleTypeDTOVisibilityFromJson(
   Object? moduleTypeDTOVisibility, [
   enums.ModuleTypeDTOVisibility? defaultValue,
 ]) {
-  return enums.ModuleTypeDTOVisibility.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          moduleTypeDTOVisibility?.toString().toLowerCase()) ??
+  return enums.ModuleTypeDTOVisibility.values
+          .firstWhereOrNull((e) => e.value == moduleTypeDTOVisibility) ??
       defaultValue ??
       enums.ModuleTypeDTOVisibility.swaggerGeneratedUnknown;
 }
@@ -9758,9 +9758,8 @@ enums.RuleDTOVisibility ruleDTOVisibilityFromJson(
   Object? ruleDTOVisibility, [
   enums.RuleDTOVisibility? defaultValue,
 ]) {
-  return enums.RuleDTOVisibility.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          ruleDTOVisibility?.toString().toLowerCase()) ??
+  return enums.RuleDTOVisibility.values
+          .firstWhereOrNull((e) => e.value == ruleDTOVisibility) ??
       defaultValue ??
       enums.RuleDTOVisibility.swaggerGeneratedUnknown;
 }
@@ -9831,9 +9830,8 @@ enums.EnrichedRuleDTOVisibility enrichedRuleDTOVisibilityFromJson(
   Object? enrichedRuleDTOVisibility, [
   enums.EnrichedRuleDTOVisibility? defaultValue,
 ]) {
-  return enums.EnrichedRuleDTOVisibility.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          enrichedRuleDTOVisibility?.toString().toLowerCase()) ??
+  return enums.EnrichedRuleDTOVisibility.values
+          .firstWhereOrNull((e) => e.value == enrichedRuleDTOVisibility) ??
       defaultValue ??
       enums.EnrichedRuleDTOVisibility.swaggerGeneratedUnknown;
 }
@@ -9905,9 +9903,8 @@ enums.RuleStatusInfoStatus ruleStatusInfoStatusFromJson(
   Object? ruleStatusInfoStatus, [
   enums.RuleStatusInfoStatus? defaultValue,
 ]) {
-  return enums.RuleStatusInfoStatus.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          ruleStatusInfoStatus?.toString().toLowerCase()) ??
+  return enums.RuleStatusInfoStatus.values
+          .firstWhereOrNull((e) => e.value == ruleStatusInfoStatus) ??
       defaultValue ??
       enums.RuleStatusInfoStatus.swaggerGeneratedUnknown;
 }
@@ -9978,9 +9975,8 @@ enums.RuleStatusInfoStatusDetail ruleStatusInfoStatusDetailFromJson(
   Object? ruleStatusInfoStatusDetail, [
   enums.RuleStatusInfoStatusDetail? defaultValue,
 ]) {
-  return enums.RuleStatusInfoStatusDetail.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          ruleStatusInfoStatusDetail?.toString().toLowerCase()) ??
+  return enums.RuleStatusInfoStatusDetail.values
+          .firstWhereOrNull((e) => e.value == ruleStatusInfoStatusDetail) ??
       defaultValue ??
       enums.RuleStatusInfoStatusDetail.swaggerGeneratedUnknown;
 }
@@ -10052,9 +10048,8 @@ enums.ConfigDescriptionParameterType configDescriptionParameterTypeFromJson(
   Object? configDescriptionParameterType, [
   enums.ConfigDescriptionParameterType? defaultValue,
 ]) {
-  return enums.ConfigDescriptionParameterType.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          configDescriptionParameterType?.toString().toLowerCase()) ??
+  return enums.ConfigDescriptionParameterType.values
+          .firstWhereOrNull((e) => e.value == configDescriptionParameterType) ??
       defaultValue ??
       enums.ConfigDescriptionParameterType.swaggerGeneratedUnknown;
 }
@@ -10128,9 +10123,8 @@ enums.RuleVisibility ruleVisibilityFromJson(
   Object? ruleVisibility, [
   enums.RuleVisibility? defaultValue,
 ]) {
-  return enums.RuleVisibility.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          ruleVisibility?.toString().toLowerCase()) ??
+  return enums.RuleVisibility.values
+          .firstWhereOrNull((e) => e.value == ruleVisibility) ??
       defaultValue ??
       enums.RuleVisibility.swaggerGeneratedUnknown;
 }
@@ -10200,9 +10194,8 @@ enums.TemplateVisibility templateVisibilityFromJson(
   Object? templateVisibility, [
   enums.TemplateVisibility? defaultValue,
 ]) {
-  return enums.TemplateVisibility.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          templateVisibility?.toString().toLowerCase()) ??
+  return enums.TemplateVisibility.values
+          .firstWhereOrNull((e) => e.value == templateVisibility) ??
       defaultValue ??
       enums.TemplateVisibility.swaggerGeneratedUnknown;
 }
@@ -10273,9 +10266,8 @@ enums.DiscoveryResultDTOFlag discoveryResultDTOFlagFromJson(
   Object? discoveryResultDTOFlag, [
   enums.DiscoveryResultDTOFlag? defaultValue,
 ]) {
-  return enums.DiscoveryResultDTOFlag.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          discoveryResultDTOFlag?.toString().toLowerCase()) ??
+  return enums.DiscoveryResultDTOFlag.values
+          .firstWhereOrNull((e) => e.value == discoveryResultDTOFlag) ??
       defaultValue ??
       enums.DiscoveryResultDTOFlag.swaggerGeneratedUnknown;
 }
@@ -10346,9 +10338,8 @@ enums.ThingStatusInfoStatus thingStatusInfoStatusFromJson(
   Object? thingStatusInfoStatus, [
   enums.ThingStatusInfoStatus? defaultValue,
 ]) {
-  return enums.ThingStatusInfoStatus.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          thingStatusInfoStatus?.toString().toLowerCase()) ??
+  return enums.ThingStatusInfoStatus.values
+          .firstWhereOrNull((e) => e.value == thingStatusInfoStatus) ??
       defaultValue ??
       enums.ThingStatusInfoStatus.swaggerGeneratedUnknown;
 }
@@ -10419,9 +10410,8 @@ enums.ThingStatusInfoStatusDetail thingStatusInfoStatusDetailFromJson(
   Object? thingStatusInfoStatusDetail, [
   enums.ThingStatusInfoStatusDetail? defaultValue,
 ]) {
-  return enums.ThingStatusInfoStatusDetail.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          thingStatusInfoStatusDetail?.toString().toLowerCase()) ??
+  return enums.ThingStatusInfoStatusDetail.values
+          .firstWhereOrNull((e) => e.value == thingStatusInfoStatusDetail) ??
       defaultValue ??
       enums.ThingStatusInfoStatusDetail.swaggerGeneratedUnknown;
 }
@@ -10493,9 +10483,8 @@ enums.ConfigStatusMessageType configStatusMessageTypeFromJson(
   Object? configStatusMessageType, [
   enums.ConfigStatusMessageType? defaultValue,
 ]) {
-  return enums.ConfigStatusMessageType.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          configStatusMessageType?.toString().toLowerCase()) ??
+  return enums.ConfigStatusMessageType.values
+          .firstWhereOrNull((e) => e.value == configStatusMessageType) ??
       defaultValue ??
       enums.ConfigStatusMessageType.swaggerGeneratedUnknown;
 }
@@ -10565,9 +10554,8 @@ enums.IconSetFormats iconSetFormatsFromJson(
   Object? iconSetFormats, [
   enums.IconSetFormats? defaultValue,
 ]) {
-  return enums.IconSetFormats.values.firstWhereOrNull((e) =>
-          e.value.toString().toLowerCase() ==
-          iconSetFormats?.toString().toLowerCase()) ??
+  return enums.IconSetFormats.values
+          .firstWhereOrNull((e) => e.value == iconSetFormats) ??
       defaultValue ??
       enums.IconSetFormats.swaggerGeneratedUnknown;
 }

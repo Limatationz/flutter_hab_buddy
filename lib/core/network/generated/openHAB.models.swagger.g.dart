@@ -71,13 +71,13 @@ Map<String, dynamic> _$ConfigDescriptionParameterDTOToJson(
 
 FilterCriteriaDTO _$FilterCriteriaDTOFromJson(Map<String, dynamic> json) =>
     FilterCriteriaDTO(
-      value: json['value'] as String?,
+      $value: json['value'] as String?,
       name: json['name'] as String?,
     );
 
 Map<String, dynamic> _$FilterCriteriaDTOToJson(FilterCriteriaDTO instance) =>
     <String, dynamic>{
-      'value': instance.value,
+      'value': instance.$value,
       'name': instance.name,
     };
 
@@ -111,13 +111,13 @@ Map<String, dynamic> _$ModuleTypeDTOToJson(ModuleTypeDTO instance) =>
 ParameterOptionDTO _$ParameterOptionDTOFromJson(Map<String, dynamic> json) =>
     ParameterOptionDTO(
       label: json['label'] as String?,
-      value: json['value'] as String?,
+      $value: json['value'] as String?,
     );
 
 Map<String, dynamic> _$ParameterOptionDTOToJson(ParameterOptionDTO instance) =>
     <String, dynamic>{
       'label': instance.label,
-      'value': instance.value,
+      'value': instance.$value,
     };
 
 ActionDTO _$ActionDTOFromJson(Map<String, dynamic> json) => ActionDTO(
@@ -418,13 +418,13 @@ Map<String, dynamic> _$ConfigurationToJson(Configuration instance) =>
 
 FilterCriteria _$FilterCriteriaFromJson(Map<String, dynamic> json) =>
     FilterCriteria(
-      value: json['value'] as String?,
+      $value: json['value'] as String?,
       name: json['name'] as String?,
     );
 
 Map<String, dynamic> _$FilterCriteriaToJson(FilterCriteria instance) =>
     <String, dynamic>{
-      'value': instance.value,
+      'value': instance.$value,
       'name': instance.name,
     };
 
@@ -450,13 +450,13 @@ Map<String, dynamic> _$ModuleToJson(Module instance) => <String, dynamic>{
 ParameterOption _$ParameterOptionFromJson(Map<String, dynamic> json) =>
     ParameterOption(
       label: json['label'] as String?,
-      value: json['value'] as String?,
+      $value: json['value'] as String?,
     );
 
 Map<String, dynamic> _$ParameterOptionToJson(ParameterOption instance) =>
     <String, dynamic>{
       'label': instance.label,
-      'value': instance.value,
+      'value': instance.$value,
     };
 
 Rule _$RuleFromJson(Map<String, dynamic> json) => Rule(
@@ -916,13 +916,13 @@ Map<String, dynamic> _$StateDescriptionToJson(StateDescription instance) =>
     };
 
 StateOption _$StateOptionFromJson(Map<String, dynamic> json) => StateOption(
-      value: json['value'] as String?,
+      $value: json['value'] as String?,
       label: json['label'] as String?,
     );
 
 Map<String, dynamic> _$StateOptionToJson(StateOption instance) =>
     <String, dynamic>{
-      'value': instance.value,
+      'value': instance.$value,
       'label': instance.label,
     };
 
@@ -974,13 +974,13 @@ Map<String, dynamic> _$DiscoveryResultDTOToJson(DiscoveryResultDTO instance) =>
     };
 
 MetadataDTO _$MetadataDTOFromJson(Map<String, dynamic> json) => MetadataDTO(
-      value: json['value'] as String?,
+      $value: json['value'] as String?,
       config: json['config'] as Map<String, dynamic>?,
     );
 
 Map<String, dynamic> _$MetadataDTOToJson(MetadataDTO instance) =>
     <String, dynamic>{
-      'value': instance.value,
+      'value': instance.$value,
       'config': instance.config,
     };
 
@@ -1157,7 +1157,7 @@ PersistenceFilterDTO _$PersistenceFilterDTOFromJson(
         Map<String, dynamic> json) =>
     PersistenceFilterDTO(
       name: json['name'] as String?,
-      value: (json['value'] as num?)?.toDouble(),
+      $value: (json['value'] as num?)?.toDouble(),
       relative: json['relative'] as bool?,
       unit: json['unit'] as String?,
       lower: (json['lower'] as num?)?.toDouble(),
@@ -1173,7 +1173,7 @@ Map<String, dynamic> _$PersistenceFilterDTOToJson(
         PersistenceFilterDTO instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'value': instance.value,
+      'value': instance.$value,
       'relative': instance.relative,
       'unit': instance.unit,
       'lower': instance.lower,

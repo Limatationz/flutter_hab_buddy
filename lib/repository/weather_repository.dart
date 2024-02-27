@@ -10,11 +10,11 @@ import 'package:weather_pack/weather_pack.dart';
 import '../core/database/app_database.dart';
 import '../core/database/items/item_type.dart';
 import '../locator.dart';
+import '../util/secrets.dart';
 import '../view/main/items/weather/weather_data.dart';
 import 'item_repository.dart';
 
 class WeatherRepository {
-  static const apiKey = "18df7aa02bea8a9fb1312bab9e46c60f";
   final ItemRepository itemRepository = locator<ItemRepository>();
 
   WeatherService? _weatherService;
@@ -101,8 +101,8 @@ class WeatherRepository {
   void _createService() {
     if (_weatherService == null) {
       final lang = _getWeatherLanguage();
-      _weatherService = WeatherService(apiKey, language: lang);
-      _geocodingService = GeocodingService(apiKey);
+      _weatherService = WeatherService(weatherApiKey, language: lang);
+      _geocodingService = GeocodingService(weatherApiKey);
     }
   }
 
