@@ -1,4 +1,3 @@
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -100,7 +99,7 @@ class SensorItemDialogChart extends StatelessWidget {
                         }))),
             lineTouchData: LineTouchData(
                 touchTooltipData: LineTouchTooltipData(
-                    tooltipBgColor: colorScheme.primaryContainer,
+                    getTooltipColor: (spot) => colorScheme.primaryContainer,
                     tooltipRoundedRadius: 8,
                     tooltipPadding: const EdgeInsets.all(8),
                     getTooltipItems: (touchedSpots) => touchedSpots
