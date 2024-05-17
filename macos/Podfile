@@ -40,4 +40,10 @@ post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_macos_build_settings(target)
   end
+
+  # set deployment target to 10.14
+    installer.pods_project.build_configurations.each do |config|
+        config.build_settings['MACOSX_DEPLOYMENT_TARGET'] = '10.14.6'
+    end
+
 end

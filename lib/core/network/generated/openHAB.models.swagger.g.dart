@@ -22,7 +22,7 @@ ConfigDescriptionParameterDTO _$ConfigDescriptionParameterDTOFromJson(
       pattern: json['pattern'] as String?,
       readOnly: json['readOnly'] as bool?,
       multiple: json['multiple'] as bool?,
-      multipleLimit: json['multipleLimit'] as int?,
+      multipleLimit: (json['multipleLimit'] as num?)?.toInt(),
       groupName: json['groupName'] as String?,
       advanced: json['advanced'] as bool?,
       verify: json['verify'] as bool?,
@@ -355,7 +355,7 @@ ConfigDescriptionParameter _$ConfigDescriptionParameterFromJson(
       required: json['required'] as bool?,
       readOnly: json['readOnly'] as bool?,
       multiple: json['multiple'] as bool?,
-      multipleLimit: json['multipleLimit'] as int?,
+      multipleLimit: (json['multipleLimit'] as num?)?.toInt(),
       unit: json['unit'] as String?,
       unitLabel: json['unitLabel'] as String?,
       context: json['context'] as String?,
@@ -699,7 +699,7 @@ TokenResponseDTO _$TokenResponseDTOFromJson(Map<String, dynamic> json) =>
     TokenResponseDTO(
       accessToken: json['access_token'] as String?,
       tokenType: json['token_type'] as String?,
-      expiresIn: json['expires_in'] as int?,
+      expiresIn: (json['expires_in'] as num?)?.toInt(),
       refreshToken: json['refresh_token'] as String?,
       scope: json['scope'] as String?,
       user: json['user'] == null
@@ -1110,7 +1110,7 @@ Map<String, dynamic> _$ItemChannelLinkDTOToJson(ItemChannelLinkDTO instance) =>
 
 HistoryDataBean _$HistoryDataBeanFromJson(Map<String, dynamic> json) =>
     HistoryDataBean(
-      time: json['time'] as int?,
+      time: (json['time'] as num?)?.toInt(),
       state: json['state'] as String?,
     );
 
@@ -1274,7 +1274,7 @@ PersistenceItemInfo _$PersistenceItemInfoFromJson(Map<String, dynamic> json) =>
       latest: json['latest'] == null
           ? null
           : DateTime.parse(json['latest'] as String),
-      count: json['count'] as int?,
+      count: (json['count'] as num?)?.toInt(),
       name: json['name'] as String?,
     );
 
@@ -1518,7 +1518,7 @@ ConfigStatusMessage _$ConfigStatusMessageFromJson(Map<String, dynamic> json) =>
       parameterName: json['parameterName'] as String?,
       type: configStatusMessageTypeNullableFromJson(json['type']),
       message: json['message'] as String?,
-      statusCode: json['statusCode'] as int?,
+      statusCode: (json['statusCode'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$ConfigStatusMessageToJson(
@@ -1747,10 +1747,10 @@ SystemInfo _$SystemInfoFromJson(Map<String, dynamic> json) => SystemInfo(
       osName: json['osName'] as String?,
       osVersion: json['osVersion'] as String?,
       osArchitecture: json['osArchitecture'] as String?,
-      availableProcessors: json['availableProcessors'] as int?,
-      freeMemory: json['freeMemory'] as int?,
-      totalMemory: json['totalMemory'] as int?,
-      startLevel: json['startLevel'] as int?,
+      availableProcessors: (json['availableProcessors'] as num?)?.toInt(),
+      freeMemory: (json['freeMemory'] as num?)?.toInt(),
+      totalMemory: (json['totalMemory'] as num?)?.toInt(),
+      startLevel: (json['startLevel'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$SystemInfoToJson(SystemInfo instance) =>
@@ -1871,9 +1871,9 @@ WidgetDTO _$WidgetDTOFromJson(Map<String, dynamic> json) => WidgetDTO(
               .toList() ??
           [],
       switchSupport: json['switchSupport'] as bool?,
-      sendFrequency: json['sendFrequency'] as int?,
-      refresh: json['refresh'] as int?,
-      height: json['height'] as int?,
+      sendFrequency: (json['sendFrequency'] as num?)?.toInt(),
+      refresh: (json['refresh'] as num?)?.toInt(),
+      height: (json['height'] as num?)?.toInt(),
       minValue: (json['minValue'] as num?)?.toDouble(),
       maxValue: (json['maxValue'] as num?)?.toDouble(),
       step: (json['step'] as num?)?.toDouble(),
@@ -2112,9 +2112,9 @@ GalleryWidgetsListItem _$GalleryWidgetsListItemFromJson(
       id: json['id'] as String?,
       title: json['title'] as String?,
       description: json['description'] as String?,
-      likes: json['likes'] as int?,
-      views: json['views'] as int?,
-      posts: json['posts'] as int?,
+      likes: (json['likes'] as num?)?.toInt(),
+      views: (json['views'] as num?)?.toInt(),
+      posts: (json['posts'] as num?)?.toInt(),
       imageUrl: json['imageUrl'] as String?,
       createdDate: json['createdDate'] == null
           ? null
@@ -2138,9 +2138,9 @@ GalleryItem _$GalleryItemFromJson(Map<String, dynamic> json) => GalleryItem(
       id: json['id'] as String?,
       title: json['title'] as String?,
       description: json['description'] as String?,
-      likes: json['likes'] as int?,
-      views: json['views'] as int?,
-      posts: json['posts'] as int?,
+      likes: (json['likes'] as num?)?.toInt(),
+      views: (json['views'] as num?)?.toInt(),
+      posts: (json['posts'] as num?)?.toInt(),
       imageUrl: json['imageUrl'] as String?,
       author: json['author'] as String?,
       authorName: json['authorName'] as String?,

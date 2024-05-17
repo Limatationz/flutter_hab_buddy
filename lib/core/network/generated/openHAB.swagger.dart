@@ -31,7 +31,7 @@ abstract class OpenHAB extends ChopperService {
     ErrorConverter? errorConverter,
     Converter? converter,
     Uri? baseUrl,
-    Iterable<dynamic>? interceptors,
+    List<Interceptor>? interceptors,
   }) {
     if (client != null) {
       return _$OpenHAB(client);

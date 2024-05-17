@@ -6,7 +6,7 @@ import 'package:chopper/chopper.dart';
 import '../../../locator.dart';
 import '../../../repository/login_repository.dart';
 
-class AuthInterceptor implements RequestInterceptor {
+class AuthInterceptor implements Interceptor {
   final _loginRepository = locator.get<LoginRepository>();
   String? _username;
   String? _password;
@@ -19,14 +19,15 @@ class AuthInterceptor implements RequestInterceptor {
   }
 
   @override
-  FutureOr<Request> onRequest(Request request) async {
+  FutureOr<Response<BodyType>> intercept<BodyType>(Chain<BodyType> chain) {
+    final request = chain.request;
     if (_username != null && _password != null) {
       final bytes = utf8.encode("$_username:$_password");
       final base64Str = base64.encode(bytes);
-      return applyHeader(
-          request, 'Authorization', 'Basic $base64Str');
+      return chain.proceed(applyHeader(
+          request, 'Authorization', 'Basic $base64Str'));
     } else {
-      return request;
+      return chain.proceed(request);
     }
   }
 }

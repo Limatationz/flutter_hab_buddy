@@ -1,21 +1,18 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
 
-import '../../../locator.dart';
-import '../../../repository/login_repository.dart';
-
-class ContentTypeInterceptor implements RequestInterceptor {
-  ContentTypeInterceptor() {}
+class ContentTypeInterceptor implements Interceptor {
+  ContentTypeInterceptor();
 
   @override
-  FutureOr<Request> onRequest(Request request) async {
+  FutureOr<Response<BodyType>> intercept<BodyType>(Chain<BodyType> chain) {
+    final request = chain.request;
     if (request.url.toString().contains("rest/items/") &&
         request.method == "POST") {
-      return applyHeader(request, 'Content-Type', 'text/plain');
+      return chain.proceed(applyHeader(request, 'Content-Type', 'text/plain'));
     } else {
-      return request;
+      return chain.proceed(request);
     }
   }
 }

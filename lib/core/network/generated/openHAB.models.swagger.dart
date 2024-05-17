@@ -92,7 +92,7 @@ class ConfigDescriptionParameterDTO {
   static const fromJsonFactory = _$ConfigDescriptionParameterDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ConfigDescriptionParameterDTO &&
             (identical(other.context, context) ||
@@ -312,7 +312,7 @@ class FilterCriteriaDTO {
   static const fromJsonFactory = _$FilterCriteriaDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is FilterCriteriaDTO &&
             (identical(other.$value, $value) ||
@@ -383,7 +383,7 @@ class ModuleTypeDTO {
   static const fromJsonFactory = _$ModuleTypeDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ModuleTypeDTO &&
             (identical(other.uid, uid) ||
@@ -474,7 +474,7 @@ class ParameterOptionDTO {
   static const fromJsonFactory = _$ParameterOptionDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ParameterOptionDTO &&
             (identical(other.label, label) ||
@@ -539,7 +539,7 @@ class ActionDTO {
   static const fromJsonFactory = _$ActionDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ActionDTO &&
             (identical(other.id, id) ||
@@ -640,7 +640,7 @@ class ConditionDTO {
   static const fromJsonFactory = _$ConditionDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ConditionDTO &&
             (identical(other.id, id) ||
@@ -762,7 +762,7 @@ class RuleDTO {
   static const fromJsonFactory = _$RuleDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is RuleDTO &&
             (identical(other.triggers, triggers) ||
@@ -904,7 +904,7 @@ class TriggerDTO {
   static const fromJsonFactory = _$TriggerDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is TriggerDTO &&
             (identical(other.id, id) ||
@@ -1025,7 +1025,7 @@ class EnrichedRuleDTO {
   static const fromJsonFactory = _$EnrichedRuleDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is EnrichedRuleDTO &&
             (identical(other.triggers, triggers) ||
@@ -1184,7 +1184,7 @@ class RuleStatusInfo {
   static const fromJsonFactory = _$RuleStatusInfoFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is RuleStatusInfo &&
             (identical(other.status, status) ||
@@ -1261,7 +1261,7 @@ class ModuleDTO {
   static const fromJsonFactory = _$ModuleDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ModuleDTO &&
             (identical(other.id, id) ||
@@ -1354,7 +1354,7 @@ class Action {
   static const fromJsonFactory = _$ActionFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is Action &&
             (identical(other.inputs, inputs) ||
@@ -1456,7 +1456,7 @@ class Condition {
   static const fromJsonFactory = _$ConditionFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is Condition &&
             (identical(other.inputs, inputs) ||
@@ -1610,7 +1610,7 @@ class ConfigDescriptionParameter {
   static const fromJsonFactory = _$ConfigDescriptionParameterFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ConfigDescriptionParameter &&
             (identical(other.name, name) ||
@@ -1828,7 +1828,7 @@ class Configuration {
   static const fromJsonFactory = _$ConfigurationFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is Configuration &&
             (identical(other.properties, properties) ||
@@ -1875,7 +1875,7 @@ class FilterCriteria {
   static const fromJsonFactory = _$FilterCriteriaFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is FilterCriteria &&
             (identical(other.$value, $value) ||
@@ -1936,7 +1936,7 @@ class Module {
   static const fromJsonFactory = _$ModuleFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is Module &&
             (identical(other.typeUID, typeUID) ||
@@ -2019,7 +2019,7 @@ class ParameterOption {
   static const fromJsonFactory = _$ParameterOptionFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ParameterOption &&
             (identical(other.label, label) ||
@@ -2107,7 +2107,7 @@ class Rule {
   static const fromJsonFactory = _$RuleFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is Rule &&
             (identical(other.configurationDescriptions,
@@ -2251,7 +2251,7 @@ class RuleExecution {
   static const fromJsonFactory = _$RuleExecutionFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is RuleExecution &&
             (identical(other.date, date) ||
@@ -2312,7 +2312,7 @@ class Trigger {
   static const fromJsonFactory = _$TriggerFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is Trigger &&
             (identical(other.typeUID, typeUID) ||
@@ -2408,7 +2408,7 @@ class Template {
   static const fromJsonFactory = _$TemplateFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is Template &&
             (identical(other.visibility, visibility) ||
@@ -2506,7 +2506,7 @@ class Input {
   static const fromJsonFactory = _$InputFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is Input &&
             (identical(other.name, name) ||
@@ -2625,7 +2625,7 @@ class Output {
   static const fromJsonFactory = _$OutputFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is Output &&
             (identical(other.name, name) ||
@@ -2731,7 +2731,7 @@ class ThingActionDTO {
   static const fromJsonFactory = _$ThingActionDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ThingActionDTO &&
             (identical(other.actionUid, actionUid) ||
@@ -2812,7 +2812,7 @@ class AudioSinkDTO {
   static const fromJsonFactory = _$AudioSinkDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is AudioSinkDTO &&
             (identical(other.id, id) ||
@@ -2864,7 +2864,7 @@ class AudioSourceDTO {
   static const fromJsonFactory = _$AudioSourceDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is AudioSourceDTO &&
             (identical(other.id, id) ||
@@ -2919,7 +2919,7 @@ class UserApiTokenDTO {
   static const fromJsonFactory = _$UserApiTokenDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is UserApiTokenDTO &&
             (identical(other.name, name) ||
@@ -2992,7 +2992,7 @@ class UserSessionDTO {
   static const fromJsonFactory = _$UserSessionDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is UserSessionDTO &&
             (identical(other.sessionId, sessionId) ||
@@ -3089,7 +3089,7 @@ class TokenResponseDTO {
   static const fromJsonFactory = _$TokenResponseDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is TokenResponseDTO &&
             (identical(other.accessToken, accessToken) ||
@@ -3180,7 +3180,7 @@ class UserDTO {
   static const fromJsonFactory = _$UserDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is UserDTO &&
             (identical(other.name, name) ||
@@ -3294,7 +3294,7 @@ class Addon {
   static const fromJsonFactory = _$AddonFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is Addon &&
             (identical(other.uid, uid) ||
@@ -3527,7 +3527,7 @@ class AddonType {
   static const fromJsonFactory = _$AddonTypeFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is AddonType &&
             (identical(other.id, id) ||
@@ -3610,7 +3610,7 @@ class ChannelTypeDTO {
   static const fromJsonFactory = _$ChannelTypeDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ChannelTypeDTO &&
             (identical(other.parameters, parameters) ||
@@ -3749,7 +3749,7 @@ class CommandDescription {
   static const fromJsonFactory = _$CommandDescriptionFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is CommandDescription &&
             (identical(other.commandOptions, commandOptions) ||
@@ -3801,7 +3801,7 @@ class CommandOption {
   static const fromJsonFactory = _$CommandOptionFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is CommandOption &&
             (identical(other.command, command) ||
@@ -3866,7 +3866,7 @@ class ConfigDescriptionParameterGroupDTO {
   static const fromJsonFactory = _$ConfigDescriptionParameterGroupDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ConfigDescriptionParameterGroupDTO &&
             (identical(other.name, name) ||
@@ -3961,7 +3961,7 @@ class StateDescription {
   static const fromJsonFactory = _$StateDescriptionFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is StateDescription &&
             (identical(other.minimum, minimum) ||
@@ -4050,7 +4050,7 @@ class StateOption {
   static const fromJsonFactory = _$StateOptionFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is StateOption &&
             (identical(other.$value, $value) ||
@@ -4108,7 +4108,7 @@ class ConfigDescriptionDTO {
   static const fromJsonFactory = _$ConfigDescriptionDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ConfigDescriptionDTO &&
             (identical(other.uri, uri) ||
@@ -4195,7 +4195,7 @@ class DiscoveryResultDTO {
   static const fromJsonFactory = _$DiscoveryResultDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is DiscoveryResultDTO &&
             (identical(other.bridgeUID, bridgeUID) ||
@@ -4296,7 +4296,7 @@ class MetadataDTO {
   static const fromJsonFactory = _$MetadataDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is MetadataDTO &&
             (identical(other.$value, $value) ||
@@ -4385,7 +4385,7 @@ class EnrichedItemDTO {
   static const fromJsonFactory = _$EnrichedItemDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is EnrichedItemDTO &&
             (identical(other.type, type) ||
@@ -4540,7 +4540,7 @@ class GroupFunctionDTO {
   static const fromJsonFactory = _$GroupFunctionDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is GroupFunctionDTO &&
             (identical(other.name, name) ||
@@ -4611,7 +4611,7 @@ class GroupItemDTO {
   static const fromJsonFactory = _$GroupItemDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is GroupItemDTO &&
             (identical(other.type, type) ||
@@ -4720,7 +4720,7 @@ class EnrichedItemChannelLinkDTO {
   static const fromJsonFactory = _$EnrichedItemChannelLinkDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is EnrichedItemChannelLinkDTO &&
             (identical(other.itemName, itemName) ||
@@ -4799,7 +4799,7 @@ class ItemChannelLinkDTO {
   static const fromJsonFactory = _$ItemChannelLinkDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ItemChannelLinkDTO &&
             (identical(other.itemName, itemName) ||
@@ -4867,7 +4867,7 @@ class HistoryDataBean {
   static const fromJsonFactory = _$HistoryDataBeanFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is HistoryDataBean &&
             (identical(other.time, time) ||
@@ -4925,7 +4925,7 @@ class ItemHistoryDTO {
   static const fromJsonFactory = _$ItemHistoryDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ItemHistoryDTO &&
             (identical(other.name, name) ||
@@ -4999,7 +4999,7 @@ class PersistenceCronStrategyDTO {
   static const fromJsonFactory = _$PersistenceCronStrategyDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is PersistenceCronStrategyDTO &&
             (identical(other.name, name) ||
@@ -5074,7 +5074,7 @@ class PersistenceFilterDTO {
   static const fromJsonFactory = _$PersistenceFilterDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is PersistenceFilterDTO &&
             (identical(other.name, name) ||
@@ -5182,7 +5182,7 @@ class PersistenceItemConfigurationDTO {
   static const fromJsonFactory = _$PersistenceItemConfigurationDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is PersistenceItemConfigurationDTO &&
             (identical(other.items, items) ||
@@ -5279,7 +5279,7 @@ class PersistenceServiceConfigurationDTO {
   static const fromJsonFactory = _$PersistenceServiceConfigurationDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is PersistenceServiceConfigurationDTO &&
             (identical(other.serviceId, serviceId) ||
@@ -5409,7 +5409,7 @@ class PersistenceItemInfo {
   static const fromJsonFactory = _$PersistenceItemInfoFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is PersistenceItemInfo &&
             (identical(other.earliest, earliest) ||
@@ -5481,7 +5481,7 @@ class PersistenceServiceDTO {
   static const fromJsonFactory = _$PersistenceServiceDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is PersistenceServiceDTO &&
             (identical(other.id, id) ||
@@ -5544,7 +5544,7 @@ class ProfileTypeDTO {
   static const fromJsonFactory = _$ProfileTypeDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ProfileTypeDTO &&
             (identical(other.uid, uid) ||
@@ -5627,7 +5627,7 @@ class ConfigurableServiceDTO {
   static const fromJsonFactory = _$ConfigurableServiceDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ConfigurableServiceDTO &&
             (identical(other.id, id) ||
@@ -5759,7 +5759,7 @@ class EnrichedChannelDTO {
   static const fromJsonFactory = _$EnrichedChannelDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is EnrichedChannelDTO &&
             (identical(other.uid, uid) ||
@@ -5929,7 +5929,7 @@ class EnrichedThingDTO {
   static const fromJsonFactory = _$EnrichedThingDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is EnrichedThingDTO &&
             (identical(other.label, label) ||
@@ -6062,7 +6062,7 @@ class FirmwareStatusDTO {
   static const fromJsonFactory = _$FirmwareStatusDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is FirmwareStatusDTO &&
             (identical(other.status, status) ||
@@ -6130,7 +6130,7 @@ class ThingStatusInfo {
   static const fromJsonFactory = _$ThingStatusInfoFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ThingStatusInfo &&
             (identical(other.status, status) ||
@@ -6225,7 +6225,7 @@ class ChannelDTO {
   static const fromJsonFactory = _$ChannelDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ChannelDTO &&
             (identical(other.uid, uid) ||
@@ -6377,7 +6377,7 @@ class ThingDTO {
   static const fromJsonFactory = _$ThingDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ThingDTO &&
             (identical(other.label, label) ||
@@ -6494,7 +6494,7 @@ class ConfigStatusMessage {
   static const fromJsonFactory = _$ConfigStatusMessageFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ConfigStatusMessage &&
             (identical(other.parameterName, parameterName) ||
@@ -6587,7 +6587,7 @@ class FirmwareDTO {
   static const fromJsonFactory = _$FirmwareDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is FirmwareDTO &&
             (identical(other.thingTypeUID, thingTypeUID) ||
@@ -6713,7 +6713,7 @@ class StrippedThingTypeDTO {
   static const fromJsonFactory = _$StrippedThingTypeDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is StrippedThingTypeDTO &&
             (identical(other.uid, uid) ||
@@ -6834,7 +6834,7 @@ class ChannelDefinitionDTO {
   static const fromJsonFactory = _$ChannelDefinitionDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ChannelDefinitionDTO &&
             (identical(other.description, description) ||
@@ -6954,7 +6954,7 @@ class ChannelGroupDefinitionDTO {
   static const fromJsonFactory = _$ChannelGroupDefinitionDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ChannelGroupDefinitionDTO &&
             (identical(other.id, id) ||
@@ -7064,7 +7064,7 @@ class ThingTypeDTO {
   static const fromJsonFactory = _$ThingTypeDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is ThingTypeDTO &&
             (identical(other.uid, uid) ||
@@ -7220,7 +7220,7 @@ class Links {
   static const fromJsonFactory = _$LinksFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is Links &&
             (identical(other.type, type) ||
@@ -7280,7 +7280,7 @@ class RootBean {
   static const fromJsonFactory = _$RootBeanFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is RootBean &&
             (identical(other.version, version) ||
@@ -7364,7 +7364,7 @@ class RuntimeInfo {
   static const fromJsonFactory = _$RuntimeInfoFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is RuntimeInfo &&
             (identical(other.version, version) ||
@@ -7454,7 +7454,7 @@ class SystemInfo {
   static const fromJsonFactory = _$SystemInfoFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is SystemInfo &&
             (identical(other.configFolder, configFolder) ||
@@ -7608,7 +7608,7 @@ class SystemInfoBean {
   static const fromJsonFactory = _$SystemInfoBeanFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is SystemInfoBean &&
             (identical(other.systemInfo, systemInfo) ||
@@ -7655,7 +7655,7 @@ class DimensionInfo {
   static const fromJsonFactory = _$DimensionInfoFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is DimensionInfo &&
             (identical(other.dimension, dimension) ||
@@ -7708,7 +7708,7 @@ class UoMInfo {
   static const fromJsonFactory = _$UoMInfoFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is UoMInfo &&
             (identical(other.dimensions, dimensions) ||
@@ -7752,7 +7752,7 @@ class UoMInfoBean {
   static const fromJsonFactory = _$UoMInfoBeanFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is UoMInfoBean &&
             (identical(other.uomInfo, uomInfo) ||
@@ -7798,7 +7798,7 @@ class MappingDTO {
   static const fromJsonFactory = _$MappingDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is MappingDTO &&
             (identical(other.command, command) ||
@@ -7870,7 +7870,7 @@ class PageDTO {
   static const fromJsonFactory = _$PageDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is PageDTO &&
             (identical(other.id, id) ||
@@ -8054,7 +8054,7 @@ class WidgetDTO {
   static const fromJsonFactory = _$WidgetDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is WidgetDTO &&
             (identical(other.widgetId, widgetId) ||
@@ -8334,7 +8334,7 @@ class SitemapDTO {
   static const fromJsonFactory = _$SitemapDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is SitemapDTO &&
             (identical(other.name, name) ||
@@ -8419,7 +8419,7 @@ class Transformation {
   static const fromJsonFactory = _$TransformationFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is Transformation &&
             (identical(other.uid, uid) ||
@@ -8501,7 +8501,7 @@ class TransformationDTO {
   static const fromJsonFactory = _$TransformationDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is TransformationDTO &&
             (identical(other.uid, uid) ||
@@ -8600,7 +8600,7 @@ class RootUIComponent {
   static const fromJsonFactory = _$RootUIComponentFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is RootUIComponent &&
             (identical(other.component, component) ||
@@ -8704,7 +8704,7 @@ class UIComponent {
   static const fromJsonFactory = _$UIComponentFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is UIComponent &&
             (identical(other.component, component) ||
@@ -8773,7 +8773,7 @@ class TileDTO {
   static const fromJsonFactory = _$TileDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is TileDTO &&
             (identical(other.name, name) ||
@@ -8846,7 +8846,7 @@ class VoiceDTO {
   static const fromJsonFactory = _$VoiceDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is VoiceDTO &&
             (identical(other.id, id) ||
@@ -8910,7 +8910,7 @@ class HumanLanguageInterpreterDTO {
   static const fromJsonFactory = _$HumanLanguageInterpreterDTOFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is HumanLanguageInterpreterDTO &&
             (identical(other.id, id) ||
@@ -8972,7 +8972,7 @@ class LoggerInfo {
   static const fromJsonFactory = _$LoggerInfoFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is LoggerInfo &&
             (identical(other.loggerName, loggerName) ||
@@ -9023,7 +9023,7 @@ class LoggerBean {
   static const fromJsonFactory = _$LoggerBeanFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is LoggerBean &&
             (identical(other.loggers, loggers) ||
@@ -9079,7 +9079,7 @@ class IconSet {
   static const fromJsonFactory = _$IconSetFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is IconSet &&
             (identical(other.id, id) ||
@@ -9170,7 +9170,7 @@ class GalleryWidgetsListItem {
   static const fromJsonFactory = _$GalleryWidgetsListItemFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is GalleryWidgetsListItem &&
             (identical(other.id, id) ||
@@ -9307,7 +9307,7 @@ class GalleryItem {
   static const fromJsonFactory = _$GalleryItemFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is GalleryItem &&
             (identical(other.id, id) ||
@@ -9452,7 +9452,7 @@ class AuthLogoutPost$RequestBody {
   static const fromJsonFactory = _$AuthLogoutPost$RequestBodyFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is AuthLogoutPost$RequestBody &&
             (identical(other.refreshToken, refreshToken) ||
@@ -9519,7 +9519,7 @@ class AuthTokenPost$RequestBody {
   static const fromJsonFactory = _$AuthTokenPost$RequestBodyFromJson;
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other is AuthTokenPost$RequestBody &&
             (identical(other.grantType, grantType) ||

@@ -75,7 +75,7 @@ final router = GoRouter(
       ),
     ]);
 
-FutureOr<bool> onExitMainView(BuildContext context) {
+FutureOr<bool> onExitMainView(BuildContext context, GoRouterState state) {
   // disable wakelock when leaving favourite view
   locator<WakelockService>().autoDisable();
   return true;
