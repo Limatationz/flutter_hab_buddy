@@ -1,5 +1,5 @@
 {
-  "errorHeadline": "An error occured",
+  "errorHeadline": "An error occurred",
   "errorButtonHome": "Go to Home",
   "navigationFavorites": "Favorites",
   "navigationRooms": "Rooms",
@@ -82,5 +82,32 @@
   "wakelockDisabledSnackbar": "Wakelock disabled",
   "disableWakelockTooltip": "Disable Wakelock",
   "enableWakelockTooltip": "Enable Wakelock",
-  "feelsLike": "Feels like {temp}"
+  "feelsLike": "Feels like {temp}",
+  "@feelsLike": {
+    "placeholders":{
+      "temp": {}
+    }
+  },
+  "data": "Data",
+  "dataWithUnit": "Data ({unit})",
+  "@dataWithUnit": {
+    "placeholders":{
+      "unit": {}
+    }
+  },
+  "time": "Time",
+  "date": "Date",
+  "settings_app": "App",
+  "settings_connection": "Connection",
+  "settings_connection_status_description": "State of the connection to MyOpenhab.org",
+  "settings_connection_status_title": "Status",
+  "settings_connection_start_title": "Start",
+  "settings_connection_start_description": "Date and time of the last connection start",
+  "never": "Never",
+  "settings_connection_update_title": "Last Update",
+  "settings_connection_update_description": "Date and time of the last recieved state change",
+  "logout": "Logout",
+  "settings_theme": "Theme",
+  "settings_wakelock": "Wakelock",
+  "settings_wakelock_description": "Automatically enable wakelock"
 }

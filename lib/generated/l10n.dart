@@ -50,10 +50,10 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `An error occured`
+  /// `An error occurred`
   String get errorHeadline {
     return Intl.message(
-      'An error occured',
+      'An error occurred',
       name: 'errorHeadline',
       desc: '',
       args: [],
@@ -887,6 +887,176 @@ class S {
       name: 'feelsLike',
       desc: '',
       args: [temp],
+    );
+  }
+
+  /// `Data`
+  String get data {
+    return Intl.message(
+      'Data',
+      name: 'data',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Data ({unit})`
+  String dataWithUnit(Object unit) {
+    return Intl.message(
+      'Data ($unit)',
+      name: 'dataWithUnit',
+      desc: '',
+      args: [unit],
+    );
+  }
+
+  /// `Time`
+  String get time {
+    return Intl.message(
+      'Time',
+      name: 'time',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Date`
+  String get date {
+    return Intl.message(
+      'Date',
+      name: 'date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `App`
+  String get settings_app {
+    return Intl.message(
+      'App',
+      name: 'settings_app',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connection`
+  String get settings_connection {
+    return Intl.message(
+      'Connection',
+      name: 'settings_connection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `State of the connection to MyOpenhab.org`
+  String get settings_connection_status_description {
+    return Intl.message(
+      'State of the connection to MyOpenhab.org',
+      name: 'settings_connection_status_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status`
+  String get settings_connection_status_title {
+    return Intl.message(
+      'Status',
+      name: 'settings_connection_status_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start`
+  String get settings_connection_start_title {
+    return Intl.message(
+      'Start',
+      name: 'settings_connection_start_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Date and time of the last connection start`
+  String get settings_connection_start_description {
+    return Intl.message(
+      'Date and time of the last connection start',
+      name: 'settings_connection_start_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Never`
+  String get never {
+    return Intl.message(
+      'Never',
+      name: 'never',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last Update`
+  String get settings_connection_update_title {
+    return Intl.message(
+      'Last Update',
+      name: 'settings_connection_update_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Date and time of the last recieved state change`
+  String get settings_connection_update_description {
+    return Intl.message(
+      'Date and time of the last recieved state change',
+      name: 'settings_connection_update_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Logout`
+  String get logout {
+    return Intl.message(
+      'Logout',
+      name: 'logout',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Theme`
+  String get settings_theme {
+    return Intl.message(
+      'Theme',
+      name: 'settings_theme',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wakelock`
+  String get settings_wakelock {
+    return Intl.message(
+      'Wakelock',
+      name: 'settings_wakelock',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Automatically enable wakelock`
+  String get settings_wakelock_description {
+    return Intl.message(
+      'Automatically enable wakelock',
+      name: 'settings_wakelock_description',
+      desc: '',
+      args: [],
     );
   }
 }

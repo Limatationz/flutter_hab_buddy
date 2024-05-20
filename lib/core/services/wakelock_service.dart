@@ -12,6 +12,7 @@ class WakelockService {
   Stream<bool> get enabledStream => _enabledSubject.stream;
   Stream<bool> get autoEnabledStream => _prefs
       .getBool(prefsKey, defaultValue: false);
+  bool get autoEnabled => _prefs.getBool(prefsKey, defaultValue: false).getValue();
 
   Future enable() async {
     await WakelockPlus.enable();
@@ -36,12 +37,8 @@ class WakelockService {
     }
   }
 
-  Future<void> toggleAutoEnabled() async {
-    await _prefs.setBool(prefsKey, !getAutoEnabled());
-  }
-
-  bool getAutoEnabled() {
-    return _prefs.getBool(prefsKey, defaultValue: false).getValue();
+  Future<void> setAutoEnabled(bool enabled) async {
+    await _prefs.setBool(prefsKey, enabled);
   }
 
   Future<bool> getCurrentlyEnabled() {

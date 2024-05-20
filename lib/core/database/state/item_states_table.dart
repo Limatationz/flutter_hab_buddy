@@ -38,12 +38,29 @@ extension FormattedState on ItemState {
       return transformedState!;
     } else if (stateDescription?.pattern != null) {
       try {
-        return sprintf(stateDescription!.pattern!, [getTypeState(state)]);
+        final text = sprintf(stateDescription!.pattern!, [getTypeState(state)]);
+        if(ohUnitSymbol != null){
+          return "$text $ohUnitSymbol";
+        } else {
+          return text;
+        }
       } catch (e) {
         return stateDescription!.pattern!.replaceFirst(RegExp(r'(\S+)'), state);
       }
     } else if (ohUnitSymbol != null) {
       return "$state ${ohUnitSymbol!}";
+    } else {
+      return state;
+    }
+  }
+
+  String rawState(String state) {
+    if (stateDescription?.pattern != null) {
+      try {
+        return sprintf(stateDescription!.pattern!, [getTypeState(state)]);
+      } catch (e) {
+        return stateDescription!.pattern!.replaceFirst(RegExp(r'(\S+)'), state);
+      }
     } else {
       return state;
     }

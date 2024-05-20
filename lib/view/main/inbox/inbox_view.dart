@@ -79,8 +79,8 @@ class InboxView extends StatelessWidget {
                     SuspensionUtil.setShowSuspensionStatus(list);
                     return AzListView(
                       data: list,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: paddingScaffold),
+                      padding: const EdgeInsets.fromLTRB(
+                          paddingScaffold, 0, paddingScaffold, paddingScaffold),
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
                         final entry = snapshot.data![index].entry;

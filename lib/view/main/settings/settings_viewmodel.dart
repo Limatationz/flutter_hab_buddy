@@ -37,6 +37,11 @@ class SettingsViewModel extends BaseViewModel {
     setSystemOverlay(theme);
   }
 
+  void setWakeLockAutoEnabled(bool enabled) {
+    wakelockService.setAutoEnabled(enabled);
+    notifyListeners();
+  }
+
   Future<void> logout(BuildContext context) async {
     await _db.deleteAllData();
     await _loginRepository.logout();

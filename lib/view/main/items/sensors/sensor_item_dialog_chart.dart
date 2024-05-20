@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -5,6 +6,7 @@ import 'package:intl/intl.dart';
 import '../../../../core/database/app_database.dart';
 import '../../../../core/database/state/item_states_table.dart';
 import '../../../../core/network/converters/persistence.dart';
+import '../../../../generated/l10n.dart';
 import '../../../../locator.dart';
 import '../../../../repository/chart_repository.dart';
 import '../../../util/constants.dart';
@@ -53,12 +55,12 @@ class SensorItemDialogChart extends StatelessWidget {
             maxY: maxY,
             gridData: FlGridData(getDrawingHorizontalLine: (value) {
               return FlLine(
-                color: colorScheme.onBackground.withOpacity(0.2),
+                color: colorScheme.onSurface.withOpacity(0.2),
                 strokeWidth: 1,
               );
             }, getDrawingVerticalLine: (value) {
               return FlLine(
-                color: colorScheme.onBackground.withOpacity(0.2),
+                color: colorScheme.onSurface.withOpacity(0.2),
                 strokeWidth: 1,
               );
             }),
@@ -66,10 +68,15 @@ class SensorItemDialogChart extends StatelessWidget {
                 show: true,
                 border: Border.all(
                   width: 2,
-                  color: colorScheme.onBackground.withOpacity(0.2),
+                  color: colorScheme.onSurface.withOpacity(0.2),
                 )),
             titlesData: FlTitlesData(
                 bottomTitles: AxisTitles(
+                    axisNameSize: 20,
+                    axisNameWidget: AutoSizeText(
+                      xDiffInDays > 1 ? S.of(context).date : S.of(context).time,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
                     sideTitles: SideTitles(
                         reservedSize: 45,
                         showTitles: true,
@@ -89,17 +96,43 @@ class SensorItemDialogChart extends StatelessWidget {
                 rightTitles: const AxisTitles(),
                 topTitles: const AxisTitles(),
                 leftTitles: AxisTitles(
+                  axisNameSize: 20,
+                  axisNameWidget: AutoSizeText(
+                    itemState.ohUnitSymbol == null ? S.of(context).data : S.of(context).dataWithUnit(itemState.ohUnitSymbol!),
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
                     sideTitles: SideTitles(
                         reservedSize: 40,
                         showTitles: true,
                         getTitlesWidget: (value, _) {
                           return Text(
-                            itemState.transformState(value.toString()),
+                            itemState.rawState(value.toString()),
+                            style: Theme.of(context).textTheme.bodyMedium,
                           );
                         }))),
             lineTouchData: LineTouchData(
+              getTouchedSpotIndicator: (barData, spotIndexes) {
+                return spotIndexes.map((spotIndex) {
+                  return TouchedSpotIndicatorData(
+                    FlLine(
+                      color: colorScheme.secondaryContainer,
+                      strokeWidth: 4,
+                    ),
+                    FlDotData(
+                      getDotPainter: (spot, percent, barData, index) {
+                        return FlDotCirclePainter(
+                          radius: 8,
+                          color: colorScheme.secondaryContainer,
+                          strokeWidth: 2,
+                          strokeColor: colorScheme.onSecondaryContainer,
+                        );
+                      },
+                    ),
+                  );
+                }).toList();
+              },
                 touchTooltipData: LineTouchTooltipData(
-                    getTooltipColor: (spot) => colorScheme.primaryContainer,
+                    getTooltipColor: (spot) => colorScheme.secondaryContainer,
                     tooltipRoundedRadius: 8,
                     tooltipPadding: const EdgeInsets.all(8),
                     getTooltipItems: (touchedSpots) => touchedSpots

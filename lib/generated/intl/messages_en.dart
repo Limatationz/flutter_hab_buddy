@@ -20,7 +20,9 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(temp) => "Feels like ${temp}";
+  static String m0(unit) => "Data (${unit})";
+
+  static String m1(temp) => "Feels like ${temp}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -37,6 +39,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "customLabel": MessageLookupByLibrary.simpleMessage("Custom Label"),
         "customLabelHelp": MessageLookupByLibrary.simpleMessage(
             "Add a custom label for this item otherwise the label from OpenHAB will be used"),
+        "data": MessageLookupByLibrary.simpleMessage("Data"),
+        "dataWithUnit": m0,
+        "date": MessageLookupByLibrary.simpleMessage("Date"),
         "deleteItemDialogHeadline":
             MessageLookupByLibrary.simpleMessage("Delete item?"),
         "deleteItemDialogText": MessageLookupByLibrary.simpleMessage(
@@ -49,8 +54,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Enable Wakelock"),
         "errorButtonHome": MessageLookupByLibrary.simpleMessage("Go to Home"),
         "errorHeadline":
-            MessageLookupByLibrary.simpleMessage("An error occured"),
-        "feelsLike": m0,
+            MessageLookupByLibrary.simpleMessage("An error occurred"),
+        "feelsLike": m1,
         "icon": MessageLookupByLibrary.simpleMessage("Icon"),
         "iconPickerNoResultsText":
             MessageLookupByLibrary.simpleMessage("No results for:"),
@@ -107,11 +112,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Login failed"),
         "loginInfo": MessageLookupByLibrary.simpleMessage(
             "Enter your credentials from myOpenHAB.org"),
+        "logout": MessageLookupByLibrary.simpleMessage("Logout"),
         "navigationFavorites":
             MessageLookupByLibrary.simpleMessage("Favorites"),
         "navigationInbox": MessageLookupByLibrary.simpleMessage("Inbox"),
         "navigationRooms": MessageLookupByLibrary.simpleMessage("Rooms"),
         "navigationSettings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "never": MessageLookupByLibrary.simpleMessage("Never"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "room": MessageLookupByLibrary.simpleMessage("Room"),
         "roomColorLabel": MessageLookupByLibrary.simpleMessage("Color"),
@@ -129,9 +136,32 @@ class MessageLookup extends MessageLookupByLibrary {
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "search": MessageLookupByLibrary.simpleMessage("Search"),
         "select": MessageLookupByLibrary.simpleMessage("Select"),
+        "settings_app": MessageLookupByLibrary.simpleMessage("App"),
+        "settings_connection":
+            MessageLookupByLibrary.simpleMessage("Connection"),
+        "settings_connection_start_description":
+            MessageLookupByLibrary.simpleMessage(
+                "Date and time of the last connection start"),
+        "settings_connection_start_title":
+            MessageLookupByLibrary.simpleMessage("Start"),
+        "settings_connection_status_description":
+            MessageLookupByLibrary.simpleMessage(
+                "State of the connection to MyOpenhab.org"),
+        "settings_connection_status_title":
+            MessageLookupByLibrary.simpleMessage("Status"),
+        "settings_connection_update_description":
+            MessageLookupByLibrary.simpleMessage(
+                "Date and time of the last recieved state change"),
+        "settings_connection_update_title":
+            MessageLookupByLibrary.simpleMessage("Last Update"),
+        "settings_theme": MessageLookupByLibrary.simpleMessage("Theme"),
+        "settings_wakelock": MessageLookupByLibrary.simpleMessage("Wakelock"),
+        "settings_wakelock_description": MessageLookupByLibrary.simpleMessage(
+            "Automatically enable wakelock"),
         "themeDark": MessageLookupByLibrary.simpleMessage("Dark"),
         "themeLight": MessageLookupByLibrary.simpleMessage("Light"),
         "themeSystem": MessageLookupByLibrary.simpleMessage("System"),
+        "time": MessageLookupByLibrary.simpleMessage("Time"),
         "timeFormat": MessageLookupByLibrary.simpleMessage("Time format"),
         "updateFailedError": MessageLookupByLibrary.simpleMessage(
             "Update failed. Please try again."),
