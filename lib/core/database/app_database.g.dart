@@ -368,6 +368,29 @@ class InboxEntry extends DataClass implements Insertable<InboxEntry> {
             ? commandDescription.value
             : this.commandDescription,
       );
+  InboxEntry copyWithCompanion(InboxTableCompanion data) {
+    return InboxEntry(
+      type: data.type.present ? data.type.value : this.type,
+      name: data.name.present ? data.name.value : this.name,
+      label: data.label.present ? data.label.value : this.label,
+      category: data.category.present ? data.category.value : this.category,
+      tags: data.tags.present ? data.tags.value : this.tags,
+      groups: data.groups.present ? data.groups.value : this.groups,
+      state: data.state.present ? data.state.value : this.state,
+      unitSymbol:
+          data.unitSymbol.present ? data.unitSymbol.value : this.unitSymbol,
+      transformedState: data.transformedState.present
+          ? data.transformedState.value
+          : this.transformedState,
+      stateDescription: data.stateDescription.present
+          ? data.stateDescription.value
+          : this.stateDescription,
+      commandDescription: data.commandDescription.present
+          ? data.commandDescription.value
+          : this.commandDescription,
+    );
+  }
+
   @override
   String toString() {
     return (StringBuffer('InboxEntry(')
@@ -793,6 +816,18 @@ class Room extends DataClass implements Insertable<Room> {
         color: color.present ? color.value : this.color,
         level: level.present ? level.value : this.level,
       );
+  Room copyWithCompanion(RoomsTableCompanion data) {
+    return Room(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      description:
+          data.description.present ? data.description.value : this.description,
+      icon: data.icon.present ? data.icon.value : this.icon,
+      color: data.color.present ? data.color.value : this.color,
+      level: data.level.present ? data.level.value : this.level,
+    );
+  }
+
   @override
   String toString() {
     return (StringBuffer('Room(')
@@ -1339,6 +1374,29 @@ class Item extends DataClass implements Insertable<Item> {
         newScore: newScore ?? this.newScore,
         complexJson: complexJson.present ? complexJson.value : this.complexJson,
       );
+  Item copyWithCompanion(ItemsTableCompanion data) {
+    return Item(
+      type: data.type.present ? data.type.value : this.type,
+      ohType: data.ohType.present ? data.ohType.value : this.ohType,
+      ohName: data.ohName.present ? data.ohName.value : this.ohName,
+      ohLabel: data.ohLabel.present ? data.ohLabel.value : this.ohLabel,
+      customLabel:
+          data.customLabel.present ? data.customLabel.value : this.customLabel,
+      ohCategory:
+          data.ohCategory.present ? data.ohCategory.value : this.ohCategory,
+      ohTags: data.ohTags.present ? data.ohTags.value : this.ohTags,
+      ohGroups: data.ohGroups.present ? data.ohGroups.value : this.ohGroups,
+      roomId: data.roomId.present ? data.roomId.value : this.roomId,
+      isFavorite:
+          data.isFavorite.present ? data.isFavorite.value : this.isFavorite,
+      icon: data.icon.present ? data.icon.value : this.icon,
+      score: data.score.present ? data.score.value : this.score,
+      newScore: data.newScore.present ? data.newScore.value : this.newScore,
+      complexJson:
+          data.complexJson.present ? data.complexJson.value : this.complexJson,
+    );
+  }
+
   @override
   String toString() {
     return (StringBuffer('Item(')
@@ -1842,6 +1900,25 @@ class ItemState extends DataClass implements Insertable<ItemState> {
         ohUnitSymbol:
             ohUnitSymbol.present ? ohUnitSymbol.value : this.ohUnitSymbol,
       );
+  ItemState copyWithCompanion(ItemStatesTableCompanion data) {
+    return ItemState(
+      ohName: data.ohName.present ? data.ohName.value : this.ohName,
+      state: data.state.present ? data.state.value : this.state,
+      transformedState: data.transformedState.present
+          ? data.transformedState.value
+          : this.transformedState,
+      stateDescription: data.stateDescription.present
+          ? data.stateDescription.value
+          : this.stateDescription,
+      commandDescription: data.commandDescription.present
+          ? data.commandDescription.value
+          : this.commandDescription,
+      ohUnitSymbol: data.ohUnitSymbol.present
+          ? data.ohUnitSymbol.value
+          : this.ohUnitSymbol,
+    );
+  }
+
   @override
   String toString() {
     return (StringBuffer('ItemState(')
@@ -1984,7 +2061,7 @@ class ItemStatesTableCompanion extends UpdateCompanion<ItemState> {
 
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
-  _$AppDatabaseManager get managers => _$AppDatabaseManager(this);
+  $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $InboxTableTable inboxTable = $InboxTableTable(this);
   late final $RoomsTableTable roomsTable = $RoomsTableTable(this);
   late final $ItemsTableTable itemsTable = $ItemsTableTable(this);
@@ -2001,7 +2078,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       [inboxTable, roomsTable, itemsTable, itemStatesTable];
 }
 
-typedef $$InboxTableTableInsertCompanionBuilder = InboxTableCompanion Function({
+typedef $$InboxTableTableCreateCompanionBuilder = InboxTableCompanion Function({
   required OhItemType type,
   required String name,
   required String label,
@@ -2036,8 +2113,7 @@ class $$InboxTableTableTableManager extends RootTableManager<
     InboxEntry,
     $$InboxTableTableFilterComposer,
     $$InboxTableTableOrderingComposer,
-    $$InboxTableTableProcessedTableManager,
-    $$InboxTableTableInsertCompanionBuilder,
+    $$InboxTableTableCreateCompanionBuilder,
     $$InboxTableTableUpdateCompanionBuilder> {
   $$InboxTableTableTableManager(_$AppDatabase db, $InboxTableTable table)
       : super(TableManagerState(
@@ -2047,9 +2123,7 @@ class $$InboxTableTableTableManager extends RootTableManager<
               $$InboxTableTableFilterComposer(ComposerState(db, table)),
           orderingComposer:
               $$InboxTableTableOrderingComposer(ComposerState(db, table)),
-          getChildManagerBuilder: (p) =>
-              $$InboxTableTableProcessedTableManager(p),
-          getUpdateCompanionBuilder: ({
+          updateCompanionCallback: ({
             Value<OhItemType> type = const Value.absent(),
             Value<String> name = const Value.absent(),
             Value<String> label = const Value.absent(),
@@ -2078,7 +2152,7 @@ class $$InboxTableTableTableManager extends RootTableManager<
             commandDescription: commandDescription,
             rowid: rowid,
           ),
-          getInsertCompanionBuilder: ({
+          createCompanionCallback: ({
             required OhItemType type,
             required String name,
             required String label,
@@ -2108,18 +2182,6 @@ class $$InboxTableTableTableManager extends RootTableManager<
             rowid: rowid,
           ),
         ));
-}
-
-class $$InboxTableTableProcessedTableManager extends ProcessedTableManager<
-    _$AppDatabase,
-    $InboxTableTable,
-    InboxEntry,
-    $$InboxTableTableFilterComposer,
-    $$InboxTableTableOrderingComposer,
-    $$InboxTableTableProcessedTableManager,
-    $$InboxTableTableInsertCompanionBuilder,
-    $$InboxTableTableUpdateCompanionBuilder> {
-  $$InboxTableTableProcessedTableManager(super.$state);
 }
 
 class $$InboxTableTableFilterComposer
@@ -2251,7 +2313,7 @@ class $$InboxTableTableOrderingComposer
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
 
-typedef $$RoomsTableTableInsertCompanionBuilder = RoomsTableCompanion Function({
+typedef $$RoomsTableTableCreateCompanionBuilder = RoomsTableCompanion Function({
   Value<int> id,
   required String name,
   Value<String?> description,
@@ -2274,8 +2336,7 @@ class $$RoomsTableTableTableManager extends RootTableManager<
     Room,
     $$RoomsTableTableFilterComposer,
     $$RoomsTableTableOrderingComposer,
-    $$RoomsTableTableProcessedTableManager,
-    $$RoomsTableTableInsertCompanionBuilder,
+    $$RoomsTableTableCreateCompanionBuilder,
     $$RoomsTableTableUpdateCompanionBuilder> {
   $$RoomsTableTableTableManager(_$AppDatabase db, $RoomsTableTable table)
       : super(TableManagerState(
@@ -2285,9 +2346,7 @@ class $$RoomsTableTableTableManager extends RootTableManager<
               $$RoomsTableTableFilterComposer(ComposerState(db, table)),
           orderingComposer:
               $$RoomsTableTableOrderingComposer(ComposerState(db, table)),
-          getChildManagerBuilder: (p) =>
-              $$RoomsTableTableProcessedTableManager(p),
-          getUpdateCompanionBuilder: ({
+          updateCompanionCallback: ({
             Value<int> id = const Value.absent(),
             Value<String> name = const Value.absent(),
             Value<String?> description = const Value.absent(),
@@ -2303,7 +2362,7 @@ class $$RoomsTableTableTableManager extends RootTableManager<
             color: color,
             level: level,
           ),
-          getInsertCompanionBuilder: ({
+          createCompanionCallback: ({
             Value<int> id = const Value.absent(),
             required String name,
             Value<String?> description = const Value.absent(),
@@ -2320,18 +2379,6 @@ class $$RoomsTableTableTableManager extends RootTableManager<
             level: level,
           ),
         ));
-}
-
-class $$RoomsTableTableProcessedTableManager extends ProcessedTableManager<
-    _$AppDatabase,
-    $RoomsTableTable,
-    Room,
-    $$RoomsTableTableFilterComposer,
-    $$RoomsTableTableOrderingComposer,
-    $$RoomsTableTableProcessedTableManager,
-    $$RoomsTableTableInsertCompanionBuilder,
-    $$RoomsTableTableUpdateCompanionBuilder> {
-  $$RoomsTableTableProcessedTableManager(super.$state);
 }
 
 class $$RoomsTableTableFilterComposer
@@ -2404,7 +2451,7 @@ class $$RoomsTableTableOrderingComposer
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
 
-typedef $$ItemsTableTableInsertCompanionBuilder = ItemsTableCompanion Function({
+typedef $$ItemsTableTableCreateCompanionBuilder = ItemsTableCompanion Function({
   required ItemType type,
   required OhItemType ohType,
   required String ohName,
@@ -2445,8 +2492,7 @@ class $$ItemsTableTableTableManager extends RootTableManager<
     Item,
     $$ItemsTableTableFilterComposer,
     $$ItemsTableTableOrderingComposer,
-    $$ItemsTableTableProcessedTableManager,
-    $$ItemsTableTableInsertCompanionBuilder,
+    $$ItemsTableTableCreateCompanionBuilder,
     $$ItemsTableTableUpdateCompanionBuilder> {
   $$ItemsTableTableTableManager(_$AppDatabase db, $ItemsTableTable table)
       : super(TableManagerState(
@@ -2456,9 +2502,7 @@ class $$ItemsTableTableTableManager extends RootTableManager<
               $$ItemsTableTableFilterComposer(ComposerState(db, table)),
           orderingComposer:
               $$ItemsTableTableOrderingComposer(ComposerState(db, table)),
-          getChildManagerBuilder: (p) =>
-              $$ItemsTableTableProcessedTableManager(p),
-          getUpdateCompanionBuilder: ({
+          updateCompanionCallback: ({
             Value<ItemType> type = const Value.absent(),
             Value<OhItemType> ohType = const Value.absent(),
             Value<String> ohName = const Value.absent(),
@@ -2492,7 +2536,7 @@ class $$ItemsTableTableTableManager extends RootTableManager<
             complexJson: complexJson,
             rowid: rowid,
           ),
-          getInsertCompanionBuilder: ({
+          createCompanionCallback: ({
             required ItemType type,
             required OhItemType ohType,
             required String ohName,
@@ -2527,18 +2571,6 @@ class $$ItemsTableTableTableManager extends RootTableManager<
             rowid: rowid,
           ),
         ));
-}
-
-class $$ItemsTableTableProcessedTableManager extends ProcessedTableManager<
-    _$AppDatabase,
-    $ItemsTableTable,
-    Item,
-    $$ItemsTableTableFilterComposer,
-    $$ItemsTableTableOrderingComposer,
-    $$ItemsTableTableProcessedTableManager,
-    $$ItemsTableTableInsertCompanionBuilder,
-    $$ItemsTableTableUpdateCompanionBuilder> {
-  $$ItemsTableTableProcessedTableManager(super.$state);
 }
 
 class $$ItemsTableTableFilterComposer
@@ -2702,7 +2734,7 @@ class $$ItemsTableTableOrderingComposer
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
 
-typedef $$ItemStatesTableTableInsertCompanionBuilder = ItemStatesTableCompanion
+typedef $$ItemStatesTableTableCreateCompanionBuilder = ItemStatesTableCompanion
     Function({
   required String ohName,
   required String state,
@@ -2729,8 +2761,7 @@ class $$ItemStatesTableTableTableManager extends RootTableManager<
     ItemState,
     $$ItemStatesTableTableFilterComposer,
     $$ItemStatesTableTableOrderingComposer,
-    $$ItemStatesTableTableProcessedTableManager,
-    $$ItemStatesTableTableInsertCompanionBuilder,
+    $$ItemStatesTableTableCreateCompanionBuilder,
     $$ItemStatesTableTableUpdateCompanionBuilder> {
   $$ItemStatesTableTableTableManager(
       _$AppDatabase db, $ItemStatesTableTable table)
@@ -2741,9 +2772,7 @@ class $$ItemStatesTableTableTableManager extends RootTableManager<
               $$ItemStatesTableTableFilterComposer(ComposerState(db, table)),
           orderingComposer:
               $$ItemStatesTableTableOrderingComposer(ComposerState(db, table)),
-          getChildManagerBuilder: (p) =>
-              $$ItemStatesTableTableProcessedTableManager(p),
-          getUpdateCompanionBuilder: ({
+          updateCompanionCallback: ({
             Value<String> ohName = const Value.absent(),
             Value<String> state = const Value.absent(),
             Value<String?> transformedState = const Value.absent(),
@@ -2762,7 +2791,7 @@ class $$ItemStatesTableTableTableManager extends RootTableManager<
             ohUnitSymbol: ohUnitSymbol,
             rowid: rowid,
           ),
-          getInsertCompanionBuilder: ({
+          createCompanionCallback: ({
             required String ohName,
             required String state,
             Value<String?> transformedState = const Value.absent(),
@@ -2782,18 +2811,6 @@ class $$ItemStatesTableTableTableManager extends RootTableManager<
             rowid: rowid,
           ),
         ));
-}
-
-class $$ItemStatesTableTableProcessedTableManager extends ProcessedTableManager<
-    _$AppDatabase,
-    $ItemStatesTableTable,
-    ItemState,
-    $$ItemStatesTableTableFilterComposer,
-    $$ItemStatesTableTableOrderingComposer,
-    $$ItemStatesTableTableProcessedTableManager,
-    $$ItemStatesTableTableInsertCompanionBuilder,
-    $$ItemStatesTableTableUpdateCompanionBuilder> {
-  $$ItemStatesTableTableProcessedTableManager(super.$state);
 }
 
 class $$ItemStatesTableTableFilterComposer
@@ -2869,9 +2886,9 @@ class $$ItemStatesTableTableOrderingComposer
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
 
-class _$AppDatabaseManager {
+class $AppDatabaseManager {
   final _$AppDatabase _db;
-  _$AppDatabaseManager(this._db);
+  $AppDatabaseManager(this._db);
   $$InboxTableTableTableManager get inboxTable =>
       $$InboxTableTableTableManager(_db, _db.inboxTable);
   $$RoomsTableTableTableManager get roomsTable =>

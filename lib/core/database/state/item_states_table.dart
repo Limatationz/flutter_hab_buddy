@@ -7,7 +7,7 @@ import '../converter/state_description_converter.dart';
 
 @DataClassName("ItemState")
 class ItemStatesTable extends Table {
-  TextColumn get ohName => text()();
+  TextColumn get ohName => text().customConstraint('REFERENCES items_table(oh_name)')();
 
   TextColumn get state => text()();
 

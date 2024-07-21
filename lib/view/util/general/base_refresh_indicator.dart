@@ -21,7 +21,7 @@ class BaseRefreshIndicator extends StatelessWidget {
                     strokeWidth: 3,
                   )));
         },
-        withRotation: false,
+
         child: child);
   }
 }
