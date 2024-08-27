@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:stacked/stacked.dart';
 import 'package:tuple/tuple.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/database/items/items_table.dart';
@@ -11,6 +12,7 @@ import '../../../util/color.dart';
 import '../items/general/item_widget.dart';
 import '../items/general/item_widget_factory.dart';
 import '../items/sensors/sensor_item_widget.dart';
+import '../rooms/rooms_view.dart';
 
 class FavouriteViewModel extends BaseViewModel {
   final _roomsStore = locator<AppDatabase>().roomsStore;
@@ -92,4 +94,8 @@ class FavouriteViewModel extends BaseViewModel {
                 buildSensorItemWidgets(sensorItems, colorScheme);
             return MapEntry(key, Tuple2(itemWidgets, sensorItemWidgets));
           });
+
+  void navigateToRoom(BuildContext context, Room room) {
+    context.goNamed(RoomsView.routeName, queryParameters: {'roomId': room.id.toString()});
+  }
 }

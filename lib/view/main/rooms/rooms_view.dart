@@ -28,14 +28,20 @@ class RoomsView extends StatelessWidget {
   static const String routePath = '/rooms';
   static const String routeName = 'RoomsView';
 
-  const RoomsView({super.key});
+  final int? initialRoomId;
+
+  const RoomsView({super.key, this.initialRoomId});
 
   // TODO: Pull to refresh
 
   @override
   Widget build(BuildContext context) {
+    print('RoomsView: $initialRoomId');
     return ViewModelBuilder<RoomsViewModel>.reactive(
-        viewModelBuilder: () => RoomsViewModel(),
+        viewModelBuilder: () => RoomsViewModel(initialRoomId),
+        onViewModelReady: (model) {
+          print('onViewModelReady: $initialRoomId');
+        },
         builder: (context, model, _) => Scaffold(
             appBar: AppBar(
               title: const Text('Rooms'),

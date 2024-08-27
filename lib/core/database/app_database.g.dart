@@ -1010,7 +1010,10 @@ class $ItemsTableTable extends ItemsTable
   @override
   late final GeneratedColumn<int> roomId = GeneratedColumn<int>(
       'room_id', aliasedName, false,
-      type: DriftSqlType.int, requiredDuringInsert: true);
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES rooms_table (id)'));
   static const VerificationMeta _isFavoriteMeta =
       const VerificationMeta('isFavorite');
   @override
@@ -1669,7 +1672,10 @@ class $ItemStatesTableTable extends ItemStatesTable
   @override
   late final GeneratedColumn<String> ohName = GeneratedColumn<String>(
       'oh_name', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES items_table (oh_name)'));
   static const VerificationMeta _stateMeta = const VerificationMeta('state');
   @override
   late final GeneratedColumn<String> state = GeneratedColumn<String>(
@@ -2107,83 +2113,6 @@ typedef $$InboxTableTableUpdateCompanionBuilder = InboxTableCompanion Function({
   Value<int> rowid,
 });
 
-class $$InboxTableTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $InboxTableTable,
-    InboxEntry,
-    $$InboxTableTableFilterComposer,
-    $$InboxTableTableOrderingComposer,
-    $$InboxTableTableCreateCompanionBuilder,
-    $$InboxTableTableUpdateCompanionBuilder> {
-  $$InboxTableTableTableManager(_$AppDatabase db, $InboxTableTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          filteringComposer:
-              $$InboxTableTableFilterComposer(ComposerState(db, table)),
-          orderingComposer:
-              $$InboxTableTableOrderingComposer(ComposerState(db, table)),
-          updateCompanionCallback: ({
-            Value<OhItemType> type = const Value.absent(),
-            Value<String> name = const Value.absent(),
-            Value<String> label = const Value.absent(),
-            Value<String?> category = const Value.absent(),
-            Value<List<String>?> tags = const Value.absent(),
-            Value<List<String>?> groups = const Value.absent(),
-            Value<String> state = const Value.absent(),
-            Value<String?> unitSymbol = const Value.absent(),
-            Value<String?> transformedState = const Value.absent(),
-            Value<StateDescription?> stateDescription = const Value.absent(),
-            Value<CommandDescription?> commandDescription =
-                const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              InboxTableCompanion(
-            type: type,
-            name: name,
-            label: label,
-            category: category,
-            tags: tags,
-            groups: groups,
-            state: state,
-            unitSymbol: unitSymbol,
-            transformedState: transformedState,
-            stateDescription: stateDescription,
-            commandDescription: commandDescription,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required OhItemType type,
-            required String name,
-            required String label,
-            Value<String?> category = const Value.absent(),
-            Value<List<String>?> tags = const Value.absent(),
-            Value<List<String>?> groups = const Value.absent(),
-            required String state,
-            Value<String?> unitSymbol = const Value.absent(),
-            Value<String?> transformedState = const Value.absent(),
-            Value<StateDescription?> stateDescription = const Value.absent(),
-            Value<CommandDescription?> commandDescription =
-                const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              InboxTableCompanion.insert(
-            type: type,
-            name: name,
-            label: label,
-            category: category,
-            tags: tags,
-            groups: groups,
-            state: state,
-            unitSymbol: unitSymbol,
-            transformedState: transformedState,
-            stateDescription: stateDescription,
-            commandDescription: commandDescription,
-            rowid: rowid,
-          ),
-        ));
-}
-
 class $$InboxTableTableFilterComposer
     extends FilterComposer<_$AppDatabase, $InboxTableTable> {
   $$InboxTableTableFilterComposer(super.$state);
@@ -2313,6 +2242,101 @@ class $$InboxTableTableOrderingComposer
           ColumnOrderings(column, joinBuilders: joinBuilders));
 }
 
+class $$InboxTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $InboxTableTable,
+    InboxEntry,
+    $$InboxTableTableFilterComposer,
+    $$InboxTableTableOrderingComposer,
+    $$InboxTableTableCreateCompanionBuilder,
+    $$InboxTableTableUpdateCompanionBuilder,
+    (InboxEntry, BaseReferences<_$AppDatabase, $InboxTableTable, InboxEntry>),
+    InboxEntry,
+    PrefetchHooks Function()> {
+  $$InboxTableTableTableManager(_$AppDatabase db, $InboxTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          filteringComposer:
+              $$InboxTableTableFilterComposer(ComposerState(db, table)),
+          orderingComposer:
+              $$InboxTableTableOrderingComposer(ComposerState(db, table)),
+          updateCompanionCallback: ({
+            Value<OhItemType> type = const Value.absent(),
+            Value<String> name = const Value.absent(),
+            Value<String> label = const Value.absent(),
+            Value<String?> category = const Value.absent(),
+            Value<List<String>?> tags = const Value.absent(),
+            Value<List<String>?> groups = const Value.absent(),
+            Value<String> state = const Value.absent(),
+            Value<String?> unitSymbol = const Value.absent(),
+            Value<String?> transformedState = const Value.absent(),
+            Value<StateDescription?> stateDescription = const Value.absent(),
+            Value<CommandDescription?> commandDescription =
+                const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              InboxTableCompanion(
+            type: type,
+            name: name,
+            label: label,
+            category: category,
+            tags: tags,
+            groups: groups,
+            state: state,
+            unitSymbol: unitSymbol,
+            transformedState: transformedState,
+            stateDescription: stateDescription,
+            commandDescription: commandDescription,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required OhItemType type,
+            required String name,
+            required String label,
+            Value<String?> category = const Value.absent(),
+            Value<List<String>?> tags = const Value.absent(),
+            Value<List<String>?> groups = const Value.absent(),
+            required String state,
+            Value<String?> unitSymbol = const Value.absent(),
+            Value<String?> transformedState = const Value.absent(),
+            Value<StateDescription?> stateDescription = const Value.absent(),
+            Value<CommandDescription?> commandDescription =
+                const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              InboxTableCompanion.insert(
+            type: type,
+            name: name,
+            label: label,
+            category: category,
+            tags: tags,
+            groups: groups,
+            state: state,
+            unitSymbol: unitSymbol,
+            transformedState: transformedState,
+            stateDescription: stateDescription,
+            commandDescription: commandDescription,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$InboxTableTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $InboxTableTable,
+    InboxEntry,
+    $$InboxTableTableFilterComposer,
+    $$InboxTableTableOrderingComposer,
+    $$InboxTableTableCreateCompanionBuilder,
+    $$InboxTableTableUpdateCompanionBuilder,
+    (InboxEntry, BaseReferences<_$AppDatabase, $InboxTableTable, InboxEntry>),
+    InboxEntry,
+    PrefetchHooks Function()>;
 typedef $$RoomsTableTableCreateCompanionBuilder = RoomsTableCompanion Function({
   Value<int> id,
   required String name,
@@ -2330,6 +2354,109 @@ typedef $$RoomsTableTableUpdateCompanionBuilder = RoomsTableCompanion Function({
   Value<int?> level,
 });
 
+final class $$RoomsTableTableReferences
+    extends BaseReferences<_$AppDatabase, $RoomsTableTable, Room> {
+  $$RoomsTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$ItemsTableTable, List<Item>> _itemsTableRefsTable(
+          _$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(db.itemsTable,
+          aliasName:
+              $_aliasNameGenerator(db.roomsTable.id, db.itemsTable.roomId));
+
+  $$ItemsTableTableProcessedTableManager get itemsTableRefs {
+    final manager = $$ItemsTableTableTableManager($_db, $_db.itemsTable)
+        .filter((f) => f.roomId.id($_item.id));
+
+    final cache = $_typedResult.readTableOrNull(_itemsTableRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+}
+
+class $$RoomsTableTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $RoomsTableTable> {
+  $$RoomsTableTableFilterComposer(super.$state);
+  ColumnFilters<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get name => $state.composableBuilder(
+      column: $state.table.name,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get description => $state.composableBuilder(
+      column: $state.table.description,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnWithTypeConverterFilters<IconData?, IconData, String> get icon =>
+      $state.composableBuilder(
+          column: $state.table.icon,
+          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
+              column,
+              joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get color => $state.composableBuilder(
+      column: $state.table.color,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<int> get level => $state.composableBuilder(
+      column: $state.table.level,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ComposableFilter itemsTableRefs(
+      ComposableFilter Function($$ItemsTableTableFilterComposer f) f) {
+    final $$ItemsTableTableFilterComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $state.db.itemsTable,
+        getReferencedColumn: (t) => t.roomId,
+        builder: (joinBuilder, parentComposers) =>
+            $$ItemsTableTableFilterComposer(ComposerState($state.db,
+                $state.db.itemsTable, joinBuilder, parentComposers)));
+    return f(composer);
+  }
+}
+
+class $$RoomsTableTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $RoomsTableTable> {
+  $$RoomsTableTableOrderingComposer(super.$state);
+  ColumnOrderings<int> get id => $state.composableBuilder(
+      column: $state.table.id,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get name => $state.composableBuilder(
+      column: $state.table.name,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get description => $state.composableBuilder(
+      column: $state.table.description,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get icon => $state.composableBuilder(
+      column: $state.table.icon,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get color => $state.composableBuilder(
+      column: $state.table.color,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<int> get level => $state.composableBuilder(
+      column: $state.table.level,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+}
+
 class $$RoomsTableTableTableManager extends RootTableManager<
     _$AppDatabase,
     $RoomsTableTable,
@@ -2337,7 +2464,10 @@ class $$RoomsTableTableTableManager extends RootTableManager<
     $$RoomsTableTableFilterComposer,
     $$RoomsTableTableOrderingComposer,
     $$RoomsTableTableCreateCompanionBuilder,
-    $$RoomsTableTableUpdateCompanionBuilder> {
+    $$RoomsTableTableUpdateCompanionBuilder,
+    (Room, $$RoomsTableTableReferences),
+    Room,
+    PrefetchHooks Function({bool itemsTableRefs})> {
   $$RoomsTableTableTableManager(_$AppDatabase db, $RoomsTableTable table)
       : super(TableManagerState(
           db: db,
@@ -2378,79 +2508,49 @@ class $$RoomsTableTableTableManager extends RootTableManager<
             color: color,
             level: level,
           ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$RoomsTableTableReferences(db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: ({itemsTableRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [if (itemsTableRefs) db.itemsTable],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (itemsTableRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable: $$RoomsTableTableReferences
+                            ._itemsTableRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$RoomsTableTableReferences(db, table, p0)
+                                .itemsTableRefs,
+                        referencedItemsForCurrentItem: (item,
+                                referencedItems) =>
+                            referencedItems.where((e) => e.roomId == item.id),
+                        typedResults: items)
+                ];
+              },
+            );
+          },
         ));
 }
 
-class $$RoomsTableTableFilterComposer
-    extends FilterComposer<_$AppDatabase, $RoomsTableTable> {
-  $$RoomsTableTableFilterComposer(super.$state);
-  ColumnFilters<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get name => $state.composableBuilder(
-      column: $state.table.name,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get description => $state.composableBuilder(
-      column: $state.table.description,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnWithTypeConverterFilters<IconData?, IconData, String> get icon =>
-      $state.composableBuilder(
-          column: $state.table.icon,
-          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get color => $state.composableBuilder(
-      column: $state.table.color,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<int> get level => $state.composableBuilder(
-      column: $state.table.level,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-}
-
-class $$RoomsTableTableOrderingComposer
-    extends OrderingComposer<_$AppDatabase, $RoomsTableTable> {
-  $$RoomsTableTableOrderingComposer(super.$state);
-  ColumnOrderings<int> get id => $state.composableBuilder(
-      column: $state.table.id,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get name => $state.composableBuilder(
-      column: $state.table.name,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get description => $state.composableBuilder(
-      column: $state.table.description,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get icon => $state.composableBuilder(
-      column: $state.table.icon,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get color => $state.composableBuilder(
-      column: $state.table.color,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<int> get level => $state.composableBuilder(
-      column: $state.table.level,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
+typedef $$RoomsTableTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $RoomsTableTable,
+    Room,
+    $$RoomsTableTableFilterComposer,
+    $$RoomsTableTableOrderingComposer,
+    $$RoomsTableTableCreateCompanionBuilder,
+    $$RoomsTableTableUpdateCompanionBuilder,
+    (Room, $$RoomsTableTableReferences),
+    Room,
+    PrefetchHooks Function({bool itemsTableRefs})>;
 typedef $$ItemsTableTableCreateCompanionBuilder = ItemsTableCompanion Function({
   required ItemType type,
   required OhItemType ohType,
@@ -2486,6 +2586,231 @@ typedef $$ItemsTableTableUpdateCompanionBuilder = ItemsTableCompanion Function({
   Value<int> rowid,
 });
 
+final class $$ItemsTableTableReferences
+    extends BaseReferences<_$AppDatabase, $ItemsTableTable, Item> {
+  $$ItemsTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $RoomsTableTable _roomIdTable(_$AppDatabase db) =>
+      db.roomsTable.createAlias(
+          $_aliasNameGenerator(db.itemsTable.roomId, db.roomsTable.id));
+
+  $$RoomsTableTableProcessedTableManager? get roomId {
+    if ($_item.roomId == null) return null;
+    final manager = $$RoomsTableTableTableManager($_db, $_db.roomsTable)
+        .filter((f) => f.id($_item.roomId!));
+    final item = $_typedResult.readTableOrNull(_roomIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+
+  static MultiTypedResultKey<$ItemStatesTableTable, List<ItemState>>
+      _itemStatesTableRefsTable(_$AppDatabase db) =>
+          MultiTypedResultKey.fromTable(db.itemStatesTable,
+              aliasName: $_aliasNameGenerator(
+                  db.itemsTable.ohName, db.itemStatesTable.ohName));
+
+  $$ItemStatesTableTableProcessedTableManager get itemStatesTableRefs {
+    final manager =
+        $$ItemStatesTableTableTableManager($_db, $_db.itemStatesTable)
+            .filter((f) => f.ohName.ohName($_item.ohName));
+
+    final cache =
+        $_typedResult.readTableOrNull(_itemStatesTableRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+}
+
+class $$ItemsTableTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $ItemsTableTable> {
+  $$ItemsTableTableFilterComposer(super.$state);
+  ColumnWithTypeConverterFilters<ItemType, ItemType, String> get type =>
+      $state.composableBuilder(
+          column: $state.table.type,
+          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
+              column,
+              joinBuilders: joinBuilders));
+
+  ColumnWithTypeConverterFilters<OhItemType, OhItemType, String> get ohType =>
+      $state.composableBuilder(
+          column: $state.table.ohType,
+          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
+              column,
+              joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get ohName => $state.composableBuilder(
+      column: $state.table.ohName,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get ohLabel => $state.composableBuilder(
+      column: $state.table.ohLabel,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get customLabel => $state.composableBuilder(
+      column: $state.table.customLabel,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get ohCategory => $state.composableBuilder(
+      column: $state.table.ohCategory,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnWithTypeConverterFilters<List<String>?, List<String>, String>
+      get ohTags => $state.composableBuilder(
+          column: $state.table.ohTags,
+          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
+              column,
+              joinBuilders: joinBuilders));
+
+  ColumnWithTypeConverterFilters<List<String>?, List<String>, String>
+      get ohGroups => $state.composableBuilder(
+          column: $state.table.ohGroups,
+          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
+              column,
+              joinBuilders: joinBuilders));
+
+  ColumnFilters<bool> get isFavorite => $state.composableBuilder(
+      column: $state.table.isFavorite,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnWithTypeConverterFilters<IconData?, IconData, String> get icon =>
+      $state.composableBuilder(
+          column: $state.table.icon,
+          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
+              column,
+              joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get score => $state.composableBuilder(
+      column: $state.table.score,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<double> get newScore => $state.composableBuilder(
+      column: $state.table.newScore,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnWithTypeConverterFilters<Map<String, dynamic>?, Map<String, dynamic>,
+          String>
+      get complexJson => $state.composableBuilder(
+          column: $state.table.complexJson,
+          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
+              column,
+              joinBuilders: joinBuilders));
+
+  $$RoomsTableTableFilterComposer get roomId {
+    final $$RoomsTableTableFilterComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.roomId,
+        referencedTable: $state.db.roomsTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder, parentComposers) =>
+            $$RoomsTableTableFilterComposer(ComposerState($state.db,
+                $state.db.roomsTable, joinBuilder, parentComposers)));
+    return composer;
+  }
+
+  ComposableFilter itemStatesTableRefs(
+      ComposableFilter Function($$ItemStatesTableTableFilterComposer f) f) {
+    final $$ItemStatesTableTableFilterComposer composer =
+        $state.composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.ohName,
+            referencedTable: $state.db.itemStatesTable,
+            getReferencedColumn: (t) => t.ohName,
+            builder: (joinBuilder, parentComposers) =>
+                $$ItemStatesTableTableFilterComposer(ComposerState($state.db,
+                    $state.db.itemStatesTable, joinBuilder, parentComposers)));
+    return f(composer);
+  }
+}
+
+class $$ItemsTableTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $ItemsTableTable> {
+  $$ItemsTableTableOrderingComposer(super.$state);
+  ColumnOrderings<String> get type => $state.composableBuilder(
+      column: $state.table.type,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get ohType => $state.composableBuilder(
+      column: $state.table.ohType,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get ohName => $state.composableBuilder(
+      column: $state.table.ohName,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get ohLabel => $state.composableBuilder(
+      column: $state.table.ohLabel,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get customLabel => $state.composableBuilder(
+      column: $state.table.customLabel,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get ohCategory => $state.composableBuilder(
+      column: $state.table.ohCategory,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get ohTags => $state.composableBuilder(
+      column: $state.table.ohTags,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get ohGroups => $state.composableBuilder(
+      column: $state.table.ohGroups,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<bool> get isFavorite => $state.composableBuilder(
+      column: $state.table.isFavorite,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get icon => $state.composableBuilder(
+      column: $state.table.icon,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get score => $state.composableBuilder(
+      column: $state.table.score,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<double> get newScore => $state.composableBuilder(
+      column: $state.table.newScore,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get complexJson => $state.composableBuilder(
+      column: $state.table.complexJson,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  $$RoomsTableTableOrderingComposer get roomId {
+    final $$RoomsTableTableOrderingComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.roomId,
+        referencedTable: $state.db.roomsTable,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder, parentComposers) =>
+            $$RoomsTableTableOrderingComposer(ComposerState($state.db,
+                $state.db.roomsTable, joinBuilder, parentComposers)));
+    return composer;
+  }
+}
+
 class $$ItemsTableTableTableManager extends RootTableManager<
     _$AppDatabase,
     $ItemsTableTable,
@@ -2493,7 +2818,10 @@ class $$ItemsTableTableTableManager extends RootTableManager<
     $$ItemsTableTableFilterComposer,
     $$ItemsTableTableOrderingComposer,
     $$ItemsTableTableCreateCompanionBuilder,
-    $$ItemsTableTableUpdateCompanionBuilder> {
+    $$ItemsTableTableUpdateCompanionBuilder,
+    (Item, $$ItemsTableTableReferences),
+    Item,
+    PrefetchHooks Function({bool roomId, bool itemStatesTableRefs})> {
   $$ItemsTableTableTableManager(_$AppDatabase db, $ItemsTableTable table)
       : super(TableManagerState(
           db: db,
@@ -2570,170 +2898,76 @@ class $$ItemsTableTableTableManager extends RootTableManager<
             complexJson: complexJson,
             rowid: rowid,
           ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$ItemsTableTableReferences(db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: (
+              {roomId = false, itemStatesTableRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (itemStatesTableRefs) db.itemStatesTable
+              ],
+              addJoins: <
+                  T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (roomId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.roomId,
+                    referencedTable:
+                        $$ItemsTableTableReferences._roomIdTable(db),
+                    referencedColumn:
+                        $$ItemsTableTableReferences._roomIdTable(db).id,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (itemStatesTableRefs)
+                    await $_getPrefetchedData(
+                        currentTable: table,
+                        referencedTable: $$ItemsTableTableReferences
+                            ._itemStatesTableRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$ItemsTableTableReferences(db, table, p0)
+                                .itemStatesTableRefs,
+                        referencedItemsForCurrentItem:
+                            (item, referencedItems) => referencedItems
+                                .where((e) => e.ohName == item.ohName),
+                        typedResults: items)
+                ];
+              },
+            );
+          },
         ));
 }
 
-class $$ItemsTableTableFilterComposer
-    extends FilterComposer<_$AppDatabase, $ItemsTableTable> {
-  $$ItemsTableTableFilterComposer(super.$state);
-  ColumnWithTypeConverterFilters<ItemType, ItemType, String> get type =>
-      $state.composableBuilder(
-          column: $state.table.type,
-          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
-
-  ColumnWithTypeConverterFilters<OhItemType, OhItemType, String> get ohType =>
-      $state.composableBuilder(
-          column: $state.table.ohType,
-          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get ohName => $state.composableBuilder(
-      column: $state.table.ohName,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get ohLabel => $state.composableBuilder(
-      column: $state.table.ohLabel,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get customLabel => $state.composableBuilder(
-      column: $state.table.customLabel,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get ohCategory => $state.composableBuilder(
-      column: $state.table.ohCategory,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnWithTypeConverterFilters<List<String>?, List<String>, String>
-      get ohTags => $state.composableBuilder(
-          column: $state.table.ohTags,
-          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
-
-  ColumnWithTypeConverterFilters<List<String>?, List<String>, String>
-      get ohGroups => $state.composableBuilder(
-          column: $state.table.ohGroups,
-          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
-
-  ColumnFilters<int> get roomId => $state.composableBuilder(
-      column: $state.table.roomId,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<bool> get isFavorite => $state.composableBuilder(
-      column: $state.table.isFavorite,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnWithTypeConverterFilters<IconData?, IconData, String> get icon =>
-      $state.composableBuilder(
-          column: $state.table.icon,
-          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get score => $state.composableBuilder(
-      column: $state.table.score,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<double> get newScore => $state.composableBuilder(
-      column: $state.table.newScore,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnWithTypeConverterFilters<Map<String, dynamic>?, Map<String, dynamic>,
-          String>
-      get complexJson => $state.composableBuilder(
-          column: $state.table.complexJson,
-          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
-}
-
-class $$ItemsTableTableOrderingComposer
-    extends OrderingComposer<_$AppDatabase, $ItemsTableTable> {
-  $$ItemsTableTableOrderingComposer(super.$state);
-  ColumnOrderings<String> get type => $state.composableBuilder(
-      column: $state.table.type,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get ohType => $state.composableBuilder(
-      column: $state.table.ohType,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get ohName => $state.composableBuilder(
-      column: $state.table.ohName,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get ohLabel => $state.composableBuilder(
-      column: $state.table.ohLabel,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get customLabel => $state.composableBuilder(
-      column: $state.table.customLabel,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get ohCategory => $state.composableBuilder(
-      column: $state.table.ohCategory,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get ohTags => $state.composableBuilder(
-      column: $state.table.ohTags,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get ohGroups => $state.composableBuilder(
-      column: $state.table.ohGroups,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<int> get roomId => $state.composableBuilder(
-      column: $state.table.roomId,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<bool> get isFavorite => $state.composableBuilder(
-      column: $state.table.isFavorite,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get icon => $state.composableBuilder(
-      column: $state.table.icon,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get score => $state.composableBuilder(
-      column: $state.table.score,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<double> get newScore => $state.composableBuilder(
-      column: $state.table.newScore,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get complexJson => $state.composableBuilder(
-      column: $state.table.complexJson,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-}
-
+typedef $$ItemsTableTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $ItemsTableTable,
+    Item,
+    $$ItemsTableTableFilterComposer,
+    $$ItemsTableTableOrderingComposer,
+    $$ItemsTableTableCreateCompanionBuilder,
+    $$ItemsTableTableUpdateCompanionBuilder,
+    (Item, $$ItemsTableTableReferences),
+    Item,
+    PrefetchHooks Function({bool roomId, bool itemStatesTableRefs})>;
 typedef $$ItemStatesTableTableCreateCompanionBuilder = ItemStatesTableCompanion
     Function({
   required String ohName,
@@ -2755,6 +2989,113 @@ typedef $$ItemStatesTableTableUpdateCompanionBuilder = ItemStatesTableCompanion
   Value<int> rowid,
 });
 
+final class $$ItemStatesTableTableReferences
+    extends BaseReferences<_$AppDatabase, $ItemStatesTableTable, ItemState> {
+  $$ItemStatesTableTableReferences(
+      super.$_db, super.$_table, super.$_typedResult);
+
+  static $ItemsTableTable _ohNameTable(_$AppDatabase db) =>
+      db.itemsTable.createAlias($_aliasNameGenerator(
+          db.itemStatesTable.ohName, db.itemsTable.ohName));
+
+  $$ItemsTableTableProcessedTableManager? get ohName {
+    if ($_item.ohName == null) return null;
+    final manager = $$ItemsTableTableTableManager($_db, $_db.itemsTable)
+        .filter((f) => f.ohName($_item.ohName!));
+    final item = $_typedResult.readTableOrNull(_ohNameTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+}
+
+class $$ItemStatesTableTableFilterComposer
+    extends FilterComposer<_$AppDatabase, $ItemStatesTableTable> {
+  $$ItemStatesTableTableFilterComposer(super.$state);
+  ColumnFilters<String> get state => $state.composableBuilder(
+      column: $state.table.state,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get transformedState => $state.composableBuilder(
+      column: $state.table.transformedState,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  ColumnWithTypeConverterFilters<StateDescription?, StateDescription, String>
+      get stateDescription => $state.composableBuilder(
+          column: $state.table.stateDescription,
+          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
+              column,
+              joinBuilders: joinBuilders));
+
+  ColumnWithTypeConverterFilters<CommandDescription?, CommandDescription,
+          String>
+      get commandDescription => $state.composableBuilder(
+          column: $state.table.commandDescription,
+          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
+              column,
+              joinBuilders: joinBuilders));
+
+  ColumnFilters<String> get ohUnitSymbol => $state.composableBuilder(
+      column: $state.table.ohUnitSymbol,
+      builder: (column, joinBuilders) =>
+          ColumnFilters(column, joinBuilders: joinBuilders));
+
+  $$ItemsTableTableFilterComposer get ohName {
+    final $$ItemsTableTableFilterComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.ohName,
+        referencedTable: $state.db.itemsTable,
+        getReferencedColumn: (t) => t.ohName,
+        builder: (joinBuilder, parentComposers) =>
+            $$ItemsTableTableFilterComposer(ComposerState($state.db,
+                $state.db.itemsTable, joinBuilder, parentComposers)));
+    return composer;
+  }
+}
+
+class $$ItemStatesTableTableOrderingComposer
+    extends OrderingComposer<_$AppDatabase, $ItemStatesTableTable> {
+  $$ItemStatesTableTableOrderingComposer(super.$state);
+  ColumnOrderings<String> get state => $state.composableBuilder(
+      column: $state.table.state,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get transformedState => $state.composableBuilder(
+      column: $state.table.transformedState,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get stateDescription => $state.composableBuilder(
+      column: $state.table.stateDescription,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get commandDescription => $state.composableBuilder(
+      column: $state.table.commandDescription,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  ColumnOrderings<String> get ohUnitSymbol => $state.composableBuilder(
+      column: $state.table.ohUnitSymbol,
+      builder: (column, joinBuilders) =>
+          ColumnOrderings(column, joinBuilders: joinBuilders));
+
+  $$ItemsTableTableOrderingComposer get ohName {
+    final $$ItemsTableTableOrderingComposer composer = $state.composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.ohName,
+        referencedTable: $state.db.itemsTable,
+        getReferencedColumn: (t) => t.ohName,
+        builder: (joinBuilder, parentComposers) =>
+            $$ItemsTableTableOrderingComposer(ComposerState($state.db,
+                $state.db.itemsTable, joinBuilder, parentComposers)));
+    return composer;
+  }
+}
+
 class $$ItemStatesTableTableTableManager extends RootTableManager<
     _$AppDatabase,
     $ItemStatesTableTable,
@@ -2762,7 +3103,10 @@ class $$ItemStatesTableTableTableManager extends RootTableManager<
     $$ItemStatesTableTableFilterComposer,
     $$ItemStatesTableTableOrderingComposer,
     $$ItemStatesTableTableCreateCompanionBuilder,
-    $$ItemStatesTableTableUpdateCompanionBuilder> {
+    $$ItemStatesTableTableUpdateCompanionBuilder,
+    (ItemState, $$ItemStatesTableTableReferences),
+    ItemState,
+    PrefetchHooks Function({bool ohName})> {
   $$ItemStatesTableTableTableManager(
       _$AppDatabase db, $ItemStatesTableTable table)
       : super(TableManagerState(
@@ -2810,81 +3154,61 @@ class $$ItemStatesTableTableTableManager extends RootTableManager<
             ohUnitSymbol: ohUnitSymbol,
             rowid: rowid,
           ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$ItemStatesTableTableReferences(db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: ({ohName = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins: <
+                  T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (ohName) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.ohName,
+                    referencedTable:
+                        $$ItemStatesTableTableReferences._ohNameTable(db),
+                    referencedColumn: $$ItemStatesTableTableReferences
+                        ._ohNameTable(db)
+                        .ohName,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
         ));
 }
 
-class $$ItemStatesTableTableFilterComposer
-    extends FilterComposer<_$AppDatabase, $ItemStatesTableTable> {
-  $$ItemStatesTableTableFilterComposer(super.$state);
-  ColumnFilters<String> get ohName => $state.composableBuilder(
-      column: $state.table.ohName,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get state => $state.composableBuilder(
-      column: $state.table.state,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get transformedState => $state.composableBuilder(
-      column: $state.table.transformedState,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-
-  ColumnWithTypeConverterFilters<StateDescription?, StateDescription, String>
-      get stateDescription => $state.composableBuilder(
-          column: $state.table.stateDescription,
-          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
-
-  ColumnWithTypeConverterFilters<CommandDescription?, CommandDescription,
-          String>
-      get commandDescription => $state.composableBuilder(
-          column: $state.table.commandDescription,
-          builder: (column, joinBuilders) => ColumnWithTypeConverterFilters(
-              column,
-              joinBuilders: joinBuilders));
-
-  ColumnFilters<String> get ohUnitSymbol => $state.composableBuilder(
-      column: $state.table.ohUnitSymbol,
-      builder: (column, joinBuilders) =>
-          ColumnFilters(column, joinBuilders: joinBuilders));
-}
-
-class $$ItemStatesTableTableOrderingComposer
-    extends OrderingComposer<_$AppDatabase, $ItemStatesTableTable> {
-  $$ItemStatesTableTableOrderingComposer(super.$state);
-  ColumnOrderings<String> get ohName => $state.composableBuilder(
-      column: $state.table.ohName,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get state => $state.composableBuilder(
-      column: $state.table.state,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get transformedState => $state.composableBuilder(
-      column: $state.table.transformedState,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get stateDescription => $state.composableBuilder(
-      column: $state.table.stateDescription,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get commandDescription => $state.composableBuilder(
-      column: $state.table.commandDescription,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-
-  ColumnOrderings<String> get ohUnitSymbol => $state.composableBuilder(
-      column: $state.table.ohUnitSymbol,
-      builder: (column, joinBuilders) =>
-          ColumnOrderings(column, joinBuilders: joinBuilders));
-}
+typedef $$ItemStatesTableTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $ItemStatesTableTable,
+    ItemState,
+    $$ItemStatesTableTableFilterComposer,
+    $$ItemStatesTableTableOrderingComposer,
+    $$ItemStatesTableTableCreateCompanionBuilder,
+    $$ItemStatesTableTableUpdateCompanionBuilder,
+    (ItemState, $$ItemStatesTableTableReferences),
+    ItemState,
+    PrefetchHooks Function({bool ohName})>;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;

@@ -4,10 +4,11 @@ import 'package:sprintf/sprintf.dart';
 import '../app_database.dart';
 import '../converter/command_description_converter.dart';
 import '../converter/state_description_converter.dart';
+import '../items/items_table.dart';
 
 @DataClassName("ItemState")
 class ItemStatesTable extends Table {
-  TextColumn get ohName => text().customConstraint('REFERENCES items_table(oh_name)')();
+  TextColumn get ohName => text().references(ItemsTable, #ohName)();
 
   TextColumn get state => text()();
 
@@ -23,11 +24,6 @@ class ItemStatesTable extends Table {
 
   @override
   Set<Column> get primaryKey => {ohName};
-
-  @override
-  List<String> get customConstraints => [
-        'FOREIGN KEY(oh_name) REFERENCES items_table(oh_name)',
-      ];
 }
 
 extension FormattedState on ItemState {

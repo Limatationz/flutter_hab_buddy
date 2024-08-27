@@ -28,7 +28,22 @@ class RoomsViewModel extends BaseViewModel {
   int currentPage = 0;
   Key pageViewKey = UniqueKey();
 
-  RoomsViewModel();
+  final int? initialRoomId;
+
+  RoomsViewModel(this.initialRoomId) {
+    print('RoomsViewModel: $initialRoomId');
+    _roomsStore.all().get().then((rooms) {
+      if (rooms.isEmpty) {
+        return;
+      }
+      if (initialRoomId != null) {
+        final index = rooms.indexWhere((element) => element.id == initialRoomId);
+        if (index != -1) {
+          currentPage = index;
+        }
+      }
+    });
+  }
 
   void onRoomChange(int index, {bool animate = false}) {
     print('onRoomChange: $index, animate: $animate');

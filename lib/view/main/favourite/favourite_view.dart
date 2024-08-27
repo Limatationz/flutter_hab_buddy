@@ -110,6 +110,9 @@ class FavouriteView extends StatelessWidget {
                                             backgroundColor: roomColorScheme
                                                 .primary
                                                 .withOpacity(0.3),
+                                            onTap: () {
+                                              model.navigateToRoom(context, room);
+                                            },
                                             child: Column(
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,

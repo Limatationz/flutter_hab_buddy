@@ -43,8 +43,10 @@ final router = GoRouter(
                 GoRoute(
                   path: RoomsView.routePath,
                   name: RoomsView.routeName,
-                  pageBuilder: (context, state) =>
-                      const NoTransitionPage(child: RoomsView()),
+                  pageBuilder: (context, state) {
+                    final roomId = int.tryParse(state.uri.queryParameters['roomId'] ?? '');
+                    return NoTransitionPage(child: RoomsView(initialRoomId: roomId));
+                  },
                   onExit: onExitMainView,
                   redirect: onEntryMainView,
                 ),

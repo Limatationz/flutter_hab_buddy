@@ -7,6 +7,7 @@ import '../converter/icon_data_converter.dart';
 import '../converter/json_converter.dart';
 import '../converter/state_description_converter.dart';
 import '../converter/string_list_converter.dart';
+import '../rooms/rooms_table.dart';
 import 'item_type.dart';
 import 'oh_item_type.dart';
 
@@ -29,7 +30,7 @@ class ItemsTable extends Table {
   TextColumn get ohGroups =>
       text().map(const StringListConverter()).nullable()();
 
-  IntColumn get roomId => integer()();
+  IntColumn get roomId => integer().references(RoomsTable, #id)();
 
   BoolColumn get isFavorite => boolean().withDefault(const Constant(false))();
 
@@ -43,11 +44,6 @@ class ItemsTable extends Table {
 
   @override
   Set<Column> get primaryKey => {ohName};
-
-  @override
-  List<String> get customConstraints => [
-        'FOREIGN KEY(room_id) REFERENCES rooms_table(id)',
-      ];
 }
 
 class ItemWithRoom {
