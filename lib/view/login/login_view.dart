@@ -45,7 +45,7 @@ class _LoginViewState extends State<LoginView> {
                                 constraints: const BoxConstraints(
                                     maxWidth: 200, maxHeight: 200),
                                 child: Image.asset(
-                                    "res/images/logo_smarthome.png"))),
+                                    "res/images/logo.png"))),
                         const Gap(42),
                         Align(
                           alignment: Alignment.centerLeft,
