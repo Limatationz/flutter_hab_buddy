@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_iconpicker/Models/configuration.dart';
 import 'package:flutter_iconpicker/flutter_iconpicker.dart';
 
 import '../../../generated/l10n.dart';
 import '../../../util/icons/icons.dart';
 
 class BaseFormIconPicker extends StatefulWidget {
-  final Map<String, IconData> iconPack;
+  final Map<String, IconPickerIcon> iconPack;
   final Function(IconData?) onChange;
   final IconData? selectedIcon;
   final String? helperText;
@@ -17,7 +18,8 @@ class BaseFormIconPicker extends StatefulWidget {
       required this.iconPack,
       required this.onChange,
       required this.selectedIcon,
-      this.helperText, this.required = true});
+      this.helperText,
+      this.required = true});
 
   @override
   State<BaseFormIconPicker> createState() => _BaseFormIconPickerState();
@@ -32,7 +34,8 @@ class _BaseFormIconPickerState extends State<BaseFormIconPicker> {
       name: "icon",
       controller: _controller,
       decoration: InputDecoration(
-          labelText: widget.required ? "${S.of(context).icon}*" : S.of(context).icon,
+          labelText:
+              widget.required ? "${S.of(context).icon}*" : S.of(context).icon,
           border: const OutlineInputBorder(),
           helperText: widget.helperText,
           helperMaxLines: 3,
@@ -48,9 +51,7 @@ class _BaseFormIconPickerState extends State<BaseFormIconPicker> {
                     _controller.clear();
                   },
                   child: Icon(LineIcons.close,
-                      size: 16,
-                      color:
-                          Theme.of(context).colorScheme.primary),
+                      size: 16, color: Theme.of(context).colorScheme.primary),
                 )
               : Icon(LineIcons.chevron_right,
                   color: Theme.of(context).colorScheme.primary)),
@@ -62,25 +63,27 @@ class _BaseFormIconPickerState extends State<BaseFormIconPicker> {
   void _pickIcon(
     BuildContext context,
   ) async {
-    IconData? icon = await showIconPicker(
+    IconPickerIcon? icon = await showIconPicker(
       context,
-      customIconPack: widget.iconPack,
-      iconPackModes: [IconPack.custom],
-      backgroundColor: Theme.of(context).dialogBackgroundColor,
-      searchClearIcon: const Icon(LineIcons.close),
-      iconColor: Theme.of(context).colorScheme.onSurface,
-      iconPickerShape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-      searchHintText: S.current.search,
-      searchIcon: const Icon(LineIcons.search),
-      noResultsText: S.current.iconPickerNoResultsText,
-      title: Text(S.current.iconPickerTitle),
-      closeChild: Text(
-        S.current.close,
+      configuration: SinglePickerConfiguration(
+        customIconPack: widget.iconPack,
+        iconPackModes: [IconPack.custom],
+        backgroundColor: Theme.of(context).dialogBackgroundColor,
+        searchClearIcon: const Icon(LineIcons.close),
+        iconColor: Theme.of(context).colorScheme.onSurface,
+        iconPickerShape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+        searchHintText: S.current.search,
+        searchIcon: const Icon(LineIcons.search),
+        noResultsText: S.current.iconPickerNoResultsText,
+        title: Text(S.current.iconPickerTitle),
+        closeChild: Text(
+          S.current.close,
+        ),
       ),
     );
     if (icon != null) {
-      widget.onChange(icon);
+      widget.onChange(icon.data);
       _controller.text = "  ";
     }
   }

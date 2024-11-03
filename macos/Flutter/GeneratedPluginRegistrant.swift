@@ -17,7 +17,7 @@ import geolocator_apple
 import package_info_plus
 import path_provider_foundation
 import shared_preferences_foundation
-import sqflite
+import sqflite_darwin
 import sqlite3_flutter_libs
 import url_launcher_macos
 import wakelock_plus
