@@ -13,4 +13,5 @@ class RoomsTable extends Table {
   TextColumn get icon => text().map(const IconDataConverter()).nullable()();
   TextColumn get color => text().nullable()();
   IntColumn get level => integer().nullable()();
+  IntColumn get sortKey => integer()();
 }

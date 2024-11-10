@@ -25,6 +25,7 @@ class RoomAddViewModel extends BaseViewModel {
       final level = data["level"] as String?;
       final levelInt = level != null ? int.parse(level) : null;
       final color = data["color"] as Color?;
+      final sortKey = await _roomsStore.getLastSortKey();
 
       final room = RoomsTableCompanion.insert(
         name: name,
@@ -33,6 +34,7 @@ class RoomAddViewModel extends BaseViewModel {
         level: levelInt != null ? Value(levelInt) : const Value.absent(),
         color: color != null ? Value(color.toHex()) : const Value.absent(),
         icon: roomIcon != null ? Value(roomIcon!) : const Value.absent(),
+        sortKey: sortKey + 1,
       );
       final id = await _roomsStore.insertOrUpdateSingleWithId(room);
       return id;

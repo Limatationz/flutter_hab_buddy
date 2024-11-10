@@ -58,8 +58,11 @@ class SettingsView extends StatelessWidget {
                     ),
                     tiles: [
                       SettingsTile(
-                        title: Text(S.of(context).settings_connection_status_title),
-                        description: Text(S.of(context).settings_connection_status_description),
+                        title: Text(
+                            S.of(context).settings_connection_status_title),
+                        description: Text(S
+                            .of(context)
+                            .settings_connection_status_description),
                         descriptionInlineIos: true,
                         trailing: StreamBuilder<bool>(
                           stream: model.connectionStatus,
@@ -80,8 +83,11 @@ class SettingsView extends StatelessWidget {
                         ),
                       ),
                       SettingsTile(
-                        title: Text(S.of(context).settings_connection_start_title),
-                        description: Text(S.of(context).settings_connection_start_description),
+                        title:
+                            Text(S.of(context).settings_connection_start_title),
+                        description: Text(S
+                            .of(context)
+                            .settings_connection_start_description),
                         descriptionInlineIos: true,
                         trailing: StreamBuilder<DateTime?>(
                           stream: model.lastConnectionStart,
@@ -97,8 +103,11 @@ class SettingsView extends StatelessWidget {
                         ),
                       ),
                       SettingsTile(
-                        title: Text(S.of(context).settings_connection_update_title),
-                        description: Text(S.of(context).settings_connection_update_description),
+                        title: Text(
+                            S.of(context).settings_connection_update_title),
+                        description: Text(S
+                            .of(context)
+                            .settings_connection_update_description),
                         descriptionInlineIos: true,
                         trailing: StreamBuilder<DateTime?>(
                           stream: model.lastUpdate,
@@ -147,7 +156,8 @@ class SettingsView extends StatelessWidget {
                       ),
                       SettingsTile.switchTile(
                         title: Text(S.of(context).settings_wakelock),
-                        description: Text(S.of(context).settings_wakelock_description),
+                        description:
+                            Text(S.of(context).settings_wakelock_description),
                         descriptionInlineIos: true,
                         initialValue: model.wakelockService.autoEnabled,
                         onToggle: model.setWakeLockAutoEnabled,
@@ -164,11 +174,15 @@ class SettingsView extends StatelessWidget {
                       tiles: [
                         SettingsTile(
                           title: const Text("Clear Database"),
-                          onPressed: (_) => model.clearDatabase,
+                          onPressed: (_) {
+                            model.clearDatabase();
+                          },
                         ),
                         SettingsTile(
                             title: const Text("Insert Dummy Data"),
-                            onPressed: (_) => model.insertDummyData),
+                            onPressed: (_) {
+                              model.insertDummyData();
+                            }),
                       ]),
               ],
             ),

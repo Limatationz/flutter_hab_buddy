@@ -23,6 +23,7 @@ import '../items/general/item_widget.dart';
 import '../items/sensors/sensor_item_widget.dart';
 import 'add/room_add_sheet.dart';
 import 'rooms_viewmodel.dart';
+import 'sort/rooms_sort_sheet.dart';
 
 class RoomsView extends StatelessWidget {
   static const String routePath = '/rooms';
@@ -46,6 +47,14 @@ class RoomsView extends StatelessWidget {
             appBar: AppBar(
               title: const Text('Rooms'),
               actions: [
+                IconButton(
+                    onPressed: () {
+                      showRoomsSortSheet(
+                        context,
+                      );
+                    },
+                    tooltip: 'Sort rooms',
+                    icon: Icon(LineIconsV5.variantfreesort_high_to_low)),
                 WakelockIndicator(),
                 InboxActionButton(countInbox: model.countInboxStream),
               ],
@@ -79,7 +88,8 @@ class RoomsView extends StatelessWidget {
                                   selectedRoom,
                                   selectedRoomColorScheme,
                                   rooms,
-                                  (index) => model.onRoomChange(index, animate: true)),
+                                  (index) =>
+                                      model.onRoomChange(index, animate: true)),
                               StreamBuilder(
                                   stream: model.itemsByRoomIdStream,
                                   builder: (context, snapshot) {

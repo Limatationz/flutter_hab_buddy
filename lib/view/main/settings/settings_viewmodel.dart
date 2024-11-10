@@ -58,11 +58,11 @@ class SettingsViewModel extends BaseViewModel {
     final roomStore = _db.roomsStore;
 
     final rooms = [
-      RoomsTableCompanion.insert(name: "Schlafzimmer", icon: Value(Icons.bed)),
-      RoomsTableCompanion.insert(name: "Küche", icon: Value(Icons.kitchen)),
-      RoomsTableCompanion.insert(name: "Flur", color: Value("#FF0000")),
+      RoomsTableCompanion.insert(name: "Schlafzimmer", icon: Value(Icons.bed), sortKey: 0),
+      RoomsTableCompanion.insert(name: "Küche", icon: Value(Icons.kitchen), sortKey: 1),
+      RoomsTableCompanion.insert(name: "Flur", color: Value("#FF0000"), sortKey: 2),
       RoomsTableCompanion.insert(
-          name: "Bad", icon: Value(Icons.bathtub), color: Value("#00FF00")),
+          name: "Bad", icon: Value(Icons.bathtub), color: Value("#00FF00"), sortKey: 3),
     ];
 
     // bedRoom

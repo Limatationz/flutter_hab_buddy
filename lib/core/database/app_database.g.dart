@@ -653,9 +653,15 @@ class $RoomsTableTable extends RoomsTable
   late final GeneratedColumn<int> level = GeneratedColumn<int>(
       'level', aliasedName, true,
       type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _sortKeyMeta =
+      const VerificationMeta('sortKey');
+  @override
+  late final GeneratedColumn<int> sortKey = GeneratedColumn<int>(
+      'sort_key', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
-      [id, name, description, icon, color, level];
+      [id, name, description, icon, color, level, sortKey];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -690,6 +696,12 @@ class $RoomsTableTable extends RoomsTable
       context.handle(
           _levelMeta, level.isAcceptableOrUnknown(data['level']!, _levelMeta));
     }
+    if (data.containsKey('sort_key')) {
+      context.handle(_sortKeyMeta,
+          sortKey.isAcceptableOrUnknown(data['sort_key']!, _sortKeyMeta));
+    } else if (isInserting) {
+      context.missing(_sortKeyMeta);
+    }
     return context;
   }
 
@@ -712,6 +724,8 @@ class $RoomsTableTable extends RoomsTable
           .read(DriftSqlType.string, data['${effectivePrefix}color']),
       level: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}level']),
+      sortKey: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}sort_key'])!,
     );
   }
 
@@ -733,13 +747,15 @@ class Room extends DataClass implements Insertable<Room> {
   final IconData? icon;
   final String? color;
   final int? level;
+  final int sortKey;
   const Room(
       {required this.id,
       required this.name,
       this.description,
       this.icon,
       this.color,
-      this.level});
+      this.level,
+      required this.sortKey});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -758,6 +774,7 @@ class Room extends DataClass implements Insertable<Room> {
     if (!nullToAbsent || level != null) {
       map['level'] = Variable<int>(level);
     }
+    map['sort_key'] = Variable<int>(sortKey);
     return map;
   }
 
@@ -773,6 +790,7 @@ class Room extends DataClass implements Insertable<Room> {
           color == null && nullToAbsent ? const Value.absent() : Value(color),
       level:
           level == null && nullToAbsent ? const Value.absent() : Value(level),
+      sortKey: Value(sortKey),
     );
   }
 
@@ -786,6 +804,7 @@ class Room extends DataClass implements Insertable<Room> {
       icon: serializer.fromJson<IconData?>(json['icon']),
       color: serializer.fromJson<String?>(json['color']),
       level: serializer.fromJson<int?>(json['level']),
+      sortKey: serializer.fromJson<int>(json['sortKey']),
     );
   }
   @override
@@ -798,6 +817,7 @@ class Room extends DataClass implements Insertable<Room> {
       'icon': serializer.toJson<IconData?>(icon),
       'color': serializer.toJson<String?>(color),
       'level': serializer.toJson<int?>(level),
+      'sortKey': serializer.toJson<int>(sortKey),
     };
   }
 
@@ -807,7 +827,8 @@ class Room extends DataClass implements Insertable<Room> {
           Value<String?> description = const Value.absent(),
           Value<IconData?> icon = const Value.absent(),
           Value<String?> color = const Value.absent(),
-          Value<int?> level = const Value.absent()}) =>
+          Value<int?> level = const Value.absent(),
+          int? sortKey}) =>
       Room(
         id: id ?? this.id,
         name: name ?? this.name,
@@ -815,6 +836,7 @@ class Room extends DataClass implements Insertable<Room> {
         icon: icon.present ? icon.value : this.icon,
         color: color.present ? color.value : this.color,
         level: level.present ? level.value : this.level,
+        sortKey: sortKey ?? this.sortKey,
       );
   Room copyWithCompanion(RoomsTableCompanion data) {
     return Room(
@@ -825,6 +847,7 @@ class Room extends DataClass implements Insertable<Room> {
       icon: data.icon.present ? data.icon.value : this.icon,
       color: data.color.present ? data.color.value : this.color,
       level: data.level.present ? data.level.value : this.level,
+      sortKey: data.sortKey.present ? data.sortKey.value : this.sortKey,
     );
   }
 
@@ -836,13 +859,15 @@ class Room extends DataClass implements Insertable<Room> {
           ..write('description: $description, ')
           ..write('icon: $icon, ')
           ..write('color: $color, ')
-          ..write('level: $level')
+          ..write('level: $level, ')
+          ..write('sortKey: $sortKey')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name, description, icon, color, level);
+  int get hashCode =>
+      Object.hash(id, name, description, icon, color, level, sortKey);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -852,7 +877,8 @@ class Room extends DataClass implements Insertable<Room> {
           other.description == this.description &&
           other.icon == this.icon &&
           other.color == this.color &&
-          other.level == this.level);
+          other.level == this.level &&
+          other.sortKey == this.sortKey);
 }
 
 class RoomsTableCompanion extends UpdateCompanion<Room> {
@@ -862,6 +888,7 @@ class RoomsTableCompanion extends UpdateCompanion<Room> {
   final Value<IconData?> icon;
   final Value<String?> color;
   final Value<int?> level;
+  final Value<int> sortKey;
   const RoomsTableCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
@@ -869,6 +896,7 @@ class RoomsTableCompanion extends UpdateCompanion<Room> {
     this.icon = const Value.absent(),
     this.color = const Value.absent(),
     this.level = const Value.absent(),
+    this.sortKey = const Value.absent(),
   });
   RoomsTableCompanion.insert({
     this.id = const Value.absent(),
@@ -877,7 +905,9 @@ class RoomsTableCompanion extends UpdateCompanion<Room> {
     this.icon = const Value.absent(),
     this.color = const Value.absent(),
     this.level = const Value.absent(),
-  }) : name = Value(name);
+    required int sortKey,
+  })  : name = Value(name),
+        sortKey = Value(sortKey);
   static Insertable<Room> custom({
     Expression<int>? id,
     Expression<String>? name,
@@ -885,6 +915,7 @@ class RoomsTableCompanion extends UpdateCompanion<Room> {
     Expression<String>? icon,
     Expression<String>? color,
     Expression<int>? level,
+    Expression<int>? sortKey,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -893,6 +924,7 @@ class RoomsTableCompanion extends UpdateCompanion<Room> {
       if (icon != null) 'icon': icon,
       if (color != null) 'color': color,
       if (level != null) 'level': level,
+      if (sortKey != null) 'sort_key': sortKey,
     });
   }
 
@@ -902,7 +934,8 @@ class RoomsTableCompanion extends UpdateCompanion<Room> {
       Value<String?>? description,
       Value<IconData?>? icon,
       Value<String?>? color,
-      Value<int?>? level}) {
+      Value<int?>? level,
+      Value<int>? sortKey}) {
     return RoomsTableCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
@@ -910,6 +943,7 @@ class RoomsTableCompanion extends UpdateCompanion<Room> {
       icon: icon ?? this.icon,
       color: color ?? this.color,
       level: level ?? this.level,
+      sortKey: sortKey ?? this.sortKey,
     );
   }
 
@@ -935,6 +969,9 @@ class RoomsTableCompanion extends UpdateCompanion<Room> {
     if (level.present) {
       map['level'] = Variable<int>(level.value);
     }
+    if (sortKey.present) {
+      map['sort_key'] = Variable<int>(sortKey.value);
+    }
     return map;
   }
 
@@ -946,7 +983,8 @@ class RoomsTableCompanion extends UpdateCompanion<Room> {
           ..write('description: $description, ')
           ..write('icon: $icon, ')
           ..write('color: $color, ')
-          ..write('level: $level')
+          ..write('level: $level, ')
+          ..write('sortKey: $sortKey')
           ..write(')'))
         .toString();
   }
@@ -2365,6 +2403,7 @@ typedef $$RoomsTableTableCreateCompanionBuilder = RoomsTableCompanion Function({
   Value<IconData?> icon,
   Value<String?> color,
   Value<int?> level,
+  required int sortKey,
 });
 typedef $$RoomsTableTableUpdateCompanionBuilder = RoomsTableCompanion Function({
   Value<int> id,
@@ -2373,6 +2412,7 @@ typedef $$RoomsTableTableUpdateCompanionBuilder = RoomsTableCompanion Function({
   Value<IconData?> icon,
   Value<String?> color,
   Value<int?> level,
+  Value<int> sortKey,
 });
 
 final class $$RoomsTableTableReferences
@@ -2424,6 +2464,9 @@ class $$RoomsTableTableFilterComposer
   ColumnFilters<int> get level => $composableBuilder(
       column: $table.level, builder: (column) => ColumnFilters(column));
 
+  ColumnFilters<int> get sortKey => $composableBuilder(
+      column: $table.sortKey, builder: (column) => ColumnFilters(column));
+
   Expression<bool> itemsTableRefs(
       Expression<bool> Function($$ItemsTableTableFilterComposer f) f) {
     final $$ItemsTableTableFilterComposer composer = $composerBuilder(
@@ -2472,6 +2515,9 @@ class $$RoomsTableTableOrderingComposer
 
   ColumnOrderings<int> get level => $composableBuilder(
       column: $table.level, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get sortKey => $composableBuilder(
+      column: $table.sortKey, builder: (column) => ColumnOrderings(column));
 }
 
 class $$RoomsTableTableAnnotationComposer
@@ -2500,6 +2546,9 @@ class $$RoomsTableTableAnnotationComposer
 
   GeneratedColumn<int> get level =>
       $composableBuilder(column: $table.level, builder: (column) => column);
+
+  GeneratedColumn<int> get sortKey =>
+      $composableBuilder(column: $table.sortKey, builder: (column) => column);
 
   Expression<T> itemsTableRefs<T extends Object>(
       Expression<T> Function($$ItemsTableTableAnnotationComposer a) f) {
@@ -2552,6 +2601,7 @@ class $$RoomsTableTableTableManager extends RootTableManager<
             Value<IconData?> icon = const Value.absent(),
             Value<String?> color = const Value.absent(),
             Value<int?> level = const Value.absent(),
+            Value<int> sortKey = const Value.absent(),
           }) =>
               RoomsTableCompanion(
             id: id,
@@ -2560,6 +2610,7 @@ class $$RoomsTableTableTableManager extends RootTableManager<
             icon: icon,
             color: color,
             level: level,
+            sortKey: sortKey,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
@@ -2568,6 +2619,7 @@ class $$RoomsTableTableTableManager extends RootTableManager<
             Value<IconData?> icon = const Value.absent(),
             Value<String?> color = const Value.absent(),
             Value<int?> level = const Value.absent(),
+            required int sortKey,
           }) =>
               RoomsTableCompanion.insert(
             id: id,
@@ -2576,6 +2628,7 @@ class $$RoomsTableTableTableManager extends RootTableManager<
             icon: icon,
             color: color,
             level: level,
+            sortKey: sortKey,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (
