@@ -28,12 +28,17 @@ class SettingsViewModel extends BaseViewModel {
   Stream<DateTime?> get lastUpdate => _itemsRepository.sseLastMessage;
 
   int getThemeIndex(BuildContext context) {
-    return AdaptiveTheme.of(context).mode.index;
+    return AdaptiveTheme
+        .of(context)
+        .mode
+        .index;
   }
 
   void setTheme(BuildContext context, int index) {
     AdaptiveTheme.of(context).setThemeMode(AdaptiveThemeMode.values[index]);
-    final theme = AdaptiveTheme.of(context).theme;
+    final theme = AdaptiveTheme
+        .of(context)
+        .theme;
     setSystemOverlay(theme);
   }
 
@@ -58,11 +63,19 @@ class SettingsViewModel extends BaseViewModel {
     final roomStore = _db.roomsStore;
 
     final rooms = [
-      RoomsTableCompanion.insert(name: "Schlafzimmer", icon: Value(Icons.bed), sortKey: 0),
-      RoomsTableCompanion.insert(name: "Küche", icon: Value(Icons.kitchen), sortKey: 1),
-      RoomsTableCompanion.insert(name: "Flur", color: Value("#FF0000"), sortKey: 2),
       RoomsTableCompanion.insert(
-          name: "Bad", icon: Value(Icons.bathtub), color: Value("#00FF00"), sortKey: 3),
+          name: "Schlafzimmer", icon: Value(Icons.bed),
+          color: Value("#CEFDFF"), sortKey: 0),
+      RoomsTableCompanion.insert(
+          name: "Küche", icon: Value(Icons.kitchen),
+          color: Value("#EE964B"), sortKey: 1),
+      RoomsTableCompanion.insert(
+          name: "Flur", color: Value("#4062BB"), sortKey: 2),
+      RoomsTableCompanion.insert(
+          name: "Bad",
+          icon: Value(Icons.bathtub),
+          color: Value("#00FF00"),
+          sortKey: 3),
     ];
 
     // bedRoom
@@ -95,9 +108,16 @@ class SettingsViewModel extends BaseViewModel {
           roomId: bedRoom,
           isFavorite: true);
     }
-    if (inboxItemNames.contains("Lampe_Wohnzimmer_Helligkeit")) {
+    if (inboxItemNames.contains("Rollos_Fenster")) {
       await _itemsRepository.addItemFromInbox(
-          itemName: "Lampe_Wohnzimmer_Helligkeit",
+          itemName: "Rollos_Fenster",
+          type: ItemType.rollerShutter,
+          roomId: bedRoom,
+          isFavorite: true);
+    }
+    if (inboxItemNames.contains("Lampe_Wohnzimmer")) {
+      await _itemsRepository.addItemFromInbox(
+          itemName: "Lampe_Wohnzimmer",
           type: ItemType.light,
           roomId: bedRoom,
           isFavorite: true);
@@ -120,6 +140,48 @@ class SettingsViewModel extends BaseViewModel {
           itemName: "Thermometer_Schlafzimmer_Temperatur",
           type: ItemType.temperature,
           roomId: bedRoom,
+          isFavorite: true);
+    }
+    if (inboxItemNames.contains("CO2Sensor_CO2")) {
+      await _itemsRepository.addItemFromInbox(
+          itemName: "CO2Sensor_CO2",
+          type: ItemType.airQuality,
+          roomId: bedRoom,
+          isFavorite: true);
+    }
+    if (inboxItemNames.contains("Szene_Tv")) {
+      await _itemsRepository.addItemFromInbox(
+          itemName: "Szene_Tv",
+          type: ItemType.button,
+          roomId: bedRoom,
+          isFavorite: true);
+    }
+    if (inboxItemNames.contains("Lampe_Kueche")) {
+      await _itemsRepository.addItemFromInbox(
+          itemName: "Lampe_Kueche",
+          type: ItemType.light,
+          roomId: kitchen,
+          isFavorite: true);
+    }
+    if (inboxItemNames.contains("Bewegungsmelder_Kueche_Bewegung")) {
+      await _itemsRepository.addItemFromInbox(
+          itemName: "Bewegungsmelder_Kueche_Bewegung",
+          type: ItemType.presence,
+          roomId: kitchen,
+          isFavorite: true);
+    }
+    if (inboxItemNames.contains("Lampe_Flur")) {
+      await _itemsRepository.addItemFromInbox(
+          itemName: "Lampe_Flur",
+          type: ItemType.light,
+          roomId: hallway,
+          isFavorite: true);
+    }
+    if (inboxItemNames.contains("Bewegungsmelder_Flur_Bewegung")) {
+      await _itemsRepository.addItemFromInbox(
+          itemName: "Bewegungsmelder_Flur_Bewegung",
+          type: ItemType.presence,
+          roomId: hallway,
           isFavorite: true);
     }
 
