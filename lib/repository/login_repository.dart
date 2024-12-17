@@ -14,10 +14,10 @@ class LoginRepository {
 
   Stream<bool?> get loggedIn => _loggedIn.stream;
 
-  final BehaviorSubject<Tuple2<String, String>?> _loginData =
+  final BehaviorSubject<LoginData?> _loginData =
       BehaviorSubject.seeded(null);
 
-  Stream<Tuple2<String, String>?> get loginData => _loginData.stream;
+  Stream<LoginData?> get loginData => _loginData.stream;
 
   Completer<bool> loginComplete = Completer();
 
@@ -31,8 +31,8 @@ class LoginRepository {
 
   String? get basicAuth {
     if (_loginData.value != null) {
-      final username = _loginData.value!.item1;
-      final password = _loginData.value!.item2;
+      final username = _loginData.value!.username;
+      final password = _loginData.value!.password;
       final bytes = utf8.encode("$username:$password");
       final base64Str = base64.encode(bytes);
       return "Basic $base64Str";
@@ -44,9 +44,10 @@ class LoginRepository {
   Future<void> checkLogin() async {
     final username = await _secureStorage.read(key: 'username');
     final password = await _secureStorage.read(key: 'password');
-    if (username != null && password != null) {
+    final apiToken = await _secureStorage.read(key: 'apiToken');
+    if (username != null && password != null && apiToken != null) {
       _loggedIn.add(true);
-      _loginData.add(Tuple2(username, password));
+      _loginData.add(LoginData(username, password, apiToken));
     } else {
       _loggedIn.add(false);
     }
@@ -56,8 +57,9 @@ class LoginRepository {
   /// returns true if login is valid
   /// returns false if login is invalid or server is not reachable
   Future<bool> storeLogin(
-      {required String username, required String password}) async {
+      {required String username, required String password, required String apiToken}) async {
     // check login
+    // TODO: Test APi Token!!
     final api = OpenHAB.create(
         baseUrl: Uri.parse("https://myopenhab.org/rest"),
         interceptors: [
@@ -67,9 +69,10 @@ class LoginRepository {
     if (result.isSuccessful) {
       await _secureStorage.write(key: 'username', value: username);
       await _secureStorage.write(key: 'password', value: password);
+      await _secureStorage.write(key: 'apiToken', value: apiToken);
 
       _loggedIn.add(true);
-      _loginData.add(Tuple2(username, password));
+      _loginData.add(LoginData(username, password, apiToken));
       return true;
     } else {
       _loggedIn.add(false);
@@ -81,7 +84,16 @@ class LoginRepository {
   Future<void> logout() async {
     await _secureStorage.delete(key: 'username');
     await _secureStorage.delete(key: 'password');
+    await _secureStorage.delete(key: 'apiToken');
     _loggedIn.add(false);
     _loginData.add(null);
   }
+}
+
+class LoginData {
+  final String username;
+  final String password;
+  final String apiToken;
+
+  LoginData(this.username, this.password, this.apiToken);
 }

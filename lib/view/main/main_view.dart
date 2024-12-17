@@ -91,8 +91,14 @@ class _MainViewState extends State<MainView> with WidgetsBindingObserver {
               LineIcons.house_plan_alt_2),
           _buildAndroidBottomNavigationItem(
               context,
-              S.of(context).navigationSettings,
+              "Automation",
               2,
+              LineIconsLight.automation,
+              LineIcons.automation),
+          _buildAndroidBottomNavigationItem(
+              context,
+              S.of(context).navigationSettings,
+              3,
               LineIconsLight.cog,
               LineIcons.cog),
         ],
@@ -115,10 +121,12 @@ class _MainViewState extends State<MainView> with WidgetsBindingObserver {
               LineIconsFilled.star),
           _buildIOSBottomNavigationItem(context, S.of(context).navigationRooms,
               1, LineIconsLight.house_plan_alt_2, LineIcons.house_plan_alt_2),
+          _buildIOSBottomNavigationItem(context, "Automation",
+              2, LineIconsLight.automation, LineIcons.house_plan_alt_2),
           _buildIOSBottomNavigationItem(
               context,
               S.of(context).navigationSettings,
-              2,
+              3,
               LineIconsLight.cog,
               LineIcons.cog),
         ],
@@ -183,6 +191,15 @@ class _MainViewState extends State<MainView> with WidgetsBindingObserver {
             LineIcons.house_plan_alt_2,
           ),
           label: Text(S.current.navigationRooms),
+        ),
+        NavigationRailDestination(
+          icon: const Icon(
+            LineIconsLight.automation,
+          ),
+          selectedIcon: const Icon(
+            LineIcons.automation,
+          ),
+          label: Text("Automation"),
         ),
         NavigationRailDestination(
           icon: const Icon(

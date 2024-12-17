@@ -10,11 +10,13 @@ class AuthInterceptor implements Interceptor {
   final _loginRepository = locator.get<LoginRepository>();
   String? _username;
   String? _password;
+  String? _apiToken;
 
   AuthInterceptor() {
     _loginRepository.loginData.listen((tuple) {
-      _username = tuple?.item1;
-      _password = tuple?.item2;
+      _username = tuple?.username;
+      _password = tuple?.password;
+      _apiToken = tuple?.apiToken;
     });
   }
 
@@ -24,8 +26,8 @@ class AuthInterceptor implements Interceptor {
     if (_username != null && _password != null) {
       final bytes = utf8.encode("$_username:$_password");
       final base64Str = base64.encode(bytes);
-      return chain.proceed(applyHeader(
-          request, 'Authorization', 'Basic $base64Str'));
+      return chain.proceed(applyHeaders(
+          request, {'Authorization': 'Basic $base64Str', 'X-OPENHAB-TOKEN': _apiToken ?? ''}));
     } else {
       return chain.proceed(request);
     }

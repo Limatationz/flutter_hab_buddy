@@ -2103,6 +2103,560 @@ class ItemStatesTableCompanion extends UpdateCompanion<ItemState> {
   }
 }
 
+class $RulesTableTable extends RulesTable
+    with TableInfo<$RulesTableTable, Rule> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $RulesTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _uidMeta = const VerificationMeta('uid');
+  @override
+  late final GeneratedColumn<String> uid = GeneratedColumn<String>(
+      'uid', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _tagsMeta = const VerificationMeta('tags');
+  @override
+  late final GeneratedColumnWithTypeConverter<List<String>?, String> tags =
+      GeneratedColumn<String>('tags', aliasedName, true,
+              type: DriftSqlType.string, requiredDuringInsert: false)
+          .withConverter<List<String>?>($RulesTableTable.$convertertagsn);
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  @override
+  late final GeneratedColumnWithTypeConverter<RuleStatusInfo?, String> status =
+      GeneratedColumn<String>('status', aliasedName, true,
+              type: DriftSqlType.string, requiredDuringInsert: false)
+          .withConverter<RuleStatusInfo?>($RulesTableTable.$converterstatus);
+  static const VerificationMeta _actionsMeta =
+      const VerificationMeta('actions');
+  @override
+  late final GeneratedColumnWithTypeConverter<List<ActionDTO>?, String>
+      actions = GeneratedColumn<String>('actions', aliasedName, true,
+              type: DriftSqlType.string, requiredDuringInsert: false)
+          .withConverter<List<ActionDTO>?>($RulesTableTable.$converteractions);
+  static const VerificationMeta _conditionsMeta =
+      const VerificationMeta('conditions');
+  @override
+  late final GeneratedColumnWithTypeConverter<List<ConditionDTO>?, String>
+      conditions = GeneratedColumn<String>('conditions', aliasedName, true,
+              type: DriftSqlType.string, requiredDuringInsert: false)
+          .withConverter<List<ConditionDTO>?>(
+              $RulesTableTable.$converterconditions);
+  static const VerificationMeta _configurationMeta =
+      const VerificationMeta('configuration');
+  @override
+  late final GeneratedColumnWithTypeConverter<Map<String, dynamic>?, String>
+      configuration = GeneratedColumn<String>(
+              'configuration', aliasedName, true,
+              type: DriftSqlType.string, requiredDuringInsert: false)
+          .withConverter<Map<String, dynamic>?>(
+              $RulesTableTable.$converterconfiguration);
+  static const VerificationMeta _configDescriptionsMeta =
+      const VerificationMeta('configDescriptions');
+  @override
+  late final GeneratedColumnWithTypeConverter<
+          List<ConfigDescriptionParameterDTO>?, String> configDescriptions =
+      GeneratedColumn<String>('config_descriptions', aliasedName, true,
+              type: DriftSqlType.string, requiredDuringInsert: false)
+          .withConverter<List<ConfigDescriptionParameterDTO>?>(
+              $RulesTableTable.$converterconfigDescriptions);
+  static const VerificationMeta _triggersMeta =
+      const VerificationMeta('triggers');
+  @override
+  late final GeneratedColumnWithTypeConverter<List<TriggerDTO>?, String>
+      triggers = GeneratedColumn<String>('triggers', aliasedName, true,
+              type: DriftSqlType.string, requiredDuringInsert: false)
+          .withConverter<List<TriggerDTO>?>(
+              $RulesTableTable.$convertertriggers);
+  static const VerificationMeta _editableMeta =
+      const VerificationMeta('editable');
+  @override
+  late final GeneratedColumn<bool> editable = GeneratedColumn<bool>(
+      'editable', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("editable" IN (0, 1))'));
+  @override
+  List<GeneratedColumn> get $columns => [
+        uid,
+        name,
+        tags,
+        status,
+        actions,
+        conditions,
+        configuration,
+        configDescriptions,
+        triggers,
+        editable
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'rules_table';
+  @override
+  VerificationContext validateIntegrity(Insertable<Rule> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('uid')) {
+      context.handle(
+          _uidMeta, uid.isAcceptableOrUnknown(data['uid']!, _uidMeta));
+    } else if (isInserting) {
+      context.missing(_uidMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    }
+    context.handle(_tagsMeta, const VerificationResult.success());
+    context.handle(_statusMeta, const VerificationResult.success());
+    context.handle(_actionsMeta, const VerificationResult.success());
+    context.handle(_conditionsMeta, const VerificationResult.success());
+    context.handle(_configurationMeta, const VerificationResult.success());
+    context.handle(_configDescriptionsMeta, const VerificationResult.success());
+    context.handle(_triggersMeta, const VerificationResult.success());
+    if (data.containsKey('editable')) {
+      context.handle(_editableMeta,
+          editable.isAcceptableOrUnknown(data['editable']!, _editableMeta));
+    } else if (isInserting) {
+      context.missing(_editableMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {uid};
+  @override
+  Rule map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Rule(
+      uid: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}uid'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name']),
+      tags: $RulesTableTable.$convertertagsn.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}tags'])),
+      status: $RulesTableTable.$converterstatus.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}status'])),
+      actions: $RulesTableTable.$converteractions.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}actions'])),
+      conditions: $RulesTableTable.$converterconditions.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}conditions'])),
+      configuration: $RulesTableTable.$converterconfiguration.fromSql(
+          attachedDatabase.typeMapping.read(
+              DriftSqlType.string, data['${effectivePrefix}configuration'])),
+      configDescriptions: $RulesTableTable.$converterconfigDescriptions.fromSql(
+          attachedDatabase.typeMapping.read(DriftSqlType.string,
+              data['${effectivePrefix}config_descriptions'])),
+      triggers: $RulesTableTable.$convertertriggers.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}triggers'])),
+      editable: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}editable'])!,
+    );
+  }
+
+  @override
+  $RulesTableTable createAlias(String alias) {
+    return $RulesTableTable(attachedDatabase, alias);
+  }
+
+  static TypeConverter<List<String>, String> $convertertags =
+      const StringListConverter();
+  static TypeConverter<List<String>?, String?> $convertertagsn =
+      NullAwareTypeConverter.wrap($convertertags);
+  static TypeConverter<RuleStatusInfo?, String?> $converterstatus =
+      const StatusDTOConverter();
+  static TypeConverter<List<ActionDTO>?, String?> $converteractions =
+      const ActionsDTOListConverter();
+  static TypeConverter<List<ConditionDTO>?, String?> $converterconditions =
+      const ConditionDtoListConverter();
+  static TypeConverter<Map<String, dynamic>?, String?> $converterconfiguration =
+      const JsonConverter();
+  static TypeConverter<List<ConfigDescriptionParameterDTO>?, String?>
+      $converterconfigDescriptions = const ConfigurationDtoListConverter();
+  static TypeConverter<List<TriggerDTO>?, String?> $convertertriggers =
+      const TriggerDtoListConverter();
+}
+
+class Rule extends DataClass implements Insertable<Rule> {
+  final String uid;
+  final String? name;
+  final List<String>? tags;
+  final RuleStatusInfo? status;
+  final List<ActionDTO>? actions;
+  final List<ConditionDTO>? conditions;
+  final Map<String, dynamic>? configuration;
+  final List<ConfigDescriptionParameterDTO>? configDescriptions;
+  final List<TriggerDTO>? triggers;
+  final bool editable;
+  const Rule(
+      {required this.uid,
+      this.name,
+      this.tags,
+      this.status,
+      this.actions,
+      this.conditions,
+      this.configuration,
+      this.configDescriptions,
+      this.triggers,
+      required this.editable});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['uid'] = Variable<String>(uid);
+    if (!nullToAbsent || name != null) {
+      map['name'] = Variable<String>(name);
+    }
+    if (!nullToAbsent || tags != null) {
+      map['tags'] =
+          Variable<String>($RulesTableTable.$convertertagsn.toSql(tags));
+    }
+    if (!nullToAbsent || status != null) {
+      map['status'] =
+          Variable<String>($RulesTableTable.$converterstatus.toSql(status));
+    }
+    if (!nullToAbsent || actions != null) {
+      map['actions'] =
+          Variable<String>($RulesTableTable.$converteractions.toSql(actions));
+    }
+    if (!nullToAbsent || conditions != null) {
+      map['conditions'] = Variable<String>(
+          $RulesTableTable.$converterconditions.toSql(conditions));
+    }
+    if (!nullToAbsent || configuration != null) {
+      map['configuration'] = Variable<String>(
+          $RulesTableTable.$converterconfiguration.toSql(configuration));
+    }
+    if (!nullToAbsent || configDescriptions != null) {
+      map['config_descriptions'] = Variable<String>($RulesTableTable
+          .$converterconfigDescriptions
+          .toSql(configDescriptions));
+    }
+    if (!nullToAbsent || triggers != null) {
+      map['triggers'] =
+          Variable<String>($RulesTableTable.$convertertriggers.toSql(triggers));
+    }
+    map['editable'] = Variable<bool>(editable);
+    return map;
+  }
+
+  RulesTableCompanion toCompanion(bool nullToAbsent) {
+    return RulesTableCompanion(
+      uid: Value(uid),
+      name: name == null && nullToAbsent ? const Value.absent() : Value(name),
+      tags: tags == null && nullToAbsent ? const Value.absent() : Value(tags),
+      status:
+          status == null && nullToAbsent ? const Value.absent() : Value(status),
+      actions: actions == null && nullToAbsent
+          ? const Value.absent()
+          : Value(actions),
+      conditions: conditions == null && nullToAbsent
+          ? const Value.absent()
+          : Value(conditions),
+      configuration: configuration == null && nullToAbsent
+          ? const Value.absent()
+          : Value(configuration),
+      configDescriptions: configDescriptions == null && nullToAbsent
+          ? const Value.absent()
+          : Value(configDescriptions),
+      triggers: triggers == null && nullToAbsent
+          ? const Value.absent()
+          : Value(triggers),
+      editable: Value(editable),
+    );
+  }
+
+  factory Rule.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Rule(
+      uid: serializer.fromJson<String>(json['uid']),
+      name: serializer.fromJson<String?>(json['name']),
+      tags: serializer.fromJson<List<String>?>(json['tags']),
+      status: serializer.fromJson<RuleStatusInfo?>(json['status']),
+      actions: serializer.fromJson<List<ActionDTO>?>(json['actions']),
+      conditions: serializer.fromJson<List<ConditionDTO>?>(json['conditions']),
+      configuration:
+          serializer.fromJson<Map<String, dynamic>?>(json['configuration']),
+      configDescriptions:
+          serializer.fromJson<List<ConfigDescriptionParameterDTO>?>(
+              json['configDescriptions']),
+      triggers: serializer.fromJson<List<TriggerDTO>?>(json['triggers']),
+      editable: serializer.fromJson<bool>(json['editable']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'uid': serializer.toJson<String>(uid),
+      'name': serializer.toJson<String?>(name),
+      'tags': serializer.toJson<List<String>?>(tags),
+      'status': serializer.toJson<RuleStatusInfo?>(status),
+      'actions': serializer.toJson<List<ActionDTO>?>(actions),
+      'conditions': serializer.toJson<List<ConditionDTO>?>(conditions),
+      'configuration': serializer.toJson<Map<String, dynamic>?>(configuration),
+      'configDescriptions': serializer
+          .toJson<List<ConfigDescriptionParameterDTO>?>(configDescriptions),
+      'triggers': serializer.toJson<List<TriggerDTO>?>(triggers),
+      'editable': serializer.toJson<bool>(editable),
+    };
+  }
+
+  Rule copyWith(
+          {String? uid,
+          Value<String?> name = const Value.absent(),
+          Value<List<String>?> tags = const Value.absent(),
+          Value<RuleStatusInfo?> status = const Value.absent(),
+          Value<List<ActionDTO>?> actions = const Value.absent(),
+          Value<List<ConditionDTO>?> conditions = const Value.absent(),
+          Value<Map<String, dynamic>?> configuration = const Value.absent(),
+          Value<List<ConfigDescriptionParameterDTO>?> configDescriptions =
+              const Value.absent(),
+          Value<List<TriggerDTO>?> triggers = const Value.absent(),
+          bool? editable}) =>
+      Rule(
+        uid: uid ?? this.uid,
+        name: name.present ? name.value : this.name,
+        tags: tags.present ? tags.value : this.tags,
+        status: status.present ? status.value : this.status,
+        actions: actions.present ? actions.value : this.actions,
+        conditions: conditions.present ? conditions.value : this.conditions,
+        configuration:
+            configuration.present ? configuration.value : this.configuration,
+        configDescriptions: configDescriptions.present
+            ? configDescriptions.value
+            : this.configDescriptions,
+        triggers: triggers.present ? triggers.value : this.triggers,
+        editable: editable ?? this.editable,
+      );
+  Rule copyWithCompanion(RulesTableCompanion data) {
+    return Rule(
+      uid: data.uid.present ? data.uid.value : this.uid,
+      name: data.name.present ? data.name.value : this.name,
+      tags: data.tags.present ? data.tags.value : this.tags,
+      status: data.status.present ? data.status.value : this.status,
+      actions: data.actions.present ? data.actions.value : this.actions,
+      conditions:
+          data.conditions.present ? data.conditions.value : this.conditions,
+      configuration: data.configuration.present
+          ? data.configuration.value
+          : this.configuration,
+      configDescriptions: data.configDescriptions.present
+          ? data.configDescriptions.value
+          : this.configDescriptions,
+      triggers: data.triggers.present ? data.triggers.value : this.triggers,
+      editable: data.editable.present ? data.editable.value : this.editable,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Rule(')
+          ..write('uid: $uid, ')
+          ..write('name: $name, ')
+          ..write('tags: $tags, ')
+          ..write('status: $status, ')
+          ..write('actions: $actions, ')
+          ..write('conditions: $conditions, ')
+          ..write('configuration: $configuration, ')
+          ..write('configDescriptions: $configDescriptions, ')
+          ..write('triggers: $triggers, ')
+          ..write('editable: $editable')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(uid, name, tags, status, actions, conditions,
+      configuration, configDescriptions, triggers, editable);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Rule &&
+          other.uid == this.uid &&
+          other.name == this.name &&
+          other.tags == this.tags &&
+          other.status == this.status &&
+          other.actions == this.actions &&
+          other.conditions == this.conditions &&
+          other.configuration == this.configuration &&
+          other.configDescriptions == this.configDescriptions &&
+          other.triggers == this.triggers &&
+          other.editable == this.editable);
+}
+
+class RulesTableCompanion extends UpdateCompanion<Rule> {
+  final Value<String> uid;
+  final Value<String?> name;
+  final Value<List<String>?> tags;
+  final Value<RuleStatusInfo?> status;
+  final Value<List<ActionDTO>?> actions;
+  final Value<List<ConditionDTO>?> conditions;
+  final Value<Map<String, dynamic>?> configuration;
+  final Value<List<ConfigDescriptionParameterDTO>?> configDescriptions;
+  final Value<List<TriggerDTO>?> triggers;
+  final Value<bool> editable;
+  final Value<int> rowid;
+  const RulesTableCompanion({
+    this.uid = const Value.absent(),
+    this.name = const Value.absent(),
+    this.tags = const Value.absent(),
+    this.status = const Value.absent(),
+    this.actions = const Value.absent(),
+    this.conditions = const Value.absent(),
+    this.configuration = const Value.absent(),
+    this.configDescriptions = const Value.absent(),
+    this.triggers = const Value.absent(),
+    this.editable = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  RulesTableCompanion.insert({
+    required String uid,
+    this.name = const Value.absent(),
+    this.tags = const Value.absent(),
+    this.status = const Value.absent(),
+    this.actions = const Value.absent(),
+    this.conditions = const Value.absent(),
+    this.configuration = const Value.absent(),
+    this.configDescriptions = const Value.absent(),
+    this.triggers = const Value.absent(),
+    required bool editable,
+    this.rowid = const Value.absent(),
+  })  : uid = Value(uid),
+        editable = Value(editable);
+  static Insertable<Rule> custom({
+    Expression<String>? uid,
+    Expression<String>? name,
+    Expression<String>? tags,
+    Expression<String>? status,
+    Expression<String>? actions,
+    Expression<String>? conditions,
+    Expression<String>? configuration,
+    Expression<String>? configDescriptions,
+    Expression<String>? triggers,
+    Expression<bool>? editable,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (uid != null) 'uid': uid,
+      if (name != null) 'name': name,
+      if (tags != null) 'tags': tags,
+      if (status != null) 'status': status,
+      if (actions != null) 'actions': actions,
+      if (conditions != null) 'conditions': conditions,
+      if (configuration != null) 'configuration': configuration,
+      if (configDescriptions != null) 'config_descriptions': configDescriptions,
+      if (triggers != null) 'triggers': triggers,
+      if (editable != null) 'editable': editable,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  RulesTableCompanion copyWith(
+      {Value<String>? uid,
+      Value<String?>? name,
+      Value<List<String>?>? tags,
+      Value<RuleStatusInfo?>? status,
+      Value<List<ActionDTO>?>? actions,
+      Value<List<ConditionDTO>?>? conditions,
+      Value<Map<String, dynamic>?>? configuration,
+      Value<List<ConfigDescriptionParameterDTO>?>? configDescriptions,
+      Value<List<TriggerDTO>?>? triggers,
+      Value<bool>? editable,
+      Value<int>? rowid}) {
+    return RulesTableCompanion(
+      uid: uid ?? this.uid,
+      name: name ?? this.name,
+      tags: tags ?? this.tags,
+      status: status ?? this.status,
+      actions: actions ?? this.actions,
+      conditions: conditions ?? this.conditions,
+      configuration: configuration ?? this.configuration,
+      configDescriptions: configDescriptions ?? this.configDescriptions,
+      triggers: triggers ?? this.triggers,
+      editable: editable ?? this.editable,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (uid.present) {
+      map['uid'] = Variable<String>(uid.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (tags.present) {
+      map['tags'] =
+          Variable<String>($RulesTableTable.$convertertagsn.toSql(tags.value));
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(
+          $RulesTableTable.$converterstatus.toSql(status.value));
+    }
+    if (actions.present) {
+      map['actions'] = Variable<String>(
+          $RulesTableTable.$converteractions.toSql(actions.value));
+    }
+    if (conditions.present) {
+      map['conditions'] = Variable<String>(
+          $RulesTableTable.$converterconditions.toSql(conditions.value));
+    }
+    if (configuration.present) {
+      map['configuration'] = Variable<String>(
+          $RulesTableTable.$converterconfiguration.toSql(configuration.value));
+    }
+    if (configDescriptions.present) {
+      map['config_descriptions'] = Variable<String>($RulesTableTable
+          .$converterconfigDescriptions
+          .toSql(configDescriptions.value));
+    }
+    if (triggers.present) {
+      map['triggers'] = Variable<String>(
+          $RulesTableTable.$convertertriggers.toSql(triggers.value));
+    }
+    if (editable.present) {
+      map['editable'] = Variable<bool>(editable.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('RulesTableCompanion(')
+          ..write('uid: $uid, ')
+          ..write('name: $name, ')
+          ..write('tags: $tags, ')
+          ..write('status: $status, ')
+          ..write('actions: $actions, ')
+          ..write('conditions: $conditions, ')
+          ..write('configuration: $configuration, ')
+          ..write('configDescriptions: $configDescriptions, ')
+          ..write('triggers: $triggers, ')
+          ..write('editable: $editable, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -2111,15 +2665,17 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $ItemsTableTable itemsTable = $ItemsTableTable(this);
   late final $ItemStatesTableTable itemStatesTable =
       $ItemStatesTableTable(this);
+  late final $RulesTableTable rulesTable = $RulesTableTable(this);
   late final InboxStore inboxStore = InboxStore(this as AppDatabase);
   late final RoomsStore roomsStore = RoomsStore(this as AppDatabase);
   late final ItemsStore itemsStore = ItemsStore(this as AppDatabase);
+  late final RulesStore rulesStore = RulesStore(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [inboxTable, roomsTable, itemsTable, itemStatesTable];
+      [inboxTable, roomsTable, itemsTable, itemStatesTable, rulesTable];
 }
 
 typedef $$InboxTableTableCreateCompanionBuilder = InboxTableCompanion Function({
@@ -2717,8 +3273,7 @@ final class $$ItemsTableTableReferences
       db.roomsTable.createAlias(
           $_aliasNameGenerator(db.itemsTable.roomId, db.roomsTable.id));
 
-  $$RoomsTableTableProcessedTableManager? get roomId {
-    if ($_item.roomId == null) return null;
+  $$RoomsTableTableProcessedTableManager get roomId {
     final manager = $$RoomsTableTableTableManager($_db, $_db.roomsTable)
         .filter((f) => f.id($_item.roomId!));
     final item = $_typedResult.readTableOrNull(_roomIdTable($_db));
@@ -3200,8 +3755,7 @@ final class $$ItemStatesTableTableReferences
       db.itemsTable.createAlias($_aliasNameGenerator(
           db.itemStatesTable.ohName, db.itemsTable.ohName));
 
-  $$ItemsTableTableProcessedTableManager? get ohName {
-    if ($_item.ohName == null) return null;
+  $$ItemsTableTableProcessedTableManager get ohName {
     final manager = $$ItemsTableTableTableManager($_db, $_db.itemsTable)
         .filter((f) => f.ohName($_item.ohName!));
     final item = $_typedResult.readTableOrNull(_ohNameTable($_db));
@@ -3476,6 +4030,270 @@ typedef $$ItemStatesTableTableProcessedTableManager = ProcessedTableManager<
     (ItemState, $$ItemStatesTableTableReferences),
     ItemState,
     PrefetchHooks Function({bool ohName})>;
+typedef $$RulesTableTableCreateCompanionBuilder = RulesTableCompanion Function({
+  required String uid,
+  Value<String?> name,
+  Value<List<String>?> tags,
+  Value<RuleStatusInfo?> status,
+  Value<List<ActionDTO>?> actions,
+  Value<List<ConditionDTO>?> conditions,
+  Value<Map<String, dynamic>?> configuration,
+  Value<List<ConfigDescriptionParameterDTO>?> configDescriptions,
+  Value<List<TriggerDTO>?> triggers,
+  required bool editable,
+  Value<int> rowid,
+});
+typedef $$RulesTableTableUpdateCompanionBuilder = RulesTableCompanion Function({
+  Value<String> uid,
+  Value<String?> name,
+  Value<List<String>?> tags,
+  Value<RuleStatusInfo?> status,
+  Value<List<ActionDTO>?> actions,
+  Value<List<ConditionDTO>?> conditions,
+  Value<Map<String, dynamic>?> configuration,
+  Value<List<ConfigDescriptionParameterDTO>?> configDescriptions,
+  Value<List<TriggerDTO>?> triggers,
+  Value<bool> editable,
+  Value<int> rowid,
+});
+
+class $$RulesTableTableFilterComposer
+    extends Composer<_$AppDatabase, $RulesTableTable> {
+  $$RulesTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get uid => $composableBuilder(
+      column: $table.uid, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnFilters(column));
+
+  ColumnWithTypeConverterFilters<List<String>?, List<String>, String>
+      get tags => $composableBuilder(
+          column: $table.tags,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnWithTypeConverterFilters<RuleStatusInfo?, RuleStatusInfo, String>
+      get status => $composableBuilder(
+          column: $table.status,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnWithTypeConverterFilters<List<ActionDTO>?, List<ActionDTO>, String>
+      get actions => $composableBuilder(
+          column: $table.actions,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnWithTypeConverterFilters<List<ConditionDTO>?, List<ConditionDTO>,
+          String>
+      get conditions => $composableBuilder(
+          column: $table.conditions,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnWithTypeConverterFilters<Map<String, dynamic>?, Map<String, dynamic>,
+          String>
+      get configuration => $composableBuilder(
+          column: $table.configuration,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnWithTypeConverterFilters<List<ConfigDescriptionParameterDTO>?,
+          List<ConfigDescriptionParameterDTO>, String>
+      get configDescriptions => $composableBuilder(
+          column: $table.configDescriptions,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnWithTypeConverterFilters<List<TriggerDTO>?, List<TriggerDTO>, String>
+      get triggers => $composableBuilder(
+          column: $table.triggers,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnFilters<bool> get editable => $composableBuilder(
+      column: $table.editable, builder: (column) => ColumnFilters(column));
+}
+
+class $$RulesTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $RulesTableTable> {
+  $$RulesTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get uid => $composableBuilder(
+      column: $table.uid, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get tags => $composableBuilder(
+      column: $table.tags, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get status => $composableBuilder(
+      column: $table.status, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get actions => $composableBuilder(
+      column: $table.actions, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get conditions => $composableBuilder(
+      column: $table.conditions, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get configuration => $composableBuilder(
+      column: $table.configuration,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get configDescriptions => $composableBuilder(
+      column: $table.configDescriptions,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get triggers => $composableBuilder(
+      column: $table.triggers, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get editable => $composableBuilder(
+      column: $table.editable, builder: (column) => ColumnOrderings(column));
+}
+
+class $$RulesTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $RulesTableTable> {
+  $$RulesTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get uid =>
+      $composableBuilder(column: $table.uid, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<List<String>?, String> get tags =>
+      $composableBuilder(column: $table.tags, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<RuleStatusInfo?, String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<List<ActionDTO>?, String> get actions =>
+      $composableBuilder(column: $table.actions, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<List<ConditionDTO>?, String>
+      get conditions => $composableBuilder(
+          column: $table.conditions, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<Map<String, dynamic>?, String>
+      get configuration => $composableBuilder(
+          column: $table.configuration, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<List<ConfigDescriptionParameterDTO>?, String>
+      get configDescriptions => $composableBuilder(
+          column: $table.configDescriptions, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<List<TriggerDTO>?, String> get triggers =>
+      $composableBuilder(column: $table.triggers, builder: (column) => column);
+
+  GeneratedColumn<bool> get editable =>
+      $composableBuilder(column: $table.editable, builder: (column) => column);
+}
+
+class $$RulesTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $RulesTableTable,
+    Rule,
+    $$RulesTableTableFilterComposer,
+    $$RulesTableTableOrderingComposer,
+    $$RulesTableTableAnnotationComposer,
+    $$RulesTableTableCreateCompanionBuilder,
+    $$RulesTableTableUpdateCompanionBuilder,
+    (Rule, BaseReferences<_$AppDatabase, $RulesTableTable, Rule>),
+    Rule,
+    PrefetchHooks Function()> {
+  $$RulesTableTableTableManager(_$AppDatabase db, $RulesTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$RulesTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$RulesTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$RulesTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> uid = const Value.absent(),
+            Value<String?> name = const Value.absent(),
+            Value<List<String>?> tags = const Value.absent(),
+            Value<RuleStatusInfo?> status = const Value.absent(),
+            Value<List<ActionDTO>?> actions = const Value.absent(),
+            Value<List<ConditionDTO>?> conditions = const Value.absent(),
+            Value<Map<String, dynamic>?> configuration = const Value.absent(),
+            Value<List<ConfigDescriptionParameterDTO>?> configDescriptions =
+                const Value.absent(),
+            Value<List<TriggerDTO>?> triggers = const Value.absent(),
+            Value<bool> editable = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              RulesTableCompanion(
+            uid: uid,
+            name: name,
+            tags: tags,
+            status: status,
+            actions: actions,
+            conditions: conditions,
+            configuration: configuration,
+            configDescriptions: configDescriptions,
+            triggers: triggers,
+            editable: editable,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String uid,
+            Value<String?> name = const Value.absent(),
+            Value<List<String>?> tags = const Value.absent(),
+            Value<RuleStatusInfo?> status = const Value.absent(),
+            Value<List<ActionDTO>?> actions = const Value.absent(),
+            Value<List<ConditionDTO>?> conditions = const Value.absent(),
+            Value<Map<String, dynamic>?> configuration = const Value.absent(),
+            Value<List<ConfigDescriptionParameterDTO>?> configDescriptions =
+                const Value.absent(),
+            Value<List<TriggerDTO>?> triggers = const Value.absent(),
+            required bool editable,
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              RulesTableCompanion.insert(
+            uid: uid,
+            name: name,
+            tags: tags,
+            status: status,
+            actions: actions,
+            conditions: conditions,
+            configuration: configuration,
+            configDescriptions: configDescriptions,
+            triggers: triggers,
+            editable: editable,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$RulesTableTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $RulesTableTable,
+    Rule,
+    $$RulesTableTableFilterComposer,
+    $$RulesTableTableOrderingComposer,
+    $$RulesTableTableAnnotationComposer,
+    $$RulesTableTableCreateCompanionBuilder,
+    $$RulesTableTableUpdateCompanionBuilder,
+    (Rule, BaseReferences<_$AppDatabase, $RulesTableTable, Rule>),
+    Rule,
+    PrefetchHooks Function()>;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -3488,4 +4306,6 @@ class $AppDatabaseManager {
       $$ItemsTableTableTableManager(_db, _db.itemsTable);
   $$ItemStatesTableTableTableManager get itemStatesTable =>
       $$ItemStatesTableTableTableManager(_db, _db.itemStatesTable);
+  $$RulesTableTableTableManager get rulesTable =>
+      $$RulesTableTableTableManager(_db, _db.rulesTable);
 }

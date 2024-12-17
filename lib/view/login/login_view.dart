@@ -44,8 +44,7 @@ class _LoginViewState extends State<LoginView> {
                             child: ConstrainedBox(
                                 constraints: const BoxConstraints(
                                     maxWidth: 200, maxHeight: 200),
-                                child: Image.asset(
-                                    "res/images/logo.png"))),
+                                child: Image.asset("res/images/logo.png"))),
                         const Gap(42),
                         Align(
                           alignment: Alignment.centerLeft,
@@ -88,6 +87,21 @@ class _LoginViewState extends State<LoginView> {
                           ),
                           obscureText: obscureText,
                           validator: FormBuilderValidators.required(),
+                          textInputAction: TextInputAction.next,
+                        ),
+                        const Gap(18),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text("Insert the Api Token",
+                              style: Theme.of(context).textTheme.bodyLarge),
+                        ),
+                        const Gap(12),
+                        FormBuilderTextField(
+                          name: "apiToken",
+                          decoration: InputDecoration(
+                            label: Text("Api Token"),
+                          ),
+                          validator: FormBuilderValidators.required(),
                           textInputAction: TextInputAction.done,
                           onSubmitted: (_) => _login(),
                         ),
@@ -103,7 +117,8 @@ class _LoginViewState extends State<LoginView> {
       loginRepository
           .storeLogin(
               username: _fbKey.currentState!.value['username'],
-              password: _fbKey.currentState!.value['password'])
+              password: _fbKey.currentState!.value['password'],
+              apiToken: _fbKey.currentState!.value['apiToken'])
           .then((success) {
         if (success) {
           context.goNamed(FavouriteView.routeName);

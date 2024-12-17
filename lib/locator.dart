@@ -9,6 +9,7 @@ import 'core/network/interceptors/AuthInterceptor.dart';
 import 'core/routing/navigation_service.dart';
 import 'core/services/wakelock_service.dart';
 import 'core/services/snackbar_service.dart';
+import 'repository/automation_repository.dart';
 import 'repository/chart_repository.dart';
 import 'repository/item_repository.dart';
 import 'repository/login_repository.dart';
@@ -51,4 +52,5 @@ void setupLocator() {
     ItemRepository(),
   );
   locator.registerSingleton(WeatherRepository());
+  locator.registerSingleton(AutomationRepository());
 }

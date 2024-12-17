@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../locator.dart';
 import '../../view/login/login_view.dart';
+import '../../view/main/automation/automation_view.dart';
 import '../../view/main/favourite/favourite_view.dart';
 import '../../view/main/main_view.dart';
 import '../../view/main/rooms/rooms_view.dart';
@@ -47,6 +48,18 @@ final router = GoRouter(
                     final roomId = int.tryParse(state.uri.queryParameters['roomId'] ?? '');
                     return NoTransitionPage(child: RoomsView(initialRoomId: roomId));
                   },
+                  onExit: onExitMainView,
+                  redirect: onEntryMainView,
+                ),
+              ],
+            ),
+            StatefulShellBranch(
+              routes: [
+                GoRoute(
+                  path: AutomationView.routePath,
+                  name: AutomationView.routeName,
+                  pageBuilder: (context, state) =>
+                  const NoTransitionPage(child: AutomationView()),
                   onExit: onExitMainView,
                   redirect: onEntryMainView,
                 ),

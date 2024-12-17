@@ -109,5 +109,6 @@
   "logout": "Logout",
   "settings_theme": "Theme",
   "settings_wakelock": "Wakelock",
-  "settings_wakelock_description": "Automatically enable wakelock"
+  "settings_wakelock_description": "Automatically enable wakelock",
+  "navigationAutomation": "Automation"
 }
