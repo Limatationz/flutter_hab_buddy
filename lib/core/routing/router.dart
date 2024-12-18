@@ -1,10 +1,15 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../locator.dart';
+import '../../view/login/login_api_setup_view.dart';
+import '../../view/login/login_local_setup_view.dart';
+import '../../view/login/login_remote_setup_view.dart';
+import '../../view/login/login_start_view.dart';
 import '../../view/login/login_view.dart';
 import '../../view/main/automation/automation_view.dart';
 import '../../view/main/favourite/favourite_view.dart';
@@ -45,8 +50,10 @@ final router = GoRouter(
                   path: RoomsView.routePath,
                   name: RoomsView.routeName,
                   pageBuilder: (context, state) {
-                    final roomId = int.tryParse(state.uri.queryParameters['roomId'] ?? '');
-                    return NoTransitionPage(child: RoomsView(initialRoomId: roomId));
+                    final roomId =
+                        int.tryParse(state.uri.queryParameters['roomId'] ?? '');
+                    return NoTransitionPage(
+                        child: RoomsView(initialRoomId: roomId));
                   },
                   onExit: onExitMainView,
                   redirect: onEntryMainView,
@@ -59,7 +66,7 @@ final router = GoRouter(
                   path: AutomationView.routePath,
                   name: AutomationView.routeName,
                   pageBuilder: (context, state) =>
-                  const NoTransitionPage(child: AutomationView()),
+                      const NoTransitionPage(child: AutomationView()),
                   onExit: onExitMainView,
                   redirect: onEntryMainView,
                 ),
@@ -83,10 +90,30 @@ final router = GoRouter(
             const NoTransitionPage(child: StartView()),
       ),
       GoRoute(
-        path: LoginView.routePath,
-        name: LoginView.routeName,
+        path: LoginStartView.routePath,
+        name: LoginStartView.routeName,
         pageBuilder: (context, state) =>
-            const NoTransitionPage(child: LoginView()),
+            const NoTransitionPage(child: LoginStartView()),
+        routes: [
+          GoRoute(
+            path: LoginLocalSetupView.routePath,
+            name: LoginLocalSetupView.routeName,
+            pageBuilder: (context, state) =>
+                const CupertinoPage(child: LoginLocalSetupView()),
+          ),
+          GoRoute(
+            path: LoginRemoteSetupView.routePath,
+            name: LoginRemoteSetupView.routeName,
+            pageBuilder: (context, state) =>
+            const CupertinoPage(child: LoginRemoteSetupView()),
+          ),
+          GoRoute(
+            path: LoginApiSetupView.routePath,
+            name: LoginApiSetupView.routeName,
+            pageBuilder: (context, state) =>
+            const CupertinoPage(child: LoginApiSetupView()),
+          )
+        ],
       ),
     ]);
 

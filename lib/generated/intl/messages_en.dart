@@ -113,6 +113,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "loginInfo": MessageLookupByLibrary.simpleMessage(
             "Enter your credentials from myOpenHAB.org"),
         "logout": MessageLookupByLibrary.simpleMessage("Logout"),
+        "navigationAutomation":
+            MessageLookupByLibrary.simpleMessage("Automation"),
         "navigationFavorites":
             MessageLookupByLibrary.simpleMessage("Favorites"),
         "navigationInbox": MessageLookupByLibrary.simpleMessage("Inbox"),

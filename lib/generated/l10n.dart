@@ -1059,6 +1059,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Automation`
+  String get navigationAutomation {
+    return Intl.message(
+      'Automation',
+      name: 'navigationAutomation',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

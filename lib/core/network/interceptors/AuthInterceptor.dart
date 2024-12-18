@@ -16,7 +16,7 @@ class AuthInterceptor implements Interceptor {
     _loginRepository.loginData.listen((tuple) {
       _username = tuple?.username;
       _password = tuple?.password;
-      _apiToken = tuple?.apiToken;
+      // _apiToken = tuple?.apiToken;
     });
   }
 

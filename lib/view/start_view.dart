@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../repository/login_repository.dart';
 import '../locator.dart';
+import 'login/login_start_view.dart';
 import 'login/login_view.dart';
 import 'main/favourite/favourite_view.dart';
 
@@ -41,7 +42,7 @@ class _StartViewState extends State<StartView> {
               if (loggedIn) {
                 context.goNamed(FavouriteView.routeName);
               } else {
-                context.goNamed(LoginView.routeName);
+                context.goNamed(LoginStartView.routeName);
               }
             });
           }

@@ -14,10 +14,9 @@ class LoginRepository {
 
   Stream<bool?> get loggedIn => _loggedIn.stream;
 
-  final BehaviorSubject<LoginData?> _loginData =
-      BehaviorSubject.seeded(null);
+  final BehaviorSubject<RemoteLoginData?> _loginData = BehaviorSubject.seeded(null);
 
-  Stream<LoginData?> get loginData => _loginData.stream;
+  Stream<RemoteLoginData?> get loginData => _loginData.stream;
 
   Completer<bool> loginComplete = Completer();
 
@@ -47,7 +46,7 @@ class LoginRepository {
     final apiToken = await _secureStorage.read(key: 'apiToken');
     if (username != null && password != null && apiToken != null) {
       _loggedIn.add(true);
-      _loginData.add(LoginData(username, password, apiToken));
+      _loginData.add(RemoteLoginData(username, password));
     } else {
       _loggedIn.add(false);
     }
@@ -57,7 +56,9 @@ class LoginRepository {
   /// returns true if login is valid
   /// returns false if login is invalid or server is not reachable
   Future<bool> storeLogin(
-      {required String username, required String password, required String apiToken}) async {
+      {required String username,
+      required String password,
+      required String apiToken}) async {
     // check login
     // TODO: Test APi Token!!
     final api = OpenHAB.create(
@@ -72,7 +73,7 @@ class LoginRepository {
       await _secureStorage.write(key: 'apiToken', value: apiToken);
 
       _loggedIn.add(true);
-      _loginData.add(LoginData(username, password, apiToken));
+      _loginData.add(RemoteLoginData(username, password));
       return true;
     } else {
       _loggedIn.add(false);
@@ -90,10 +91,24 @@ class LoginRepository {
   }
 }
 
-class LoginData {
+// Login Data for Local OpenHAB Server
+class LocalLoginData {
+  final String host;
+  final String port;
+
+  LocalLoginData(this.host, this.port);
+}
+
+// Login Data for MyOpenHAB
+class RemoteLoginData {
   final String username;
   final String password;
+
+  RemoteLoginData(this.username, this.password);
+}
+
+class ApiLoginData {
   final String apiToken;
 
-  LoginData(this.username, this.password, this.apiToken);
+  ApiLoginData(this.apiToken);
 }
