@@ -5,7 +5,8 @@ import 'core/network/client/http_client_factory.dart'
 
 import 'core/database/app_database.dart';
 import 'core/network/generated/client_index.dart';
-import 'core/network/interceptors/AuthInterceptor.dart';
+import 'core/network/interceptors/api_auth_interceptor.dart';
+import 'core/network/interceptors/cloud_auth_interceptor.dart';
 import 'core/routing/navigation_service.dart';
 import 'core/services/wakelock_service.dart';
 import 'core/services/snackbar_service.dart';
@@ -36,15 +37,6 @@ void setupLocator() {
   locator.registerLazySingleton(() => AppDatabase());
 
   locator.registerSingleton(LoginRepository());
-
-  // API
-  locator.registerSingleton<OpenHAB>(OpenHAB.create(
-      baseUrl: Uri.parse("https://myopenhab.org/rest"),
-      httpClient: getHttpClient(),
-      interceptors: [
-        AuthInterceptor(),
-        // kDebugMode ? HttpLoggingInterceptor() : null
-      ]));
 
   // repositories
   locator.registerSingleton(ChartRepository());

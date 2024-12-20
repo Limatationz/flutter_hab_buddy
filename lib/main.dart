@@ -13,6 +13,7 @@ import 'package:logging/logging.dart';
 import 'core/routing/router.dart';
 import 'generated/l10n.dart';
 import 'locator.dart';
+import 'repository/login_repository.dart';
 import 'view/util/platform.dart';
 import 'view/util/text_styles.g.dart';
 
@@ -43,6 +44,8 @@ void main() async {
       isDark = false;
     }
   }
+
+  final isLoggedIn = await locator<LoginRepository>().checkLogin();
 
   runApp(DynamicColorBuilder(
       builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
@@ -107,7 +110,7 @@ void main() async {
           return MaterialApp.router(
                   debugShowCheckedModeBanner: false,
                   title: "OpenHAB Home",
-                  routerConfig: router,
+                  routerConfig: router(isLoggedIn),
                   localizationsDelegates: const [
                     S.delegate,
                     GlobalMaterialLocalizations.delegate,

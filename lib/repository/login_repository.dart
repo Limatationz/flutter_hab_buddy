@@ -1,26 +1,34 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:chopper/chopper.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:tuple/tuple.dart';
-import '../core/network/generated/openHAB.swagger.dart';
-import '../core/network/interceptors/LoginInterceptor.dart';
+import '../core/database/login/login_data.dart';
+import 'connectivity_manager.dart';
 
 class LoginRepository {
+  static const String _secureStorageKey = 'loginData';
+
   final _secureStorage = const FlutterSecureStorage();
   final BehaviorSubject<bool?> _loggedIn = BehaviorSubject.seeded(null);
 
   Stream<bool?> get loggedIn => _loggedIn.stream;
 
-  final BehaviorSubject<RemoteLoginData?> _loginData = BehaviorSubject.seeded(null);
+  final BehaviorSubject<LoginData?> _loginData = BehaviorSubject.seeded(null);
 
-  Stream<RemoteLoginData?> get loginData => _loginData.stream;
+  Stream<LoginData?> get loginData => _loginData.stream;
 
   Completer<bool> loginComplete = Completer();
 
+  late final ConnectivityManager _connectivityManager;
+
+  ConnectivityManager get connectivityManager => _connectivityManager;
+
+  final Completer<bool> firstConnectionComplete = Completer();
+
   LoginRepository() {
+    _connectivityManager = ConnectivityManager(loginData, firstConnectionComplete);
+
     _loginData.listen((event) {
       if (event != null) {
         loginComplete.complete(true);
@@ -28,52 +36,62 @@ class LoginRepository {
     });
   }
 
-  String? get basicAuth {
-    if (_loginData.value != null) {
-      final username = _loginData.value!.username;
-      final password = _loginData.value!.password;
+  Map<String, String> get basicAuth {
+    if (connectivityManager.connectionState == ServerConnectionState.cloud &&
+        _loginData.value?.cloudLoginData != null) {
+      final username = _loginData.value!.cloudLoginData?.username;
+      final password = _loginData.value!.cloudLoginData?.password;
+
+      if (username == null || password == null) {
+        return {};
+      }
+
       final bytes = utf8.encode("$username:$password");
       final base64Str = base64.encode(bytes);
-      return "Basic $base64Str";
+      return {"Authorization": "Basic $base64Str"};
+    } else if (connectivityManager.connectionState == ServerConnectionState.remote &&
+        _loginData.value?.remoteLoginData?.hasBasicAuth == true) {
+      final username = _loginData.value!.remoteLoginData?.basicAuthUsername;
+      final password = _loginData.value!.remoteLoginData?.basicAuthPassword;
+
+      if (username == null || password == null) {
+        return {};
+      }
+
+      final bytes = utf8.encode("$username:$password");
+      final base64Str = base64.encode(bytes);
+      return {"Authorization": "Basic $base64Str"};
     } else {
-      return null;
+      return {};
     }
   }
 
-  Future<void> checkLogin() async {
-    final username = await _secureStorage.read(key: 'username');
-    final password = await _secureStorage.read(key: 'password');
-    final apiToken = await _secureStorage.read(key: 'apiToken');
-    if (username != null && password != null && apiToken != null) {
-      _loggedIn.add(true);
-      _loginData.add(RemoteLoginData(username, password));
+  Map<String, String> get apiAuth {
+    if (connectivityManager.connectionState != ServerConnectionState.offline &&
+        _loginData.value?.apiLoginData != null) {
+      final token = _loginData.value!.apiLoginData?.apiToken;
+      if (token == null) {
+        return {};
+      }
+      return {"X-OPENHAB-TOKEN": token};
     } else {
-      _loggedIn.add(false);
+      return {};
     }
   }
 
-  /// checks if login is valid and stores it in secure storage
-  /// returns true if login is valid
-  /// returns false if login is invalid or server is not reachable
-  Future<bool> storeLogin(
-      {required String username,
-      required String password,
-      required String apiToken}) async {
-    // check login
-    // TODO: Test APi Token!!
-    final api = OpenHAB.create(
-        baseUrl: Uri.parse("https://myopenhab.org/rest"),
-        interceptors: [
-          LoginInterceptor(username, password),
-        ]);
-    final result = await api.get();
-    if (result.isSuccessful) {
-      await _secureStorage.write(key: 'username', value: username);
-      await _secureStorage.write(key: 'password', value: password);
-      await _secureStorage.write(key: 'apiToken', value: apiToken);
+  LocalLoginData? get localLoginData {
+    return _loginData.value?.localLoginData;
+  }
 
+  Future<bool> checkLogin() async {
+    final loginDataString =
+        (await _secureStorage.read(key: _secureStorageKey)) ?? "";
+    final loginData = loginDataString.isNotEmpty
+        ? LoginData.fromJson(jsonDecode(loginDataString))
+        : null;
+    if (loginData != null) {
       _loggedIn.add(true);
-      _loginData.add(RemoteLoginData(username, password));
+      _loginData.add(loginData);
       return true;
     } else {
       _loggedIn.add(false);
@@ -82,33 +100,68 @@ class LoginRepository {
     }
   }
 
+  Future<bool> storeLocalLogin({
+    required LocalLoginData localLoginData,
+  }) async {
+    final loginData = LoginData(localLoginData);
+    final loginDataString = jsonEncode(loginData.toJson());
+    await _secureStorage.write(key: _secureStorageKey, value: loginDataString);
+    _loggedIn.add(true);
+    _loginData.add(loginData);
+    return true;
+  }
+
+  Future<bool> storeCloudLogin({required CloudLoginData cloudLoginData}) async {
+    final storedLoginData = _loginData.valueOrNull;
+    if (storedLoginData == null) {
+      // this should not happen -> step 1 is not completed
+      return false;
+    }
+
+    final newLoginData =
+        storedLoginData.copyWith(cloudLoginData: cloudLoginData);
+    final loginDataString = jsonEncode(newLoginData.toJson());
+    await _secureStorage.write(key: _secureStorageKey, value: loginDataString);
+    _loggedIn.add(true);
+    _loginData.add(newLoginData);
+    return true;
+  }
+
+  Future<bool> storeRemoteLogin(
+      {required RemoteLoginData remoteLoginData}) async {
+    final storedLoginData = _loginData.valueOrNull;
+    if (storedLoginData == null) {
+      // this should not happen -> step 1 is not completed
+      return false;
+    }
+
+    final newLoginData =
+        storedLoginData.copyWith(remoteLoginData: remoteLoginData);
+    final loginDataString = jsonEncode(newLoginData.toJson());
+    await _secureStorage.write(key: _secureStorageKey, value: loginDataString);
+    _loggedIn.add(true);
+    _loginData.add(newLoginData);
+    return true;
+  }
+
+  Future<bool> storeApiToken({required ApiLoginData apiLoginData}) async {
+    final storedLoginData = _loginData.valueOrNull;
+    if (storedLoginData == null) {
+      // this should not happen -> step 1 is not completed
+      return false;
+    }
+
+    final newLoginData = storedLoginData.copyWith(apiLoginData: apiLoginData);
+    final loginDataString = jsonEncode(newLoginData.toJson());
+    await _secureStorage.write(key: _secureStorageKey, value: loginDataString);
+    _loggedIn.add(true);
+    _loginData.add(newLoginData);
+    return true;
+  }
+
   Future<void> logout() async {
-    await _secureStorage.delete(key: 'username');
-    await _secureStorage.delete(key: 'password');
-    await _secureStorage.delete(key: 'apiToken');
+    await _secureStorage.delete(key: _secureStorageKey);
     _loggedIn.add(false);
     _loginData.add(null);
   }
-}
-
-// Login Data for Local OpenHAB Server
-class LocalLoginData {
-  final String host;
-  final String port;
-
-  LocalLoginData(this.host, this.port);
-}
-
-// Login Data for MyOpenHAB
-class RemoteLoginData {
-  final String username;
-  final String password;
-
-  RemoteLoginData(this.username, this.password);
-}
-
-class ApiLoginData {
-  final String apiToken;
-
-  ApiLoginData(this.apiToken);
 }

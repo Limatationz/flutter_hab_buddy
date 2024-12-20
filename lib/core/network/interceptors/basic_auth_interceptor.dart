@@ -3,11 +3,11 @@ import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
 
-class LoginInterceptor implements Interceptor {
+class BasicAuthInterceptor implements Interceptor {
   final String _username;
   final String _password;
 
-  LoginInterceptor(this._username, this._password);
+  BasicAuthInterceptor(this._username, this._password);
 
   @override
   FutureOr<Response<BodyType>> intercept<BodyType>(Chain<BodyType> chain) {

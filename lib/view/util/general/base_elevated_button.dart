@@ -42,10 +42,10 @@ class BaseElevatedButton extends StatelessWidget {
                     .textTheme
                     .bodyLarge
                     ?.copyWith(
-                        color: textColor ??
+                        color: onPressed != null ? (textColor ??
                             Theme.of(context)
                                 .colorScheme
-                                .onInverseSurface),
+                                .onInverseSurface) : Colors.white),
               ),
             ));
   }

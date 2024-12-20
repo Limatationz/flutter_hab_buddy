@@ -6,7 +6,6 @@ import '../core/network/generated/openHAB.swagger.dart';
 import '../locator.dart';
 
 class ChartRepository {
-  final _api = locator<OpenHAB>();
   late final Box<List> _sensorDataBox;
   late final Box<DateTime> _sensorDataLastUpdateBox;
 
@@ -24,7 +23,7 @@ class ChartRepository {
     final lastDateString =
         lastDate.add(const Duration(seconds: 1)).toIso8601String();
 
-    final result = await _api.persistenceItemsItemnameGet(
+    final result = await locator<OpenHAB>().persistenceItemsItemnameGet(
         itemname: itemName, starttime: lastDateString);
     if (result.isSuccessful) {
       final data = result.body!.data;
@@ -36,7 +35,7 @@ class ChartRepository {
             [];
         final newData = data
             .map((e) => SensorHistoryDataBean.fromNetworkModel(e))
-            .whereNotNull()
+            .nonNulls
             .toList();
         await _sensorDataBox.put(itemName, [...storedData, ...newData]);
 

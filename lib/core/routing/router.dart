@@ -10,20 +10,18 @@ import '../../view/login/login_api_setup_view.dart';
 import '../../view/login/login_local_setup_view.dart';
 import '../../view/login/login_remote_setup_view.dart';
 import '../../view/login/login_start_view.dart';
-import '../../view/login/login_view.dart';
 import '../../view/main/automation/automation_view.dart';
 import '../../view/main/favourite/favourite_view.dart';
 import '../../view/main/main_view.dart';
 import '../../view/main/rooms/rooms_view.dart';
 import '../../view/main/settings/settings_view.dart';
-import '../../view/start_view.dart';
 import '../services/wakelock_service.dart';
 import 'error_view.dart';
 import 'navigation_service.dart';
 
-final router = GoRouter(
+GoRouter router(bool isLoggedIn) => GoRouter(
     debugLogDiagnostics: kDebugMode,
-    initialLocation: StartView.routePath,
+    initialLocation: isLoggedIn ? FavouriteView.routePath : LoginStartView.routePath,
     navigatorKey: locator.get<NavigationService>().navigatorKey,
     errorBuilder: (context, state) => ErrorView(state: state),
     routes: [
@@ -83,12 +81,6 @@ final router = GoRouter(
               ],
             ),
           ]),
-      GoRoute(
-        path: StartView.routePath,
-        name: StartView.routeName,
-        pageBuilder: (context, state) =>
-            const NoTransitionPage(child: StartView()),
-      ),
       GoRoute(
         path: LoginStartView.routePath,
         name: LoginStartView.routeName,

@@ -1,10 +1,11 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ConnectionState;
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../generated/l10n.dart';
+import '../../../repository/connectivity_manager.dart';
 import '../../../util/icons/icons.dart';
 import '../../util/general/bar_bottom_sheet.dart';
 import '../../util/general/list_picker_sheet_view.dart';
@@ -64,15 +65,13 @@ class SettingsView extends StatelessWidget {
                             .of(context)
                             .settings_connection_status_description),
                         descriptionInlineIos: true,
-                        trailing: StreamBuilder<bool>(
+                        trailing: StreamBuilder<ServerConnectionState>(
                           stream: model.connectionStatus,
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
                               return Icon(
-                                snapshot.data!
-                                    ? LineIcons.checkmark
-                                    : LineIcons.minus,
-                                color: snapshot.data!
+                                snapshot.data?.icon,
+                                color: snapshot.data != ServerConnectionState.offline
                                     ? Colors.green
                                     : Theme.of(context).colorScheme.error,
                               );
@@ -90,7 +89,7 @@ class SettingsView extends StatelessWidget {
                             .settings_connection_start_description),
                         descriptionInlineIos: true,
                         trailing: StreamBuilder<DateTime?>(
-                          stream: model.lastConnectionStart,
+                          stream: model.lastSSEConnectionStart,
                           builder: (context, snapshot) {
                             if (snapshot.data != null) {
                               return Text(DateFormat.yMd()
@@ -110,7 +109,7 @@ class SettingsView extends StatelessWidget {
                             .settings_connection_update_description),
                         descriptionInlineIos: true,
                         trailing: StreamBuilder<DateTime?>(
-                          stream: model.lastUpdate,
+                          stream: model.lastSSEUpdate,
                           builder: (context, snapshot) {
                             if (snapshot.data != null) {
                               return Text(DateFormat.yMd()

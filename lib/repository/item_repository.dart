@@ -27,21 +27,6 @@ class ItemRepository {
   final _itemsStore = locator<AppDatabase>().itemsStore;
   final _inboxStore = locator<AppDatabase>().inboxStore;
   final _snackbarService = locator<SnackbarService>();
-  final _api = locator<OpenHAB>();
-
-  // SSE Connection
-  final BehaviorSubject<bool?> _sseConnection = BehaviorSubject.seeded(null);
-
-  Stream<bool?> get sseConnection => _sseConnection.stream;
-  final BehaviorSubject<DateTime?> _sseLastConnection =
-      BehaviorSubject.seeded(null);
-
-  Stream<DateTime?> get sseLastConnection => _sseLastConnection.stream;
-
-  final BehaviorSubject<DateTime?> _sseLastMessage =
-      BehaviorSubject.seeded(null);
-
-  Stream<DateTime?> get sseLastMessage => _sseLastMessage.stream;
 
   Stream<DateTime> get clockStream =>
       Stream.periodic(const Duration(seconds: 1), (_) => DateTime.now());
@@ -51,7 +36,8 @@ class ItemRepository {
   }
 
   Future<void> fetchData({bool insertToInbox = true}) async {
-    final result = await _api.itemsGet();
+    await _loginRepository.firstConnectionComplete.future;
+    final result = await locator<OpenHAB>().itemsGet();
     if (result.isSuccessful) {
       final storedItems = await _itemsStore.all().get();
       if (insertToInbox) {
@@ -108,7 +94,7 @@ class ItemRepository {
   }
 
   Future<void> fetchDataByName(String itemName) async {
-    final result = await _api.itemsItemnameGet(itemname: itemName);
+    final result = await locator<OpenHAB>().itemsItemnameGet(itemname: itemName);
     if (result.isSuccessful && result.body != null) {
       final item = result.body!.asDatabaseModel();
       if (item != null) {
@@ -264,10 +250,12 @@ class ItemRepository {
     _itemsStore.incrementScoreByName(itemName);
 
     try {
-      final dio = await Dio().post("https://myopenhab.org/rest/items/$itemName",
+      final dio = await Dio().post(
+          "${_loginRepository.connectivityManager.baseUrl}/items/$itemName",
           data: body,
           options: Options(headers: {
-            "Authorization": "${_loginRepository.basicAuth}",
+            ..._loginRepository.basicAuth,
+            ..._loginRepository.apiAuth,
             "Content-Type": "text/plain",
           }));
       if (dio.statusCode != 200) {
@@ -283,7 +271,7 @@ class ItemRepository {
   }
 
   Future<void> getStatusOfItem(String itemName) async {
-    final result = await _api.itemsItemnameGet(itemname: itemName);
+    final result = await locator<OpenHAB>().itemsItemnameGet(itemname: itemName);
     if (result.isSuccessful && result.body != null) {
       final update = result.body!.asItemUpdate();
       if (update != null) {
@@ -293,7 +281,7 @@ class ItemRepository {
   }
 
   Future<String?> fetchStatusOfItem(String itemName) async {
-    final result = await _api.itemsItemnameGet(itemname: itemName);
+    final result = await locator<OpenHAB>().itemsItemnameGet(itemname: itemName);
     if (result.isSuccessful && result.body != null) {
       return result.body!.state;
     }
@@ -303,26 +291,11 @@ class ItemRepository {
   // TODO!!!!
   Future<void> observeEvents() async {
     await _loginRepository.loginComplete.future;
-    SSEClient.subscribeToSSE(
-      method: SSERequestType.GET,
-      url: 'https://myopenhab.org/rest/events?topics=*/items/*/statechanged',
-      header: {
-        "Authorization": "${_loginRepository.basicAuth}",
-      },
-    )
+    _loginRepository.connectivityManager.sseStateStream
         .withLatestFrom(_itemsStore.watchAllOhNames(),
             (event, names) => Tuple2(event, names))
         .listen(
       (tuple) {
-        // Connection
-        if (_sseConnection.value != true) {
-          _sseConnection.add(true);
-        }
-        if (_sseLastConnection.value == null) {
-          _sseLastConnection.add(DateTime.now());
-        }
-        _sseLastMessage.add(DateTime.now());
-
         final event = tuple.item1;
         final names = tuple.item2;
 

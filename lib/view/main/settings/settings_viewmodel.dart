@@ -1,6 +1,6 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:drift/drift.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide ConnectionState;
 import 'package:go_router/go_router.dart';
 import 'package:stacked/stacked.dart';
 
@@ -9,9 +9,10 @@ import '../../../core/database/items/item_type.dart';
 import '../../../core/services/wakelock_service.dart';
 import '../../../locator.dart';
 import '../../../main.dart';
+import '../../../repository/connectivity_manager.dart';
 import '../../../repository/item_repository.dart';
 import '../../../repository/login_repository.dart';
-import '../../login/login_view.dart';
+import '../../login/login_start_view.dart';
 
 class SettingsViewModel extends BaseViewModel {
   final _db = locator<AppDatabase>();
@@ -19,13 +20,13 @@ class SettingsViewModel extends BaseViewModel {
   final _loginRepository = locator<LoginRepository>();
   final wakelockService = locator<WakelockService>();
 
-  Stream<bool> get connectionStatus =>
-      _itemsRepository.sseConnection.map((event) => event ?? false);
+  Stream<ServerConnectionState> get connectionStatus =>
+      _loginRepository.connectivityManager.connectionStateStream;
 
-  Stream<DateTime?> get lastConnectionStart =>
-      _itemsRepository.sseLastConnection;
+  Stream<DateTime?> get lastSSEConnectionStart =>
+      _loginRepository.connectivityManager.sseLastConnection;
 
-  Stream<DateTime?> get lastUpdate => _itemsRepository.sseLastMessage;
+  Stream<DateTime?> get lastSSEUpdate => _loginRepository.connectivityManager.sseLastMessage;
 
   int getThemeIndex(BuildContext context) {
     return AdaptiveTheme
@@ -50,7 +51,7 @@ class SettingsViewModel extends BaseViewModel {
   Future<void> logout(BuildContext context) async {
     await _db.deleteAllData();
     await _loginRepository.logout();
-    context.goNamed(LoginView.routeName);
+    context.replaceNamed(LoginStartView.routeName);
   }
 
   Future<void> clearDatabase() async {

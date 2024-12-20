@@ -8,10 +8,11 @@ import 'package:go_router/go_router.dart';
 import 'package:multicast_dns/multicast_dns.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../core/database/login/login_data.dart';
 import '../../core/network/generated/client_index.dart';
 import '../../core/network/generated/openHAB.swagger.dart';
-import '../../core/network/interceptors/ApiInterceptor.dart';
-import '../../core/network/interceptors/LoginInterceptor.dart';
+import '../../core/network/interceptors/api_interceptor.dart';
+import '../../core/network/interceptors/basic_auth_interceptor.dart';
 import '../../core/services/snackbar_service.dart';
 import '../../generated/l10n.dart';
 import '../../locator.dart';
@@ -33,6 +34,7 @@ class LoginApiSetupView extends StatefulWidget {
 }
 
 class _LoginApiSetupViewState extends State<LoginApiSetupView> {
+  final _loginRepository = locator<LoginRepository>();
   final formKey = GlobalKey<FormBuilderState>();
 
   // local login data from the step before to check if the server is the same
@@ -45,7 +47,12 @@ class _LoginApiSetupViewState extends State<LoginApiSetupView> {
 
   @override
   void initState() {
-    localLoginData = LocalLoginData("192.168.178.49", "8080");
+    final localLoginData = _loginRepository.localLoginData;
+    if (localLoginData == null){
+      // TODO: was machen wir hier?
+    } else {
+      this.localLoginData = localLoginData;
+    }
     super.initState();
   }
 
@@ -124,9 +131,15 @@ class _LoginApiSetupViewState extends State<LoginApiSetupView> {
   }
 
   Future<void> _onNextPressed(BuildContext context) async {
-    // TODO: save local data
-
-    context.pushNamed(FavouriteView.routeName);
+    final result = await _loginRepository.storeApiToken(
+        apiLoginData: apiLoginData!);
+    if (result) {
+      context.pushNamed(FavouriteView.routeName);
+    } else {
+      locator<SnackbarService>().showSnackbar(
+          message: "Failed to store api data. Please try again.",
+          type: SnackbarType.error);
+    }
   }
 
   Future<void> _testConnection() async {

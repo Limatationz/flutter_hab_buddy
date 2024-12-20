@@ -4,10 +4,11 @@ import '../core/database/app_database.dart';
 import '../core/network/converters/rule.dart';
 import '../core/network/generated/openHAB.swagger.dart' hide Rule;
 import '../locator.dart';
+import 'login_repository.dart';
 
 class AutomationRepository {
+  final _loginRepository = locator<LoginRepository>();
   final _store = locator<AppDatabase>().rulesStore;
-  final _api = locator<OpenHAB>();
 
   Stream<List<Rule>> get rules => _store.all().watch();
 
@@ -18,7 +19,8 @@ class AutomationRepository {
   }
 
   Future<void> fetchData() async {
-    final result = await _api.rulesGet();
+    await _loginRepository.firstConnectionComplete.future;
+    final result = await locator<OpenHAB>().rulesGet();
     if (result.isSuccessful) {
       final storedRules = await _store.all().get();
 

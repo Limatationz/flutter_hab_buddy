@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../generated/l10n.dart';
@@ -25,6 +26,8 @@ class _MainViewState extends State<MainView> with WidgetsBindingObserver {
 
   @override
   void initState() {
+    FlutterNativeSplash.remove();
+
     viewModel.fetchData();
 
     WidgetsBinding.instance.addObserver(this);
