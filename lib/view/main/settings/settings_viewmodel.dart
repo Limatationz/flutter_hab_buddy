@@ -9,14 +9,18 @@ import '../../../core/database/items/item_type.dart';
 import '../../../core/services/wakelock_service.dart';
 import '../../../locator.dart';
 import '../../../main.dart';
+import '../../../repository/automation_repository.dart';
 import '../../../repository/connectivity_manager.dart';
 import '../../../repository/item_repository.dart';
 import '../../../repository/login_repository.dart';
+import '../../login/login_api_setup_view.dart';
+import '../../login/login_remote_setup_view.dart';
 import '../../login/login_start_view.dart';
 
 class SettingsViewModel extends BaseViewModel {
   final _db = locator<AppDatabase>();
   final _itemsRepository = locator<ItemRepository>();
+  final _automationRepository = locator<AutomationRepository>();
   final _loginRepository = locator<LoginRepository>();
   final wakelockService = locator<WakelockService>();
 
@@ -35,6 +39,17 @@ class SettingsViewModel extends BaseViewModel {
         .index;
   }
 
+  bool get missingRemoteSetup => !_loginRepository.hasRemoteLoginData;
+  bool get missingCloudSetup => !_loginRepository.hasCloudLoginData;
+  bool get missingApiSetup => !_loginRepository.hasApiLoginData;
+
+  SettingsViewModel() {
+    _loginRepository.loginData.listen((event) {
+      // update ui when login data changes -> user adds new login data like remote, cloud or api
+      notifyListeners();
+    });
+  }
+
   void setTheme(BuildContext context, int index) {
     AdaptiveTheme.of(context).setThemeMode(AdaptiveThemeMode.values[index]);
     final theme = AdaptiveTheme
@@ -46,6 +61,19 @@ class SettingsViewModel extends BaseViewModel {
   void setWakeLockAutoEnabled(bool enabled) {
     wakelockService.setAutoEnabled(enabled);
     notifyListeners();
+  }
+
+  Future<void> addRemoteSetup(BuildContext context) async {
+    context.pushNamed(LoginRemoteSetupView.routeName, queryParameters: {'type': "remote"});
+  }
+
+  Future<void> addCloudSetup(BuildContext context) async {
+    context.pushNamed(LoginRemoteSetupView.routeName, queryParameters: {'type': "cloud"});
+  }
+
+  Future<void> addApiSetup(BuildContext context) async {
+    final result = await context.pushNamed(LoginApiSetupView.routeName, queryParameters: {'type': "fromSettings"});
+    _automationRepository.fetchData();
   }
 
   Future<void> logout(BuildContext context) async {

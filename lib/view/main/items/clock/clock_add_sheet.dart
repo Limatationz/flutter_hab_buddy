@@ -123,7 +123,7 @@ class _ClockAddSheetState extends State<ClockAddSheet> {
                 if (!isAdd)
                   IconButton(
                       onPressed: () async {
-                        final result = await showDeleteDialog(
+                        final result = await showDeleteItemDialog(
                             context: context, itemLabel: "Clock");
                         if (result == true) {
                           _itemsRepository

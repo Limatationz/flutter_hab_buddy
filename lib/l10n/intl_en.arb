@@ -99,7 +99,7 @@
   "date": "Date",
   "settings_app": "App",
   "settings_connection": "Connection",
-  "settings_connection_status_description": "State of the connection to MyOpenhab.org",
+  "settings_connection_status_description": "State of the connection to the openHAB server",
   "settings_connection_status_title": "Status",
   "settings_connection_start_title": "Start",
   "settings_connection_start_description": "Date and time of the last connection start",
@@ -110,5 +110,16 @@
   "settings_theme": "Theme",
   "settings_wakelock": "Wakelock",
   "settings_wakelock_description": "Automatically enable wakelock",
-  "navigationAutomation": "Automation"
+  "navigationAutomation": "Automation",
+  "settingsAddRemoteAccess": "Add remote access",
+  "settingsAddCloudAccess": "Add cloud access",
+  "settingsAddApiAccess": "Add api access",
+  "next": "Next",
+  "finish": "Finish",
+  "serverConnectionStateLocal": "Local",
+  "serverConnectionStateRemote": "Remote",
+  "serverConnectionStateCloud": "Cloud",
+  "serverConnectionStateOffline": "Offline",
+  "confirmTriggerRuleAlertText1": "Do you want to trigger the rule",
+  "confirmTriggerRuleAlertText2": "now ?"
 }

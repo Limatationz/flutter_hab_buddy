@@ -69,11 +69,8 @@ class SettingsView extends StatelessWidget {
                           stream: model.connectionStatus,
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
-                              return Icon(
-                                snapshot.data?.icon,
-                                color: snapshot.data != ServerConnectionState.offline
-                                    ? Colors.green
-                                    : Theme.of(context).colorScheme.error,
+                              return Text(
+                                snapshot.data?.name ?? "-",
                               );
                             } else {
                               return const CircularProgressIndicator();
@@ -121,6 +118,24 @@ class SettingsView extends StatelessWidget {
                           },
                         ),
                       ),
+                      if (model.missingRemoteSetup)
+                        SettingsTile(
+                          title: Text(S.of(context).settingsAddRemoteAccess),
+                          onPressed: (context) => model.addRemoteSetup(context),
+                          trailing: const SizedBox.shrink(),
+                        ),
+                      if (model.missingCloudSetup)
+                        SettingsTile(
+                          title: Text(S.of(context).settingsAddCloudAccess),
+                          onPressed: (context) => model.addCloudSetup(context),
+                          trailing: const SizedBox.shrink(),
+                        ),
+                      if (model.missingApiSetup)
+                        SettingsTile(
+                          title: Text(S.of(context).settingsAddApiAccess),
+                          onPressed: (context) => model.addApiSetup(context),
+                          trailing: const SizedBox.shrink(),
+                        ),
                       SettingsTile(
                         title: Text(S.of(context).logout),
                         onPressed: (context) => model.logout(context),

@@ -48,7 +48,6 @@ class _ListPickerSheetViewState extends State<ListPickerSheetView> {
                   widget.onOptionChange(_option);
                   context.pop(_option);
                 },
-                fullSizeOnDesktop: true,
               )
             ]);
   }

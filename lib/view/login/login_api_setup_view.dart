@@ -27,7 +27,10 @@ class LoginApiSetupView extends StatefulWidget {
   static const String routePath = '/login-api-setup';
   static const String routeName = 'LoginApiSetupView';
 
-  const LoginApiSetupView({Key? key}) : super(key: key);
+  // fromSettings
+  final String? type;
+
+  const LoginApiSetupView({super.key, this.type});
 
   @override
   State<LoginApiSetupView> createState() => _LoginApiSetupViewState();
@@ -45,6 +48,8 @@ class _LoginApiSetupViewState extends State<LoginApiSetupView> {
 
   bool checkingConnection = false;
 
+  bool get popOnNext => widget.type == 'fromSettings';
+
   @override
   void initState() {
     final localLoginData = _loginRepository.localLoginData;
@@ -60,25 +65,25 @@ class _LoginApiSetupViewState extends State<LoginApiSetupView> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Padding(
-      padding: EdgeInsets.all(paddingScaffold),
+      padding: const EdgeInsets.all(paddingScaffold),
       child: Center(
           child: FormBuilder(
         key: formKey,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Spacer(),
+            const Spacer(),
             Text("Step 3: Api Setup",
                 style: Theme.of(context).textTheme.headlineLarge),
-            Gap(18),
+            const Gap(18),
             Text(
                 "To enable some features, we need more permissions. More text bla bla.",
                 style: Theme.of(context).textTheme.bodyLarge),
-            Gap(24),
-            Gap(12),
+            const Gap(24),
+            const Gap(12),
             FormBuilderTextField(
               name: "token",
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 label: Text("Api Token"),
               ),
               keyboardType: TextInputType.multiline,
@@ -87,22 +92,23 @@ class _LoginApiSetupViewState extends State<LoginApiSetupView> {
               ]),
               textInputAction: TextInputAction.done,
             ),
-            Gap(8),
+            const Gap(8),
             BaseElevatedButton(
               onPressed: _testConnection,
               text: "Connect",
             ),
-            Spacer(),
+            const Spacer(),
             _buildConnectedServer(context),
-            Gap(16),
+            const Gap(16),
             BaseElevatedButton(
               onPressed: apiLoginData != null
                   ? () {
                       _onNextPressed(context);
                     }
                   : null,
-              text: "Next",
+              text: widget.type != null ? S.of(context).finish : S.of(context).next,
             ),
+            const Gap(smallPadding),
             Row(
               children: [
                 Expanded(
@@ -113,7 +119,9 @@ class _LoginApiSetupViewState extends State<LoginApiSetupView> {
                     text: "Back",
                   ),
                 ),
-                Gap(8),
+                if (!popOnNext)
+                const Gap(smallPadding),
+                if (!popOnNext)
                 Expanded(
                   child: BaseElevatedButton(
                     onPressed: () {
@@ -134,7 +142,12 @@ class _LoginApiSetupViewState extends State<LoginApiSetupView> {
     final result = await _loginRepository.storeApiToken(
         apiLoginData: apiLoginData!);
     if (result) {
-      context.pushNamed(FavouriteView.routeName);
+      if (popOnNext) {
+        // if we only want to add the token afterwards we came from the settings and just want to pop
+        context.pop();
+      } else {
+        context.pushNamed(FavouriteView.routeName);
+      }
     } else {
       locator<SnackbarService>().showSnackbar(
           message: "Failed to store api data. Please try again.",
@@ -188,14 +201,14 @@ class _LoginApiSetupViewState extends State<LoginApiSetupView> {
   Widget _buildConnectedServer(BuildContext context) {
     return WidgetContainer(
         width: double.infinity,
-        padding: EdgeInsets.all(paddingContainer),
+        padding: const EdgeInsets.all(paddingContainer),
         child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
           Icon(
             cloudIcon,
             color: cloudColor,
             size: 28,
           ),
-          Gap(12),
+          const Gap(12),
           Builder(builder: (context) {
             if (checkingConnection) {
               return Text(

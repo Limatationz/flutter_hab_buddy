@@ -47,7 +47,7 @@ class ItemEditView extends StatelessWidget {
                     const Gap(listSpacing),
                     IconButton(
                         onPressed: () async {
-                          final result = await showDeleteDialog(
+                          final result = await showDeleteItemDialog(
                               context: context, itemLabel: item.ohLabel);
                           if (result == true) {
                             model.onDelete().then((value) {

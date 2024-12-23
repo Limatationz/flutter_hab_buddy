@@ -28,7 +28,10 @@ class LoginRemoteSetupView extends StatefulWidget {
   static const String routePath = '/login-remote-setup';
   static const String routeName = 'LoginRemoteSetupView';
 
-  const LoginRemoteSetupView({Key? key}) : super(key: key);
+  // remote or cloud
+  final String? type;
+
+  const LoginRemoteSetupView({super.key, this.type});
 
   @override
   State<LoginRemoteSetupView> createState() => _LoginRemoteSetupViewState();
@@ -39,7 +42,7 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
   final _cloudFormKey = GlobalKey<FormBuilderState>();
   final _serverFormKey = GlobalKey<FormBuilderState>();
 
-  HttpClient _testClient = HttpClient();
+  final HttpClient _testClient = HttpClient();
 
   // local login data from the step before to check if the server is the same
   LocalLoginData? localLoginData;
@@ -64,8 +67,8 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
       this.localLoginData = localLoginData;
     }
 
-    _testClient.connectionTimeout = Duration(seconds: 5);
-    _testClient.idleTimeout = Duration(seconds: 5);
+    _testClient.connectionTimeout = const Duration(seconds: 5);
+    _testClient.idleTimeout = const Duration(seconds: 5);
 
     super.initState();
   }
@@ -83,133 +86,137 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
               Text("Step 2: Remote Setup",
                   style: Theme.of(context).textTheme.headlineLarge),
               const Gap(largePadding),
-              Text("Step 2.1: Remote Server",
-                  style: Theme.of(context).textTheme.headlineLarge),
-              const Gap(largePadding),
-              Text(
-                  "Add an url where your server can be accessed from the internet. The server must support the OpenHAB API.",
-                  style: Theme.of(context).textTheme.bodyLarge),
-              const Gap(extraLargePadding),
-              Flexible(
-                  child: FormBuilder(
-                      key: _serverFormKey,
-                      child: Column(children: [
-                        FormBuilderTextField(
-                          name: "url",
-                          initialValue: "https://",
-                          decoration: InputDecoration(
-                            label: Text("Url"),
-                            hintText:
-                                "Has to start with 'https://' or 'http://'",
-                          ),
-                          keyboardType: TextInputType.url,
-                          validator: FormBuilderValidators.compose([
-                            FormBuilderValidators.required(),
-                            FormBuilderValidators.url(
-                                protocols: ["https", "http"]),
-                          ]),
-                          textInputAction: TextInputAction.next,
-                        ),
-                        const Gap(12),
-                        FormBuilderTextField(
-                          name: "port",
-                          decoration: InputDecoration(
-                            label: Text("Port"),
-                          ),
-                          validator: FormBuilderValidators.numeric(
-                              checkNullOrEmpty: false),
-                          textInputAction: TextInputAction.done,
-                        ),
-                        const Gap(12),
-                        FormBuilderSwitch(
-                            name: "basicAuthEnabled",
-                            initialValue: showRemoteBasicAuth,
-                            onChanged: (newValue) {
-                              if (newValue != null) {
-                                setState(() {
-                                  showRemoteBasicAuth = newValue;
-                                });
-                              }
-                            },
-                            title: Text(
-                              "Basic Auth enabled",
-                              style: TextTheme.of(context).bodyLarge,
-                            )),
-                        _serverBasicAuthInputView(context),
-                        const Gap(8),
-                        BaseElevatedButton(
-                          onPressed: _testRemoteConnection,
-                          text: "Connect",
-                        ),
-                      ]))),
-              const Gap(extraLargePadding),
-              Text("Step 2.2: MyOpenHAB Cloud",
-                  style: Theme.of(context).textTheme.headlineLarge),
-              const Gap(largePadding),
-              Text(
-                  "Add the credentials for the myOpenHAB Cloud to access your server remotely.",
-                  style: Theme.of(context).textTheme.bodyLarge),
-              const Gap(extraLargePadding),
-              Flexible(
-                  child: FormBuilder(
-                      key: _cloudFormKey,
-                      child: Column(children: [
-                        FormBuilderTextField(
-                          name: "username",
-                          decoration: InputDecoration(
-                            label: Text(S.of(context).username),
-                          ),
-                          keyboardType: TextInputType.emailAddress,
-                          validator: FormBuilderValidators.compose([
-                            FormBuilderValidators.required(),
-                            FormBuilderValidators.email(),
-                          ]),
-                          textInputAction: TextInputAction.next,
-                        ),
-                        const Gap(12),
-                        FormBuilderTextField(
-                          name: "password",
-                          decoration: InputDecoration(
-                            label: Text(S.of(context).password),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                  obscureText
-                                      ? LineIconsFilled.eye
-                                      : LineIconsFilled.eye_slash,
-                                  size: 22,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onPrimaryContainer),
-                              onPressed: () {
-                                setState(() {
-                                  obscureText = !obscureText;
-                                });
-                              },
+              if (widget.type != "cloud")
+                Flexible(
+                    child: FormBuilder(
+                        key: _serverFormKey,
+                        child: Column(children: [
+                          Text("Step 2.1: Remote Server",
+                              style: Theme.of(context).textTheme.headlineLarge),
+                          const Gap(largePadding),
+                          Text(
+                              "Add an url where your server can be accessed from the internet. The server must support the OpenHAB API.",
+                              style: Theme.of(context).textTheme.bodyLarge),
+                          const Gap(extraLargePadding),
+                          FormBuilderTextField(
+                            name: "url",
+                            initialValue: "https://",
+                            decoration: const InputDecoration(
+                              label: Text("Url"),
+                              hintText:
+                                  "Has to start with 'https://' or 'http://'",
                             ),
+                            keyboardType: TextInputType.url,
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(),
+                              FormBuilderValidators.url(
+                                  protocols: ["https", "http"]),
+                            ]),
+                            textInputAction: TextInputAction.next,
                           ),
-                          obscureText: obscureText,
-                          validator: FormBuilderValidators.required(),
-                          textInputAction: TextInputAction.done,
-                        ),
-                        const Gap(8),
-                        BaseElevatedButton(
-                          onPressed: _testCloudConnection,
-                          text: "Connect",
-                        ),
-                      ]))),
+                          const Gap(12),
+                          FormBuilderTextField(
+                            name: "port",
+                            decoration: const InputDecoration(
+                              label: Text("Port"),
+                            ),
+                            validator: FormBuilderValidators.numeric(
+                                checkNullOrEmpty: false),
+                            textInputAction: TextInputAction.done,
+                          ),
+                          const Gap(12),
+                          FormBuilderSwitch(
+                              name: "basicAuthEnabled",
+                              initialValue: showRemoteBasicAuth,
+                              onChanged: (newValue) {
+                                if (newValue != null) {
+                                  setState(() {
+                                    showRemoteBasicAuth = newValue;
+                                  });
+                                }
+                              },
+                              title: Text(
+                                "Basic Auth enabled",
+                                style: TextTheme.of(context).bodyLarge,
+                              )),
+                          _serverBasicAuthInputView(context),
+                          const Gap(8),
+                          BaseElevatedButton(
+                            onPressed: _testRemoteConnection,
+                            text: "Connect",
+                          ),
+                          const Gap(extraLargePadding),
+                        ]))),
+              if (widget.type != "remote")
+                Flexible(
+                    child: FormBuilder(
+                        key: _cloudFormKey,
+                        child: Column(children: [
+                          Text("Step 2.2: MyOpenHAB Cloud",
+                              style: Theme.of(context).textTheme.headlineLarge),
+                          const Gap(largePadding),
+                          Text(
+                              "Add the credentials for the myOpenHAB Cloud to access your server remotely.",
+                              style: Theme.of(context).textTheme.bodyLarge),
+                          const Gap(extraLargePadding),
+                          FormBuilderTextField(
+                            name: "username",
+                            decoration: InputDecoration(
+                              label: Text(S.of(context).username),
+                            ),
+                            keyboardType: TextInputType.emailAddress,
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(),
+                              FormBuilderValidators.email(),
+                            ]),
+                            textInputAction: TextInputAction.next,
+                          ),
+                          const Gap(12),
+                          FormBuilderTextField(
+                            name: "password",
+                            decoration: InputDecoration(
+                              label: Text(S.of(context).password),
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                    obscureText
+                                        ? LineIconsFilled.eye
+                                        : LineIconsFilled.eye_slash,
+                                    size: 22,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimaryContainer),
+                                onPressed: () {
+                                  setState(() {
+                                    obscureText = !obscureText;
+                                  });
+                                },
+                              ),
+                            ),
+                            obscureText: obscureText,
+                            validator: FormBuilderValidators.required(),
+                            textInputAction: TextInputAction.done,
+                          ),
+                          const Gap(8),
+                          BaseElevatedButton(
+                            onPressed: _testCloudConnection,
+                            text: "Connect",
+                          ),
+                        ]))),
             ])),
-            Gap(largePadding),
-            _buildCloudConnectedServer(context),
-            Gap(smallPadding),
+            if (widget.type != "cloud") const Gap(smallPadding),
+            if (widget.type != "cloud")
             _buildRemoteConnectedServer(context),
+            if (widget.type != "remote") const Gap(largePadding),
+            if (widget.type != "remote")
+            _buildCloudConnectedServer(context),
             const Gap(16),
             BaseElevatedButton(
-              onPressed: cloudLoginData != null
+              onPressed: cloudLoginData != null || remoteLoginData != null
                   ? () {
                       _onNextPressed(context);
                     }
                   : null,
-              text: "Next",
+              text: widget.type != null ? S.of(context).finish : S.of(context).next,
             ),
             const Gap(smallPadding),
             Row(
@@ -222,15 +229,16 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
                     text: "Back",
                   ),
                 ),
-                const Gap(smallPadding),
-                Expanded(
-                  child: BaseElevatedButton(
-                    onPressed: () {
-                      context.pushNamed(LoginApiSetupView.routeName);
-                    },
-                    text: "Skip",
+                if (widget.type == null) const Gap(smallPadding),
+                if (widget.type == null)
+                  Expanded(
+                    child: BaseElevatedButton(
+                      onPressed: () {
+                        context.pushNamed(LoginApiSetupView.routeName);
+                      },
+                      text: "Skip",
+                    ),
                   ),
-                ),
               ],
             )
           ],
@@ -240,13 +248,24 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
   }
 
   Future<void> _onNextPressed(BuildContext context) async {
-    final result =
-        await _loginRepository.storeCloudLogin(cloudLoginData: cloudLoginData!);
-    if (result) {
-      context.pushNamed(LoginApiSetupView.routeName);
+    final resultCloud = cloudLoginData != null
+        ? await _loginRepository.storeCloudLogin(
+            cloudLoginData: cloudLoginData!)
+        : false;
+    final resultRemote = remoteLoginData != null
+        ? await _loginRepository.storeRemoteLogin(
+            remoteLoginData: remoteLoginData!)
+        : false;
+    if (resultCloud || resultRemote) {
+      if (widget.type != null){
+        // if we only want to add one type we come from the settings and just want to pop
+        context.pop();
+      } else {
+        context.pushNamed(LoginApiSetupView.routeName);
+      }
     } else {
       locator<SnackbarService>().showSnackbar(
-          message: "Failed to store remote data. Please try again.",
+          message: "Failed to store the data. Please try again.",
           type: SnackbarType.error);
     }
   }
@@ -410,8 +429,7 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
   Widget _buildCloudConnectedServer(BuildContext context) {
     return WidgetContainer(
         width: double.infinity,
-        padding: const EdgeInsets.all(paddingContainer),
-        child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        child: Row(children: [
           Icon(
             cloudIcon,
             color: cloudColor,
@@ -443,8 +461,7 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
   Widget _buildRemoteConnectedServer(BuildContext context) {
     return WidgetContainer(
         width: double.infinity,
-        padding: const EdgeInsets.all(paddingContainer),
-        child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        child: Row(children: [
           Icon(
             serverIcon,
             color: serverColor,
@@ -523,7 +540,7 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
 
   Widget _serverBasicAuthInputView(BuildContext context) {
     return AnimatedSize(
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       child: Column(
         children: [
           if (showRemoteBasicAuth) const Gap(mediumPadding),

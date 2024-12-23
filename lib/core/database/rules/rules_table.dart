@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 
+import '../app_database.dart';
 import '../converter/json_converter.dart';
 import '../converter/rule_comverters.dart';
 import '../converter/string_list_converter.dart';
@@ -30,3 +31,6 @@ class RulesTable extends Table {
   Set<Column> get primaryKey => {uid};
 }
 
+extension RuleDBExtension on Rule {
+  bool get fromApp => tags?.contains("app") ?? false;
+}

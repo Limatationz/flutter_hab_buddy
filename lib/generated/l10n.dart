@@ -950,10 +950,10 @@ class S {
     );
   }
 
-  /// `State of the connection to MyOpenhab.org`
+  /// `State of the connection to the openHAB server`
   String get settings_connection_status_description {
     return Intl.message(
-      'State of the connection to MyOpenhab.org',
+      'State of the connection to the openHAB server',
       name: 'settings_connection_status_description',
       desc: '',
       args: [],
@@ -1065,6 +1065,116 @@ class S {
     return Intl.message(
       'Automation',
       name: 'navigationAutomation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add remote access`
+  String get settingsAddRemoteAccess {
+    return Intl.message(
+      'Add remote access',
+      name: 'settingsAddRemoteAccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add cloud access`
+  String get settingsAddCloudAccess {
+    return Intl.message(
+      'Add cloud access',
+      name: 'settingsAddCloudAccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add api access`
+  String get settingsAddApiAccess {
+    return Intl.message(
+      'Add api access',
+      name: 'settingsAddApiAccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Next`
+  String get next {
+    return Intl.message(
+      'Next',
+      name: 'next',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Finish`
+  String get finish {
+    return Intl.message(
+      'Finish',
+      name: 'finish',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Local`
+  String get serverConnectionStateLocal {
+    return Intl.message(
+      'Local',
+      name: 'serverConnectionStateLocal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remote`
+  String get serverConnectionStateRemote {
+    return Intl.message(
+      'Remote',
+      name: 'serverConnectionStateRemote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cloud`
+  String get serverConnectionStateCloud {
+    return Intl.message(
+      'Cloud',
+      name: 'serverConnectionStateCloud',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Offline`
+  String get serverConnectionStateOffline {
+    return Intl.message(
+      'Offline',
+      name: 'serverConnectionStateOffline',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Do you want to trigger the rule`
+  String get confirmTriggerRuleAlertText1 {
+    return Intl.message(
+      'Do you want to trigger the rule',
+      name: 'confirmTriggerRuleAlertText1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `now ?`
+  String get confirmTriggerRuleAlertText2 {
+    return Intl.message(
+      'now ?',
+      name: 'confirmTriggerRuleAlertText2',
       desc: '',
       args: [],
     );

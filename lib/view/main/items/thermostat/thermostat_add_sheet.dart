@@ -90,7 +90,7 @@ class _ThermostatAddSheetState extends State<ThermostatAddSheet> {
                 if (!isAdd)
                   IconButton(
                       onPressed: () async {
-                        final result = await showDeleteDialog(
+                        final result = await showDeleteItemDialog(
                             context: context,
                             itemLabel:
                                 widget.thermostatData!.heatingSetpointItemName);

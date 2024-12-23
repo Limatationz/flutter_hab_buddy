@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../generated/l10n.dart';
 import 'alert_dialog_action.dart';
 
-Future<bool?> showDeleteDialog({
+Future<bool?> showDeleteItemDialog({
   required BuildContext context,
   required String itemLabel,
 }) =>

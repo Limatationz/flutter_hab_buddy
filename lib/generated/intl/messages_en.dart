@@ -36,6 +36,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "complex_player_add_item_error":
             MessageLookupByLibrary.simpleMessage("Player Item not found"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
+        "confirmTriggerRuleAlertText1": MessageLookupByLibrary.simpleMessage(
+            "Do you want to trigger the rule"),
+        "confirmTriggerRuleAlertText2":
+            MessageLookupByLibrary.simpleMessage("now ?"),
         "customLabel": MessageLookupByLibrary.simpleMessage("Custom Label"),
         "customLabelHelp": MessageLookupByLibrary.simpleMessage(
             "Add a custom label for this item otherwise the label from OpenHAB will be used"),
@@ -56,6 +60,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "errorHeadline":
             MessageLookupByLibrary.simpleMessage("An error occurred"),
         "feelsLike": m1,
+        "finish": MessageLookupByLibrary.simpleMessage("Finish"),
         "icon": MessageLookupByLibrary.simpleMessage("Icon"),
         "iconPickerNoResultsText":
             MessageLookupByLibrary.simpleMessage("No results for:"),
@@ -121,6 +126,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "navigationRooms": MessageLookupByLibrary.simpleMessage("Rooms"),
         "navigationSettings": MessageLookupByLibrary.simpleMessage("Settings"),
         "never": MessageLookupByLibrary.simpleMessage("Never"),
+        "next": MessageLookupByLibrary.simpleMessage("Next"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "room": MessageLookupByLibrary.simpleMessage("Room"),
         "roomColorLabel": MessageLookupByLibrary.simpleMessage("Color"),
@@ -138,6 +144,20 @@ class MessageLookup extends MessageLookupByLibrary {
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "search": MessageLookupByLibrary.simpleMessage("Search"),
         "select": MessageLookupByLibrary.simpleMessage("Select"),
+        "serverConnectionStateCloud":
+            MessageLookupByLibrary.simpleMessage("Cloud"),
+        "serverConnectionStateLocal":
+            MessageLookupByLibrary.simpleMessage("Local"),
+        "serverConnectionStateOffline":
+            MessageLookupByLibrary.simpleMessage("Offline"),
+        "serverConnectionStateRemote":
+            MessageLookupByLibrary.simpleMessage("Remote"),
+        "settingsAddApiAccess":
+            MessageLookupByLibrary.simpleMessage("Add api access"),
+        "settingsAddCloudAccess":
+            MessageLookupByLibrary.simpleMessage("Add cloud access"),
+        "settingsAddRemoteAccess":
+            MessageLookupByLibrary.simpleMessage("Add remote access"),
         "settings_app": MessageLookupByLibrary.simpleMessage("App"),
         "settings_connection":
             MessageLookupByLibrary.simpleMessage("Connection"),
@@ -148,7 +168,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Start"),
         "settings_connection_status_description":
             MessageLookupByLibrary.simpleMessage(
-                "State of the connection to MyOpenhab.org"),
+                "State of the connection to the openHAB server"),
         "settings_connection_status_title":
             MessageLookupByLibrary.simpleMessage("Status"),
         "settings_connection_update_description":

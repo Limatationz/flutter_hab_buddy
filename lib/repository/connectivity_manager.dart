@@ -12,6 +12,7 @@ import '../core/network/interceptors/api_auth_interceptor.dart';
 import '../core/network/interceptors/basic_auth_interceptor.dart';
 import '../core/network/interceptors/cloud_auth_interceptor.dart';
 import '../core/network/interceptors/remote_basic_auth_interceptor.dart';
+import '../generated/l10n.dart';
 import '../locator.dart';
 import '../util/icons/icons.dart';
 
@@ -261,6 +262,19 @@ enum ServerConnectionState {
         return LineIconsV5.cloud_wifi;
       case ServerConnectionState.offline:
         return LineIconsV5.wifi_disabled;
+    }
+  }
+  
+  String get name {
+    switch (this) {
+      case ServerConnectionState.local:
+        return S.current.serverConnectionStateLocal;
+      case ServerConnectionState.remote:
+        return S.current.serverConnectionStateRemote;
+      case ServerConnectionState.cloud:
+        return S.current.serverConnectionStateCloud;
+      case ServerConnectionState.offline:
+        return S.current.serverConnectionStateOffline;
     }
   }
 

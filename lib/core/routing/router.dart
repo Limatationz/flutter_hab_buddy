@@ -20,94 +20,106 @@ import 'error_view.dart';
 import 'navigation_service.dart';
 
 GoRouter router(bool isLoggedIn) => GoRouter(
-    debugLogDiagnostics: kDebugMode,
-    initialLocation: isLoggedIn ? FavouriteView.routePath : LoginStartView.routePath,
-    navigatorKey: locator.get<NavigationService>().navigatorKey,
-    errorBuilder: (context, state) => ErrorView(state: state),
-    routes: [
-      StatefulShellRoute.indexedStack(
-          pageBuilder: (context, state, child) {
-            return NoTransitionPage(child: MainView(navigationShell: child));
-          },
-          branches: [
-            StatefulShellBranch(
-              routes: [
-                GoRoute(
-                  path: FavouriteView.routePath,
-                  name: FavouriteView.routeName,
-                  pageBuilder: (context, state) =>
-                      const NoTransitionPage(child: FavouriteView()),
-                  onExit: onExitMainView,
-                  redirect: onEntryMainView,
-                ),
-              ],
-            ),
-            StatefulShellBranch(
-              routes: [
-                GoRoute(
-                  path: RoomsView.routePath,
-                  name: RoomsView.routeName,
-                  pageBuilder: (context, state) {
-                    final roomId =
-                        int.tryParse(state.uri.queryParameters['roomId'] ?? '');
-                    return NoTransitionPage(
-                        child: RoomsView(initialRoomId: roomId));
-                  },
-                  onExit: onExitMainView,
-                  redirect: onEntryMainView,
-                ),
-              ],
-            ),
-            StatefulShellBranch(
-              routes: [
-                GoRoute(
-                  path: AutomationView.routePath,
-                  name: AutomationView.routeName,
-                  pageBuilder: (context, state) =>
-                      const NoTransitionPage(child: AutomationView()),
-                  onExit: onExitMainView,
-                  redirect: onEntryMainView,
-                ),
-              ],
-            ),
-            StatefulShellBranch(
-              routes: [
-                GoRoute(
-                  path: SettingsView.routePath,
-                  name: SettingsView.routeName,
-                  pageBuilder: (context, state) =>
-                      const NoTransitionPage(child: SettingsView()),
-                ),
-              ],
-            ),
-          ]),
-      GoRoute(
-        path: LoginStartView.routePath,
-        name: LoginStartView.routeName,
-        pageBuilder: (context, state) =>
-            const NoTransitionPage(child: LoginStartView()),
+        debugLogDiagnostics: kDebugMode,
+        initialLocation:
+            isLoggedIn ? FavouriteView.routePath : LoginStartView.routePath,
+        navigatorKey: locator.get<NavigationService>().navigatorKey,
+        errorBuilder: (context, state) => ErrorView(state: state),
         routes: [
+          StatefulShellRoute.indexedStack(
+              pageBuilder: (context, state, child) {
+                return NoTransitionPage(
+                    child: MainView(navigationShell: child));
+              },
+              branches: [
+                StatefulShellBranch(
+                  routes: [
+                    GoRoute(
+                      path: FavouriteView.routePath,
+                      name: FavouriteView.routeName,
+                      pageBuilder: (context, state) =>
+                          const NoTransitionPage(child: FavouriteView()),
+                      onExit: onExitMainView,
+                      redirect: onEntryMainView,
+                    ),
+                  ],
+                ),
+                StatefulShellBranch(
+                  routes: [
+                    GoRoute(
+                      path: RoomsView.routePath,
+                      name: RoomsView.routeName,
+                      pageBuilder: (context, state) {
+                        final roomId = int.tryParse(
+                            state.uri.queryParameters['roomId'] ?? '');
+                        return NoTransitionPage(
+                            child: RoomsView(initialRoomId: roomId));
+                      },
+                      onExit: onExitMainView,
+                      redirect: onEntryMainView,
+                    ),
+                  ],
+                ),
+                StatefulShellBranch(
+                  routes: [
+                    GoRoute(
+                      path: AutomationView.routePath,
+                      name: AutomationView.routeName,
+                      pageBuilder: (context, state) =>
+                          const NoTransitionPage(child: AutomationView()),
+                      onExit: onExitMainView,
+                      redirect: onEntryMainView,
+                    ),
+                  ],
+                ),
+                StatefulShellBranch(
+                  routes: [
+                    GoRoute(
+                      path: SettingsView.routePath,
+                      name: SettingsView.routeName,
+                      pageBuilder: (context, state) =>
+                          const NoTransitionPage(child: SettingsView()),
+                    ),
+                  ],
+                ),
+              ]),
           GoRoute(
-            path: LoginLocalSetupView.routePath,
-            name: LoginLocalSetupView.routeName,
+            path: LoginStartView.routePath,
+            name: LoginStartView.routeName,
             pageBuilder: (context, state) =>
-                const CupertinoPage(child: LoginLocalSetupView()),
+                const NoTransitionPage(child: LoginStartView()),
+            routes: [
+              GoRoute(
+                path: LoginLocalSetupView.routePath,
+                name: LoginLocalSetupView.routeName,
+                pageBuilder: (context, state) =>
+                    const CupertinoPage(child: LoginLocalSetupView()),
+              ),
+              GoRoute(
+                path: LoginRemoteSetupView.routePath,
+                name: LoginRemoteSetupView.routeName,
+                pageBuilder: (context, state) {
+                  final type = state.uri.queryParameters['type'];
+                  return CupertinoPage(
+                      child: LoginRemoteSetupView(
+                    type: type,
+                  ));
+                },
+              ),
+              GoRoute(
+                path: LoginApiSetupView.routePath,
+                name: LoginApiSetupView.routeName,
+                pageBuilder: (context, state) {
+                  final type = state.uri.queryParameters['type'];
+                  return CupertinoPage(
+                      child: LoginApiSetupView(
+                        type: type,
+                      ));
+                },
+              )
+            ],
           ),
-          GoRoute(
-            path: LoginRemoteSetupView.routePath,
-            name: LoginRemoteSetupView.routeName,
-            pageBuilder: (context, state) =>
-            const CupertinoPage(child: LoginRemoteSetupView()),
-          ),
-          GoRoute(
-            path: LoginApiSetupView.routePath,
-            name: LoginApiSetupView.routeName,
-            pageBuilder: (context, state) =>
-            const CupertinoPage(child: LoginApiSetupView()),
-          )
-        ],
-      ),
-    ]);
+        ]);
 
 FutureOr<bool> onExitMainView(BuildContext context, GoRouterState state) {
   // disable wakelock when leaving favourite view

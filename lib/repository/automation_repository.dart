@@ -1,4 +1,3 @@
-
 import 'package:collection/collection.dart';
 import '../core/database/app_database.dart';
 import '../core/network/converters/rule.dart';
@@ -25,10 +24,10 @@ class AutomationRepository {
       final storedRules = await _store.all().get();
 
       for (final rule in result.body!) {
-        final storedRule = storedRules
-            .firstWhereOrNull((element) => element.uid == rule.uid);
+        final storedRule =
+            storedRules.firstWhereOrNull((element) => element.uid == rule.uid);
         final dbRule = rule.asDatabaseModel();
-        if (dbRule == null){
+        if (dbRule == null) {
           print('Rule is not valid. Uid: ${rule.uid}');
           continue;
         } else {
@@ -47,10 +46,16 @@ class AutomationRepository {
 
       // Delete all rules that are not available anymore
       for (final rule in storedRules) {
-          await _store.deleteDataByUid(rule.uid);
+        await _store.deleteDataByUid(rule.uid);
       }
     } else {
       print(result.error);
     }
+  }
+
+  Future<bool> triggerRule(String ruleUid) async {
+    final result = await locator<OpenHAB>()
+        .rulesRuleUIDRunnowPost(ruleUID: ruleUid, body: null);
+    return result.isSuccessful;
   }
 }

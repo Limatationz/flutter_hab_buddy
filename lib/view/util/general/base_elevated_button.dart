@@ -7,8 +7,7 @@ class BaseElevatedButton extends StatelessWidget {
   final String text;
   final Color? backgroundColor;
   final Color? textColor;
-  final double? width;
-  final bool fullSizeOnDesktop;
+  final double? maxWidth;
 
   const BaseElevatedButton({
     super.key,
@@ -16,37 +15,43 @@ class BaseElevatedButton extends StatelessWidget {
     this.onPressed,
     this.backgroundColor,
     this.textColor,
-    this.width,
-    this.fullSizeOnDesktop = false,
+    this.maxWidth,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-            width: width ?? double.infinity,
-            child: ElevatedButton(
-              onPressed: onPressed,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: backgroundColor ??
-                    Theme.of(context).colorScheme.primary,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                padding:
-                    EdgeInsets.symmetric(vertical: isDesktop() ? 14 : 8, horizontal: 16),
-                minimumSize: const Size(0, 0),
-              ),
-              child: Text(
-                text,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.copyWith(
-                        color: onPressed != null ? (textColor ??
-                            Theme.of(context)
-                                .colorScheme
-                                .onInverseSurface) : Colors.white),
-              ),
-            ));
+    return Container(
+        constraints: BoxConstraints(maxWidth: maxWidth ?? double.infinity),
+        width: maxWidth != null ? null : double.infinity,
+        child: ElevatedButton(
+          onPressed: onPressed,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: backgroundColor ??
+                Theme
+                    .of(context)
+                    .colorScheme
+                    .primary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            padding:
+            EdgeInsets.symmetric(
+                vertical: isDesktop() ? 14 : 8, horizontal: 16),
+            minimumSize: const Size(0, 0),
+          ),
+          child: Text(
+            text,
+            style: Theme
+                .of(context)
+                .textTheme
+                .bodyLarge
+                ?.copyWith(
+                color: onPressed != null ? (textColor ??
+                    Theme
+                        .of(context)
+                        .colorScheme
+                        .onInverseSurface) : Colors.white),
+          ),
+        ));
   }
 }

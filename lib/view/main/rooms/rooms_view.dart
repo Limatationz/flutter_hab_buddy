@@ -258,7 +258,7 @@ class RoomsView extends StatelessWidget {
         const Text("No rooms available"),
         const Gap(paddingScaffold),
         BaseElevatedButton(
-          width: 150,
+          maxWidth: 150,
           text: S.current.addRoomHeadline,
           onPressed: () {
             showBarModalBottomSheet<int?>(
@@ -275,7 +275,7 @@ class RoomsView extends StatelessWidget {
         const Text("No items for the selected room available"),
         const Gap(paddingScaffold),
         BaseElevatedButton(
-          width: 150,
+          maxWidth: 150,
           text: S.current.navigationInbox,
           onPressed: () {
             modal.showMaterialModalBottomSheet(
@@ -293,7 +293,7 @@ class RoomsView extends StatelessWidget {
         ),
         const Gap(paddingScaffold),
         BaseElevatedButton(
-          width: 200,
+          maxWidth: 200,
           text: S.current.addComplexItem,
           onPressed: () {
             AddComplexItemSelectionSheet.openSheet(context, roomId);

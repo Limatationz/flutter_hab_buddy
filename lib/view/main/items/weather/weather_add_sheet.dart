@@ -86,7 +86,7 @@ class _WeatherAddSheetState extends State<WeatherAddSheet> {
                 if (!isAdd)
                   IconButton(
                       onPressed: () async {
-                        final result = await showDeleteDialog(
+                        final result = await showDeleteItemDialog(
                             context: context,
                             itemLabel:
                                 "Weather for ${config!.location.locationString}");

@@ -18,6 +18,8 @@ class LoginRepository {
 
   Stream<LoginData?> get loginData => _loginData.stream;
 
+  Stream<bool> get hasApiAccessStream => _loginData.map((event) => event?.apiLoginData != null);
+
   Completer<bool> loginComplete = Completer();
 
   late final ConnectivityManager _connectivityManager;
@@ -81,6 +83,18 @@ class LoginRepository {
 
   LocalLoginData? get localLoginData {
     return _loginData.value?.localLoginData;
+  }
+
+  bool get hasRemoteLoginData {
+    return _loginData.valueOrNull?.remoteLoginData != null;
+  }
+
+  bool get hasCloudLoginData {
+    return _loginData.valueOrNull?.cloudLoginData != null;
+  }
+
+  bool get hasApiLoginData {
+    return _loginData.valueOrNull?.apiLoginData != null;
   }
 
   Future<bool> checkLogin() async {

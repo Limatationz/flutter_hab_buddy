@@ -95,7 +95,7 @@ class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
                 if (!isAdd)
                   IconButton(
                       onPressed: () async {
-                        final result = await showDeleteDialog(
+                        final result = await showDeleteItemDialog(
                             context: context,
                             itemLabel:
                                 widget.complexPlayerData!.playerItemName);
