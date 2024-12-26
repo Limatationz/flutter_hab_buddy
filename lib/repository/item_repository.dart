@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:collection/collection.dart';
+import 'package:color_models/color_models.dart';
 import 'package:dio/dio.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
@@ -230,6 +231,10 @@ class ItemRepository {
 
   Future<void> dimmerAction(String itemName, double value) async {
     return _sendAction(itemName, value.toInt().toString());
+  }
+
+  Future<void> colorAction(String itemName, HsbColor value) async {
+    return _sendAction(itemName, "${value.hue},${value.saturation},${value.brightness}");
   }
 
   Future<void> rollershutterAction(String itemName, bool up) async {

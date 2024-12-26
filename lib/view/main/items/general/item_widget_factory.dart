@@ -9,6 +9,7 @@ import '../../../util/general/bar_bottom_sheet.dart';
 import '../../../util/general/base_item_dialog.dart';
 import '../clock/clock_add_sheet.dart';
 import '../clock/clock_item_widget.dart';
+import '../color/color_item_widget.dart';
 import '../dimmer/dimmer_item_widget.dart';
 import '../edit/item_edit_view.dart';
 import '../image/image_item_widget.dart';
@@ -77,6 +78,8 @@ class ItemWidgetFactory {
         return ClockItemWidget(item: item, colorScheme: colorScheme);
       case OhItemType.image:
         return ImageItemWidget(item: item, colorScheme: colorScheme);
+      case OhItemType.color:
+        return ColorItemWidget(item: item, colorScheme: colorScheme);
       default:
         return TextItemWidget(
           item: item,

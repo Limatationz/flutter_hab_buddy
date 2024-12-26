@@ -121,5 +121,7 @@
   "serverConnectionStateCloud": "Cloud",
   "serverConnectionStateOffline": "Offline",
   "confirmTriggerRuleAlertText1": "Do you want to trigger the rule",
-  "confirmTriggerRuleAlertText2": "now ?"
+  "confirmTriggerRuleAlertText2": "now ?",
+  "recentColors": "Recent Colors",
+  "color": "Color"
 }

@@ -1179,6 +1179,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Recent Colors`
+  String get recentColors {
+    return Intl.message(
+      'Recent Colors',
+      name: 'recentColors',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Color`
+  String get color {
+    return Intl.message(
+      'Color',
+      name: 'color',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

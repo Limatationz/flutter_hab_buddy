@@ -33,6 +33,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "clock": MessageLookupByLibrary.simpleMessage("Clock"),
         "close": MessageLookupByLibrary.simpleMessage("Close"),
+        "color": MessageLookupByLibrary.simpleMessage("Color"),
         "complex_player_add_item_error":
             MessageLookupByLibrary.simpleMessage("Player Item not found"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
@@ -128,6 +129,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "never": MessageLookupByLibrary.simpleMessage("Never"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
+        "recentColors": MessageLookupByLibrary.simpleMessage("Recent Colors"),
         "room": MessageLookupByLibrary.simpleMessage("Room"),
         "roomColorLabel": MessageLookupByLibrary.simpleMessage("Color"),
         "roomDescriptionHelp": MessageLookupByLibrary.simpleMessage(

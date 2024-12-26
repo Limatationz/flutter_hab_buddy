@@ -140,8 +140,8 @@ class _DimmableWidgetContainerState extends State<DimmableWidgetContainer> {
   Color getBackgroundColor(BuildContext context) =>
       widget.backgroundColor ??
       ElevationOverlay.applySurfaceTint(
-          widget.colorScheme?.background ??
-              Theme.of(context).colorScheme.background,
+          widget.colorScheme?.surface ??
+              Theme.of(context).colorScheme.surface,
           widget.colorScheme?.surfaceTint ??
               Theme.of(context).colorScheme.surfaceTint,
           1);

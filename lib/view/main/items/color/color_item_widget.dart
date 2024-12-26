@@ -1,4 +1,5 @@
 import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
+import 'package:color_models/color_models.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/database/items/items_table.dart';
@@ -10,10 +11,11 @@ import '../../../util/general/dimmable_widget_container.dart';
 import '../general/item_state_injector.dart';
 import '../general/item_widget.dart';
 import '../general/item_widget_factory.dart';
-import 'dimmer_item_dialog.dart';
+import 'color_item_dialog.dart';
+import 'color_util.dart';
 
-class DimmerItemWidget extends SmallItemWidget {
-  DimmerItemWidget({super.key, required super.item, required super.colorScheme})
+class ColorItemWidget extends SmallItemWidget {
+  ColorItemWidget({super.key, required super.item, required super.colorScheme})
       : assert(item != null);
 
   final _itemRepository = locator<ItemRepository>();
@@ -23,17 +25,19 @@ class DimmerItemWidget extends SmallItemWidget {
     return ItemStateInjector(
         itemName: item!.ohName,
         builder: (state) {
-          final dimmerState = double.parse(state.state);
+          final colorValue = OpenhabColorUtil.parseColorState(state.state);
+          final dimmerState = colorValue.brightness.toDouble();
           final isOn = dimmerState > 0;
           return DimmableWidgetContainer(
-              key: ValueKey(dimmerState.toString()),
+              key: ValueKey(colorValue.hex),
               onTap: !state.isReadOnly ? () => onAction(isOn) : null,
-              onLongTap: () => onLongTap(context, dimmerState),
+              onLongTap: () => onLongTap(context, colorValue),
               value: dimmerState,
               maxValue: state.stateDescription?.maximum,
               minValue: state.stateDescription?.minimum,
               onDragDone: !state.isReadOnly ? onDragDone : null,
               colorScheme: colorScheme,
+              accentBackgroundColor: colorValue.toColor(fullOpacity: true),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -47,8 +51,8 @@ class DimmerItemWidget extends SmallItemWidget {
                         item!.icon ?? item!.type.icon,
                         size: iconSize,
                         color: isOn
-                            ? Theme.of(context).colorScheme.onSurface
-                            : Colors.grey,
+                          ? Theme.of(context).colorScheme.onSurface
+                          : Colors.grey,
                       )),
                 ],
               ));
@@ -63,10 +67,10 @@ class DimmerItemWidget extends SmallItemWidget {
     await _itemRepository.dimmerAction(item!.ohName, value);
   }
 
-  void onLongTap(BuildContext context, double value) =>
+  void onLongTap(BuildContext context, HsbColor value) =>
       ItemWidgetFactory.openDialog(
           context,
-          DimmerItemDialog(
+          ColorItemDialog(
               itemName: item!.ohName,
               initialValue: value,
               colorScheme: colorScheme),

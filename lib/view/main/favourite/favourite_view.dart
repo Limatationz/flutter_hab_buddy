@@ -6,6 +6,7 @@ import 'package:stacked/stacked.dart';
 import 'package:tuple/tuple.dart';
 
 import '../../../core/database/app_database.dart';
+import '../../../generated/l10n.dart';
 import '../../../util/color.dart';
 import '../../util/constants.dart';
 import '../../util/general/base_refresh_indicator.dart';
@@ -30,7 +31,7 @@ class FavouriteView extends StatelessWidget {
             body: NestedScrollView(
                 headerSliverBuilder: (context, innerBoxIsScrolled) => [
                       SliverAppBar.medium(
-                        title: const Text("Favorites"),
+                        title: Text(S.current.navigationFavorites),
                         actions: [
                           WakelockIndicator(),
                           InboxActionButton(countInbox: model.countInboxStream),
