@@ -59,7 +59,7 @@ class ConnectivityManager {
   final CloudAuthInterceptor _cloudAuthInterceptor;
   final RemoteBasisAuthInterceptor _remoteBasicAuthInterceptor;
 
-  final Completer<bool> firstConnectionComplete;
+  Completer<bool> firstConnectionComplete;
 
   ConnectivityManager(
       Stream<LoginData?> loginDataStream, this.firstConnectionComplete)
@@ -248,6 +248,19 @@ class ConnectivityManager {
     final bytes = utf8.encode("$username:$password");
     final base64Str = base64.encode(bytes);
     return {"Authorization": "Basic $base64Str"};
+  }
+
+  void reset() {
+    firstConnectionComplete = Completer<bool>();
+
+    _connectionStateSubject.add(ServerConnectionState.offline);
+    _sseLastConnection.add(null);
+    _sseLastMessage.add(null);
+    _sseDataStream = null;
+    _sseStateStreamController.close();
+    _sseStateStreamController = StreamController.broadcast();
+
+    _baseUrl = "";
   }
 }
 

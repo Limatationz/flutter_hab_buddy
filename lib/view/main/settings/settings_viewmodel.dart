@@ -87,7 +87,10 @@ class SettingsViewModel extends BaseViewModel {
     await _itemsRepository.fetchData();
   }
 
-  Future<void> insertDummyData() async {
+  static Future<void> insertDummyDataMunich() async {
+    final _itemsRepository = locator<ItemRepository>();
+    final _db = locator<AppDatabase>();
+
     // create rooms
     final roomStore = _db.roomsStore;
 
@@ -211,6 +214,147 @@ class SettingsViewModel extends BaseViewModel {
           itemName: "Bewegungsmelder_Flur_Bewegung",
           type: ItemType.presence,
           roomId: hallway,
+          isFavorite: true);
+    }
+
+    await _itemsRepository.fetchData();
+  }
+
+
+  static Future<void> insertDummyDataHof() async {
+    final _itemsRepository = locator<ItemRepository>();
+    final _db = locator<AppDatabase>();
+
+    // create rooms
+    final roomStore = locator<AppDatabase>().roomsStore;
+
+    final rooms = [
+      RoomsTableCompanion.insert(
+          name: "Erik", icon: Value(Icons.bed),
+          color: Value("#CEFDFF"), sortKey: 0),
+      RoomsTableCompanion.insert(
+          name: "Wohnzimmer", icon: Value(Icons.tv),
+          color: Value("#EE964B"), sortKey: 1),
+      RoomsTableCompanion.insert(
+          name: "Malte", color: Value("#4062BB"), sortKey: 2),
+      RoomsTableCompanion.insert(
+          name: "Bad",
+          icon: Value(Icons.bathtub),
+          color: Value("#00FF00"),
+          sortKey: 3),
+    ];
+
+    // Eriks Room
+    final erikRoom = await roomStore.insertOrUpdateSingleWithId(rooms[0]);
+
+    // living room
+    final livingRoom = await roomStore.insertOrUpdateSingleWithId(rooms[1]);
+
+    // Maltes Room
+    final malteRoom = await roomStore.insertOrUpdateSingleWithId(rooms[2]);
+
+    // bathRoom
+    final bathRoom = await roomStore.insertOrUpdateSingleWithId(rooms[3]);
+
+    final inboxStore = _db.inboxStore;
+    final inboxItemNames = (await inboxStore.all().get()).map((e) => e.name);
+
+    // create items
+    // Erik
+    if (inboxItemNames.contains("Erik_pos3")) {
+      await _itemsRepository.addItemFromInbox(
+          itemName: "Erik_pos3",
+          type: ItemType.rollerShutter,
+          roomId: erikRoom,
+          isFavorite: true);
+    }
+    if (inboxItemNames.contains("stripe_erik_brightness")) {
+      await _itemsRepository.addItemFromInbox(
+          itemName: "stripe_erik_brightness",
+          type: ItemType.light,
+          roomId: erikRoom,
+          isFavorite: true);
+    }
+    if (inboxItemNames.contains("Thermostat_Erik_Temperature")) {
+      await _itemsRepository.addItemFromInbox(
+          itemName: "Thermostat_Erik_Temperature",
+          type: ItemType.temperature,
+          roomId: erikRoom,
+          isFavorite: true);
+    }
+    if (inboxItemNames.contains("Thermostat_Erik_Actual_Humidity")) {
+      await _itemsRepository.addItemFromInbox(
+          itemName: "Thermostat_Erik_Actual_Humidity",
+          type: ItemType.humidity,
+          roomId: erikRoom,
+          isFavorite: true);
+    }
+
+    // Malte
+    if (inboxItemNames.contains("Erik_pos3")) {
+      await _itemsRepository.addItemFromInbox(
+          itemName: "Erik_pos3",
+          type: ItemType.rollerShutter,
+          roomId: malteRoom,
+          isFavorite: true);
+    }
+    if (inboxItemNames.contains("Lampe_Malte")) {
+      await _itemsRepository.addItemFromInbox(
+          itemName: "Lampe_Malte",
+          type: ItemType.light,
+          roomId: malteRoom,
+          isFavorite: true);
+    }
+    if (inboxItemNames.contains("Thermostat_Malte_Temperature")) {
+      await _itemsRepository.addItemFromInbox(
+          itemName: "Thermostat_Malte_Temperature",
+          type: ItemType.temperature,
+          roomId: malteRoom,
+          isFavorite: true);
+    }
+    if (inboxItemNames.contains("Thermostat_Malte_Actual_Humidity")) {
+      await _itemsRepository.addItemFromInbox(
+          itemName: "Thermostat_Malte_Actual_Humidity",
+          type: ItemType.humidity,
+          roomId: malteRoom,
+          isFavorite: true);
+    }
+
+    // livingRoom
+    if (inboxItemNames.contains("Thermostat_Wohnzimmer_Actual_Temperature")) {
+      await _itemsRepository.addItemFromInbox(
+          itemName: "Thermostat_Wohnzimmer_Actual_Temperature",
+          type: ItemType.temperature,
+          roomId: livingRoom,
+          isFavorite: true);
+    }
+    if (inboxItemNames.contains("Thermostat_Wohnzimmer_Actual_Humidity")) {
+      await _itemsRepository.addItemFromInbox(
+          itemName: "Thermostat_Wohnzimmer_Actual_Humidity",
+          type: ItemType.humidity,
+          roomId: livingRoom);
+    }
+
+    // Bathroom
+    if (inboxItemNames.contains("Thermostat_Bad_EG_Actual_Humidity")) {
+      await _itemsRepository.addItemFromInbox(
+          itemName: "Thermostat_Bad_EG_Actual_Humidity",
+          type: ItemType.humidity,
+          roomId: bathRoom,
+          isFavorite: true);
+    }
+    if (inboxItemNames.contains("Thermostat_Bad_EG_Actual_Temperature")) {
+      await _itemsRepository.addItemFromInbox(
+          itemName: "Thermostat_Bad_EG_Actual_Temperature",
+          type: ItemType.temperature,
+          roomId: bathRoom,
+          isFavorite: true);
+    }
+    if (inboxItemNames.contains("Fenster_Sensor_Bad_Fensterkontakt")) {
+      await _itemsRepository.addItemFromInbox(
+          itemName: "Fenster_Sensor_Bad_Fensterkontakt",
+          type: ItemType.windowContact,
+          roomId: bathRoom,
           isFavorite: true);
     }
 

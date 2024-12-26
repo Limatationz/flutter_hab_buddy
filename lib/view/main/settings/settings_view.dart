@@ -193,9 +193,14 @@ class SettingsView extends StatelessWidget {
                           },
                         ),
                         SettingsTile(
-                            title: const Text("Insert Dummy Data"),
+                            title: const Text("Insert Dummy Data München"),
                             onPressed: (_) {
-                              model.insertDummyData();
+                              SettingsViewModel.insertDummyDataMunich();
+                            }),
+                        SettingsTile(
+                            title: const Text("Insert Dummy Data Hof"),
+                            onPressed: (_) {
+                              SettingsViewModel.insertDummyDataHof();
                             }),
                       ]),
               ],

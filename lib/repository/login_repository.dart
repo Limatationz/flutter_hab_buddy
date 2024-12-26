@@ -114,6 +114,17 @@ class LoginRepository {
     }
   }
 
+  // just for testing
+  Future<bool> storeLoginData({
+    required LoginData loginData,
+  }) async {
+    final loginDataString = jsonEncode(loginData.toJson());
+    await _secureStorage.write(key: _secureStorageKey, value: loginDataString);
+    _loggedIn.add(true);
+    _loginData.add(loginData);
+    return true;
+  }
+
   Future<bool> storeLocalLogin({
     required LocalLoginData localLoginData,
   }) async {
@@ -177,5 +188,6 @@ class LoginRepository {
     await _secureStorage.delete(key: _secureStorageKey);
     _loggedIn.add(false);
     _loginData.add(null);
+    connectivityManager.reset();
   }
 }
