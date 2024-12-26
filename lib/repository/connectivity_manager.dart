@@ -4,6 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_client_sse/constants/sse_request_type_enum.dart';
 import 'package:flutter_client_sse/flutter_client_sse.dart';
+import 'package:logger/logger.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../core/database/login/login_data.dart';
@@ -17,6 +18,8 @@ import '../locator.dart';
 import '../util/icons/icons.dart';
 
 class ConnectivityManager {
+  final _log = Logger();
+
   final connectivity = Connectivity();
 
   // Connection Status
@@ -75,16 +78,17 @@ class ConnectivityManager {
   asyncInit(Stream<LoginData?> loginDataStream) async {
     final currentConnectionStatus = await connectivity.checkConnectivity();
 
+    // listen to login changes
     loginDataStream.listen((e) {
       _updateBestConnectivity(e);
     });
 
-    // TODO: Why is this not working?
-    Rx.combineLatest2(
-        connectivity.onConnectivityChanged.startWith(currentConnectionStatus),
-        loginDataStream, (_, loginData) {
-      print("2 LoginDataStream: $loginData");
-      _updateBestConnectivity(loginData);
+    // listen to connectivity changes
+    connectivity.onConnectivityChanged
+        .startWith(currentConnectionStatus)
+        .withLatestFrom(loginDataStream, (c, l) => (c, l))
+        .listen((e) {
+      _updateBestConnectivity(e.$2);
     });
   }
 
@@ -216,6 +220,8 @@ class ConnectivityManager {
         firstConnectionComplete.isCompleted == false) {
       firstConnectionComplete.complete(true);
     }
+
+    _log.i("Updated Connection State to $newState");
   }
 
   void _updateSSEConnection(
@@ -223,7 +229,6 @@ class ConnectivityManager {
     String? basicAuthUsername,
     String? basicAuthPassword,
   }) {
-    print('$baseUrl/events?topics=*/items/*/statechanged');
     _sseDataStream = SSEClient.subscribeToSSE(
       method: SSERequestType.GET,
       url: '$baseUrl/events?topics=*/items/*/statechanged',
@@ -264,7 +269,7 @@ enum ServerConnectionState {
         return LineIconsV5.wifi_disabled;
     }
   }
-  
+
   String get name {
     switch (this) {
       case ServerConnectionState.local:
