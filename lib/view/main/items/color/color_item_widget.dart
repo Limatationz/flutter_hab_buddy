@@ -31,7 +31,9 @@ class ColorItemWidget extends SmallItemWidget {
           return DimmableWidgetContainer(
               key: ValueKey(colorValue.hex),
               onTap: !state.isReadOnly ? () => onAction(isOn) : null,
-              onLongTap: () => onLongTap(context, colorValue),
+              onLongTap: !state.isReadOnly
+                  ? () => onLongTap(context, colorValue)
+                  : null,
               value: dimmerState,
               maxValue: state.stateDescription?.maximum,
               minValue: state.stateDescription?.minimum,
@@ -51,8 +53,8 @@ class ColorItemWidget extends SmallItemWidget {
                         item!.icon ?? item!.type.icon,
                         size: iconSize,
                         color: isOn
-                          ? Theme.of(context).colorScheme.onSurface
-                          : Colors.grey,
+                            ? Theme.of(context).colorScheme.onSurface
+                            : Colors.grey,
                       )),
                 ],
               ));

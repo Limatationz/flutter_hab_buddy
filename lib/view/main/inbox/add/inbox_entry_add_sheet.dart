@@ -149,7 +149,7 @@ class InboxEntryAddSheet extends StatelessWidget {
                     label: S.of(context).customLabel,
                     helperText: S.of(context).customLabelHelp,
                     hintText: entry.label,
-                    validator: FormBuilderValidators.maxLength(50),
+                    validator: FormBuilderValidators.maxLength(50, checkNullOrEmpty: false),
                     required: false,
                   ),
                   const SizedBox(height: 16),

@@ -42,6 +42,8 @@ enum OhItemType {
         return OhItemType.image;
       case "Call":
         return OhItemType.call;
+      case "Location":
+        return OhItemType.location;
       default:
         if (value?.contains("Number") ?? false) {
           return OhItemType.number;

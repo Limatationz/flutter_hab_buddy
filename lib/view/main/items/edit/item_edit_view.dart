@@ -149,6 +149,7 @@ class ItemEditView extends StatelessWidget {
                     helperText: S.of(context).customLabelHelp,
                     hintText: item.ohLabel,
                     initialValue: item.label,
+                    required: false,
                   ),
                   const SizedBox(height: 16),
                   BaseElevatedButton(

@@ -45,7 +45,7 @@ class RoomsView extends StatelessWidget {
         },
         builder: (context, model, _) => Scaffold(
             appBar: AppBar(
-              title: const Text('Rooms'),
+              title: Text(S.current.navigationRooms),
               actions: [
                 IconButton(
                     onPressed: () {
@@ -54,7 +54,7 @@ class RoomsView extends StatelessWidget {
                       );
                     },
                     tooltip: 'Sort rooms',
-                    icon: Icon(LineIconsV5.variantfreesort_high_to_low)),
+                    icon: const Icon(LineIconsV5.variantfreesort_high_to_low)),
                 WakelockIndicator(),
                 InboxActionButton(countInbox: model.countInboxStream),
               ],
@@ -66,6 +66,7 @@ class RoomsView extends StatelessWidget {
                   return StreamBuilder(
                       stream: model.roomsStream,
                       builder: (context, snapshot) {
+                        print("refresh rooms");
                         if (!snapshot.hasData) {
                           return const Center(
                             child: CircularProgressIndicator(),
@@ -93,6 +94,7 @@ class RoomsView extends StatelessWidget {
                               StreamBuilder(
                                   stream: model.itemsByRoomIdStream,
                                   builder: (context, snapshot) {
+                                    print("refresh items by room");
                                     if (!snapshot.hasData) {
                                       return Center(
                                         child: CircularProgressIndicator(

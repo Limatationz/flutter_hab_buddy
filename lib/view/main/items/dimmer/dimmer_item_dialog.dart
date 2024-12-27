@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import '../../../../core/database/app_database.dart';
+import '../../../../core/database/state/item_states_table.dart';
 import '../../../../locator.dart';
 import '../../../../repository/item_repository.dart';
 import '../general/item_state_injector.dart';
@@ -34,11 +34,12 @@ class _DimmerItemDialogState extends State<DimmerItemDialog> {
 
     _itemsStore
         .stateByName(widget.itemName)
-        .watchSingleOrNull().distinct()
+        .watchSingleOrNull()
+        .distinct()
         .listen((state) {
       if (state != null) {
         final doubleValue = double.tryParse(state.state);
-        if(mounted) {
+        if (mounted) {
           setState(() {
             if (doubleValue != null) {
               sliderValue = doubleValue;
@@ -57,12 +58,14 @@ class _DimmerItemDialogState extends State<DimmerItemDialog> {
           return Column(children: [
             Slider(
               value: sliderValue,
-              onChangeEnd: onDragDone,
-              onChanged: (newValue) {
-                setState(() {
-                  sliderValue = newValue;
-                });
-              },
+              onChangeEnd: !itemState.isReadOnly ? onDragDone : null,
+              onChanged: !itemState.isReadOnly
+                  ? (newValue) {
+                      setState(() {
+                        sliderValue = newValue;
+                      });
+                    }
+                  : null,
               min: itemState.stateDescription?.minimum ?? 0,
               max: itemState.stateDescription?.maximum ?? 100,
               divisions: itemState.stateDescription?.step != null
@@ -81,22 +84,17 @@ class _DimmerItemDialogState extends State<DimmerItemDialog> {
                     Text(
                       itemState.stateDescription?.minimum?.round().toString() ??
                           "0",
-                      style:
-                      Theme.of(context).textTheme.bodyLarge,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     Text(
                       "${(sliderValue).round()}",
-                      style:
-                      Theme.of(context).textTheme.bodyLarge,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     Text(
                       itemState.stateDescription?.maximum?.round().toString() ??
                           "100",
-                      style:
-                          Theme.of(context).textTheme.bodyLarge,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
-
-
                   ],
                 ))
           ]);

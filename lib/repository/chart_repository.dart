@@ -1,5 +1,4 @@
-import 'package:collection/collection.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_ce/hive.dart';
 
 import '../core/network/converters/persistence.dart';
 import '../core/network/generated/openHAB.swagger.dart';

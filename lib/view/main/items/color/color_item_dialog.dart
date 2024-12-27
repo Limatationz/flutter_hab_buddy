@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import '../../../../core/database/app_database.dart';
+import '../../../../core/database/state/item_states_table.dart';
 import '../../../../generated/l10n.dart';
 import '../../../../locator.dart';
 import '../../../../repository/item_repository.dart';
@@ -70,28 +71,32 @@ class _ColorItemDialogState extends State<ColorItemDialog> {
                 color: color.toColor(),
                 height: 48,
                 width: 48,
-                onSelect: () async {
-                  final newColor = await OpenhabColorUtil.showColorPicker(
-                    context: context,
-                    initialColor: color.toColor(),
-                    colorScheme: widget.colorScheme,
-                  );
-                  final rgbColor = RgbColor(
-                      newColor.r * 255, newColor.g * 255, newColor.b * 255);
-                  final hsbColor = rgbColor.toHsbColor();
-                  await onColorPickerDone(hsbColor);
-                },
+                onSelect: !itemState.isReadOnly
+                    ? () async {
+                        final newColor = await OpenhabColorUtil.showColorPicker(
+                          context: context,
+                          initialColor: color.toColor(),
+                          colorScheme: widget.colorScheme,
+                        );
+                        final rgbColor = RgbColor(newColor.r * 255,
+                            newColor.g * 255, newColor.b * 255);
+                        final hsbColor = rgbColor.toHsbColor();
+                        await onColorPickerDone(hsbColor);
+                      }
+                    : null,
               )
             ]),
             const Gap(largePadding),
             Slider(
               value: sliderValue,
-              onChangeEnd: onDragDone,
-              onChanged: (newValue) {
-                setState(() {
-                  sliderValue = newValue;
-                });
-              },
+              onChangeEnd: !itemState.isReadOnly ? onDragDone : null,
+              onChanged: !itemState.isReadOnly
+                  ? (newValue) {
+                      setState(() {
+                        sliderValue = newValue;
+                      });
+                    }
+                  : null,
               min: itemState.stateDescription?.minimum ?? 0,
               max: itemState.stateDescription?.maximum ?? 100,
               divisions: itemState.stateDescription?.step != null

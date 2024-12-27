@@ -1,5 +1,5 @@
 // Can be generated automatically
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive_ce/hive.dart';
 
 import '../generated/openHAB.models.swagger.dart';
 

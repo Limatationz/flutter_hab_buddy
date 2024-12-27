@@ -16,13 +16,13 @@ class RoomsViewModel extends BaseViewModel {
 
   Stream<int> get countInboxStream => _inboxStore.count();
 
-  Stream<List<Room>> get roomsStream => _roomsStore.all().watch();
+  Stream<List<Room>> get roomsStream => _roomsStore.all().watch().distinct();
 
   Stream<bool> get hasRoomsStream =>
       _roomsStore.all().watch().map((event) => event.isNotEmpty);
 
   Stream<Map<int, List<Item>>> get itemsByRoomIdStream =>
-      _itemsStore.watchGroupedByRoomId();
+      _itemsStore.watchGroupedByRoomId().distinct();
 
   final pageController = PageController();
   int currentPage = 0;

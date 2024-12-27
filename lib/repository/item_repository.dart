@@ -250,6 +250,10 @@ class ItemRepository {
     return _sendAction(itemName, body);
   }
 
+  Future<void> locationAction(String itemName, double latitude, double longitude) async {
+    return _sendAction(itemName, "$latitude,$longitude");
+  }
+
   Future<void> _sendAction(String itemName, String body) async {
     // increment score of item
     _itemsStore.incrementScoreByName(itemName);

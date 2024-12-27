@@ -13,6 +13,7 @@ import '../color/color_item_widget.dart';
 import '../dimmer/dimmer_item_widget.dart';
 import '../edit/item_edit_view.dart';
 import '../image/image_item_widget.dart';
+import '../location/location_item_widget.dart';
 import '../player/base/player_item_widget.dart';
 import '../player/complex/complex_player_add_sheet.dart';
 import '../player/complex/complex_player_data.dart';
@@ -80,6 +81,8 @@ class ItemWidgetFactory {
         return ImageItemWidget(item: item, colorScheme: colorScheme);
       case OhItemType.color:
         return ColorItemWidget(item: item, colorScheme: colorScheme);
+      case OhItemType.location:
+        return LocationItemWidget(item: item, colorScheme: colorScheme);
       default:
         return TextItemWidget(
           item: item,
