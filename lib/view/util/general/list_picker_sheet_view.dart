@@ -4,29 +4,32 @@ import 'package:go_router/go_router.dart';
 
 import '../../../generated/l10n.dart';
 import '../../../util/icons/icons.dart';
+import '../constants.dart';
 import '../general/base_elevated_button.dart';
 import '../general/better_divider.dart';
 import '../general/bottom_sheet_container.dart';
 
 class ListPickerSheetView<T> extends StatefulWidget {
   final List<T> options;
-  final int option;
-  final Function(int) onOptionChange;
+  final T? option;
+  final Function(T?) onOptionChange;
+  final String Function(T)? optionToString;
   final bool canSelectNone;
 
   const ListPickerSheetView(
       {super.key,
       required this.options,
-      required this.option,
+      this.option,
       required this.onOptionChange,
-      this.canSelectNone = false});
+      this.canSelectNone = false,
+      this.optionToString});
 
   @override
-  _ListPickerSheetViewState createState() => _ListPickerSheetViewState();
+  _ListPickerSheetViewState<T> createState() => _ListPickerSheetViewState<T>();
 }
 
-class _ListPickerSheetViewState extends State<ListPickerSheetView> {
-  int _option = 0;
+class _ListPickerSheetViewState<T> extends State<ListPickerSheetView<T>> {
+  T? _option;
 
   @override
   void initState() {
@@ -37,19 +40,20 @@ class _ListPickerSheetViewState extends State<ListPickerSheetView> {
   @override
   Widget build(BuildContext context) {
     return Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Flexible(child: getListView(context)),
-              const SizedBox(height: 16),
-              BaseElevatedButton(
-                text: S.of(context).done,
-                onPressed: () {
-                  widget.onOptionChange(_option);
-                  context.pop(_option);
-                },
-              )
-            ]);
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Flexible(child: getListView(context)),
+          const SizedBox(height: largePadding),
+          BaseElevatedButton(
+            fullWidth: true,
+            text: S.of(context).done,
+            onPressed: _option == null && !widget.canSelectNone ? null : () {
+              widget.onOptionChange(_option);
+              Navigator.of(context).pop();
+            },
+          )
+        ]);
   }
 
   Widget getListView(BuildContext context) => ListView.separated(
@@ -57,10 +61,13 @@ class _ListPickerSheetViewState extends State<ListPickerSheetView> {
       shrinkWrap: true,
       itemCount: widget.options.length,
       itemBuilder: (BuildContext context, int index) {
+        final currentOption = widget.options[index];
         return ListTile(
-          title: Text(widget.options[index].toString(),
+          title: Text(
+              widget.optionToString?.call(currentOption) ??
+                  currentOption.toString(),
               style: Theme.of(context).textTheme.bodyLarge),
-          trailing: _option == index
+          trailing: _option == currentOption
               ? Icon(
                   LineIcons.checkmark,
                   color: Theme.of(context).colorScheme.secondary,
@@ -68,10 +75,10 @@ class _ListPickerSheetViewState extends State<ListPickerSheetView> {
               : const SizedBox.shrink(),
           onTap: () {
             setState(() {
-              if (_option != index) {
-                _option = index;
+              if (_option != currentOption) {
+                _option = currentOption;
               } else if (widget.canSelectNone) {
-                _option = -1;
+                _option = null;
               }
             });
           },

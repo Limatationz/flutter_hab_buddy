@@ -1,11 +1,11 @@
+import 'dart:math';
+
 import 'package:drift/drift.dart';
-import 'package:sprintf/sprintf.dart';
+import 'package:flutter/material.dart' show Colors;
 
 import '../app_database.dart';
-import '../converter/command_description_converter.dart';
 import '../converter/icon_data_converter.dart';
 import '../converter/json_converter.dart';
-import '../converter/state_description_converter.dart';
 import '../converter/string_list_converter.dart';
 import '../rooms/rooms_table.dart';
 import 'item_type.dart';
@@ -63,14 +63,33 @@ class ItemWithState {
 extension ItemLabel on Item {
   String get label => customLabel ?? ohLabel;
 
-
-
   bool get isSensor =>
       type == ItemType.temperature ||
       type == ItemType.humidity ||
       type == ItemType.airPressure ||
       type == ItemType.airQuality ||
       type == ItemType.presence;
+
+  dynamic get defaultValue {
+    switch (ohType) {
+      case OhItemType.number:
+        return 0;
+      case OhItemType.string:
+        return '';
+      case OhItemType.button:
+        return false;
+      case OhItemType.dimmer:
+        return 0;
+      case OhItemType.rollershutter:
+        return 0;
+      case OhItemType.dateTime:
+        return DateTime.now();
+      case OhItemType.color:
+        return Colors.primaries[Random().nextInt(Colors.primaries.length)];
+      case OhItemType.contact:
+        return false;
+      default:
+       return null;
+    }
+  }
 }
-
-

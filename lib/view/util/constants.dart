@@ -7,6 +7,7 @@ const double paddingContainer = smallPadding;
 const double paddingPillContainer = 4.0;
 const double marginContainer = largePadding;
 
+const double extraSmallPadding = 4.0;
 const double smallPadding = 8.0;
 const double mediumPadding = 12.0;
 const double largePadding = 16.0;

@@ -44,7 +44,7 @@ class InboxView extends StatelessWidget {
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        icon: const Icon(LineIcons.close))
+                        icon: const Icon(LineIconsV5.xmark))
                   ],
                 )),
             const HeadlinePaddingBox(),
@@ -65,10 +65,10 @@ class InboxView extends StatelessWidget {
                         },
                         iconSize: 18,
                         visualDensity: VisualDensity.compact,
-                        icon: const Icon(LineIcons.close)),
+                        icon: const Icon(LineIconsV5.xmark)),
                   ),
                 )),
-            const Gap(12),
+            const Gap(mediumPadding),
             Expanded(
               child: StreamBuilder<List<InboxListEntry>>(
                 stream: model.filteredInbox,
@@ -90,6 +90,21 @@ class InboxView extends StatelessWidget {
                               context, entry, model.resetSearch, roomId),
                         );
                       },
+                      hapticFeedback: true,
+                      indexBarMargin: const EdgeInsets.only(right: 8),
+                      indexBarOptions: IndexBarOptions(
+                        downColor: Colors.green,
+                        textStyle: TextTheme.of(context).bodyMedium!,
+                        indexHintDecoration: BoxDecoration(
+                          color: ColorScheme.of(context).secondaryContainer,
+                          borderRadius: const BorderRadius.all(
+                              Radius.circular(borderRadiusContainer)),
+                        ),
+                        indexHintTextStyle: TextStyle(
+                          fontSize: 24,
+                          color: ColorScheme.of(context).onSecondaryContainer,
+                        ),
+                      ),
                     );
                   } else {
                     return const Center(child: CircularProgressIndicator());

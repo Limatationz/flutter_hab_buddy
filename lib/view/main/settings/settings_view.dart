@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide ConnectionState;
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
@@ -154,15 +155,21 @@ class SettingsView extends StatelessWidget {
                         onPressed: (context) {
                           showBarModalBottomSheet<int?>(
                             context: context,
-                            builder: (_) => ListPickerSheetView<String>(
-                              options: [
-                                S.current.themeLight,
-                                S.current.themeDark,
-                                S.current.themeSystem
-                              ],
-                              option: model.getThemeIndex(context),
-                              onOptionChange: (index) {
-                                model.setTheme(context, index);
+                            builder: (_) => ListPickerSheetView<AdaptiveThemeMode>(
+                              options: AdaptiveThemeMode.values,
+                              optionToString: (mode) {
+                                switch (mode) {
+                                  case AdaptiveThemeMode.light:
+                                    return S.current.themeLight;
+                                  case AdaptiveThemeMode.dark:
+                                    return S.current.themeDark;
+                                  case AdaptiveThemeMode.system:
+                                    return S.current.themeSystem;
+                                }
+                              },
+                              option: model.getThemeMode(context),
+                              onOptionChange: (newMode) {
+                                model.setTheme(context, newMode!);
                               },
                             ),
                           );

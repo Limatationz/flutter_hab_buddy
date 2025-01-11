@@ -495,7 +495,7 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
       return LineIconsV5.cloud_refresh_anticlockwise;
     } else {
       if (cloudLoginData != null) {
-        return LineIconsV5.variantfreecloud_check_circle;
+        return LineIconsV5.cloud_check_circle;
       } else {
         return LineIconsV5.cloud_xmark_circle;
       }

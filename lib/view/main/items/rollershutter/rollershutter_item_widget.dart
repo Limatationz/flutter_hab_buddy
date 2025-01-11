@@ -30,7 +30,7 @@ class RollershutterItemWidget extends SmallItemWidget {
           return DimmableWidgetContainer(
               key: ValueKey(numberState.toString()),
               onTap: () => !itemState.isReadOnly ? onAction(isDown) : null,
-              onLongTap: () => onLongTap(context, numberState),
+              onLongTap: () => onLongTap(context),
               value: numberState,
               maxValue: itemState.stateDescription?.maximum ?? 100,
               minValue: itemState.stateDescription?.minimum ?? 0,
@@ -41,11 +41,11 @@ class RollershutterItemWidget extends SmallItemWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  AutoHyphenatingText(item!.label,
+              Expanded(child: AutoHyphenatingText(item!.label,
                       maxLines: 3,
                       style: Theme.of(context)
                           .textTheme
-                          .titleMedium),
+                          .titleMedium)),
                   Align(
                       alignment: Alignment.bottomRight,
                       child: Icon(
@@ -54,7 +54,7 @@ class RollershutterItemWidget extends SmallItemWidget {
                         color: !isDown
                             ? Theme.of(context)
                                 .colorScheme
-                                .onBackground
+                                .onSurface
                             : Colors.grey,
                       )),
                 ],
@@ -70,12 +70,11 @@ class RollershutterItemWidget extends SmallItemWidget {
     await _itemRepository.dimmerAction(item!.ohName, value);
   }
 
-  void onLongTap(BuildContext context, double initialValue) =>
+  void onLongTap(BuildContext context) =>
       ItemWidgetFactory.openDialog(
           context,
           RollerShutterItemDialog(
             itemName: item!.ohName,
-            initialValue: initialValue,
             colorScheme: colorScheme,
           ),
           item!,

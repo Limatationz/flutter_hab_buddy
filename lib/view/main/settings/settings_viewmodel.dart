@@ -32,11 +32,10 @@ class SettingsViewModel extends BaseViewModel {
 
   Stream<DateTime?> get lastSSEUpdate => _loginRepository.connectivityManager.sseLastMessage;
 
-  int getThemeIndex(BuildContext context) {
+  AdaptiveThemeMode getThemeMode(BuildContext context) {
     return AdaptiveTheme
         .of(context)
-        .mode
-        .index;
+        .mode;
   }
 
   bool get missingRemoteSetup => !_loginRepository.hasRemoteLoginData;
@@ -50,8 +49,8 @@ class SettingsViewModel extends BaseViewModel {
     });
   }
 
-  void setTheme(BuildContext context, int index) {
-    AdaptiveTheme.of(context).setThemeMode(AdaptiveThemeMode.values[index]);
+  void setTheme(BuildContext context, AdaptiveThemeMode newMode) {
+    AdaptiveTheme.of(context).setThemeMode(newMode);
     final theme = AdaptiveTheme
         .of(context)
         .theme;

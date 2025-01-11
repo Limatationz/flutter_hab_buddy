@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
 import 'package:dynamic_color/dynamic_color.dart';
@@ -40,7 +42,7 @@ void main() async {
   final themeMode = await AdaptiveTheme.getThemeMode();
   bool isDark = themeMode == AdaptiveThemeMode.dark;
   if (themeMode == AdaptiveThemeMode.system) {
-    final brightness = SchedulerBinding.instance!.window.platformBrightness;
+    final brightness = PlatformDispatcher.instance.platformBrightness;
     if (brightness == Brightness.dark) {
       isDark = true;
     } else {
@@ -49,6 +51,7 @@ void main() async {
   }
 
   final isLoggedIn = await locator<LoginRepository>().checkLogin();
+  final appRouter = router(isLoggedIn);
 
   runApp(DynamicColorBuilder(
       builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
@@ -71,13 +74,13 @@ void main() async {
 
     //Theme
     final themeLight = ThemeData.from(
-        colorScheme: lightColorScheme,
-        textTheme: textTheme,
-        useMaterial3: true).copyWith(
+            colorScheme: lightColorScheme,
+            textTheme: textTheme,
+            useMaterial3: true)
+        .copyWith(
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: lightColorScheme.secondaryContainer
-            .withOpacity(0.4),
+        fillColor: lightColorScheme.secondaryContainer.withValues(alpha: 0.4),
         border: const OutlineInputBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(12.0),
@@ -88,11 +91,13 @@ void main() async {
     );
 
     final themeDark = ThemeData.from(
-        colorScheme: darkColorScheme, textTheme: textTheme, useMaterial3: true).copyWith(
+            colorScheme: darkColorScheme,
+            textTheme: textTheme,
+            useMaterial3: true)
+        .copyWith(
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: darkColorScheme.secondaryContainer
-            .withOpacity(0.4),
+        fillColor: darkColorScheme.secondaryContainer.withValues(alpha: 0.4),
         border: const OutlineInputBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(12.0),
@@ -111,19 +116,19 @@ void main() async {
           setSystemOverlay(currentTheme);
 
           return MaterialApp.router(
-                  debugShowCheckedModeBanner: false,
-                  title: "OpenHAB Home",
-                  routerConfig: router(isLoggedIn),
-                  localizationsDelegates: const [
-                    S.delegate,
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate,
-                  ],
-                  supportedLocales: S.delegate.supportedLocales,
-                  theme: theme,
-                  darkTheme: darkTheme,
-                );
+            debugShowCheckedModeBanner: false,
+            title: "OpenHAB Home",
+            routerConfig: appRouter,
+            localizationsDelegates: const [
+              S.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: S.delegate.supportedLocales,
+            theme: theme,
+            darkTheme: darkTheme,
+          );
         });
   }));
 }

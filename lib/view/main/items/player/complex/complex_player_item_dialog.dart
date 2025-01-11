@@ -138,7 +138,7 @@ class ComplexPlayerItemDialog extends StatelessWidget {
   }
 
   Future<void> onAction(String action) async {
-    await _itemRepository.playerStringAction(itemName, action);
+    await _itemRepository.stringAction(itemName, action);
   }
 }
 
@@ -206,5 +206,5 @@ class _VolumeSliderState extends State<VolumeSlider> {
   }
 
   Future<void> onVolumeChange(double value) =>
-      _itemRepository.playerStringAction(widget.itemName, value.toString());
+      _itemRepository.stringAction(widget.itemName, value.toString());
 }

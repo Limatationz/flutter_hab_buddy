@@ -224,13 +224,12 @@ class ItemRepository {
     return true;
   }
 
-  Future<void> switchAction(String itemName, bool on) async {
-    final body = on ? "ON" : "OFF";
-    return _sendAction(itemName, body);
-  }
-
   Future<void> dimmerAction(String itemName, double value) async {
     return _sendAction(itemName, value.toInt().toString());
+  }
+
+  Future<void> stringAction(String itemName, String value) async {
+    return _sendAction(itemName, value.toString());
   }
 
   Future<void> colorAction(String itemName, HsbColor value) async {
@@ -239,14 +238,6 @@ class ItemRepository {
 
   Future<void> rollershutterAction(String itemName, bool up) async {
     final body = up ? "UP" : "DOWN";
-    return _sendAction(itemName, body);
-  }
-
-  Future<void> rollershutterStringAction(String itemName, String body) async {
-    return _sendAction(itemName, body);
-  }
-
-  Future<void> playerStringAction(String itemName, String body) async {
     return _sendAction(itemName, body);
   }
 

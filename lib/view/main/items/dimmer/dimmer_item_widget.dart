@@ -28,7 +28,7 @@ class DimmerItemWidget extends SmallItemWidget {
           return DimmableWidgetContainer(
               key: ValueKey(dimmerState.toString()),
               onTap: !state.isReadOnly ? () => onAction(isOn) : null,
-              onLongTap: () => onLongTap(context, dimmerState),
+              onLongTap: () => onLongTap(context),
               value: dimmerState,
               maxValue: state.stateDescription?.maximum,
               minValue: state.stateDescription?.minimum,
@@ -38,9 +38,9 @@ class DimmerItemWidget extends SmallItemWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  AutoHyphenatingText(item!.label,
+                  Expanded(child: AutoHyphenatingText(item!.label,
                       maxLines: 3,
-                      style: Theme.of(context).textTheme.titleMedium),
+                      style: Theme.of(context).textTheme.titleMedium)),
                   Align(
                       alignment: Alignment.bottomRight,
                       child: Icon(
@@ -56,19 +56,18 @@ class DimmerItemWidget extends SmallItemWidget {
   }
 
   Future<void> onAction(bool isOn) async {
-    await _itemRepository.switchAction(item!.ohName, !isOn);
+    await _itemRepository.stringAction(item!.ohName, isOn ? "OFF" : "ON");
   }
 
   Future<void> onDragDone(double value) async {
     await _itemRepository.dimmerAction(item!.ohName, value);
   }
 
-  void onLongTap(BuildContext context, double value) =>
+  void onLongTap(BuildContext context) =>
       ItemWidgetFactory.openDialog(
           context,
           DimmerItemDialog(
               itemName: item!.ohName,
-              initialValue: value,
               colorScheme: colorScheme),
           item!,
           colorScheme);

@@ -23,6 +23,6 @@ class TextItemDialog extends StatelessWidget {
   }
 
   Future<void> onAction(bool on) async {
-    await _itemRepository.switchAction(itemName, on);
+    await _itemRepository.stringAction(itemName, on ? "ON" : "OFF");
   }
 }

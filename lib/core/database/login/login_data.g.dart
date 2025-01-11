@@ -56,12 +56,16 @@ RemoteLoginData _$RemoteLoginDataFromJson(Map<String, dynamic> json) =>
     RemoteLoginData(
       json['url'] as String,
       port: json['port'] as String?,
+      basicAuthUsername: json['basicAuthUsername'] as String?,
+      basicAuthPassword: json['basicAuthPassword'] as String?,
     );
 
 Map<String, dynamic> _$RemoteLoginDataToJson(RemoteLoginData instance) =>
     <String, dynamic>{
       'url': instance.url,
       'port': instance.port,
+      'basicAuthUsername': instance.basicAuthUsername,
+      'basicAuthPassword': instance.basicAuthPassword,
     };
 
 ApiLoginData _$ApiLoginDataFromJson(Map<String, dynamic> json) => ApiLoginData(

@@ -1,14 +1,19 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:chopper/chopper.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_client_sse/constants/sse_request_type_enum.dart';
 import 'package:flutter_client_sse/flutter_client_sse.dart';
 import 'package:logger/logger.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:http/io_client.dart' as http_io;
+import 'package:http/http.dart' as http;
+import 'dart:io';
 
 import '../core/database/login/login_data.dart';
 import '../core/network/generated/client_index.dart';
+import '../core/network/generated/openHAB.swagger.dart';
 import '../core/network/interceptors/api_auth_interceptor.dart';
 import '../core/network/interceptors/basic_auth_interceptor.dart';
 import '../core/network/interceptors/cloud_auth_interceptor.dart';
@@ -95,16 +100,22 @@ class ConnectivityManager {
   // Update Chopper client with the best available base URL
   Future<void> _updateBestConnectivity(LoginData? loginData) async {
     if (loginData != null) {
+      final http.Client testClient = http_io.IOClient(
+        HttpClient()
+          ..connectionTimeout = const Duration(seconds: 5)
+          ..idleTimeout = const Duration(seconds: 5),
+      );
+
       // Test connections in priority order
-      if (await _testLocalConnection(loginData.localLoginData)) {
+      if (await _testLocalConnection(loginData.localLoginData, testClient)) {
         return;
       }
       if (loginData.hasRemoteLogin &&
-          await _testRemoteConnection(loginData.remoteLoginData!)) {
+          await _testRemoteConnection(loginData.remoteLoginData!, testClient)) {
         return;
       }
       if (loginData.hasCloudLogin &&
-          await _testCloudConnection(loginData.cloudLoginData!)) {
+          await _testCloudConnection(loginData.cloudLoginData!, testClient)) {
         return;
       }
     }
@@ -114,13 +125,17 @@ class ConnectivityManager {
     _connectionStateSubject.add(ServerConnectionState.offline);
   }
 
-  Future<bool> _testLocalConnection(LocalLoginData loginData) async {
-    final testApi = OpenHAB.create(baseUrl: Uri.parse(loginData.url));
+  Future<bool> _testLocalConnection(
+      LocalLoginData loginData, http.Client client) async {
+    final testApi = OpenHAB.create(
+      client: ChopperClient(
+          converter: $JsonSerializableConverter(),
+          client: client,
+          baseUrl: Uri.parse(loginData.url)),
+    );
 
     try {
       final rootBean = await testApi.get();
-
-      print("rootBean.isSuccessful: ${rootBean.isSuccessful}");
 
       if (rootBean.isSuccessful &&
           connectionState != ServerConnectionState.local) {
@@ -130,23 +145,26 @@ class ConnectivityManager {
         _connectionStateSubject.add(ServerConnectionState.local);
         return true;
       }
-    } catch (e) {
-      print("Error while testing local Connection: $e");
+    } catch (e, s) {
+      _log.e("Error while testing local Connection", error: e, stackTrace: s);
     }
 
     return false;
   }
 
-  Future<bool> _testRemoteConnection(RemoteLoginData loginData) async {
+  Future<bool> _testRemoteConnection(
+      RemoteLoginData loginData, http.Client client) async {
     final testApi = OpenHAB.create(
-        baseUrl: Uri.parse(
-          loginData.fullUrl,
-        ),
-        interceptors: [
-          if (loginData.hasBasicAuth)
-            BasicAuthInterceptor(
-                loginData.basicAuthUsername!, loginData.basicAuthPassword!)
-        ]);
+      client: ChopperClient(
+          client: client,
+          baseUrl: Uri.parse(loginData.url),
+          converter: $JsonSerializableConverter(),
+          interceptors: [
+            if (loginData.hasBasicAuth)
+              BasicAuthInterceptor(
+                  loginData.basicAuthUsername!, loginData.basicAuthPassword!)
+          ]),
+    );
 
     try {
       final rootBean = await testApi.get();
@@ -162,19 +180,23 @@ class ConnectivityManager {
         _connectionStateSubject.add(ServerConnectionState.remote);
         return true;
       }
-    } catch (e) {
-      print("Error while testing remote Connection: $e");
+    } catch (e, s) {
+      _log.e("Error while testing remote Connection", error: e, stackTrace: s);
     }
 
     return false;
   }
 
-  Future<bool> _testCloudConnection(CloudLoginData loginData) async {
+  Future<bool> _testCloudConnection(
+      CloudLoginData loginData, http.Client client) async {
     final testApi = OpenHAB.create(
-        baseUrl: Uri.parse("https://my.openhab.org/rest"),
-        interceptors: [
+        client: ChopperClient(
+            client: client,
+            converter: $JsonSerializableConverter(),
+            baseUrl: Uri.parse("https://myopenhab.org/rest"),
+            interceptors: [
           BasicAuthInterceptor(loginData.username, loginData.password)
-        ]);
+        ]));
 
     try {
       final rootBean = await testApi.get();
@@ -183,17 +205,17 @@ class ConnectivityManager {
           connectionState != ServerConnectionState.cloud) {
         _updateApi(
           ServerConnectionState.cloud,
-          "https://my.openhab.org/rest",
+          "https://myopenhab.org/rest",
         );
-        _updateSSEConnection("https://my.openhab.org/rest",
+        _updateSSEConnection("https://myopenhab.org/rest",
             basicAuthUsername: loginData.username,
             basicAuthPassword: loginData.password);
-        _baseUrl = "https://my.openhab.org/rest";
+        _baseUrl = "https://myopenhab.org/rest";
         _connectionStateSubject.add(ServerConnectionState.cloud);
         return true;
       }
-    } catch (e) {
-      print("Error while testing remote Connection: $e");
+    } catch (e, s) {
+      _log.e("Error while testing cloud Connection", error: e, stackTrace: s);
     }
 
     return false;

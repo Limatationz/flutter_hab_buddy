@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 import 'package:stacked/stacked.dart';
 
@@ -12,6 +13,8 @@ import '../../util/constants.dart';
 import '../../util/general/alert_dialog_action.dart';
 import '../../util/general/base_elevated_button.dart';
 import 'automation_viewmodel.dart';
+import 'edit/automation_edit_view.dart';
+import 'rule_list_item.dart';
 
 class AutomationView extends StatelessWidget {
   static const String routePath = '/automation';
@@ -23,7 +26,8 @@ class AutomationView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<AutomationViewModel>.reactive(
         viewModelBuilder: () => AutomationViewModel(),
-        builder: (context, model, _) => Scaffold(
+        builder: (context, model, _) =>
+            Scaffold(
               appBar: AppBar(title: Text(S.current.navigationAutomation)),
               body: StreamBuilder2(
                   streams: StreamTuple2(model.hasApiAccess, model.rules),
@@ -57,69 +61,17 @@ class AutomationView extends StatelessWidget {
                           padding: const EdgeInsets.all(paddingScaffold),
                           itemBuilder: (context, index) {
                             final rule = snapshot.snapshot2.data![index];
-                            return ListTile(
-                              title: Text(rule.name ?? 'No name'),
-                              subtitle: Text(rule.uid),
-                              contentPadding: const EdgeInsets.all(0),
-                              trailing: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    if (!rule.fromApp)
-                                      const Icon(LineIconsV5.locked_3),
-                                    if (!rule.fromApp) const Gap(smallPadding),
-                                    GestureDetector(
-                                      onLongPress: () {
-                                        // This handles the long press.
-                                        _onRuleTriggered(
-                                            context, rule, model, false);
-                                      },
-                                      child: IconButton(
-                                        onPressed: () {
-                                          // This handles the normal tap.
-                                          _onRuleTriggered(
-                                              context, rule, model, true);
-                                        },
-                                        icon: const Icon(
-                                            LineIconsV5.variantfreeplay),
-                                      ),
-                                    ),
-                                  ]),
-                            );
+                            return RuleListItem(rule: rule);
                           });
                     } else {
                       return const Center(child: CircularProgressIndicator());
                     }
                   }),
+              floatingActionButton: FloatingActionButton(
+                  child: Icon(LineIconsV5.plus),
+                  onPressed: () {
+                    context.pushNamed(AutomationEditView.routeName);
+                  }),
             ));
-  }
-
-  Future<void> _onRuleTriggered(BuildContext context, Rule rule,
-      AutomationViewModel model, bool needsConfirm) async {
-    final confirmed = !needsConfirm
-        ? false
-        : await showAdaptiveDialog<bool?>(
-            context: context,
-            builder: (context) => AlertDialog.adaptive(
-                  content: Text.rich(TextSpan(children: [
-                    TextSpan(text: S.of(context).confirmTriggerRuleAlertText1),
-                    TextSpan(
-                        text: " ${rule.name ?? rule.uid} ",
-                        style: const TextStyle(fontWeight: FontWeight.bold)),
-                    TextSpan(
-                      text: S.of(context).confirmTriggerRuleAlertText2,
-                    ),
-                  ])),
-                  actions: [
-                    AlertDialogAction(
-                        onPressed: () => Navigator.of(context).pop(false),
-                        child: Text(S.of(context).cancel)),
-                    AlertDialogAction(
-                        onPressed: () => Navigator.of(context).pop(true),
-                        child: Text(S.of(context).confirm))
-                  ],
-                ));
-    if (confirmed == true) {
-      model.triggerRule(rule.uid);
-    }
   }
 }

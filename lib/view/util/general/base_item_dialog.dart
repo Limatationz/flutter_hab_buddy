@@ -1,12 +1,17 @@
 import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:badges/badges.dart' as badges;
+import 'package:go_router/go_router.dart';
+import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/database/items/items_table.dart';
 import '../../../locator.dart';
+import '../../../repository/automation_repository.dart';
 import '../../../repository/item_repository.dart';
 import '../../../util/icons/icons.dart';
+import '../../main/automation/by_item/automations_by_item_view.dart';
 import '../../main/items/general/item_widget_factory.dart';
 import '../constants.dart';
 
@@ -31,6 +36,7 @@ class BaseItemDialog extends StatefulWidget {
 
 class _BaseItemDialogState extends State<BaseItemDialog> {
   final _itemRepository = locator<ItemRepository>();
+  final _automationRepository = locator<AutomationRepository>();
 
   bool isFavorite = false;
 
@@ -44,7 +50,7 @@ class _BaseItemDialogState extends State<BaseItemDialog> {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-            color: widget.colorScheme.background,
+            color: widget.colorScheme.surface,
             borderRadius: const BorderRadius.all(Radius.circular(10))),
         padding: const EdgeInsets.all(paddingScaffold),
         child: Column(
@@ -58,6 +64,39 @@ class _BaseItemDialogState extends State<BaseItemDialog> {
                   style: Theme.of(context).textTheme.headlineMedium,
                 )),
                 const Gap(listSpacing),
+                StreamBuilder2(
+                    streams: StreamTuple2(
+                        _automationRepository.automationEnabled,
+                        _automationRepository
+                            .countRulesForItemNameStream(widget.item.ohName)),
+                    builder: (context, snapshot) {
+                      final enabled = snapshot.snapshot1.data ?? false;
+                      final count = snapshot.snapshot2.data ?? 0;
+                      return badges.Badge(
+                          badgeContent: Text(
+                            count.toString(),
+                            style: TextStyle(
+                                color: widget.colorScheme.onSecondaryContainer),
+                          ),
+                          showBadge: count > 0,
+                          badgeStyle: badges.BadgeStyle(
+                            badgeColor: widget.colorScheme.secondaryContainer,
+                          ),
+                          position: badges.BadgePosition.topEnd(end: -2),
+                          child: IconButton(
+                              color: widget.colorScheme.primary,
+                              onPressed: enabled
+                                  ? () {
+                                      context.pushNamed(
+                                          AutomationsByItemView.routeName,
+                                          pathParameters: {
+                                            "itemName": widget.item.ohName
+                                          });
+                                    }
+                                  : null,
+                              visualDensity: VisualDensity.compact,
+                              icon: const Icon(LineIconsFilled.automation)));
+                    }),
                 IconButton(
                     color: widget.colorScheme.primary,
                     onPressed: toggleFavorite,

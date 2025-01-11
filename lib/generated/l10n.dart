@@ -1180,6 +1180,16 @@ class S {
     );
   }
 
+  /// `Do you really want to delete the rule`
+  String get confirmDeleteRuleAlertText {
+    return Intl.message(
+      'Do you really want to delete the rule',
+      name: 'confirmDeleteRuleAlertText',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Recent Colors`
   String get recentColors {
     return Intl.message(
@@ -1195,6 +1205,991 @@ class S {
     return Intl.message(
       'Color',
       name: 'color',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Successfully triggered the rule`
+  String get triggered_rule_success {
+    return Intl.message(
+      'Successfully triggered the rule',
+      name: 'triggered_rule_success',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to trigger the rule`
+  String get triggered_rule_failure {
+    return Intl.message(
+      'Failed to trigger the rule',
+      name: 'triggered_rule_failure',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Successfully deleted the rule`
+  String get deletedRuleSuccess {
+    return Intl.message(
+      'Successfully deleted the rule',
+      name: 'deletedRuleSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to delete the rule`
+  String get deletedRuleFailure {
+    return Intl.message(
+      'Failed to delete the rule',
+      name: 'deletedRuleFailure',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Automation`
+  String get addAutomation {
+    return Intl.message(
+      'Add Automation',
+      name: 'addAutomation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Automations`
+  String get automations {
+    return Intl.message(
+      'Automations',
+      name: 'automations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Automations with {itemName}`
+  String automationsWith(Object itemName) {
+    return Intl.message(
+      'Automations with $itemName',
+      name: 'automationsWith',
+      desc: '',
+      args: [itemName],
+    );
+  }
+
+  /// `Repeating`
+  String get ruleTypeRepeating {
+    return Intl.message(
+      'Repeating',
+      name: 'ruleTypeRepeating',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Scheduled`
+  String get ruleTypeScheduled {
+    return Intl.message(
+      'Scheduled',
+      name: 'ruleTypeScheduled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No rules found`
+  String get noRulesFound {
+    return Intl.message(
+      'No rules found',
+      name: 'noRulesFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Rule`
+  String get editRule {
+    return Intl.message(
+      'Edit Rule',
+      name: 'editRule',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New Rule`
+  String get newRule {
+    return Intl.message(
+      'New Rule',
+      name: 'newRule',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get delete {
+    return Intl.message(
+      'Delete',
+      name: 'delete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Run`
+  String get run {
+    return Intl.message(
+      'Run',
+      name: 'run',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `every second`
+  String get cronEverySecond {
+    return Intl.message(
+      'every second',
+      name: 'cronEverySecond',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `every {everySecond} seconds starting at {startSecond}`
+  String cronEveryEverySecondsStartingAt(
+      Object everySecond, Object startSecond) {
+    return Intl.message(
+      'every $everySecond seconds starting at $startSecond',
+      name: 'cronEveryEverySecondsStartingAt',
+      desc: '',
+      args: [everySecond, startSecond],
+    );
+  }
+
+  /// `every {everySecond} seconds`
+  String cronEverySeconds(Object everySecond) {
+    return Intl.message(
+      'every $everySecond seconds',
+      name: 'cronEverySeconds',
+      desc: '',
+      args: [everySecond],
+    );
+  }
+
+  /// `at second {seconds}`
+  String cronAtSecond(Object seconds) {
+    return Intl.message(
+      'at second $seconds',
+      name: 'cronAtSecond',
+      desc: '',
+      args: [seconds],
+    );
+  }
+
+  /// `at seconds {secondsRange} and ${secondsLast}`
+  String cronAtSecondsAnd(Object secondsRange, Object secondsLast) {
+    return Intl.message(
+      'at seconds $secondsRange and \$$secondsLast',
+      name: 'cronAtSecondsAnd',
+      desc: '',
+      args: [secondsRange, secondsLast],
+    );
+  }
+
+  /// `every second between {betweenStartSecond} and {betweenEndSecond}`
+  String cronEverySecondBetweenAnd(
+      Object betweenStartSecond, Object betweenEndSecond) {
+    return Intl.message(
+      'every second between $betweenStartSecond and $betweenEndSecond',
+      name: 'cronEverySecondBetweenAnd',
+      desc: '',
+      args: [betweenStartSecond, betweenEndSecond],
+    );
+  }
+
+  /// `every minute`
+  String get cronEveryMinute {
+    return Intl.message(
+      'every minute',
+      name: 'cronEveryMinute',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `every {everyMinute} minutes starting at {startMinute}`
+  String cronEveryEveryMinutesStartingAt(
+      Object everyMinute, Object startMinute) {
+    return Intl.message(
+      'every $everyMinute minutes starting at $startMinute',
+      name: 'cronEveryEveryMinutesStartingAt',
+      desc: '',
+      args: [everyMinute, startMinute],
+    );
+  }
+
+  /// `every {everyMinute} minutes`
+  String cronEveryMinutes(Object everyMinute) {
+    return Intl.message(
+      'every $everyMinute minutes',
+      name: 'cronEveryMinutes',
+      desc: '',
+      args: [everyMinute],
+    );
+  }
+
+  /// `at minute {minute}`
+  String cronAtMinute(Object minute) {
+    return Intl.message(
+      'at minute $minute',
+      name: 'cronAtMinute',
+      desc: '',
+      args: [minute],
+    );
+  }
+
+  /// `at minutes {minutesRange} and {minutesLast}`
+  String cronAtMinutesAnd(Object minutesRange, Object minutesLast) {
+    return Intl.message(
+      'at minutes $minutesRange and $minutesLast',
+      name: 'cronAtMinutesAnd',
+      desc: '',
+      args: [minutesRange, minutesLast],
+    );
+  }
+
+  /// `every minute between {betweenStartMinute} and {betweenEndMinute}`
+  String cronEveryMinuteBetweenAnd(
+      Object betweenStartMinute, Object betweenEndMinute) {
+    return Intl.message(
+      'every minute between $betweenStartMinute and $betweenEndMinute',
+      name: 'cronEveryMinuteBetweenAnd',
+      desc: '',
+      args: [betweenStartMinute, betweenEndMinute],
+    );
+  }
+
+  /// `every month`
+  String get cronEveryMonth {
+    return Intl.message(
+      'every month',
+      name: 'cronEveryMonth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `every {everyMonth} months starting at {startMonth}`
+  String cronEveryEveryMonthsStartingAt(Object everyMonth, Object startMonth) {
+    return Intl.message(
+      'every $everyMonth months starting at $startMonth',
+      name: 'cronEveryEveryMonthsStartingAt',
+      desc: '',
+      args: [everyMonth, startMonth],
+    );
+  }
+
+  /// `every {everyMonth} months`
+  String cronEveryMonths(Object everyMonth) {
+    return Intl.message(
+      'every $everyMonth months',
+      name: 'cronEveryMonths',
+      desc: '',
+      args: [everyMonth],
+    );
+  }
+
+  /// `at month {month}`
+  String cronAtMonth(Object month) {
+    return Intl.message(
+      'at month $month',
+      name: 'cronAtMonth',
+      desc: '',
+      args: [month],
+    );
+  }
+
+  /// `at months {monthsRange} and {monthsLast}`
+  String cronAtMonthsAnd(Object monthsRange, Object monthsLast) {
+    return Intl.message(
+      'at months $monthsRange and $monthsLast',
+      name: 'cronAtMonthsAnd',
+      desc: '',
+      args: [monthsRange, monthsLast],
+    );
+  }
+
+  /// `every month between {betweenStartMonth} and {betweenEndMonth}`
+  String cronEveryMonthBetweenAnd(
+      Object betweenStartMonth, Object betweenEndMonth) {
+    return Intl.message(
+      'every month between $betweenStartMonth and $betweenEndMonth',
+      name: 'cronEveryMonthBetweenAnd',
+      desc: '',
+      args: [betweenStartMonth, betweenEndMonth],
+    );
+  }
+
+  /// `every year`
+  String get cronEveryYear {
+    return Intl.message(
+      'every year',
+      name: 'cronEveryYear',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `every {everyYear} years starting in {startYear}`
+  String cronEveryEveryYearsStartingAt(Object everyYear, Object startYear) {
+    return Intl.message(
+      'every $everyYear years starting in $startYear',
+      name: 'cronEveryEveryYearsStartingAt',
+      desc: '',
+      args: [everyYear, startYear],
+    );
+  }
+
+  /// `starting in {startYear}`
+  String cronStartingInYear(Object startYear) {
+    return Intl.message(
+      'starting in $startYear',
+      name: 'cronStartingInYear',
+      desc: '',
+      args: [startYear],
+    );
+  }
+
+  /// `in {year}`
+  String cronInYear(Object year) {
+    return Intl.message(
+      'in $year',
+      name: 'cronInYear',
+      desc: '',
+      args: [year],
+    );
+  }
+
+  /// `in {yearsRange} and {yearsLast}`
+  String cronInYearsAnd(Object yearsRange, Object yearsLast) {
+    return Intl.message(
+      'in $yearsRange and $yearsLast',
+      name: 'cronInYearsAnd',
+      desc: '',
+      args: [yearsRange, yearsLast],
+    );
+  }
+
+  /// `between {betweenStartYear} and {betweenEndYear}`
+  String cronBetweenYears(Object betweenStartYear, Object betweenEndYear) {
+    return Intl.message(
+      'between $betweenStartYear and $betweenEndYear',
+      name: 'cronBetweenYears',
+      desc: '',
+      args: [betweenStartYear, betweenEndYear],
+    );
+  }
+
+  /// `every {everyDay} days starting on the {startDay}`
+  String cronEveryDayStartingOn(Object everyDay, Object startDay) {
+    return Intl.message(
+      'every $everyDay days starting on the $startDay',
+      name: 'cronEveryDayStartingOn',
+      desc: '',
+      args: [everyDay, startDay],
+    );
+  }
+
+  /// `every {everyDay} days`
+  String cronEveryDay(Object everyDay) {
+    return Intl.message(
+      'every $everyDay days',
+      name: 'cronEveryDay',
+      desc: '',
+      args: [everyDay],
+    );
+  }
+
+  /// `on the {day} day`
+  String cronOnDay(Object day) {
+    return Intl.message(
+      'on the $day day',
+      name: 'cronOnDay',
+      desc: '',
+      args: [day],
+    );
+  }
+
+  /// `on the {daysRange} and {lastDay} day`
+  String cronOnDaysAnd(Object daysRange, Object lastDay) {
+    return Intl.message(
+      'on the $daysRange and $lastDay day',
+      name: 'cronOnDaysAnd',
+      desc: '',
+      args: [daysRange, lastDay],
+    );
+  }
+
+  /// `on the {lastDay} day of the month`
+  String cronOnLastDayOfMonth(Object lastDay) {
+    return Intl.message(
+      'on the $lastDay day of the month',
+      name: 'cronOnLastDayOfMonth',
+      desc: '',
+      args: [lastDay],
+    );
+  }
+
+  /// `on the last weekday of the month`
+  String get cronOnLastWeekdayOfMonth {
+    return Intl.message(
+      'on the last weekday of the month',
+      name: 'cronOnLastWeekdayOfMonth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{dayBefore} days before the end of the month`
+  String cronOnDayBeforeEndOfMonth(Object dayBefore) {
+    return Intl.message(
+      '$dayBefore days before the end of the month',
+      name: 'cronOnDayBeforeEndOfMonth',
+      desc: '',
+      args: [dayBefore],
+    );
+  }
+
+  /// `on the nearest weekday to the {nearestWeekday} of the month`
+  String cronOnNearestWeekdayOfMonth(Object nearestWeekday) {
+    return Intl.message(
+      'on the nearest weekday to the $nearestWeekday of the month',
+      name: 'cronOnNearestWeekdayOfMonth',
+      desc: '',
+      args: [nearestWeekday],
+    );
+  }
+
+  /// `every week`
+  String get cronEveryWeek {
+    return Intl.message(
+      'every week',
+      name: 'cronEveryWeek',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `every {everyDay} days starting on the {startDay}`
+  String cronEveryDayInWeekStartingOn(Object everyDay, Object startDay) {
+    return Intl.message(
+      'every $everyDay days starting on the $startDay',
+      name: 'cronEveryDayInWeekStartingOn',
+      desc: '',
+      args: [everyDay, startDay],
+    );
+  }
+
+  /// `on the {weekday}`
+  String cronOnWeekday(Object weekday) {
+    return Intl.message(
+      'on the $weekday',
+      name: 'cronOnWeekday',
+      desc: '',
+      args: [weekday],
+    );
+  }
+
+  /// `on the {weekdaysRange} and {lastWeekday}`
+  String cronOnWeekdaysAnd(Object weekdaysRange, Object lastWeekday) {
+    return Intl.message(
+      'on the $weekdaysRange and $lastWeekday',
+      name: 'cronOnWeekdaysAnd',
+      desc: '',
+      args: [weekdaysRange, lastWeekday],
+    );
+  }
+
+  /// `the last {lastDay} of the month`
+  String cronOnLastXDayOfMonth(Object lastDay) {
+    return Intl.message(
+      'the last $lastDay of the month',
+      name: 'cronOnLastXDayOfMonth',
+      desc: '',
+      args: [lastDay],
+    );
+  }
+
+  /// `on the {xthWeek} {weekday} of the month`
+  String cronOnXthWeekdayOfMonth(Object xthWeek, Object weekday) {
+    return Intl.message(
+      'on the $xthWeek $weekday of the month',
+      name: 'cronOnXthWeekdayOfMonth',
+      desc: '',
+      args: [xthWeek, weekday],
+    );
+  }
+
+  /// `FIRST`
+  String get cronFirstWeek {
+    return Intl.message(
+      'FIRST',
+      name: 'cronFirstWeek',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `SECOND`
+  String get cronSecondWeek {
+    return Intl.message(
+      'SECOND',
+      name: 'cronSecondWeek',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `THIRD`
+  String get cronThirdWeek {
+    return Intl.message(
+      'THIRD',
+      name: 'cronThirdWeek',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `FOURTH`
+  String get cronFourthWeek {
+    return Intl.message(
+      'FOURTH',
+      name: 'cronFourthWeek',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `FIFTH`
+  String get cronFifthWeek {
+    return Intl.message(
+      'FIFTH',
+      name: 'cronFifthWeek',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Could not add trigger`
+  String get couldNotAddTrigger {
+    return Intl.message(
+      'Could not add trigger',
+      name: 'couldNotAddTrigger',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Item`
+  String get addItem {
+    return Intl.message(
+      'Add Item',
+      name: 'addItem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Trigger`
+  String get addTrigger {
+    return Intl.message(
+      'Add Trigger',
+      name: 'addTrigger',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Off`
+  String get off {
+    return Intl.message(
+      'Off',
+      name: 'off',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `On`
+  String get on {
+    return Intl.message(
+      'On',
+      name: 'on',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `max`
+  String get sliderMaxHint {
+    return Intl.message(
+      'max',
+      name: 'sliderMaxHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `current`
+  String get sliderCurrentHint {
+    return Intl.message(
+      'current',
+      name: 'sliderCurrentHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `min`
+  String get sliderMinHint {
+    return Intl.message(
+      'min',
+      name: 'sliderMinHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Up`
+  String get up {
+    return Intl.message(
+      'Up',
+      name: 'up',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stop`
+  String get stop {
+    return Intl.message(
+      'Stop',
+      name: 'stop',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Down`
+  String get down {
+    return Intl.message(
+      'Down',
+      name: 'down',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `in 5 min`
+  String get timeTriggerIn5Min {
+    return Intl.message(
+      'in 5 min',
+      name: 'timeTriggerIn5Min',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `in 10 min`
+  String get timeTriggerIn10Min {
+    return Intl.message(
+      'in 10 min',
+      name: 'timeTriggerIn10Min',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `in 30 min`
+  String get timeTriggerIn30Min {
+    return Intl.message(
+      'in 30 min',
+      name: 'timeTriggerIn30Min',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `in 1 h`
+  String get timeTriggerIn1H {
+    return Intl.message(
+      'in 1 h',
+      name: 'timeTriggerIn1H',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `in 2 h`
+  String get timeTriggerIn2H {
+    return Intl.message(
+      'in 2 h',
+      name: 'timeTriggerIn2H',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `in 12 h`
+  String get timeTriggerIn12H {
+    return Intl.message(
+      'in 12 h',
+      name: 'timeTriggerIn12H',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `in 1 day`
+  String get timeTriggerIn1Day {
+    return Intl.message(
+      'in 1 day',
+      name: 'timeTriggerIn1Day',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `in 2 days`
+  String get timeTriggerIn2Days {
+    return Intl.message(
+      'in 2 days',
+      name: 'timeTriggerIn2Days',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `in 1 min`
+  String get timeTriggerIn1Min {
+    return Intl.message(
+      'in 1 min',
+      name: 'timeTriggerIn1Min',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `40 - Rules loaded`
+  String get systemStartTrigger40 {
+    return Intl.message(
+      '40 - Rules loaded',
+      name: 'systemStartTrigger40',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `50 - Rule engine started`
+  String get systemStartTrigger50 {
+    return Intl.message(
+      '50 - Rule engine started',
+      name: 'systemStartTrigger50',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `70 - User interfaces started`
+  String get systemStartTrigger70 {
+    return Intl.message(
+      '70 - User interfaces started',
+      name: 'systemStartTrigger70',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `80 - Things initialized`
+  String get systemStartTrigger80 {
+    return Intl.message(
+      '80 - Things initialized',
+      name: 'systemStartTrigger80',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `100 - Startup complete`
+  String get systemStartTrigger100 {
+    return Intl.message(
+      '100 - Startup complete',
+      name: 'systemStartTrigger100',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Auto delete`
+  String get ruleAutoDeleteTitle {
+    return Intl.message(
+      'Auto delete',
+      name: 'ruleAutoDeleteTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Automatically delete the rule after it is triggered. Requires that all triggers are time based and refer to a concrete date.`
+  String get ruleAutoDeleteHint {
+    return Intl.message(
+      'Automatically delete the rule after it is triggered. Requires that all triggers are time based and refer to a concrete date.',
+      name: 'ruleAutoDeleteHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rule name`
+  String get ruleName {
+    return Intl.message(
+      'Rule name',
+      name: 'ruleName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Triggers`
+  String get triggers {
+    return Intl.message(
+      'Triggers',
+      name: 'triggers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Actions`
+  String get actions {
+    return Intl.message(
+      'Actions',
+      name: 'actions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Options`
+  String get options {
+    return Intl.message(
+      'Options',
+      name: 'options',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Item Action`
+  String get addItemAction {
+    return Intl.message(
+      'Add Item Action',
+      name: 'addItemAction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add an item first`
+  String get addAnItemFirst {
+    return Intl.message(
+      'Add an item first',
+      name: 'addAnItemFirst',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Script`
+  String get script {
+    return Intl.message(
+      'Script',
+      name: 'script',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Item Action`
+  String get itemAction {
+    return Intl.message(
+      'Item Action',
+      name: 'itemAction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Item`
+  String get selectItem {
+    return Intl.message(
+      'Select Item',
+      name: 'selectItem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select Action Type`
+  String get selectActionType {
+    return Intl.message(
+      'Select Action Type',
+      name: 'selectActionType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Post Update`
+  String get postUpdateCommandLabel {
+    return Intl.message(
+      'Post Update',
+      name: 'postUpdateCommandLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send Command`
+  String get sendCommandCommandLabel {
+    return Intl.message(
+      'Send Command',
+      name: 'sendCommandCommandLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Or`
+  String get or {
+    return Intl.message(
+      'Or',
+      name: 'or',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `And`
+  String get and {
+    return Intl.message(
+      'And',
+      name: 'and',
       desc: '',
       args: [],
     );

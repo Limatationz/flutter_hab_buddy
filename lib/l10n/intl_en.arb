@@ -84,14 +84,14 @@
   "enableWakelockTooltip": "Enable Wakelock",
   "feelsLike": "Feels like {temp}",
   "@feelsLike": {
-    "placeholders":{
+    "placeholders": {
       "temp": {}
     }
   },
   "data": "Data",
   "dataWithUnit": "Data ({unit})",
   "@dataWithUnit": {
-    "placeholders":{
+    "placeholders": {
       "unit": {}
     }
   },
@@ -122,6 +122,287 @@
   "serverConnectionStateOffline": "Offline",
   "confirmTriggerRuleAlertText1": "Do you want to trigger the rule",
   "confirmTriggerRuleAlertText2": "now ?",
+  "confirmDeleteRuleAlertText": "Do you really want to delete the rule",
   "recentColors": "Recent Colors",
-  "color": "Color"
+  "color": "Color",
+  "triggered_rule_success": "Successfully triggered the rule",
+  "triggered_rule_failure": "Failed to trigger the rule",
+  "deletedRuleSuccess": "Successfully deleted the rule",
+  "deletedRuleFailure": "Failed to delete the rule",
+  "addAutomation": "Add Automation",
+  "automations": "Automations",
+  "automationsWith": "Automations with {itemName}",
+  "@automationsWith": {
+    "placeholders": {
+      "itemName": {}
+    }
+  },
+  "ruleTypeRepeating": "Repeating",
+  "ruleTypeScheduled": "Scheduled",
+  "noRulesFound": "No rules found",
+  "editRule": "Edit Rule",
+  "newRule": "New Rule",
+  "delete": "Delete",
+  "run": "Run",
+  "cronEverySecond": "every second",
+  "cronEveryEverySecondsStartingAt": "every {everySecond} seconds starting at {startSecond}",
+  "@cronEveryEverySecondsStartingAt": {
+    "placeholders": {
+      "everySecond": {},
+      "startSecond": {}
+    }
+  },
+  "cronEverySeconds": "every {everySecond} seconds",
+  "@cronEverySeconds": {
+    "placeholders": {
+      "everySecond": {}
+    }
+  },
+  "cronAtSecond": "at second {seconds}",
+  "@cronAtSecond": {
+    "placeholders": {
+      "seconds": {}
+    }
+  },
+  "cronAtSecondsAnd": "at seconds {secondsRange} and ${secondsLast}",
+  "@cronAtSecondsAnd": {
+    "placeholders": {
+      "secondsRange": {},
+      "secondsLast": {}
+    }
+  },
+  "cronEverySecondBetweenAnd": "every second between {betweenStartSecond} and {betweenEndSecond}",
+  "@cronEverySecondBetweenAnd": {
+    "placeholders": {
+      "betweenStartSecond": {},
+      "betweenEndSecond": {}
+    }
+  },
+  "cronEveryMinute": "every minute",
+  "cronEveryEveryMinutesStartingAt": "every {everyMinute} minutes starting at {startMinute}",
+  "@cronEveryEveryMinutesStartingAt": {
+    "placeholders": {
+      "everyMinute": {},
+      "startMinute": {}
+    }
+  },
+  "cronEveryMinutes": "every {everyMinute} minutes",
+  "@cronEveryMinutes": {
+    "placeholders": {
+      "everyMinute": {}
+    }
+  },
+  "cronAtMinute": "at minute {minute}",
+  "@cronAtMinute": {
+    "placeholders": {
+      "minute": {}
+    }
+  },
+  "cronAtMinutesAnd": "at minutes {minutesRange} and {minutesLast}",
+  "@cronAtMinutesAnd": {
+    "placeholders": {
+      "minutesRange": {},
+      "minutesLast": {}
+    }
+  },
+  "cronEveryMinuteBetweenAnd": "every minute between {betweenStartMinute} and {betweenEndMinute}",
+  "@cronEveryMinuteBetweenAnd": {
+    "placeholders": {
+      "betweenStartMinute": {},
+      "betweenEndMinute": {}
+    }
+  },
+  "cronEveryMonth": "every month",
+  "cronEveryEveryMonthsStartingAt": "every {everyMonth} months starting at {startMonth}",
+  "@cronEveryEveryMonthsStartingAt": {
+    "placeholders": {
+      "everyMonth": {},
+      "startMonth": {}
+    }
+  },
+  "cronEveryMonths": "every {everyMonth} months",
+  "@cronEveryMonths": {
+    "placeholders": {
+      "everyMonth": {}
+    }
+  },
+  "cronAtMonth": "at month {month}",
+  "@cronAtMonth": {
+    "placeholders": {
+      "month": {}
+    }
+  },
+  "cronAtMonthsAnd": "at months {monthsRange} and {monthsLast}",
+  "@cronAtMonthsAnd": {
+    "placeholders": {
+      "monthsRange": {},
+      "monthsLast": {}
+    }
+  },
+  "cronEveryMonthBetweenAnd": "every month between {betweenStartMonth} and {betweenEndMonth}",
+  "@cronEveryMonthBetweenAnd": {
+    "placeholders": {
+      "betweenStartMonth": {},
+      "betweenEndMonth": {}
+    }
+  },
+  "cronEveryYear": "every year",
+  "cronEveryEveryYearsStartingAt": "every {everyYear} years starting in {startYear}",
+  "@cronEveryEveryYearsStartingAt": {
+    "placeholders": {
+      "everyYear": {},
+      "startYear": {}
+    }
+  },
+  "cronStartingInYear": "starting in {startYear}",
+  "@cronStartingInYear": {
+    "placeholders": {
+      "startYear": {}
+    }
+  },
+  "cronInYear": "in {year}",
+  "@cronInYear": {
+    "placeholders": {
+      "year": {}
+    }
+  },
+  "cronInYearsAnd": "in {yearsRange} and {yearsLast}",
+  "@cronInYearsAnd": {
+    "placeholders": {
+      "yearsRange": {},
+      "yearsLast": {}
+    }
+  },
+  "cronBetweenYears": "between {betweenStartYear} and {betweenEndYear}",
+  "@cronBetweenYears": {
+    "placeholders": {
+      "betweenStartYear": {},
+      "betweenEndYear": {}
+    }
+  },
+  "cronEveryDayStartingOn": "every {everyDay} days starting on the {startDay}",
+  "@cronEveryDayStartingOn": {
+    "placeholders": {
+      "everyDay": {},
+      "startDay": {}
+    }
+  },
+  "cronEveryDay": "every {everyDay} days",
+  "@cronEveryDay": {
+    "placeholders": {
+      "everyDay": {}
+    }
+  },
+  "cronOnDay": "on the {day} day",
+  "@cronOnDay": {
+    "placeholders": {
+      "day": {}
+    }
+  },
+  "cronOnDaysAnd": "on the {daysRange} and {lastDay} day",
+  "@cronOnDaysAnd": {
+    "placeholders": {
+      "daysRange": {},
+      "lastDay": {}
+    }
+  },
+  "cronOnLastDayOfMonth": "on the {lastDay} day of the month",
+  "@cronOnLastDayOfMonth": {
+    "placeholders": {
+      "lastDay": {}
+    }
+  },
+  "cronOnLastWeekdayOfMonth": "on the last weekday of the month",
+  "cronOnDayBeforeEndOfMonth": "{dayBefore} days before the end of the month",
+  "@cronOnDayBeforeEndOfMonth": {
+    "placeholders": {
+      "dayBefore": {}
+    }
+  },
+  "cronOnNearestWeekdayOfMonth": "on the nearest weekday to the {nearestWeekday} of the month",
+  "@cronOnNearestWeekdayOfMonth": {
+    "placeholders": {
+      "nearestWeekday": {}
+    }
+  },
+  "cronEveryWeek": "every week",
+  "cronEveryDayInWeekStartingOn": "every {everyDay} days starting on the {startDay}",
+  "@cronEveryDayInWeekStartingOn": {
+    "placeholders": {
+      "everyDay": {},
+      "startDay": {}
+    }
+  },
+  "cronOnWeekday": "on the {weekday}",
+  "@cronOnWeekday": {
+    "placeholders": {
+      "weekday": {}
+    }
+  },
+  "cronOnWeekdaysAnd": "on the {weekdaysRange} and {lastWeekday}",
+  "@cronOnWeekdaysAnd": {
+    "placeholders": {
+      "weekdaysRange": {},
+      "lastWeekday": {}
+    }
+  },
+  "cronOnLastXDayOfMonth": "the last {lastDay} of the month",
+  "@cronOnLastXDayOfMonth": {
+    "placeholders": {
+      "lastDay": {}
+    }
+  },
+  "cronOnXthWeekdayOfMonth": "on the {xthWeek} {weekday} of the month",
+  "@cronOnXthWeekdayOfMonth": {
+    "placeholders": {
+      "xthWeek": {},
+      "weekday": {}
+    }
+  },
+  "cronFirstWeek": "FIRST",
+  "cronSecondWeek": "SECOND",
+  "cronThirdWeek": "THIRD",
+  "cronFourthWeek": "FOURTH",
+  "cronFifthWeek": "FIFTH",
+  "couldNotAddTrigger": "Could not add trigger",
+  "addItem": "Add Item",
+  "addTrigger": "Add Trigger",
+  "off": "Off",
+  "on": "On",
+  "sliderMaxHint": "max",
+  "sliderCurrentHint": "current",
+  "sliderMinHint": "min",
+  "up": "Up",
+  "stop": "Stop",
+  "down": "Down",
+  "timeTriggerIn5Min": "in 5 min",
+  "timeTriggerIn10Min": "in 10 min",
+  "timeTriggerIn30Min": "in 30 min",
+  "timeTriggerIn1H": "in 1 h",
+  "timeTriggerIn2H": "in 2 h",
+  "timeTriggerIn12H": "in 12 h",
+  "timeTriggerIn1Day": "in 1 day",
+  "timeTriggerIn2Days": "in 2 days",
+  "timeTriggerIn1Min": "in 1 min",
+  "systemStartTrigger40": "40 - Rules loaded",
+  "systemStartTrigger50": "50 - Rule engine started",
+  "systemStartTrigger70": "70 - User interfaces started",
+  "systemStartTrigger80": "80 - Things initialized",
+  "systemStartTrigger100": "100 - Startup complete",
+  "ruleAutoDeleteTitle": "Auto delete",
+  "ruleAutoDeleteHint": "Automatically delete the rule after it is triggered. Requires that all triggers are time based and refer to a concrete date.",
+  "ruleName": "Rule name",
+  "triggers": "Triggers",
+  "actions": "Actions",
+  "options": "Options",
+  "addItemAction": "Add Item Action",
+  "addAnItemFirst": "Add an item first",
+  "script": "Script",
+  "itemAction": "Item Action",
+  "selectItem": "Select Item",
+  "selectActionType": "Select Action Type",
+  "postUpdateCommandLabel": "Post Update",
+  "sendCommandCommandLabel": "Send Command",
+  "or": "Or",
+  "and": "And"
 }

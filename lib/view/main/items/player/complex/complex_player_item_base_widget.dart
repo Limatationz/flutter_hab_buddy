@@ -184,7 +184,7 @@ class ComplexPlayerItemBaseWidget extends MediumWidthItemWidget {
   }
 
   Future<void> onAction(String action) async {
-    await _itemRepository.playerStringAction(item!.ohName, action);
+    await _itemRepository.stringAction(item!.ohName, action);
   }
 
   void onLongTap(BuildContext context) => ItemWidgetFactory.openDialog(

@@ -5,103 +5,46 @@ import '../../../../core/database/app_database.dart';
 import '../../../../core/database/state/item_states_table.dart';
 import '../../../../locator.dart';
 import '../../../../repository/item_repository.dart';
+import '../general/item_state_combined_injector.dart';
 import '../general/item_state_injector.dart';
+import 'dimmer_item_control.dart';
 
-class DimmerItemDialog extends StatefulWidget {
+class DimmerItemDialog extends StatelessWidget {
   final String itemName;
-  final double initialValue;
   final ColorScheme colorScheme;
 
-  const DimmerItemDialog(
-      {super.key,
-      required this.itemName,
-      required this.initialValue,
-      required this.colorScheme});
+  DimmerItemDialog(
+      {super.key, required this.itemName, required this.colorScheme});
 
-  @override
-  State<DimmerItemDialog> createState() => _DimmerItemDialogState();
-}
-
-class _DimmerItemDialogState extends State<DimmerItemDialog> {
   final _itemRepository = locator<ItemRepository>();
-  final _itemsStore = locator<AppDatabase>().itemsStore;
-  double sliderValue = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    sliderValue = widget.initialValue;
-
-    _itemsStore
-        .stateByName(widget.itemName)
-        .watchSingleOrNull()
-        .distinct()
-        .listen((state) {
-      if (state != null) {
-        final doubleValue = double.tryParse(state.state);
-        if (mounted) {
-          setState(() {
-            if (doubleValue != null) {
-              sliderValue = doubleValue;
-            }
-          });
-        }
-      }
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    return ItemStateInjector(
-        itemName: widget.itemName,
-        builder: (itemState) {
-          return Column(children: [
-            Slider(
-              value: sliderValue,
-              onChangeEnd: !itemState.isReadOnly ? onDragDone : null,
-              onChanged: !itemState.isReadOnly
-                  ? (newValue) {
-                      setState(() {
-                        sliderValue = newValue;
-                      });
-                    }
-                  : null,
-              min: itemState.stateDescription?.minimum ?? 0,
-              max: itemState.stateDescription?.maximum ?? 100,
-              divisions: itemState.stateDescription?.step != null
-                  ? (itemState.stateDescription?.maximum ?? 100) ~/
-                      itemState.stateDescription!.step!
-                  : null,
-              activeColor: widget.colorScheme.primary,
-              inactiveColor: widget.colorScheme.primary.withOpacity(0.24),
-            ),
-            const Gap(8),
-            Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 14),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      itemState.stateDescription?.minimum?.round().toString() ??
-                          "0",
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    Text(
-                      "${(sliderValue).round()}",
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    Text(
-                      itemState.stateDescription?.maximum?.round().toString() ??
-                          "100",
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ],
-                ))
-          ]);
+    return ItemStateCombinedInjector(
+        itemName: itemName,
+        builder: (item, itemState) {
+          final doubleValue = double.parse(itemState.state);
+          return DimmerItemControl(
+              key: ValueKey(doubleValue),
+              onDimmerChanged: (newValue) {
+                if (newValue is double) {
+                  onDragDone(newValue);
+                } else if (newValue is String) {
+                  onAction(newValue);
+                }
+              },
+              item: item,
+              itemState: itemState,
+              colorScheme: colorScheme,
+              initialValue: doubleValue);
         });
   }
 
   Future<void> onDragDone(double value) async {
-    await _itemRepository.dimmerAction(widget.itemName, value);
+    await _itemRepository.dimmerAction(itemName, value);
+  }
+
+  Future<void> onAction(String body) async {
+    await _itemRepository.stringAction(itemName, body);
   }
 }

@@ -46,10 +46,10 @@ class WidgetContainer extends StatelessWidget {
                   image: backgroundImage,
                   color: backgroundColor ??
                       ElevationOverlay.applySurfaceTint(
-                          colorScheme?.background ??
+                          colorScheme?.surface ??
                               Theme.of(context)
                                   .colorScheme
-                                  .background,
+                                  .surface,
                           colorScheme?.surfaceTint ??
                               Theme.of(context)
                                   .colorScheme

@@ -5,6 +5,7 @@ import 'package:stacked/stacked.dart';
 import '../../../core/database/app_database.dart';
 import '../../../core/routing/navigation_service.dart';
 import '../../../core/services/snackbar_service.dart';
+import '../../../generated/l10n.dart';
 import '../../../locator.dart';
 import '../../../repository/automation_repository.dart';
 import '../../../repository/login_repository.dart';
@@ -24,12 +25,12 @@ class AutomationViewModel extends BaseViewModel {
     _automationRepository.fetchData();
   }
 
-  Future<void> triggerRule(String ruleId) async {
-    final result = await _automationRepository.triggerRule(ruleId);
+  Future<void> onRuleTriggered(BuildContext context, Rule rule, bool needsConfirm) async {
+    final result = await _automationRepository.onRuleTriggered(context, rule, needsConfirm);
     if(result) {
-      _snackbarService.showSnackbar(message: "Successfully triggered the rule", type: SnackbarType.success);
+      _snackbarService.showSnackbar(message: S.current.triggered_rule_success, type: SnackbarType.success);
     } else {
-      _snackbarService.showSnackbar(message: "Failed to trigger the rule", type: SnackbarType.error);
+      _snackbarService.showSnackbar(message: S.current.triggered_rule_failure, type: SnackbarType.error);
     }
   }
 }

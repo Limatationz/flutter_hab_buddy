@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:drift/drift.dart';
 
 import '../../network/generated/openHAB.swagger.dart';
+import '../rules/rule_trigger.dart';
 
 class StatusDTOConverter extends TypeConverter<RuleStatusInfo?, String?> {
   const StatusDTOConverter();
@@ -104,23 +105,23 @@ class ConfigurationDtoListConverter extends TypeConverter<List<ConfigDescription
   }
 }
 
-class TriggerDtoListConverter extends TypeConverter<List<TriggerDTO>?, String?> {
-  const TriggerDtoListConverter();
+class RuleTriggerListConverter extends TypeConverter<List<RuleTrigger>?, String?> {
+  const RuleTriggerListConverter();
 
   @override
-  List<TriggerDTO>? fromSql(String? fromDb) {
+  List<RuleTrigger>? fromSql(String? fromDb) {
     if (fromDb == null) {
       return null;
     } else {
       // Decode the JSON string into a list of maps
       List<dynamic> jsonList = jsonDecode(fromDb);
       // Convert each map into a TriggerDTO object
-      return jsonList.map((json) => TriggerDTO.fromJson(json)).toList();
+      return jsonList.map((json) => RuleTrigger.fromJson(json)).toList();
     }
   }
 
   @override
-  String? toSql(List<TriggerDTO>? value) {
+  String? toSql(List<RuleTrigger>? value) {
     if (value == null) {
       return null;
     } else {

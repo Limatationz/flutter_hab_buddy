@@ -35,11 +35,11 @@ class SwitchItemWidget extends SmallItemWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  AutoHyphenatingText(item!.label,
+              Expanded(child: AutoHyphenatingText(item!.label,
                       maxLines: 3,
                       style: Theme.of(context)
                           .textTheme
-                          .titleMedium),
+                          .titleMedium)),
                   Align(
                       alignment: Alignment.bottomRight,
                       child: Icon(
@@ -48,7 +48,7 @@ class SwitchItemWidget extends SmallItemWidget {
                         color: isOn
                             ? Theme.of(context)
                                 .colorScheme
-                                .onBackground
+                                .onSurface
                             : Colors.grey,
                       )),
                 ],
@@ -57,9 +57,9 @@ class SwitchItemWidget extends SmallItemWidget {
   }
 
   Future<void> onAction(bool isOn) async {
-    await _itemRepository.switchAction(item!.ohName, !isOn);
+    await _itemRepository.stringAction(item!.ohName, isOn ? "OFF" : "ON");
   }
 
   void onLongTap(BuildContext context) => ItemWidgetFactory.openDialog(
-      context, SwitchItemDialog(itemName: item!.ohName), item!, colorScheme);
+      context, SwitchItemDialog(itemName: item!.ohName, colorScheme: colorScheme,), item!, colorScheme);
 }

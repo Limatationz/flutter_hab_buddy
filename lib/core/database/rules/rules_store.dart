@@ -11,8 +11,7 @@ part 'rules_store.g.dart';
 class RulesStore extends DatabaseAccessor<AppDatabase> with _$RulesStoreMixin {
   RulesStore(super.database);
 
-  MultiSelectable<Rule> all() =>
-      select(rulesTable);
+  MultiSelectable<Rule> all() => select(rulesTable);
 
   MultiSelectable<Rule> editable() =>
       select(rulesTable)..where((tbl) => tbl.editable.equals(true));
@@ -20,11 +19,21 @@ class RulesStore extends DatabaseAccessor<AppDatabase> with _$RulesStoreMixin {
   SingleOrNullSelectable<Rule> byUid(String uid) =>
       select(rulesTable)..where((tbl) => tbl.uid.equals(uid));
 
+  MultiSelectable<Rule> editableByItemName(String itemName) {
+    final itemNamePattern =
+        '%"itemName":"$itemName"%'; // Pattern to match the itemName in the JSON
+
+    return select(rulesTable)
+      ..where((tbl) =>
+          tbl.triggers.like(itemNamePattern) |
+          tbl.actions.like(itemNamePattern));
+  }
+
   Future<void> insertOrUpdate(List<RulesTableCompanion> data) async {
     await batch((batch) => batch.insertAllOnConflictUpdate(
-      rulesTable,
-      data,
-    ));
+          rulesTable,
+          data,
+        ));
   }
 
   Future<void> insertOrUpdateSingle(RulesTableCompanion data) async {

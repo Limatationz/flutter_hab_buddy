@@ -44,9 +44,10 @@ class ColorItemWidget extends SmallItemWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  AutoHyphenatingText(item!.label,
-                      maxLines: 3,
-                      style: Theme.of(context).textTheme.titleMedium),
+                  Expanded(
+                      child: AutoHyphenatingText(item!.label,
+                          maxLines: 3,
+                          style: Theme.of(context).textTheme.titleMedium)),
                   Align(
                       alignment: Alignment.bottomRight,
                       child: Icon(
@@ -62,7 +63,7 @@ class ColorItemWidget extends SmallItemWidget {
   }
 
   Future<void> onAction(bool isOn) async {
-    await _itemRepository.switchAction(item!.ohName, !isOn);
+    await _itemRepository.stringAction(item!.ohName, isOn ? "OFF" : "ON");
   }
 
   Future<void> onDragDone(double value) async {

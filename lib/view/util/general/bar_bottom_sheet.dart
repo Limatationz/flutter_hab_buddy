@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import '../constants.dart';
 import 'bottom_sheet_container.dart';
 
 class BarModal extends StatelessWidget {
@@ -22,6 +24,7 @@ class BarModal extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
+        if (expand) const Gap(largePadding),
         Container(
           height: 6,
           width: 40,

@@ -50,6 +50,6 @@ class PlayerItemDialog extends StatelessWidget {
   }
 
   Future<void> onAction(String action) async {
-    await _itemRepository.playerStringAction(itemName, action);
+    await _itemRepository.stringAction(itemName, action);
   }
 }

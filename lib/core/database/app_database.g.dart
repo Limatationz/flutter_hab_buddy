@@ -2167,10 +2167,10 @@ class $RulesTableTable extends RulesTable
   static const VerificationMeta _triggersMeta =
       const VerificationMeta('triggers');
   @override
-  late final GeneratedColumnWithTypeConverter<List<TriggerDTO>?, String>
+  late final GeneratedColumnWithTypeConverter<List<RuleTrigger>?, String>
       triggers = GeneratedColumn<String>('triggers', aliasedName, true,
               type: DriftSqlType.string, requiredDuringInsert: false)
-          .withConverter<List<TriggerDTO>?>(
+          .withConverter<List<RuleTrigger>?>(
               $RulesTableTable.$convertertriggers);
   static const VerificationMeta _editableMeta =
       const VerificationMeta('editable');
@@ -2285,8 +2285,8 @@ class $RulesTableTable extends RulesTable
       const JsonConverter();
   static TypeConverter<List<ConfigDescriptionParameterDTO>?, String?>
       $converterconfigDescriptions = const ConfigurationDtoListConverter();
-  static TypeConverter<List<TriggerDTO>?, String?> $convertertriggers =
-      const TriggerDtoListConverter();
+  static TypeConverter<List<RuleTrigger>?, String?> $convertertriggers =
+      const RuleTriggerListConverter();
 }
 
 class Rule extends DataClass implements Insertable<Rule> {
@@ -2298,7 +2298,7 @@ class Rule extends DataClass implements Insertable<Rule> {
   final List<ConditionDTO>? conditions;
   final Map<String, dynamic>? configuration;
   final List<ConfigDescriptionParameterDTO>? configDescriptions;
-  final List<TriggerDTO>? triggers;
+  final List<RuleTrigger>? triggers;
   final bool editable;
   const Rule(
       {required this.uid,
@@ -2392,7 +2392,7 @@ class Rule extends DataClass implements Insertable<Rule> {
       configDescriptions:
           serializer.fromJson<List<ConfigDescriptionParameterDTO>?>(
               json['configDescriptions']),
-      triggers: serializer.fromJson<List<TriggerDTO>?>(json['triggers']),
+      triggers: serializer.fromJson<List<RuleTrigger>?>(json['triggers']),
       editable: serializer.fromJson<bool>(json['editable']),
     );
   }
@@ -2409,7 +2409,7 @@ class Rule extends DataClass implements Insertable<Rule> {
       'configuration': serializer.toJson<Map<String, dynamic>?>(configuration),
       'configDescriptions': serializer
           .toJson<List<ConfigDescriptionParameterDTO>?>(configDescriptions),
-      'triggers': serializer.toJson<List<TriggerDTO>?>(triggers),
+      'triggers': serializer.toJson<List<RuleTrigger>?>(triggers),
       'editable': serializer.toJson<bool>(editable),
     };
   }
@@ -2424,7 +2424,7 @@ class Rule extends DataClass implements Insertable<Rule> {
           Value<Map<String, dynamic>?> configuration = const Value.absent(),
           Value<List<ConfigDescriptionParameterDTO>?> configDescriptions =
               const Value.absent(),
-          Value<List<TriggerDTO>?> triggers = const Value.absent(),
+          Value<List<RuleTrigger>?> triggers = const Value.absent(),
           bool? editable}) =>
       Rule(
         uid: uid ?? this.uid,
@@ -2506,7 +2506,7 @@ class RulesTableCompanion extends UpdateCompanion<Rule> {
   final Value<List<ConditionDTO>?> conditions;
   final Value<Map<String, dynamic>?> configuration;
   final Value<List<ConfigDescriptionParameterDTO>?> configDescriptions;
-  final Value<List<TriggerDTO>?> triggers;
+  final Value<List<RuleTrigger>?> triggers;
   final Value<bool> editable;
   final Value<int> rowid;
   const RulesTableCompanion({
@@ -2573,7 +2573,7 @@ class RulesTableCompanion extends UpdateCompanion<Rule> {
       Value<List<ConditionDTO>?>? conditions,
       Value<Map<String, dynamic>?>? configuration,
       Value<List<ConfigDescriptionParameterDTO>?>? configDescriptions,
-      Value<List<TriggerDTO>?>? triggers,
+      Value<List<RuleTrigger>?>? triggers,
       Value<bool>? editable,
       Value<int>? rowid}) {
     return RulesTableCompanion(
@@ -3275,7 +3275,7 @@ final class $$ItemsTableTableReferences
 
   $$RoomsTableTableProcessedTableManager get roomId {
     final manager = $$RoomsTableTableTableManager($_db, $_db.roomsTable)
-        .filter((f) => f.id($_item.roomId!));
+        .filter((f) => f.id($_item.roomId));
     final item = $_typedResult.readTableOrNull(_roomIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -3757,7 +3757,7 @@ final class $$ItemStatesTableTableReferences
 
   $$ItemsTableTableProcessedTableManager get ohName {
     final manager = $$ItemsTableTableTableManager($_db, $_db.itemsTable)
-        .filter((f) => f.ohName($_item.ohName!));
+        .filter((f) => f.ohName($_item.ohName));
     final item = $_typedResult.readTableOrNull(_ohNameTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -4039,7 +4039,7 @@ typedef $$RulesTableTableCreateCompanionBuilder = RulesTableCompanion Function({
   Value<List<ConditionDTO>?> conditions,
   Value<Map<String, dynamic>?> configuration,
   Value<List<ConfigDescriptionParameterDTO>?> configDescriptions,
-  Value<List<TriggerDTO>?> triggers,
+  Value<List<RuleTrigger>?> triggers,
   required bool editable,
   Value<int> rowid,
 });
@@ -4052,7 +4052,7 @@ typedef $$RulesTableTableUpdateCompanionBuilder = RulesTableCompanion Function({
   Value<List<ConditionDTO>?> conditions,
   Value<Map<String, dynamic>?> configuration,
   Value<List<ConfigDescriptionParameterDTO>?> configDescriptions,
-  Value<List<TriggerDTO>?> triggers,
+  Value<List<RuleTrigger>?> triggers,
   Value<bool> editable,
   Value<int> rowid,
 });
@@ -4105,7 +4105,7 @@ class $$RulesTableTableFilterComposer
           column: $table.configDescriptions,
           builder: (column) => ColumnWithTypeConverterFilters(column));
 
-  ColumnWithTypeConverterFilters<List<TriggerDTO>?, List<TriggerDTO>, String>
+  ColumnWithTypeConverterFilters<List<RuleTrigger>?, List<RuleTrigger>, String>
       get triggers => $composableBuilder(
           column: $table.triggers,
           builder: (column) => ColumnWithTypeConverterFilters(column));
@@ -4192,7 +4192,7 @@ class $$RulesTableTableAnnotationComposer
       get configDescriptions => $composableBuilder(
           column: $table.configDescriptions, builder: (column) => column);
 
-  GeneratedColumnWithTypeConverter<List<TriggerDTO>?, String> get triggers =>
+  GeneratedColumnWithTypeConverter<List<RuleTrigger>?, String> get triggers =>
       $composableBuilder(column: $table.triggers, builder: (column) => column);
 
   GeneratedColumn<bool> get editable =>
@@ -4231,7 +4231,7 @@ class $$RulesTableTableTableManager extends RootTableManager<
             Value<Map<String, dynamic>?> configuration = const Value.absent(),
             Value<List<ConfigDescriptionParameterDTO>?> configDescriptions =
                 const Value.absent(),
-            Value<List<TriggerDTO>?> triggers = const Value.absent(),
+            Value<List<RuleTrigger>?> triggers = const Value.absent(),
             Value<bool> editable = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
@@ -4258,7 +4258,7 @@ class $$RulesTableTableTableManager extends RootTableManager<
             Value<Map<String, dynamic>?> configuration = const Value.absent(),
             Value<List<ConfigDescriptionParameterDTO>?> configDescriptions =
                 const Value.absent(),
-            Value<List<TriggerDTO>?> triggers = const Value.absent(),
+            Value<List<RuleTrigger>?> triggers = const Value.absent(),
             required bool editable,
             Value<int> rowid = const Value.absent(),
           }) =>

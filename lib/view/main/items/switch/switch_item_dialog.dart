@@ -1,14 +1,16 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../../locator.dart';
 import '../../../../repository/item_repository.dart';
 import '../general/item_state_combined_injector.dart';
+import 'switch_item_control.dart';
 
 class SwitchItemDialog extends StatelessWidget {
   final String itemName;
+  final ColorScheme colorScheme;
 
-  SwitchItemDialog({super.key, required this.itemName});
+  SwitchItemDialog(
+      {super.key, required this.itemName, required this.colorScheme});
 
   final _itemRepository = locator<ItemRepository>();
 
@@ -19,19 +21,16 @@ class SwitchItemDialog extends StatelessWidget {
         builder: (item, itemState) {
           final isOn = itemState.state == "ON";
           return Align(
-              child: IconButton(
-                  onPressed: () => onAction(!isOn),
-                  icon: Icon(
-                    item.icon ?? item.type.icon,
-                    color: isOn
-                        ? Theme.of(context).colorScheme.primary
-                        : Colors.grey,
-                  ),
-                  iconSize: 60));
+              child: SwitchItemControl(
+            onSwitchChanged: (newValue) => onAction(newValue),
+            value: isOn,
+            item: item,
+            colorScheme: colorScheme,
+          ));
         });
   }
 
-  Future<void> onAction(bool on) async {
-    await _itemRepository.switchAction(itemName, on);
+  Future<void> onAction(String value) async {
+    await _itemRepository.stringAction(itemName, value);
   }
 }

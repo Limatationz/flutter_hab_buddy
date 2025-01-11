@@ -50,7 +50,7 @@ class ThermostatItemDialog extends StatelessWidget {
   }
 
   Future<void> onAction(String action) async {
-    await _itemRepository.playerStringAction(itemName, action);
+    await _itemRepository.stringAction(itemName, action);
   }
 }
 
@@ -142,6 +142,6 @@ class _ThermostatGaugeState extends State<ThermostatGauge> {
   }
 
   Future<void> onSetpointChange(double value) =>
-      _itemRepository.rollershutterStringAction(
+      _itemRepository.stringAction(
           widget.heatingSetpointItemName, value.toString());
 }

@@ -54,7 +54,7 @@ class RoomsView extends StatelessWidget {
                       );
                     },
                     tooltip: 'Sort rooms',
-                    icon: const Icon(LineIconsV5.variantfreesort_high_to_low)),
+                    icon: const Icon(LineIconsV5.sort_high_to_low)),
                 WakelockIndicator(),
                 InboxActionButton(countInbox: model.countInboxStream),
               ],

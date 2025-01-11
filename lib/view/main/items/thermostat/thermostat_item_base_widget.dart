@@ -139,7 +139,7 @@ class ThermostatItemBaseWidget extends MediumWidthItemWidget {
   }
 
   Future<void> onDragDone(double value) async {
-    await _itemRepository.playerStringAction(
+    await _itemRepository.stringAction(
         item!.ohName, value.toStringAsFixed(2));
   }
 

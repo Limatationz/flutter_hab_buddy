@@ -86,6 +86,27 @@ class ItemsStore extends DatabaseAccessor<AppDatabase> with _$ItemsStoreMixin {
             }
           });
 
+  Future<ItemWithState?> getByNameWithState(String name) async {
+    final row = (await (select(itemsTable)
+          ..where((tbl) => tbl.ohName.equals(name))
+          ..orderBy([
+            (tbl) =>
+                OrderingTerm(expression: tbl.score, mode: OrderingMode.desc)
+          ]))
+        .join([
+      leftOuterJoin(
+          itemStatesTable, itemStatesTable.ohName.equalsExp(itemsTable.ohName)),
+    ]).getSingleOrNull());
+    final item = row?.readTable(itemsTable);
+    final state = row?.readTable(itemStatesTable);
+
+    if (item != null && state != null) {
+      return ItemWithState(item, state);
+    } else {
+      return null;
+    }
+  }
+
   SingleOrNullSelectable<ItemState> stateByName(String name) =>
       select(itemStatesTable)..where((tbl) => tbl.ohName.equals(name));
 
