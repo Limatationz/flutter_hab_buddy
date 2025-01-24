@@ -1,12 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
-import 'core/network/client/http_client_factory.dart'
-  if (dart.library.js_interop) 'core/network/client/http_client_factory_web.dart';
 
 import 'core/database/app_database.dart';
-import 'core/network/generated/client_index.dart';
-import 'core/network/interceptors/api_auth_interceptor.dart';
-import 'core/network/interceptors/cloud_auth_interceptor.dart';
 import 'core/routing/navigation_service.dart';
 import 'core/services/wakelock_service.dart';
 import 'core/services/snackbar_service.dart';
@@ -34,7 +29,7 @@ void setupLocator() {
       dependsOn: [StreamingSharedPreferences]);
 
   // database
-  locator.registerLazySingleton(() => AppDatabase());
+  locator.registerLazySingleton(() => AppDatabase.defaults());
 
   locator.registerSingleton(LoginRepository());
 

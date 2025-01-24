@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:drift_flutter/drift_flutter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart' show IconData;
 import 'package:path_provider/path_provider.dart';
@@ -47,29 +48,32 @@ part 'app_database.g.dart';
   RulesStore,
 ])
 class AppDatabase extends _$AppDatabase {
-  AppDatabase() : super(_openConnection());
+  AppDatabase(super.e);
+
+  AppDatabase.defaults() : super(driftDatabase(name: 'app_db'));
 
   @override
   int get schemaVersion => 1;
 
   @override
   MigrationStrategy get migration {
-    return MigrationStrategy(beforeOpen: (details) async {
-      await customStatement("PRAGMA foreign_key = ON");
-      if (kDebugMode && false) {
-        final m = Migrator(this);
-        for (final table in allTables) {
-          await m.deleteTable(table.actualTableName);
-          await m.createTable(table);
-        }
-      }
+    return MigrationStrategy(
+        beforeOpen: (details) async {
+          await customStatement("PRAGMA foreign_key = ON");
+          if (kDebugMode && false) {
+            final m = Migrator(this);
+            for (final table in allTables) {
+              await m.deleteTable(table.actualTableName);
+              await m.createTable(table);
+            }
+          }
 
-      await initScores();
-      }, onCreate: (Migrator m) async {
-      await m.createAll();
-    }, onUpgrade: (Migrator m, int from, int to) async {
-
-    });
+          await initScores();
+        },
+        onCreate: (Migrator m) async {
+          await m.createAll();
+        },
+        onUpgrade: (Migrator m, int from, int to) async {});
   }
 
   Future<void> initScores() async {
@@ -79,19 +83,20 @@ class AppDatabase extends _$AppDatabase {
     // reset score if time is over
     final prefs = locator<StreamingSharedPreferences>();
     final lastScoreReset =
-    prefs.getInt(lastItemScoreResetKey, defaultValue: 0).getValue();
+        prefs.getInt(lastItemScoreResetKey, defaultValue: 0).getValue();
     if (lastScoreReset == 0) {
       // First start
       prefs.setInt(
           lastItemScoreResetKey, DateTime.now().millisecondsSinceEpoch);
     } else {
       final lastScoreResetDate =
-      DateTime.fromMillisecondsSinceEpoch(lastScoreReset);
+          DateTime.fromMillisecondsSinceEpoch(lastScoreReset);
       if (DateTime.now().difference(lastScoreResetDate).inDays > 14) {
         // Reset all scores after 14 days
         prefs.setInt(
             lastItemScoreResetKey, DateTime.now().millisecondsSinceEpoch);
-        await customStatement('UPDATE items_table SET score = score / 10 WHERE score > 0');
+        await customStatement(
+            'UPDATE items_table SET score = score / 10 WHERE score > 0');
         await customStatement('UPDATE items_table SET new_score = score');
       }
     }
@@ -103,28 +108,4 @@ class AppDatabase extends _$AppDatabase {
       await delete(table).go();
     }
   }
-}
-
-LazyDatabase _openConnection() {
-  // the LazyDatabase util lets us find the right location for the file async.
-  return LazyDatabase(() async {
-    // put the database file, called db.sqlite here, into the documents folder
-    // for your app.
-    final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, 'db.sqlite'));
-
-    // Also work around limitations on old Android versions
-    if (Platform.isAndroid) {
-      await applyWorkaroundToOpenSqlite3OnOldAndroidVersions();
-    }
-
-    // Make sqlite3 pick a more suitable location for temporary files - the
-    // one from the system may be inaccessible due to sandboxing.
-    final cachebase = (await getTemporaryDirectory()).path;
-    // We can't access /tmp on Android, which sqlite3 would try by default.
-    // Explicitly tell it about the correct temporary directory.
-    sqlite3.tempDirectory = cachebase;
-
-    return NativeDatabase.createInBackground(file);
-  });
 }
