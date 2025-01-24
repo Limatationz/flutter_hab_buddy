@@ -15,12 +15,16 @@ class AutomationEditFormElementTriggerCron extends StatelessWidget {
   final RuleTriggerCronConfiguration configuration;
   final RuleTriggerConfigurationCallback onChanged;
   final RuleTriggerConfigurationDeleteCallback onDelete;
+  final int? listIndex;
+  final bool enabled;
 
   const AutomationEditFormElementTriggerCron(
       {super.key,
       required this.configuration,
       required this.onChanged,
-      required this.onDelete});
+      required this.onDelete,
+      required this.enabled,
+      this.listIndex});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +34,15 @@ class AutomationEditFormElementTriggerCron extends StatelessWidget {
         Expanded(
             child: Text("Time Trigger",
                 style: Theme.of(context).textTheme.bodyLarge)),
-        IconButton(onPressed: onDelete, icon: const Icon(LineIconsV5.trash_1))
+        if (listIndex != null && enabled)
+          ReorderableDragStartListener(
+            index: listIndex!,
+            child: IconButton(
+                onPressed: () {}, icon: Icon(LineIconsV5.menu_veggieburger)),
+          ),
+        IconButton(
+            onPressed: enabled ? onDelete : null,
+            icon: const Icon(LineIconsV5.trash_1))
       ]),
       const Gap(smallPadding),
       SegmentedButton(
@@ -40,22 +52,24 @@ class AutomationEditFormElementTriggerCron extends StatelessWidget {
           ],
           selectedIcon: const Icon(LineIconsV5.check),
           selected: <int>{singleDateSelect ? 1 : 0},
-          onSelectionChanged: (Set<int> newSelection) {
-            if (newSelection.first == 1) {
-              // single date select
-              // check if current cron expression is already specific
-              if (!configuration.cronExpression.isSingleSpecificDate) {
-                onChanged.call(RuleTriggerCronConfiguration(
-                    cronExpression: CronExpression.now()));
-              }
-            } else {
-              // repeating
-              if (configuration.cronExpression.isSingleSpecificDate) {
-                onChanged.call(RuleTriggerCronConfiguration(
-                    cronExpression: CronExpression.everyHour()));
-              }
-            }
-          }),
+          onSelectionChanged: enabled
+              ? (Set<int> newSelection) {
+                  if (newSelection.first == 1) {
+                    // single date select
+                    // check if current cron expression is already specific
+                    if (!configuration.cronExpression.isSingleSpecificDate) {
+                      onChanged.call(RuleTriggerCronConfiguration(
+                          cronExpression: CronExpression.now()));
+                    }
+                  } else {
+                    // repeating
+                    if (configuration.cronExpression.isSingleSpecificDate) {
+                      onChanged.call(RuleTriggerCronConfiguration(
+                          cronExpression: CronExpression.everyHour()));
+                    }
+                  }
+                }
+              : null),
       const Gap(mediumPadding),
       AnimatedSwitcher(
           duration: const Duration(milliseconds: 300),
@@ -65,6 +79,7 @@ class AutomationEditFormElementTriggerCron extends StatelessWidget {
                     name: "date",
                     firstDate: DateTime.now(),
                     initialValue: configuration.cronExpression.toDateTime(),
+                    enabled: enabled,
                     key: ValueKey(configuration.cronExpression
                         .toDateTime()
                         ?.microsecondsSinceEpoch),
@@ -76,105 +91,112 @@ class AutomationEditFormElementTriggerCron extends StatelessWidget {
                       }
                     },
                   ),
-                  const Gap(mediumPadding),
-                  Wrap(
-                      spacing: smallPadding,
-                      runSpacing: smallPadding,
-                      children: [
-                        ActionChip(
-                          label: Text(
-                            S.of(context).timeTriggerIn1Min,
+                  if (enabled) const Gap(mediumPadding),
+                  if (enabled)
+                    Wrap(
+                        spacing: smallPadding,
+                        runSpacing: smallPadding,
+                        children: [
+                          ActionChip(
+                            label: Text(
+                              S.of(context).timeTriggerIn1Min,
+                            ),
+                            onPressed: () {
+                              onChanged.call(RuleTriggerCronConfiguration(
+                                  cronExpression: CronExpression.fromDateTime(
+                                      DateTime.now()
+                                          .add(Duration(minutes: 1)))));
+                            },
                           ),
-                          onPressed: () {
-                            onChanged.call(RuleTriggerCronConfiguration(
-                                cronExpression: CronExpression.fromDateTime(
-                                    DateTime.now().add(Duration(minutes: 1)))));
-                          },
-                        ),
-                    ActionChip(
-                      label: Text(
-                        S.of(context).timeTriggerIn5Min,
-                      ),
-                      onPressed: () {
-                        onChanged.call(RuleTriggerCronConfiguration(
-                            cronExpression: CronExpression.fromDateTime(
-                                DateTime.now().add(Duration(minutes: 5)))));
-                      },
-                    ),
-                    ActionChip(
-                      label: Text(
-                        S.of(context).timeTriggerIn10Min,
-                      ),
-                      onPressed: () {
-                        onChanged.call(RuleTriggerCronConfiguration(
-                            cronExpression: CronExpression.fromDateTime(
-                                DateTime.now().add(Duration(minutes: 10)))));
-                      },
-                    ),
-                    ActionChip(
-                      label: Text(
-                        S.of(context).timeTriggerIn30Min,
-                      ),
-                      onPressed: () {
-                        onChanged.call(RuleTriggerCronConfiguration(
-                            cronExpression: CronExpression.fromDateTime(
-                                DateTime.now().add(Duration(minutes: 30)))));
-                      },
-                    ),
-                    ActionChip(
-                      label: Text(
-                        S.of(context).timeTriggerIn1H,
-                      ),
-                      onPressed: () {
-                        onChanged.call(RuleTriggerCronConfiguration(
-                            cronExpression: CronExpression.fromDateTime(
-                                DateTime.now().add(Duration(minutes: 60)))));
-                      },
-                    ),
-                    ActionChip(
-                      label: Text(
-                        S.of(context).timeTriggerIn2H,
-                      ),
-                      onPressed: () {
-                        onChanged.call(RuleTriggerCronConfiguration(
-                            cronExpression: CronExpression.fromDateTime(
-                                DateTime.now().add(Duration(minutes: 120)))));
-                      },
-                    ),
-                    ActionChip(
-                      label: Text(
-                        S.of(context).timeTriggerIn12H,
-                      ),
-                      onPressed: () {
-                        onChanged.call(RuleTriggerCronConfiguration(
-                            cronExpression: CronExpression.fromDateTime(
-                                DateTime.now()
-                                    .add(Duration(minutes: 12 * 60)))));
-                      },
-                    ),
-                    ActionChip(
-                      label: Text(
-                        S.of(context).timeTriggerIn1Day,
-                      ),
-                      onPressed: () {
-                        onChanged.call(RuleTriggerCronConfiguration(
-                            cronExpression: CronExpression.fromDateTime(
-                                DateTime.now()
-                                    .add(Duration(minutes: 24 * 60)))));
-                      },
-                    ),
-                    ActionChip(
-                      label: Text(
-                        S.of(context).timeTriggerIn2Days,
-                      ),
-                      onPressed: () {
-                        onChanged.call(RuleTriggerCronConfiguration(
-                            cronExpression: CronExpression.fromDateTime(
-                                DateTime.now()
-                                    .add(Duration(minutes: 24 * 60 * 2)))));
-                      },
-                    ),
-                  ])
+                          ActionChip(
+                            label: Text(
+                              S.of(context).timeTriggerIn5Min,
+                            ),
+                            onPressed: () {
+                              onChanged.call(RuleTriggerCronConfiguration(
+                                  cronExpression: CronExpression.fromDateTime(
+                                      DateTime.now()
+                                          .add(Duration(minutes: 5)))));
+                            },
+                          ),
+                          ActionChip(
+                            label: Text(
+                              S.of(context).timeTriggerIn10Min,
+                            ),
+                            onPressed: () {
+                              onChanged.call(RuleTriggerCronConfiguration(
+                                  cronExpression: CronExpression.fromDateTime(
+                                      DateTime.now()
+                                          .add(Duration(minutes: 10)))));
+                            },
+                          ),
+                          ActionChip(
+                            label: Text(
+                              S.of(context).timeTriggerIn30Min,
+                            ),
+                            onPressed: () {
+                              onChanged.call(RuleTriggerCronConfiguration(
+                                  cronExpression: CronExpression.fromDateTime(
+                                      DateTime.now()
+                                          .add(Duration(minutes: 30)))));
+                            },
+                          ),
+                          ActionChip(
+                            label: Text(
+                              S.of(context).timeTriggerIn1H,
+                            ),
+                            onPressed: () {
+                              onChanged.call(RuleTriggerCronConfiguration(
+                                  cronExpression: CronExpression.fromDateTime(
+                                      DateTime.now()
+                                          .add(Duration(minutes: 60)))));
+                            },
+                          ),
+                          ActionChip(
+                            label: Text(
+                              S.of(context).timeTriggerIn2H,
+                            ),
+                            onPressed: () {
+                              onChanged.call(RuleTriggerCronConfiguration(
+                                  cronExpression: CronExpression.fromDateTime(
+                                      DateTime.now()
+                                          .add(Duration(minutes: 120)))));
+                            },
+                          ),
+                          ActionChip(
+                            label: Text(
+                              S.of(context).timeTriggerIn12H,
+                            ),
+                            onPressed: () {
+                              onChanged.call(RuleTriggerCronConfiguration(
+                                  cronExpression: CronExpression.fromDateTime(
+                                      DateTime.now()
+                                          .add(Duration(minutes: 12 * 60)))));
+                            },
+                          ),
+                          ActionChip(
+                            label: Text(
+                              S.of(context).timeTriggerIn1Day,
+                            ),
+                            onPressed: () {
+                              onChanged.call(RuleTriggerCronConfiguration(
+                                  cronExpression: CronExpression.fromDateTime(
+                                      DateTime.now()
+                                          .add(Duration(minutes: 24 * 60)))));
+                            },
+                          ),
+                          ActionChip(
+                            label: Text(
+                              S.of(context).timeTriggerIn2Days,
+                            ),
+                            onPressed: () {
+                              onChanged.call(RuleTriggerCronConfiguration(
+                                  cronExpression: CronExpression.fromDateTime(
+                                      DateTime.now().add(
+                                          Duration(minutes: 24 * 60 * 2)))));
+                            },
+                          ),
+                        ])
                 ])
               : CronFormField(
                   key: Key(configuration.cronExpression

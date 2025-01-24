@@ -393,6 +393,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "updateFailedError": MessageLookupByLibrary.simpleMessage(
             "Update failed. Please try again."),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
+        "viewRule": MessageLookupByLibrary.simpleMessage("View Rule"),
         "wakelockDisabledSnackbar":
             MessageLookupByLibrary.simpleMessage("Wakelock disabled"),
         "wakelockEnabledSnackbar":

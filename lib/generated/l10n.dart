@@ -2194,6 +2194,16 @@ class S {
       args: [],
     );
   }
+
+  /// `View Rule`
+  String get viewRule {
+    return Intl.message(
+      'View Rule',
+      name: 'viewRule',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

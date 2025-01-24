@@ -11,18 +11,19 @@ import '../../../../../util/constants.dart';
 import '../../../../../util/general/bar_bottom_sheet.dart';
 import '../../../../../util/general/list_picker_sheet_view.dart';
 import '../../../../../util/general/widget_container.dart';
-import '../../../../items/dimmer/dimmer_item_control.dart';
 import '../../../../items/general/item_select_view.dart';
 import '../../../../items/general/item_widget_factory.dart';
-import '../action/automation_edit_form_element_action_general.dart';
 import 'automation_edit_form_element_trigger_general.dart';
 
 // TODO: state and previous state
+// TODO: just when item changed
 
 class AutomationEditFormElementTriggerItem extends StatelessWidget {
   final RuleTriggerItemConfiguration configuration;
   final RuleTriggerConfigurationCallback onChanged;
   final RuleTriggerConfigurationDeleteCallback onDelete;
+  final int? listIndex;
+  final bool enabled;
 
   final _itemsStore = locator.get<AppDatabase>().itemsStore;
 
@@ -30,7 +31,9 @@ class AutomationEditFormElementTriggerItem extends StatelessWidget {
       {super.key,
       required this.configuration,
       required this.onChanged,
-      required this.onDelete});
+      required this.onDelete,
+      required this.enabled,
+      this.listIndex});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +44,13 @@ class AutomationEditFormElementTriggerItem extends StatelessWidget {
           Expanded(
               child: Text("Item Trigger",
                   style: Theme.of(context).textTheme.bodyLarge)),
-          IconButton(onPressed: onDelete, icon: const Icon(LineIconsV5.trash_1))
+          if (listIndex != null && enabled)
+            ReorderableDragStartListener(
+              index: listIndex!,
+              child: IconButton(
+                  onPressed: () {}, icon: const Icon(LineIconsV5.menu_veggieburger)),
+            ),
+          IconButton(onPressed: enabled ? onDelete : null, icon: const Icon(LineIconsV5.trash_1))
         ]),
         const Gap(smallPadding),
         Wrap(spacing: mediumPadding, runSpacing: mediumPadding, children: [
@@ -51,7 +60,7 @@ class AutomationEditFormElementTriggerItem extends StatelessWidget {
                   : ColorScheme.of(context).secondaryContainer,
               padding: const EdgeInsets.symmetric(
                   vertical: smallPadding, horizontal: mediumPadding),
-              onTap: () {
+              onTap: enabled ? () {
                 ItemSelectView.showSheet(context,
                     onItemWithStateSelect: (item) {
                   final newConfig = configuration.copyWith(
@@ -59,7 +68,7 @@ class AutomationEditFormElementTriggerItem extends StatelessWidget {
 
                   onChanged(newConfig);
                 });
-              },
+              } : null,
               child: Text(
                   configuration.itemName == null
                       ? S.of(context).selectItem
@@ -72,7 +81,7 @@ class AutomationEditFormElementTriggerItem extends StatelessWidget {
               backgroundColor: ColorScheme.of(context).secondaryContainer,
               padding: const EdgeInsets.symmetric(
                   vertical: smallPadding, horizontal: mediumPadding),
-              onTap: () {
+              onTap: enabled ? () {
                 showBarModalBottomSheet<int?>(
                   context: context,
                   builder: (_) => ListPickerSheetView<RuleTriggerItemType>(
@@ -86,7 +95,7 @@ class AutomationEditFormElementTriggerItem extends StatelessWidget {
                     },
                   ),
                 );
-              },
+              } : null,
               child: Text(configuration.type.label,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       color: ColorScheme.of(context).onSecondaryContainer))),
@@ -108,11 +117,11 @@ class AutomationEditFormElementTriggerItem extends StatelessWidget {
                         itemWithState: itemWithState,
                         colorScheme: ColorScheme.of(context),
                         value: configuration.state,
-                        onItemStateChanged: (value) {
+                        onItemStateChanged: enabled ? (value) {
                           final newAction =
                               configuration.copyWith(state: value);
                           onChanged(newAction);
-                        },
+                        } : null,
                       );
                     }
                   }))

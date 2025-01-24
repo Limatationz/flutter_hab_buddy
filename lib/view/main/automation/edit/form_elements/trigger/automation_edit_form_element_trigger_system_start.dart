@@ -11,12 +11,16 @@ class AutomationEditFormElementTriggerSystemStart extends StatelessWidget {
   final RuleTriggerSystemStartConfiguration configuration;
   final RuleTriggerConfigurationCallback onChanged;
   final RuleTriggerConfigurationDeleteCallback onDelete;
+  final int? listIndex;
+  final bool enabled;
 
   const AutomationEditFormElementTriggerSystemStart(
       {super.key,
       required this.configuration,
       required this.onChanged,
-      required this.onDelete});
+      required this.onDelete,
+      required this.enabled,
+      this.listIndex});
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +30,21 @@ class AutomationEditFormElementTriggerSystemStart extends StatelessWidget {
         Expanded(
             child: Text("System Start",
                 style: Theme.of(context).textTheme.bodyLarge)),
-        IconButton(onPressed: onDelete, icon: const Icon(LineIconsV5.trash_1))
+        if (listIndex != null && enabled)
+          ReorderableDragStartListener(
+            index: listIndex!,
+            child: IconButton(
+                onPressed: () {}, icon: Icon(LineIconsV5.menu_veggieburger)),
+          ),
+        IconButton(
+            onPressed: enabled ? onDelete : null,
+            icon: const Icon(LineIconsV5.trash_1))
       ]),
       const Gap(smallPadding),
       FormBuilderDropdown<RuleTriggerSystemStartConfigurationLevel>(
         name: "level",
         initialValue: configuration.startLevel,
+        enabled: enabled,
         items: RuleTriggerSystemStartConfigurationLevel.values.map((level) {
           return DropdownMenuItem(
             value: level,

@@ -404,5 +404,6 @@
   "postUpdateCommandLabel": "Post Update",
   "sendCommandCommandLabel": "Send Command",
   "or": "Or",
-  "and": "And"
+  "and": "And",
+  "viewRule": "View Rule"
 }

@@ -9,7 +9,7 @@ import '../general/item_widget_factory.dart';
 import '../switch/switch_item_control.dart';
 
 class DimmerItemControl extends StatefulWidget {
-  final OnItemStateChanged onDimmerChanged;
+  final OnItemStateChanged? onDimmerChanged;
   final ItemState itemState;
   final Item item;
   final ColorScheme colorScheme;
@@ -17,7 +17,7 @@ class DimmerItemControl extends StatefulWidget {
 
   const DimmerItemControl(
       {super.key,
-      required this.onDimmerChanged,
+      this.onDimmerChanged,
       required this.itemState,
       required this.colorScheme,
       required this.initialValue,

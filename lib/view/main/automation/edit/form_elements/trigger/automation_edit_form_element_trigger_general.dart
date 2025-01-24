@@ -14,11 +14,16 @@ class AutomationEditFormElementTriggerGeneral extends StatelessWidget {
   final RuleTriggerConfiguration configuration;
   final RuleTriggerConfigurationCallback onChanged;
   final RuleTriggerConfigurationDeleteCallback onDelete;
+  final int? listIndex;
+  final bool enabled;
 
   const AutomationEditFormElementTriggerGeneral({
     super.key,
     required this.configuration,
-    required this.onChanged, required this.onDelete,
+    required this.onChanged,
+    required this.onDelete,
+    required this.enabled,
+    this.listIndex,
   });
 
   @override
@@ -29,18 +34,24 @@ class AutomationEditFormElementTriggerGeneral extends StatelessWidget {
           configuration: e,
           onChanged: onChanged,
           onDelete: onDelete,
+          listIndex: listIndex,
+          enabled: enabled,
         );
       case RuleTriggerSystemStartConfiguration e:
         return AutomationEditFormElementTriggerSystemStart(
           configuration: e,
           onChanged: onChanged,
           onDelete: onDelete,
+          listIndex: listIndex,
+          enabled: enabled,
         );
       case RuleTriggerItemConfiguration e:
         return AutomationEditFormElementTriggerItem(
           configuration: e,
           onChanged: onChanged,
           onDelete: onDelete,
+          listIndex: listIndex,
+          enabled: enabled,
         );
       default:
         return Text("Not implemented yet: ${configuration.runtimeType}");

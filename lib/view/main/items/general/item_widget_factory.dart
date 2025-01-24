@@ -101,7 +101,7 @@ class ItemWidgetFactory {
       {required ItemWithState itemWithState,
       required ColorScheme colorScheme,
       required dynamic value,
-      required OnItemStateChanged onItemStateChanged}) {
+      OnItemStateChanged? onItemStateChanged}) {
     switch (itemWithState.item.ohType) {
       case OhItemType.button:
         return SwitchItemControl(

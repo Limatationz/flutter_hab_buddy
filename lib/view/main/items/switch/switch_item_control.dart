@@ -11,7 +11,7 @@ class SwitchItemControl extends StatelessWidget {
   final Item item;
   final ColorScheme colorScheme;
 
-  final OnItemStateChanged onSwitchChanged;
+  final OnItemStateChanged? onSwitchChanged;
   final dynamic value;
   final double iconSize;
   final bool withIcon;
@@ -55,12 +55,13 @@ class SwitchItemControl extends StatelessWidget {
           TextTheme.of(context).titleLarge?.copyWith(
               color: isOn ? colorScheme.onPrimary : colorScheme.onSurface),
         ],
+        changeOnTap: onSwitchChanged != null,
         activeBgColor: [colorScheme.primary, colorScheme.primary],
         animate: true,
         curve: Curves.bounceInOut,
         onToggle: (index) {
           if (index != null) {
-            onSwitchChanged(index == 0 ? "OFF" : "ON");
+            onSwitchChanged?.call(index == 0 ? "OFF" : "ON");
           }
         },
       ),

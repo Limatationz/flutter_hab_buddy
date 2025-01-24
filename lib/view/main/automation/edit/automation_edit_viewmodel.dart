@@ -31,15 +31,17 @@ class AutomationEditViewModel extends BaseViewModel {
   // triggers
   List<RuleTriggerEntry>? triggers;
 
-  // action items
-  List<RuleAction>? actionItemsWithState;
+  // actions
+  List<RuleAction>? actions;
 
   // options
   RuleOptions options = RuleOptions();
 
-  bool get isLoading => actionItemsWithState == null;
+  bool get isLoading => actions == null;
 
   bool get isNew => args?.initialRuleUid?.isEmpty ?? true;
+
+  bool get canEdit => isNew || (initialRule?.editable ?? false);
 
   AutomationEditViewModel(
     this.args,
@@ -60,8 +62,8 @@ class AutomationEditViewModel extends BaseViewModel {
                   .toList() ??
               [];
 
-          // get action items
-          actionItemsWithState = await _getActionItemsWithState(rule);
+          // get actions
+          actions = await _getActions(rule);
 
           // get options
           options = rule.options;
@@ -94,7 +96,7 @@ class AutomationEditViewModel extends BaseViewModel {
             .then((itemWithState) {
           itemOpenedBy = itemWithState?.item;
           if (itemWithState != null) {
-            actionItemsWithState = [
+            actions = [
               RuleActionItem(itemWithState, RuleActionItemCommand.sendCommand,
                   itemWithState.item.defaultValue),
             ];
@@ -106,18 +108,20 @@ class AutomationEditViewModel extends BaseViewModel {
         });
       } else {
         // rule was opened without item
-        actionItemsWithState = [];
+        actions = [];
         notifyListeners();
       }
     }
   }
 
-  Future<List<RuleAction>> _getActionItemsWithState(db.Rule rule) async {
+  Future<List<RuleAction>> _getActions(db.Rule rule) async {
     final actions = rule.actions;
     if (actions?.isEmpty ?? true) {
       return [];
     } else {
-      final list = actions!
+      List<RuleAction> result = [];
+
+      final listOfItemActions = actions!
           .where((action) =>
               (action.type == "core.ItemCommandAction" ||
                   action.type == "core.ItemStateUpdateAction") &&
@@ -132,7 +136,7 @@ class AutomationEditViewModel extends BaseViewModel {
           .toList();
 
       // fetch items from database
-      final listWithItemsFutures = list.map((e) async {
+      final listWithItemsFutures = listOfItemActions.map((e) async {
         final item = await _itemsStore.getByNameWithState(e.$1);
         return (item, e);
       }).toList();
@@ -152,14 +156,45 @@ class AutomationEditViewModel extends BaseViewModel {
       listWithItems.removeWhere((element) => element.$1 == null);
 
       // create map
-      return listWithItems
+      final itemActions = listWithItems
           .map((e) => RuleActionItem(e.$1!, e.$2.$2, e.$2.$3))
           .toList();
+
+      result.addAll(itemActions);
+
+      // get action scripts
+      final scriptActions = actions
+          .where((action) =>
+              action.type == "script.ScriptAction" &&
+              (action.configuration?.containsKey("script") ?? false))
+          .map((action) =>
+              RuleActionScript(action.configuration!["script"] as String))
+          .toList();
+
+      result.addAll(scriptActions);
+
+      return result;
+    }
+  }
+
+  Future<List<RuleAction>> _getActionScripts(db.Rule rule) async {
+    final actions = rule.actions;
+    if (actions?.isEmpty ?? true) {
+      return [];
+    } else {
+      final list = actions!
+          .where((action) =>
+              action.type == "core.ScriptAction" &&
+              action.configuration != null)
+          .map((action) =>
+              RuleActionScript(action.configuration!["script"] as String))
+          .toList();
+      return list;
     }
   }
 
   void updateAction(int index, RuleAction action) {
-    actionItemsWithState![index] = action;
+    actions![index] = action;
     notifyListeners();
   }
 
@@ -185,16 +220,27 @@ class AutomationEditViewModel extends BaseViewModel {
     }
   }
 
+  void reorderTriggers(int oldIndex, int newIndex) {
+    if (oldIndex < newIndex) {
+      newIndex -= 1;
+    }
+    final entry = triggers?.removeAt(oldIndex);
+    if (entry != null) {
+      triggers?.insert(newIndex, entry);
+      notifyListeners();
+    }
+  }
+
   Future<bool> createRule() async {
     // check if scheduled time is set and action items are set
     if ((triggers?.isEmpty ?? true) ||
-        (actionItemsWithState?.isEmpty ?? true)) {
+        (actions?.isEmpty ?? true)) {
       _log.e("triggers or action items not set");
       return false;
     }
 
     // check if all actions are valid
-    for (final actionItem in actionItemsWithState!) {
+    for (final actionItem in actions!) {
       if (!actionItem.validate()) {
         return false;
       }
@@ -210,7 +256,7 @@ class AutomationEditViewModel extends BaseViewModel {
             .mapIndexed(
                 (index, entry) => RuleTrigger.toTriggerDto(index, entry))
             .toList(),
-        actions: actionItemsWithState!
+        actions: actions!
             .mapIndexed((index, e) => e.toActionDto(index))
             .toList());
 
@@ -252,19 +298,19 @@ class AutomationEditViewModel extends BaseViewModel {
   }
 
   void addEmptyItemAction() {
-    actionItemsWithState ??= [];
-    actionItemsWithState?.add(RuleActionItem(null, null, null));
+    actions ??= [];
+    actions?.add(RuleActionItem(null, null, null));
     notifyListeners();
   }
 
   deleteAction(int index) {
-    actionItemsWithState?.removeAt(index);
+    actions?.removeAt(index);
     notifyListeners();
   }
 
   void addEmptyScriptAction() {
-    actionItemsWithState ??= [];
-    actionItemsWithState?.add(RuleActionScript(""));
+    actions ??= [];
+    actions?.add(RuleActionScript(""));
     notifyListeners();
   }
 }

@@ -9,14 +9,14 @@ import '../../../util/constants.dart';
 import '../general/item_widget_factory.dart';
 
 class RollershutterItemControl extends StatefulWidget {
-  final OnItemStateChanged onRollershutterChanged;
+  final OnItemStateChanged? onRollershutterChanged;
   final ItemState itemState;
   final ColorScheme colorScheme;
   final double initialValue;
 
   const RollershutterItemControl(
       {super.key,
-      required this.onRollershutterChanged,
+       this.onRollershutterChanged,
       required this.itemState,
       required this.colorScheme,
       required this.initialValue});
@@ -43,7 +43,7 @@ class _RollershutterItemControlState extends State<RollershutterItemControl> {
         children: [
           IconButton(
               onPressed: !widget.itemState.isReadOnly
-                  ? () => widget.onRollershutterChanged("UP")
+                  ? () => widget.onRollershutterChanged?.call("UP")
                   : null,
               color: widget.colorScheme.primary,
               tooltip: S.of(context).up,
@@ -53,7 +53,7 @@ class _RollershutterItemControlState extends State<RollershutterItemControl> {
               )),
           IconButton(
               onPressed: !widget.itemState.isReadOnly
-                  ? () => widget.onRollershutterChanged("STOP")
+                  ? () => widget.onRollershutterChanged?.call("STOP")
                   : null,
               tooltip: S.of(context).stop,
               color: widget.colorScheme.primary,
@@ -61,7 +61,7 @@ class _RollershutterItemControlState extends State<RollershutterItemControl> {
           IconButton(
               color: widget.colorScheme.primary,
               onPressed: !widget.itemState.isReadOnly
-                  ? () => widget.onRollershutterChanged("DOWN")
+                  ? () => widget.onRollershutterChanged?.call("DOWN")
                   : null,
               tooltip: S.of(context).down,
               icon: const Icon(LineIconsV5.chevron_down, size: 36)),

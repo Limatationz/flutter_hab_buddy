@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/database/rules/rules_table.dart';
@@ -9,6 +10,7 @@ import '../../../locator.dart';
 import '../../../repository/automation_repository.dart';
 import '../../../util/icons/icons.dart';
 import '../../util/constants.dart';
+import 'edit/automation_edit_view.dart';
 
 class RuleListItem extends StatelessWidget {
   final _snackbarService = locator<SnackbarService>();
@@ -50,6 +52,10 @@ class RuleListItem extends StatelessWidget {
                   )
                 ]),
       ]),
+      onTap: () {
+        context.pushNamed(AutomationEditView.routeName,
+            queryParameters: {"initialRuleUid": rule.uid});
+      },
     );
   }
 
