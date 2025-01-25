@@ -1,3 +1,4 @@
+import 'package:dart_date/dart_date.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:logger/logger.dart';
@@ -9,7 +10,6 @@ import '../../../view/util/cron/cron_expression.dart';
 import '../../../view/util/cron/enums/cron_expression_output_format.dart';
 import '../../network/generated/openHAB.models.swagger.dart';
 import '../app_database.dart';
-import '../items/items_table.dart';
 
 part 'rule_trigger.g.dart';
 
@@ -100,6 +100,8 @@ class RuleTrigger extends JsonSerializable {
 abstract class RuleTriggerConfiguration extends JsonSerializable {
   String get openhabType;
 
+  bool validate();
+
   @override
   Map<String, dynamic> toJson();
 }
@@ -111,8 +113,23 @@ class RuleTriggerItemConfiguration extends RuleTriggerConfiguration {
   final dynamic previousState;
   final RuleTriggerItemType type;
 
+  RuleTriggerItemChangedType get changedType =>
+      RuleTriggerItemChangedType.fromConfiguration(this);
+
   @override
   String get openhabType => type.openHabValue;
+
+  @override
+  bool validate() {
+    if (changedType.isAny) {
+      return state == null && previousState == null;
+    } else if (changedType.isTo) {
+      return state != null && previousState == null;
+    } else if (changedType.isFromTo) {
+      return state != null && previousState != null && state != previousState;
+    }
+    return false;
+  }
 
   RuleTriggerItemConfiguration(
       {this.itemName, this.state, this.previousState, required this.type});
@@ -144,6 +161,18 @@ class RuleTriggerItemConfiguration extends RuleTriggerConfiguration {
       type: type ?? this.type,
     );
   }
+
+  RuleTriggerItemConfiguration copyWithStates({
+    dynamic state,
+    dynamic previousState,
+  }) {
+    return RuleTriggerItemConfiguration(
+      itemName: itemName,
+      state: state,
+      previousState: previousState,
+      type: type,
+    );
+  }
 }
 
 @JsonSerializable()
@@ -153,6 +182,9 @@ class RuleTriggerSystemStartConfiguration extends RuleTriggerConfiguration {
 
   @override
   String get openhabType => "core.SystemStartlevelTrigger";
+
+  @override
+  bool validate() => true;
 
   RuleTriggerSystemStartConfiguration({required this.startLevel});
 
@@ -209,6 +241,102 @@ enum RuleTriggerItemType {
   }
 }
 
+enum RuleTriggerItemChangedType {
+  changeAny,
+  changeTo,
+  changeFromTo,
+  updateAny,
+  updateTo,
+  commandAny,
+  commandSpecific,
+  unknown;
+
+  bool get isAny =>
+      this == changeAny || this == updateAny || this == commandAny;
+
+  bool get isTo =>
+      this == changeTo || this == updateTo || this == commandSpecific;
+
+  bool get isFromTo => this == changeFromTo;
+
+  bool get showTo =>
+      this == changeTo ||
+      this == updateTo ||
+      this == commandSpecific ||
+      this == changeFromTo;
+
+  bool get showFrom => this == changeFromTo;
+
+  String get label {
+    switch (this) {
+      case RuleTriggerItemChangedType.changeAny:
+        return "Any change";
+      case RuleTriggerItemChangedType.changeTo:
+        return "Change to";
+      case RuleTriggerItemChangedType.changeFromTo:
+        return "Change from to";
+      case RuleTriggerItemChangedType.updateAny:
+        return "Any update";
+      case RuleTriggerItemChangedType.updateTo:
+        return "Update to";
+      case RuleTriggerItemChangedType.commandAny:
+        return "Any command";
+      case RuleTriggerItemChangedType.commandSpecific:
+        return "Specific command";
+      case RuleTriggerItemChangedType.unknown:
+        return "Unknown";
+    }
+  }
+
+  static RuleTriggerItemChangedType fromConfiguration(
+      RuleTriggerItemConfiguration config) {
+    if (config.type == RuleTriggerItemType.stateChanged) {
+      if (config.state == null && config.previousState == null) {
+        return RuleTriggerItemChangedType.changeAny;
+      } else if (config.state != null && config.previousState == null) {
+        return RuleTriggerItemChangedType.changeTo;
+      } else if (config.state != null && config.previousState != null) {
+        return RuleTriggerItemChangedType.changeFromTo;
+      }
+    } else if (config.type == RuleTriggerItemType.stateUpdated) {
+      if (config.state == null) {
+        return RuleTriggerItemChangedType.updateAny;
+      } else {
+        return RuleTriggerItemChangedType.updateTo;
+      }
+    } else if (config.type == RuleTriggerItemType.receivedCommand) {
+      if (config.state == null) {
+        return RuleTriggerItemChangedType.commandAny;
+      } else {
+        return RuleTriggerItemChangedType.commandSpecific;
+      }
+    }
+    return RuleTriggerItemChangedType.unknown;
+  }
+
+  static List<RuleTriggerItemChangedType> getTypesForConfig(
+      RuleTriggerItemType type) {
+    switch (type) {
+      case RuleTriggerItemType.stateChanged:
+        return [
+          RuleTriggerItemChangedType.changeAny,
+          RuleTriggerItemChangedType.changeTo,
+          RuleTriggerItemChangedType.changeFromTo,
+        ];
+      case RuleTriggerItemType.stateUpdated:
+        return [
+          RuleTriggerItemChangedType.updateAny,
+          RuleTriggerItemChangedType.updateTo,
+        ];
+      case RuleTriggerItemType.receivedCommand:
+        return [
+          RuleTriggerItemChangedType.commandAny,
+          RuleTriggerItemChangedType.commandSpecific,
+        ];
+    }
+  }
+}
+
 enum RuleTriggerSystemStartConfigurationLevel {
   @JsonValue(40)
   rulesLoaded,
@@ -248,6 +376,9 @@ class RuleTriggerCronConfiguration extends RuleTriggerConfiguration {
   @override
   String get openhabType => "timer.GenericCronTrigger";
 
+  @override
+  bool validate() => cronExpression.toDateTime()?.isFuture ?? true;
+
   RuleTriggerCronConfiguration({required this.cronExpression});
 
   factory RuleTriggerCronConfiguration.fromJson(Map<String, dynamic> json) =>
@@ -269,6 +400,9 @@ class RuleTriggerCronConfiguration extends RuleTriggerConfiguration {
 class RuleTriggerUnknownConfiguration extends RuleTriggerConfiguration {
   @override
   String get openhabType => "unknown";
+
+  @override
+  bool validate() => false;
 }
 
 enum RuleTriggerType {

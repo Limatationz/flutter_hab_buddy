@@ -70,11 +70,13 @@ Future<T?> showBarModalBottomSheet<T>({
       context: context,
       bounce: bounce,
       builder: builder,
-      containerWidget: (_, animation, child) => BarModal(
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          expand: expand,
-          child: BottomSheetContainer(
-            child: child,
-          )),
+      containerWidget: (context, animation, child) {
+        return BarModal(
+            backgroundColor: ColorScheme.of(context).surface,
+            expand: expand,
+            child: BottomSheetContainer(
+              child: child,
+            ));
+      },
       expand: expand);
 }

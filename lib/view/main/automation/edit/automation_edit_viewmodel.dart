@@ -239,9 +239,18 @@ class AutomationEditViewModel extends BaseViewModel {
       return false;
     }
 
+    // check if all triggers are valid
+    for (final trigger in triggers!) {
+      if (!trigger.validate()) {
+        _log.e("triggers are not valid: ${trigger}");
+        return false;
+      }
+    }
+
     // check if all actions are valid
     for (final actionItem in actions!) {
       if (!actionItem.validate()) {
+        _log.e("actions are not valid: ${actionItem}");
         return false;
       }
     }
@@ -286,7 +295,7 @@ class AutomationEditViewModel extends BaseViewModel {
   bool get autoDeleteOptionEnabled =>
       (triggers?.isNotEmpty ?? false) &&
       (triggers?.every((e) =>
-              e.type == RuleTriggerType.cron &&
+              e.configuration is RuleTriggerCronConfiguration &&
               (e.configuration as RuleTriggerCronConfiguration)
                   .cronExpression
                   .isSingleSpecificDate) ??
@@ -318,6 +327,8 @@ class AutomationEditViewModel extends BaseViewModel {
 class RuleTriggerEntry {
   final String type;
   final RuleTriggerConfiguration configuration;
+
+  bool validate() => configuration.validate();
 
   RuleTriggerEntry(this.type, this.configuration);
 

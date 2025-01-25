@@ -21,7 +21,8 @@ import 'form_elements/action/automation_edit_form_element_action_general.dart';
 import 'form_elements/trigger/automation_edit_form_element_trigger_general.dart';
 
 // TODO: Condition: only if
-// TODO: just look at the rule if user cannot edit
+// TODO: just look at the rule if user cannot edit -> what if the items are not in the database?
+// TODO: add error indicators for triggers/actions/conditions
 
 class AutomationEditView extends StatelessWidget {
   static const routeName = 'AutomationEditView';
@@ -105,7 +106,10 @@ class AutomationEditView extends StatelessWidget {
                                     key: ValueKey(trigger.hashCode),
                                     children: [
                                       AutomationEditFormElementTriggerGeneral(
-                                          listIndex: index,
+                                          listIndex:
+                                              (model.triggers?.length ?? 0) > 1
+                                                  ? index
+                                                  : null,
                                           enabled: model.canEdit,
                                           configuration: trigger.configuration,
                                           onChanged: (newConfiguration) => model

@@ -1,3 +1,5 @@
+import 'package:gap/gap.dart';
+
 const double paddingScaffold = 16.0;
 const double borderRadiusContainer = 12.0;
 const double borderRadiusPillContainer = 32.0;
@@ -12,6 +14,12 @@ const double smallPadding = 8.0;
 const double mediumPadding = 12.0;
 const double largePadding = 16.0;
 const double extraLargePadding = 24.0;
+
+const Gap extraSmallGap = Gap(extraSmallPadding);
+const Gap smallGap = Gap(smallPadding);
+const Gap mediumGap = Gap(mediumPadding);
+const Gap largeGap = Gap(largePadding);
+const Gap extraLargeGap = Gap(extraLargePadding);
 
 // item widgets
 const double itemListCountBreakpoint = 60;
