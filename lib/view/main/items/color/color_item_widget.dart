@@ -15,7 +15,8 @@ import 'color_item_dialog.dart';
 import 'color_util.dart';
 
 class ColorItemWidget extends SmallItemWidget {
-  ColorItemWidget({super.key, required super.item, required super.colorScheme})
+  final bool disableTap;
+  ColorItemWidget({super.key, required super.item, required super.colorScheme, this.disableTap = false})
       : assert(item != null);
 
   final _itemRepository = locator<ItemRepository>();
@@ -40,6 +41,7 @@ class ColorItemWidget extends SmallItemWidget {
               onDragDone: !state.isReadOnly ? onDragDone : null,
               colorScheme: colorScheme,
               accentBackgroundColor: colorValue.toColor(fullOpacity: true),
+              disableTap: disableTap,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,7 +53,7 @@ class ColorItemWidget extends SmallItemWidget {
                   Align(
                       alignment: Alignment.bottomRight,
                       child: Icon(
-                        item!.icon ?? item!.type.icon,
+                        item!.icon ?? item!.type!.icon,
                         size: iconSize,
                         color: isOn
                             ? Theme.of(context).colorScheme.onSurface

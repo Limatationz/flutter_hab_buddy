@@ -12,9 +12,15 @@ import 'sensor_item_dialog.dart';
 class SensorItemWidget extends StatefulWidget {
   final Item item;
   final ColorScheme colorScheme;
+  final bool disableTap;
+  final bool initiallyExpanded;
 
   const SensorItemWidget(
-      {super.key, required this.item, required this.colorScheme});
+      {super.key,
+      required this.item,
+      required this.colorScheme,
+      this.disableTap = false,
+      this.initiallyExpanded = false});
 
   @override
   State<SensorItemWidget> createState() => _SensorItemWidgetState();
@@ -22,6 +28,12 @@ class SensorItemWidget extends StatefulWidget {
 
 class _SensorItemWidgetState extends State<SensorItemWidget> {
   bool expanded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    expanded = widget.initiallyExpanded;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +46,11 @@ class _SensorItemWidgetState extends State<SensorItemWidget> {
               onTap: toggleExpanded,
               onLongTap: onLongTap,
               colorScheme: widget.colorScheme,
+              disableTap: widget.disableTap,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(widget.item.icon ?? widget.item.type.icon, size: 24),
+                  Icon(widget.item.icon ?? widget.item.type!.icon, size: 24),
                   const Gap(smallListSpacing),
                   AnimatedSize(
                       duration: const Duration(milliseconds: 300),

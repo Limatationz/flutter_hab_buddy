@@ -13,12 +13,14 @@ import 'clock_data.dart';
 
 class ClockItemBaseWidget extends MediumWidthItemWidget {
   final Stream<String>? clockFormatStream;
+  final bool disableTap;
 
   ClockItemBaseWidget({
     super.key,
     required super.item,
     required super.colorScheme,
     this.clockFormatStream,
+    this.disableTap = false,
   });
 
   @override
@@ -47,6 +49,7 @@ class ClockItemBaseWidget extends MediumWidthItemWidget {
               key: ValueKey(time.toIso8601String()),
               colorScheme: colorScheme,
               onLongTap: config != null ? () => onLongTap(context) : null,
+              disableTap: disableTap,
               child: isMock
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

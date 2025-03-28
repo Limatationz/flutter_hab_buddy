@@ -4,7 +4,6 @@ import 'package:gap/gap.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../core/database/app_database.dart';
-import '../../../core/database/inbox/inbox_list_entry.dart';
 import '../../../generated/l10n.dart';
 import '../../../util/icons/icons.dart';
 import '../../util/constants.dart';
@@ -70,7 +69,7 @@ class InboxView extends StatelessWidget {
                 )),
             const Gap(mediumPadding),
             Expanded(
-              child: StreamBuilder<List<InboxListEntry>>(
+              child: StreamBuilder<List<InboxItemEntry>>(
                 stream: model.filteredInbox,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
@@ -118,7 +117,7 @@ class InboxView extends StatelessWidget {
     );
   }
 
-  void _onEntryTap(BuildContext context, InboxEntry entry,
+  void _onEntryTap(BuildContext context, Item entry,
       VoidCallback resetSearch, int? roomId) async {
     final result = await showBarModalBottomSheet<bool>(
         context: context,

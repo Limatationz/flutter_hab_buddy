@@ -8,10 +8,12 @@ import 'complex_player_data.dart';
 import 'complex_player_item_base_widget.dart';
 
 class ComplexPlayerItemWidget extends MediumWidthItemWidget {
+  final bool disableTap;
   ComplexPlayerItemWidget({
     super.key,
     required super.item,
     required super.colorScheme,
+    this.disableTap = false,
   }) : assert(item != null);
 
   final _itemsStore = locator<AppDatabase>().itemsStore;
@@ -46,6 +48,7 @@ class ComplexPlayerItemWidget extends MediumWidthItemWidget {
               .watchSingleOrNull()
               .whereNotNull()
           : null,
+      disableTap: disableTap,
     );
   }
 }

@@ -266,11 +266,11 @@ class _WeatherAddSheetState extends State<WeatherAddSheet> {
         }
 
         final clockItem = ItemsTableCompanion.insert(
-          type: isForecast ? ItemType.weatherForecast : ItemType.weather,
+          type: Value(isForecast ? ItemType.weatherForecast : ItemType.weather),
           ohType: OhItemType.string,
           ohName: itemName,
           ohLabel: city ?? "Weather",
-          roomId: widget.roomId,
+          roomId: Value(widget.roomId),
           complexJson: Value(weatherData.toJson()),
         );
 

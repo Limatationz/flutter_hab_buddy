@@ -154,5 +154,5 @@ void setSystemOverlay(ThemeData theme) {
       systemNavigationBarIconBrightness: theme.brightness == Brightness.dark
           ? Brightness.light
           : Brightness.dark,
-      systemNavigationBarDividerColor: theme.colorScheme.background));
+      systemNavigationBarDividerColor: theme.colorScheme.surface));
 }

@@ -13,7 +13,7 @@ import 'oh_item_type.dart';
 
 @DataClassName("Item")
 class ItemsTable extends Table {
-  TextColumn get type => textEnum<ItemType>()();
+  TextColumn get type => textEnum<ItemType>().nullable()();
 
   TextColumn get ohType => textEnum<OhItemType>()();
 
@@ -30,7 +30,7 @@ class ItemsTable extends Table {
   TextColumn get ohGroups =>
       text().map(const StringListConverter()).nullable()();
 
-  IntColumn get roomId => integer().references(RoomsTable, #id)();
+  IntColumn get roomId => integer().references(RoomsTable, #id).nullable()();
 
   BoolColumn get isFavorite => boolean().withDefault(const Constant(false))();
 
@@ -39,6 +39,8 @@ class ItemsTable extends Table {
   RealColumn get score => real().withDefault(const Constant(0))();
 
   RealColumn get newScore => real().withDefault(const Constant(0))();
+
+  IntColumn get manualOrderIndex => integer().withDefault(const Constant(0))();
 
   TextColumn get complexJson => text().map(const JsonConverter()).nullable()();
 
@@ -60,7 +62,9 @@ class ItemWithState {
   ItemWithState(this.item, this.state);
 }
 
-extension ItemLabel on Item {
+extension ItemExtension on Item {
+  bool get isInInbox => roomId == null;
+
   String get label => customLabel ?? ohLabel;
 
   bool get isSensor =>

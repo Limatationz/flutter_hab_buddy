@@ -111,295 +111,325 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "actions": MessageLookupByLibrary.simpleMessage("Actions"),
-        "addAnItemFirst":
-            MessageLookupByLibrary.simpleMessage("Add an item first"),
-        "addAutomation": MessageLookupByLibrary.simpleMessage("Add Automation"),
-        "addComplexItem":
-            MessageLookupByLibrary.simpleMessage("Add Complex Item"),
-        "addItem": MessageLookupByLibrary.simpleMessage("Add Item"),
-        "addItemAction":
-            MessageLookupByLibrary.simpleMessage("Add Item Action"),
-        "addItemHeadline": MessageLookupByLibrary.simpleMessage("Add Item"),
-        "addRoomHeadline": MessageLookupByLibrary.simpleMessage("Add Room"),
-        "addTrigger": MessageLookupByLibrary.simpleMessage("Add Trigger"),
-        "and": MessageLookupByLibrary.simpleMessage("And"),
-        "automations": MessageLookupByLibrary.simpleMessage("Automations"),
-        "automationsWith": m0,
-        "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
-        "clock": MessageLookupByLibrary.simpleMessage("Clock"),
-        "close": MessageLookupByLibrary.simpleMessage("Close"),
-        "color": MessageLookupByLibrary.simpleMessage("Color"),
-        "complex_player_add_item_error":
-            MessageLookupByLibrary.simpleMessage("Player Item not found"),
-        "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
-        "confirmDeleteRuleAlertText": MessageLookupByLibrary.simpleMessage(
-            "Do you really want to delete the rule"),
-        "confirmTriggerRuleAlertText1": MessageLookupByLibrary.simpleMessage(
-            "Do you want to trigger the rule"),
-        "confirmTriggerRuleAlertText2":
-            MessageLookupByLibrary.simpleMessage("now ?"),
-        "couldNotAddTrigger":
-            MessageLookupByLibrary.simpleMessage("Could not add trigger"),
-        "cronAtMinute": m1,
-        "cronAtMinutesAnd": m2,
-        "cronAtMonth": m3,
-        "cronAtMonthsAnd": m4,
-        "cronAtSecond": m5,
-        "cronAtSecondsAnd": m6,
-        "cronBetweenYears": m7,
-        "cronEveryDay": m8,
-        "cronEveryDayInWeekStartingOn": m9,
-        "cronEveryDayStartingOn": m10,
-        "cronEveryEveryMinutesStartingAt": m11,
-        "cronEveryEveryMonthsStartingAt": m12,
-        "cronEveryEverySecondsStartingAt": m13,
-        "cronEveryEveryYearsStartingAt": m14,
-        "cronEveryMinute": MessageLookupByLibrary.simpleMessage("every minute"),
-        "cronEveryMinuteBetweenAnd": m15,
-        "cronEveryMinutes": m16,
-        "cronEveryMonth": MessageLookupByLibrary.simpleMessage("every month"),
-        "cronEveryMonthBetweenAnd": m17,
-        "cronEveryMonths": m18,
-        "cronEverySecond": MessageLookupByLibrary.simpleMessage("every second"),
-        "cronEverySecondBetweenAnd": m19,
-        "cronEverySeconds": m20,
-        "cronEveryWeek": MessageLookupByLibrary.simpleMessage("every week"),
-        "cronEveryYear": MessageLookupByLibrary.simpleMessage("every year"),
-        "cronFifthWeek": MessageLookupByLibrary.simpleMessage("FIFTH"),
-        "cronFirstWeek": MessageLookupByLibrary.simpleMessage("FIRST"),
-        "cronFourthWeek": MessageLookupByLibrary.simpleMessage("FOURTH"),
-        "cronInYear": m21,
-        "cronInYearsAnd": m22,
-        "cronOnDay": m23,
-        "cronOnDayBeforeEndOfMonth": m24,
-        "cronOnDaysAnd": m25,
-        "cronOnLastDayOfMonth": m26,
-        "cronOnLastWeekdayOfMonth": MessageLookupByLibrary.simpleMessage(
-            "on the last weekday of the month"),
-        "cronOnLastXDayOfMonth": m27,
-        "cronOnNearestWeekdayOfMonth": m28,
-        "cronOnWeekday": m29,
-        "cronOnWeekdaysAnd": m30,
-        "cronOnXthWeekdayOfMonth": m31,
-        "cronSecondWeek": MessageLookupByLibrary.simpleMessage("SECOND"),
-        "cronStartingInYear": m32,
-        "cronThirdWeek": MessageLookupByLibrary.simpleMessage("THIRD"),
-        "customLabel": MessageLookupByLibrary.simpleMessage("Custom Label"),
-        "customLabelHelp": MessageLookupByLibrary.simpleMessage(
-            "Add a custom label for this item otherwise the label from OpenHAB will be used"),
-        "data": MessageLookupByLibrary.simpleMessage("Data"),
-        "dataWithUnit": m33,
-        "date": MessageLookupByLibrary.simpleMessage("Date"),
-        "delete": MessageLookupByLibrary.simpleMessage("Delete"),
-        "deleteItemDialogHeadline":
-            MessageLookupByLibrary.simpleMessage("Delete item?"),
-        "deleteItemDialogText": MessageLookupByLibrary.simpleMessage(
-            "Do you really want to delete item"),
-        "deletedRuleFailure":
-            MessageLookupByLibrary.simpleMessage("Failed to delete the rule"),
-        "deletedRuleSuccess": MessageLookupByLibrary.simpleMessage(
-            "Successfully deleted the rule"),
-        "disableWakelockTooltip":
-            MessageLookupByLibrary.simpleMessage("Disable Wakelock"),
-        "done": MessageLookupByLibrary.simpleMessage("Done"),
-        "down": MessageLookupByLibrary.simpleMessage("Down"),
-        "editItem": MessageLookupByLibrary.simpleMessage("Edit Item"),
-        "editRule": MessageLookupByLibrary.simpleMessage("Edit Rule"),
-        "enableWakelockTooltip":
-            MessageLookupByLibrary.simpleMessage("Enable Wakelock"),
-        "errorButtonHome": MessageLookupByLibrary.simpleMessage("Go to Home"),
-        "errorHeadline":
-            MessageLookupByLibrary.simpleMessage("An error occurred"),
-        "feelsLike": m34,
-        "finish": MessageLookupByLibrary.simpleMessage("Finish"),
-        "icon": MessageLookupByLibrary.simpleMessage("Icon"),
-        "iconPickerNoResultsText":
-            MessageLookupByLibrary.simpleMessage("No results for:"),
-        "iconPickerTitle": MessageLookupByLibrary.simpleMessage("Pick an icon"),
-        "itemAction": MessageLookupByLibrary.simpleMessage("Item Action"),
-        "itemType": MessageLookupByLibrary.simpleMessage("Item Type"),
-        "itemTypeAirPressure":
-            MessageLookupByLibrary.simpleMessage("Air Pressure"),
-        "itemTypeAirQuality":
-            MessageLookupByLibrary.simpleMessage("Air Quality"),
-        "itemTypeButton": MessageLookupByLibrary.simpleMessage("Switch"),
-        "itemTypeCall": MessageLookupByLibrary.simpleMessage("Call"),
-        "itemTypeColor": MessageLookupByLibrary.simpleMessage("Color"),
-        "itemTypeComplexPlayer":
-            MessageLookupByLibrary.simpleMessage("Advanced Player"),
-        "itemTypeDateTime":
-            MessageLookupByLibrary.simpleMessage("Date and Time"),
-        "itemTypeDimmer": MessageLookupByLibrary.simpleMessage("Dimmer"),
-        "itemTypeDoorContact":
-            MessageLookupByLibrary.simpleMessage("Door Contact"),
-        "itemTypeEnergy": MessageLookupByLibrary.simpleMessage("Energy"),
-        "itemTypeFan": MessageLookupByLibrary.simpleMessage("Fan"),
-        "itemTypeHeater": MessageLookupByLibrary.simpleMessage("Heater"),
-        "itemTypeHelp":
-            MessageLookupByLibrary.simpleMessage("The type of the item"),
-        "itemTypeHumidity": MessageLookupByLibrary.simpleMessage("Humidity"),
-        "itemTypeImage": MessageLookupByLibrary.simpleMessage("Image"),
-        "itemTypeLight": MessageLookupByLibrary.simpleMessage("Light"),
-        "itemTypeLocation": MessageLookupByLibrary.simpleMessage("Location"),
-        "itemTypeMotionDetector":
-            MessageLookupByLibrary.simpleMessage("Motion Detector"),
-        "itemTypeNumber": MessageLookupByLibrary.simpleMessage("Number"),
-        "itemTypePlayer": MessageLookupByLibrary.simpleMessage("Player"),
-        "itemTypePowerOutlet":
-            MessageLookupByLibrary.simpleMessage("Power Outlet"),
-        "itemTypePresence": MessageLookupByLibrary.simpleMessage("Presence"),
-        "itemTypeRollerShutter":
-            MessageLookupByLibrary.simpleMessage("Roller Shutter"),
-        "itemTypeSmokeDetector":
-            MessageLookupByLibrary.simpleMessage("Smoke Detector"),
-        "itemTypeTemperature":
-            MessageLookupByLibrary.simpleMessage("Temperature"),
-        "itemTypeText": MessageLookupByLibrary.simpleMessage("Text"),
-        "itemTypeThermostat":
-            MessageLookupByLibrary.simpleMessage("Thermostat"),
-        "itemTypeUnknown": MessageLookupByLibrary.simpleMessage("Unknown"),
-        "itemTypeWaterDetector":
-            MessageLookupByLibrary.simpleMessage("Water Detector"),
-        "itemTypeWindowContact":
-            MessageLookupByLibrary.simpleMessage("Window Contact"),
-        "login": MessageLookupByLibrary.simpleMessage("Login"),
-        "loginFailedMessage":
-            MessageLookupByLibrary.simpleMessage("Please try again"),
-        "loginFailedTitle":
-            MessageLookupByLibrary.simpleMessage("Login failed"),
-        "loginInfo": MessageLookupByLibrary.simpleMessage(
-            "Enter your credentials from myOpenHAB.org"),
-        "logout": MessageLookupByLibrary.simpleMessage("Logout"),
-        "navigationAutomation":
-            MessageLookupByLibrary.simpleMessage("Automation"),
-        "navigationFavorites":
-            MessageLookupByLibrary.simpleMessage("Favorites"),
-        "navigationInbox": MessageLookupByLibrary.simpleMessage("Inbox"),
-        "navigationRooms": MessageLookupByLibrary.simpleMessage("Rooms"),
-        "navigationSettings": MessageLookupByLibrary.simpleMessage("Settings"),
-        "never": MessageLookupByLibrary.simpleMessage("Never"),
-        "newRule": MessageLookupByLibrary.simpleMessage("New Rule"),
-        "next": MessageLookupByLibrary.simpleMessage("Next"),
-        "noRulesFound": MessageLookupByLibrary.simpleMessage("No rules found"),
-        "off": MessageLookupByLibrary.simpleMessage("Off"),
-        "on": MessageLookupByLibrary.simpleMessage("On"),
-        "options": MessageLookupByLibrary.simpleMessage("Options"),
-        "or": MessageLookupByLibrary.simpleMessage("Or"),
-        "password": MessageLookupByLibrary.simpleMessage("Password"),
-        "postUpdateCommandLabel":
-            MessageLookupByLibrary.simpleMessage("Post Update"),
-        "recentColors": MessageLookupByLibrary.simpleMessage("Recent Colors"),
-        "room": MessageLookupByLibrary.simpleMessage("Room"),
-        "roomColorLabel": MessageLookupByLibrary.simpleMessage("Color"),
-        "roomDescriptionHelp": MessageLookupByLibrary.simpleMessage(
-            "Further description of the room"),
-        "roomDescriptionLabel":
-            MessageLookupByLibrary.simpleMessage("Description"),
-        "roomHelp": MessageLookupByLibrary.simpleMessage(
-            "The room where the item is located"),
-        "roomLevelLabel": MessageLookupByLibrary.simpleMessage("Level"),
-        "roomNameHelp":
-            MessageLookupByLibrary.simpleMessage("Name of the room"),
-        "roomNameHint": MessageLookupByLibrary.simpleMessage("Living Room"),
-        "roomNameLabel": MessageLookupByLibrary.simpleMessage("Name"),
-        "ruleAutoDeleteHint": MessageLookupByLibrary.simpleMessage(
-            "Automatically delete the rule after it is triggered. Requires that all triggers are time based and refer to a concrete date."),
-        "ruleAutoDeleteTitle":
-            MessageLookupByLibrary.simpleMessage("Auto delete"),
-        "ruleName": MessageLookupByLibrary.simpleMessage("Rule name"),
-        "ruleTypeRepeating": MessageLookupByLibrary.simpleMessage("Repeating"),
-        "ruleTypeScheduled": MessageLookupByLibrary.simpleMessage("Scheduled"),
-        "run": MessageLookupByLibrary.simpleMessage("Run"),
-        "save": MessageLookupByLibrary.simpleMessage("Save"),
-        "script": MessageLookupByLibrary.simpleMessage("Script"),
-        "search": MessageLookupByLibrary.simpleMessage("Search"),
-        "select": MessageLookupByLibrary.simpleMessage("Select"),
-        "selectActionType":
-            MessageLookupByLibrary.simpleMessage("Select Action Type"),
-        "selectItem": MessageLookupByLibrary.simpleMessage("Select Item"),
-        "sendCommandCommandLabel":
-            MessageLookupByLibrary.simpleMessage("Send Command"),
-        "serverConnectionStateCloud":
-            MessageLookupByLibrary.simpleMessage("Cloud"),
-        "serverConnectionStateLocal":
-            MessageLookupByLibrary.simpleMessage("Local"),
-        "serverConnectionStateOffline":
-            MessageLookupByLibrary.simpleMessage("Offline"),
-        "serverConnectionStateRemote":
-            MessageLookupByLibrary.simpleMessage("Remote"),
-        "settingsAddApiAccess":
-            MessageLookupByLibrary.simpleMessage("Add api access"),
-        "settingsAddCloudAccess":
-            MessageLookupByLibrary.simpleMessage("Add cloud access"),
-        "settingsAddRemoteAccess":
-            MessageLookupByLibrary.simpleMessage("Add remote access"),
-        "settings_app": MessageLookupByLibrary.simpleMessage("App"),
-        "settings_connection":
-            MessageLookupByLibrary.simpleMessage("Connection"),
-        "settings_connection_start_description":
-            MessageLookupByLibrary.simpleMessage(
-                "Date and time of the last connection start"),
-        "settings_connection_start_title":
-            MessageLookupByLibrary.simpleMessage("Start"),
-        "settings_connection_status_description":
-            MessageLookupByLibrary.simpleMessage(
-                "State of the connection to the openHAB server"),
-        "settings_connection_status_title":
-            MessageLookupByLibrary.simpleMessage("Status"),
-        "settings_connection_update_description":
-            MessageLookupByLibrary.simpleMessage(
-                "Date and time of the last recieved state change"),
-        "settings_connection_update_title":
-            MessageLookupByLibrary.simpleMessage("Last Update"),
-        "settings_theme": MessageLookupByLibrary.simpleMessage("Theme"),
-        "settings_wakelock": MessageLookupByLibrary.simpleMessage("Wakelock"),
-        "settings_wakelock_description": MessageLookupByLibrary.simpleMessage(
-            "Automatically enable wakelock"),
-        "sliderCurrentHint": MessageLookupByLibrary.simpleMessage("current"),
-        "sliderMaxHint": MessageLookupByLibrary.simpleMessage("max"),
-        "sliderMinHint": MessageLookupByLibrary.simpleMessage("min"),
-        "stop": MessageLookupByLibrary.simpleMessage("Stop"),
-        "systemStartTrigger100":
-            MessageLookupByLibrary.simpleMessage("100 - Startup complete"),
-        "systemStartTrigger40":
-            MessageLookupByLibrary.simpleMessage("40 - Rules loaded"),
-        "systemStartTrigger50":
-            MessageLookupByLibrary.simpleMessage("50 - Rule engine started"),
-        "systemStartTrigger70": MessageLookupByLibrary.simpleMessage(
-            "70 - User interfaces started"),
-        "systemStartTrigger80":
-            MessageLookupByLibrary.simpleMessage("80 - Things initialized"),
-        "themeDark": MessageLookupByLibrary.simpleMessage("Dark"),
-        "themeLight": MessageLookupByLibrary.simpleMessage("Light"),
-        "themeSystem": MessageLookupByLibrary.simpleMessage("System"),
-        "time": MessageLookupByLibrary.simpleMessage("Time"),
-        "timeFormat": MessageLookupByLibrary.simpleMessage("Time format"),
-        "timeTriggerIn10Min": MessageLookupByLibrary.simpleMessage("in 10 min"),
-        "timeTriggerIn12H": MessageLookupByLibrary.simpleMessage("in 12 h"),
-        "timeTriggerIn1Day": MessageLookupByLibrary.simpleMessage("in 1 day"),
-        "timeTriggerIn1H": MessageLookupByLibrary.simpleMessage("in 1 h"),
-        "timeTriggerIn1Min": MessageLookupByLibrary.simpleMessage("in 1 min"),
-        "timeTriggerIn2Days": MessageLookupByLibrary.simpleMessage("in 2 days"),
-        "timeTriggerIn2H": MessageLookupByLibrary.simpleMessage("in 2 h"),
-        "timeTriggerIn30Min": MessageLookupByLibrary.simpleMessage("in 30 min"),
-        "timeTriggerIn5Min": MessageLookupByLibrary.simpleMessage("in 5 min"),
-        "triggered_rule_failure":
-            MessageLookupByLibrary.simpleMessage("Failed to trigger the rule"),
-        "triggered_rule_success": MessageLookupByLibrary.simpleMessage(
-            "Successfully triggered the rule"),
-        "triggers": MessageLookupByLibrary.simpleMessage("Triggers"),
-        "up": MessageLookupByLibrary.simpleMessage("Up"),
-        "updateFailedError": MessageLookupByLibrary.simpleMessage(
-            "Update failed. Please try again."),
-        "username": MessageLookupByLibrary.simpleMessage("Username"),
-        "viewRule": MessageLookupByLibrary.simpleMessage("View Rule"),
-        "wakelockDisabledSnackbar":
-            MessageLookupByLibrary.simpleMessage("Wakelock disabled"),
-        "wakelockEnabledSnackbar":
-            MessageLookupByLibrary.simpleMessage("Wakelock enabled"),
-        "weather": MessageLookupByLibrary.simpleMessage("Weather"),
-        "weatherForecast":
-            MessageLookupByLibrary.simpleMessage("Weather Forecast")
-      };
+    "actions": MessageLookupByLibrary.simpleMessage("Actions"),
+    "addAnItemFirst": MessageLookupByLibrary.simpleMessage("Add an item first"),
+    "addAutomation": MessageLookupByLibrary.simpleMessage("Add Automation"),
+    "addComplexItem": MessageLookupByLibrary.simpleMessage("Add Complex Item"),
+    "addItem": MessageLookupByLibrary.simpleMessage("Add Item"),
+    "addItemAction": MessageLookupByLibrary.simpleMessage("Add Item Action"),
+    "addItemHeadline": MessageLookupByLibrary.simpleMessage("Add Item"),
+    "addRoomHeadline": MessageLookupByLibrary.simpleMessage("Add Room"),
+    "addTrigger": MessageLookupByLibrary.simpleMessage("Add Trigger"),
+    "and": MessageLookupByLibrary.simpleMessage("And"),
+    "automations": MessageLookupByLibrary.simpleMessage("Automations"),
+    "automationsWith": m0,
+    "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+    "clock": MessageLookupByLibrary.simpleMessage("Clock"),
+    "close": MessageLookupByLibrary.simpleMessage("Close"),
+    "color": MessageLookupByLibrary.simpleMessage("Color"),
+    "complex_player_add_item_error": MessageLookupByLibrary.simpleMessage(
+      "Player Item not found",
+    ),
+    "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
+    "confirmDeleteRuleAlertText": MessageLookupByLibrary.simpleMessage(
+      "Do you really want to delete the rule",
+    ),
+    "confirmTriggerRuleAlertText1": MessageLookupByLibrary.simpleMessage(
+      "Do you want to trigger the rule",
+    ),
+    "confirmTriggerRuleAlertText2": MessageLookupByLibrary.simpleMessage(
+      "now ?",
+    ),
+    "couldNotAddTrigger": MessageLookupByLibrary.simpleMessage(
+      "Could not add trigger",
+    ),
+    "cronAtMinute": m1,
+    "cronAtMinutesAnd": m2,
+    "cronAtMonth": m3,
+    "cronAtMonthsAnd": m4,
+    "cronAtSecond": m5,
+    "cronAtSecondsAnd": m6,
+    "cronBetweenYears": m7,
+    "cronEveryDay": m8,
+    "cronEveryDayInWeekStartingOn": m9,
+    "cronEveryDayStartingOn": m10,
+    "cronEveryEveryMinutesStartingAt": m11,
+    "cronEveryEveryMonthsStartingAt": m12,
+    "cronEveryEverySecondsStartingAt": m13,
+    "cronEveryEveryYearsStartingAt": m14,
+    "cronEveryMinute": MessageLookupByLibrary.simpleMessage("every minute"),
+    "cronEveryMinuteBetweenAnd": m15,
+    "cronEveryMinutes": m16,
+    "cronEveryMonth": MessageLookupByLibrary.simpleMessage("every month"),
+    "cronEveryMonthBetweenAnd": m17,
+    "cronEveryMonths": m18,
+    "cronEverySecond": MessageLookupByLibrary.simpleMessage("every second"),
+    "cronEverySecondBetweenAnd": m19,
+    "cronEverySeconds": m20,
+    "cronEveryWeek": MessageLookupByLibrary.simpleMessage("every week"),
+    "cronEveryYear": MessageLookupByLibrary.simpleMessage("every year"),
+    "cronFifthWeek": MessageLookupByLibrary.simpleMessage("FIFTH"),
+    "cronFirstWeek": MessageLookupByLibrary.simpleMessage("FIRST"),
+    "cronFourthWeek": MessageLookupByLibrary.simpleMessage("FOURTH"),
+    "cronInYear": m21,
+    "cronInYearsAnd": m22,
+    "cronOnDay": m23,
+    "cronOnDayBeforeEndOfMonth": m24,
+    "cronOnDaysAnd": m25,
+    "cronOnLastDayOfMonth": m26,
+    "cronOnLastWeekdayOfMonth": MessageLookupByLibrary.simpleMessage(
+      "on the last weekday of the month",
+    ),
+    "cronOnLastXDayOfMonth": m27,
+    "cronOnNearestWeekdayOfMonth": m28,
+    "cronOnWeekday": m29,
+    "cronOnWeekdaysAnd": m30,
+    "cronOnXthWeekdayOfMonth": m31,
+    "cronSecondWeek": MessageLookupByLibrary.simpleMessage("SECOND"),
+    "cronStartingInYear": m32,
+    "cronThirdWeek": MessageLookupByLibrary.simpleMessage("THIRD"),
+    "customLabel": MessageLookupByLibrary.simpleMessage("Custom Label"),
+    "customLabelHelp": MessageLookupByLibrary.simpleMessage(
+      "Add a custom label for this item otherwise the label from OpenHAB will be used",
+    ),
+    "data": MessageLookupByLibrary.simpleMessage("Data"),
+    "dataWithUnit": m33,
+    "date": MessageLookupByLibrary.simpleMessage("Date"),
+    "delete": MessageLookupByLibrary.simpleMessage("Delete"),
+    "deleteItemDialogHeadline": MessageLookupByLibrary.simpleMessage(
+      "Delete item?",
+    ),
+    "deleteItemDialogText": MessageLookupByLibrary.simpleMessage(
+      "Do you really want to delete item",
+    ),
+    "deletedRuleFailure": MessageLookupByLibrary.simpleMessage(
+      "Failed to delete the rule",
+    ),
+    "deletedRuleSuccess": MessageLookupByLibrary.simpleMessage(
+      "Successfully deleted the rule",
+    ),
+    "disableWakelockTooltip": MessageLookupByLibrary.simpleMessage(
+      "Disable Wakelock",
+    ),
+    "done": MessageLookupByLibrary.simpleMessage("Done"),
+    "down": MessageLookupByLibrary.simpleMessage("Down"),
+    "editItem": MessageLookupByLibrary.simpleMessage("Edit Item"),
+    "editRule": MessageLookupByLibrary.simpleMessage("Edit Rule"),
+    "enableWakelockTooltip": MessageLookupByLibrary.simpleMessage(
+      "Enable Wakelock",
+    ),
+    "errorButtonHome": MessageLookupByLibrary.simpleMessage("Go to Home"),
+    "errorHeadline": MessageLookupByLibrary.simpleMessage("An error occurred"),
+    "feelsLike": m34,
+    "finish": MessageLookupByLibrary.simpleMessage("Finish"),
+    "icon": MessageLookupByLibrary.simpleMessage("Icon"),
+    "iconPickerNoResultsText": MessageLookupByLibrary.simpleMessage(
+      "No results for:",
+    ),
+    "iconPickerTitle": MessageLookupByLibrary.simpleMessage("Pick an icon"),
+    "itemAction": MessageLookupByLibrary.simpleMessage("Item Action"),
+    "itemType": MessageLookupByLibrary.simpleMessage("Item Type"),
+    "itemTypeAirPressure": MessageLookupByLibrary.simpleMessage("Air Pressure"),
+    "itemTypeAirQuality": MessageLookupByLibrary.simpleMessage("Air Quality"),
+    "itemTypeButton": MessageLookupByLibrary.simpleMessage("Switch"),
+    "itemTypeCall": MessageLookupByLibrary.simpleMessage("Call"),
+    "itemTypeColor": MessageLookupByLibrary.simpleMessage("Color"),
+    "itemTypeComplexPlayer": MessageLookupByLibrary.simpleMessage(
+      "Advanced Player",
+    ),
+    "itemTypeDateTime": MessageLookupByLibrary.simpleMessage("Date and Time"),
+    "itemTypeDimmer": MessageLookupByLibrary.simpleMessage("Dimmer"),
+    "itemTypeDoorContact": MessageLookupByLibrary.simpleMessage("Door Contact"),
+    "itemTypeEnergy": MessageLookupByLibrary.simpleMessage("Energy"),
+    "itemTypeFan": MessageLookupByLibrary.simpleMessage("Fan"),
+    "itemTypeHeater": MessageLookupByLibrary.simpleMessage("Heater"),
+    "itemTypeHelp": MessageLookupByLibrary.simpleMessage(
+      "The type of the item",
+    ),
+    "itemTypeHumidity": MessageLookupByLibrary.simpleMessage("Humidity"),
+    "itemTypeImage": MessageLookupByLibrary.simpleMessage("Image"),
+    "itemTypeLight": MessageLookupByLibrary.simpleMessage("Light"),
+    "itemTypeLocation": MessageLookupByLibrary.simpleMessage("Location"),
+    "itemTypeMotionDetector": MessageLookupByLibrary.simpleMessage(
+      "Motion Detector",
+    ),
+    "itemTypeNumber": MessageLookupByLibrary.simpleMessage("Number"),
+    "itemTypePlayer": MessageLookupByLibrary.simpleMessage("Player"),
+    "itemTypePowerOutlet": MessageLookupByLibrary.simpleMessage("Power Outlet"),
+    "itemTypePresence": MessageLookupByLibrary.simpleMessage("Presence"),
+    "itemTypeRollerShutter": MessageLookupByLibrary.simpleMessage(
+      "Roller Shutter",
+    ),
+    "itemTypeSmokeDetector": MessageLookupByLibrary.simpleMessage(
+      "Smoke Detector",
+    ),
+    "itemTypeTemperature": MessageLookupByLibrary.simpleMessage("Temperature"),
+    "itemTypeText": MessageLookupByLibrary.simpleMessage("Text"),
+    "itemTypeThermostat": MessageLookupByLibrary.simpleMessage("Thermostat"),
+    "itemTypeUnknown": MessageLookupByLibrary.simpleMessage("Unknown"),
+    "itemTypeWaterDetector": MessageLookupByLibrary.simpleMessage(
+      "Water Detector",
+    ),
+    "itemTypeWindowContact": MessageLookupByLibrary.simpleMessage(
+      "Window Contact",
+    ),
+    "login": MessageLookupByLibrary.simpleMessage("Login"),
+    "loginFailedMessage": MessageLookupByLibrary.simpleMessage(
+      "Please try again",
+    ),
+    "loginFailedTitle": MessageLookupByLibrary.simpleMessage("Login failed"),
+    "loginInfo": MessageLookupByLibrary.simpleMessage(
+      "Enter your credentials from myOpenHAB.org",
+    ),
+    "logout": MessageLookupByLibrary.simpleMessage("Logout"),
+    "navigationAutomation": MessageLookupByLibrary.simpleMessage("Automation"),
+    "navigationFavorites": MessageLookupByLibrary.simpleMessage("Favorites"),
+    "navigationInbox": MessageLookupByLibrary.simpleMessage("Inbox"),
+    "navigationRooms": MessageLookupByLibrary.simpleMessage("Rooms"),
+    "navigationSettings": MessageLookupByLibrary.simpleMessage("Settings"),
+    "never": MessageLookupByLibrary.simpleMessage("Never"),
+    "newRule": MessageLookupByLibrary.simpleMessage("New Rule"),
+    "next": MessageLookupByLibrary.simpleMessage("Next"),
+    "noRulesFound": MessageLookupByLibrary.simpleMessage("No rules found"),
+    "off": MessageLookupByLibrary.simpleMessage("Off"),
+    "on": MessageLookupByLibrary.simpleMessage("On"),
+    "options": MessageLookupByLibrary.simpleMessage("Options"),
+    "or": MessageLookupByLibrary.simpleMessage("Or"),
+    "password": MessageLookupByLibrary.simpleMessage("Password"),
+    "postUpdateCommandLabel": MessageLookupByLibrary.simpleMessage(
+      "Post Update",
+    ),
+    "recentColors": MessageLookupByLibrary.simpleMessage("Recent Colors"),
+    "room": MessageLookupByLibrary.simpleMessage("Room"),
+    "roomColorLabel": MessageLookupByLibrary.simpleMessage("Color"),
+    "roomDescriptionHelp": MessageLookupByLibrary.simpleMessage(
+      "Further description of the room",
+    ),
+    "roomDescriptionLabel": MessageLookupByLibrary.simpleMessage("Description"),
+    "roomHelp": MessageLookupByLibrary.simpleMessage(
+      "The room where the item is located",
+    ),
+    "roomLevelLabel": MessageLookupByLibrary.simpleMessage("Level"),
+    "roomNameHelp": MessageLookupByLibrary.simpleMessage("Name of the room"),
+    "roomNameHint": MessageLookupByLibrary.simpleMessage("Living Room"),
+    "roomNameLabel": MessageLookupByLibrary.simpleMessage("Name"),
+    "ruleAutoDeleteHint": MessageLookupByLibrary.simpleMessage(
+      "Automatically delete the rule after it is triggered. Requires that all triggers are time based and refer to a concrete date.",
+    ),
+    "ruleAutoDeleteTitle": MessageLookupByLibrary.simpleMessage("Auto delete"),
+    "ruleName": MessageLookupByLibrary.simpleMessage("Rule name"),
+    "ruleTypeRepeating": MessageLookupByLibrary.simpleMessage("Repeating"),
+    "ruleTypeScheduled": MessageLookupByLibrary.simpleMessage("Scheduled"),
+    "run": MessageLookupByLibrary.simpleMessage("Run"),
+    "save": MessageLookupByLibrary.simpleMessage("Save"),
+    "script": MessageLookupByLibrary.simpleMessage("Script"),
+    "search": MessageLookupByLibrary.simpleMessage("Search"),
+    "select": MessageLookupByLibrary.simpleMessage("Select"),
+    "selectActionType": MessageLookupByLibrary.simpleMessage(
+      "Select Action Type",
+    ),
+    "selectItem": MessageLookupByLibrary.simpleMessage("Select Item"),
+    "sendCommandCommandLabel": MessageLookupByLibrary.simpleMessage(
+      "Send Command",
+    ),
+    "serverConnectionStateCloud": MessageLookupByLibrary.simpleMessage("Cloud"),
+    "serverConnectionStateLocal": MessageLookupByLibrary.simpleMessage("Local"),
+    "serverConnectionStateOffline": MessageLookupByLibrary.simpleMessage(
+      "Offline",
+    ),
+    "serverConnectionStateRemote": MessageLookupByLibrary.simpleMessage(
+      "Remote",
+    ),
+    "settingsAddApiAccess": MessageLookupByLibrary.simpleMessage(
+      "Add api access",
+    ),
+    "settingsAddCloudAccess": MessageLookupByLibrary.simpleMessage(
+      "Add cloud access",
+    ),
+    "settingsAddRemoteAccess": MessageLookupByLibrary.simpleMessage(
+      "Add remote access",
+    ),
+    "settings_app": MessageLookupByLibrary.simpleMessage("App"),
+    "settings_connection": MessageLookupByLibrary.simpleMessage("Connection"),
+    "settings_connection_start_description":
+        MessageLookupByLibrary.simpleMessage(
+          "Date and time of the last connection start",
+        ),
+    "settings_connection_start_title": MessageLookupByLibrary.simpleMessage(
+      "Start",
+    ),
+    "settings_connection_status_description":
+        MessageLookupByLibrary.simpleMessage(
+          "State of the connection to the openHAB server",
+        ),
+    "settings_connection_status_title": MessageLookupByLibrary.simpleMessage(
+      "Status",
+    ),
+    "settings_connection_update_description":
+        MessageLookupByLibrary.simpleMessage(
+          "Date and time of the last recieved state change",
+        ),
+    "settings_connection_update_title": MessageLookupByLibrary.simpleMessage(
+      "Last Update",
+    ),
+    "settings_theme": MessageLookupByLibrary.simpleMessage("Theme"),
+    "settings_wakelock": MessageLookupByLibrary.simpleMessage("Wakelock"),
+    "settings_wakelock_description": MessageLookupByLibrary.simpleMessage(
+      "Automatically enable wakelock",
+    ),
+    "sliderCurrentHint": MessageLookupByLibrary.simpleMessage("current"),
+    "sliderMaxHint": MessageLookupByLibrary.simpleMessage("max"),
+    "sliderMinHint": MessageLookupByLibrary.simpleMessage("min"),
+    "stop": MessageLookupByLibrary.simpleMessage("Stop"),
+    "systemStartTrigger100": MessageLookupByLibrary.simpleMessage(
+      "100 - Startup complete",
+    ),
+    "systemStartTrigger40": MessageLookupByLibrary.simpleMessage(
+      "40 - Rules loaded",
+    ),
+    "systemStartTrigger50": MessageLookupByLibrary.simpleMessage(
+      "50 - Rule engine started",
+    ),
+    "systemStartTrigger70": MessageLookupByLibrary.simpleMessage(
+      "70 - User interfaces started",
+    ),
+    "systemStartTrigger80": MessageLookupByLibrary.simpleMessage(
+      "80 - Things initialized",
+    ),
+    "themeDark": MessageLookupByLibrary.simpleMessage("Dark"),
+    "themeLight": MessageLookupByLibrary.simpleMessage("Light"),
+    "themeSystem": MessageLookupByLibrary.simpleMessage("System"),
+    "time": MessageLookupByLibrary.simpleMessage("Time"),
+    "timeFormat": MessageLookupByLibrary.simpleMessage("Time format"),
+    "timeTriggerIn10Min": MessageLookupByLibrary.simpleMessage("in 10 min"),
+    "timeTriggerIn12H": MessageLookupByLibrary.simpleMessage("in 12 h"),
+    "timeTriggerIn1Day": MessageLookupByLibrary.simpleMessage("in 1 day"),
+    "timeTriggerIn1H": MessageLookupByLibrary.simpleMessage("in 1 h"),
+    "timeTriggerIn1Min": MessageLookupByLibrary.simpleMessage("in 1 min"),
+    "timeTriggerIn2Days": MessageLookupByLibrary.simpleMessage("in 2 days"),
+    "timeTriggerIn2H": MessageLookupByLibrary.simpleMessage("in 2 h"),
+    "timeTriggerIn30Min": MessageLookupByLibrary.simpleMessage("in 30 min"),
+    "timeTriggerIn5Min": MessageLookupByLibrary.simpleMessage("in 5 min"),
+    "triggered_rule_failure": MessageLookupByLibrary.simpleMessage(
+      "Failed to trigger the rule",
+    ),
+    "triggered_rule_success": MessageLookupByLibrary.simpleMessage(
+      "Successfully triggered the rule",
+    ),
+    "triggers": MessageLookupByLibrary.simpleMessage("Triggers"),
+    "up": MessageLookupByLibrary.simpleMessage("Up"),
+    "updateFailedError": MessageLookupByLibrary.simpleMessage(
+      "Update failed. Please try again.",
+    ),
+    "username": MessageLookupByLibrary.simpleMessage("Username"),
+    "viewRule": MessageLookupByLibrary.simpleMessage("View Rule"),
+    "wakelockDisabledSnackbar": MessageLookupByLibrary.simpleMessage(
+      "Wakelock disabled",
+    ),
+    "wakelockEnabledSnackbar": MessageLookupByLibrary.simpleMessage(
+      "Wakelock enabled",
+    ),
+    "weather": MessageLookupByLibrary.simpleMessage("Weather"),
+    "weatherForecast": MessageLookupByLibrary.simpleMessage("Weather Forecast"),
+  };
 }

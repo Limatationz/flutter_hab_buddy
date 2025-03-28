@@ -22,15 +22,16 @@ import 'weather_current_dialog.dart';
 
 class WeatherCurrentWidget extends MediumWidthItemWidget {
   final Stream<WeatherLocationData?>? locationStream;
+  final bool disableTap;
 
   WeatherCurrentWidget({
     super.key,
     required super.item,
     required super.colorScheme,
     this.locationStream,
+    this.disableTap = false,
   });
 
-  @override
   bool get isMock => item == null;
   final _weatherRepository = locator<WeatherRepository>();
 
@@ -97,6 +98,7 @@ class WeatherCurrentWidget extends MediumWidthItemWidget {
                     context,
                   )
               : null,
+          disableTap: disableTap,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -13,7 +13,8 @@ import '../general/item_widget_factory.dart';
 import 'dimmer_item_dialog.dart';
 
 class DimmerItemWidget extends SmallItemWidget {
-  DimmerItemWidget({super.key, required super.item, required super.colorScheme})
+  final bool disableTap;
+  DimmerItemWidget({super.key, required super.item, required super.colorScheme, this.disableTap = false})
       : assert(item != null);
 
   final _itemRepository = locator<ItemRepository>();
@@ -34,6 +35,7 @@ class DimmerItemWidget extends SmallItemWidget {
               minValue: state.stateDescription?.minimum,
               onDragDone: !state.isReadOnly ? onDragDone : null,
               colorScheme: colorScheme,
+              disableTap: disableTap,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -44,7 +46,7 @@ class DimmerItemWidget extends SmallItemWidget {
                   Align(
                       alignment: Alignment.bottomRight,
                       child: Icon(
-                        item!.icon ?? item!.type.icon,
+                        item!.icon ?? item!.type!.icon,
                         size: iconSize,
                         color: isOn
                             ? Theme.of(context).colorScheme.onSurface

@@ -9,6 +9,8 @@ import '../../../util/general/widget_container.dart';
 import 'add_complex_item_selection_sheet.dart';
 
 class AddComplexItemWidget extends StatelessWidget {
+  static const keyName = "add_complex_item_widget";
+
   final ColorScheme colorScheme;
   final int roomId;
 
@@ -17,10 +19,7 @@ class AddComplexItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StaggeredGridTile.count(
-        crossAxisCellCount: smallGridCrossAxisCount,
-        mainAxisCellCount: smallGridMainAxisCount,
-        child: WidgetContainer(
+    return WidgetContainer(
           colorScheme: colorScheme,
           backgroundColor: colorScheme.secondaryContainer,
           onTap: () => onTap(context),
@@ -35,7 +34,7 @@ class AddComplexItemWidget extends StatelessWidget {
                   child: Icon(LineIcons.plus, size: iconSize)),
             ],
           ),
-        ));
+        );
   }
 
   void onTap(BuildContext context) {

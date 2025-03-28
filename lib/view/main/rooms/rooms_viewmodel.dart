@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../core/database/app_database.dart';
+import '../../../core/database/rooms/rooms_table.dart';
 import '../../../locator.dart';
 import '../../../repository/item_repository.dart';
+import '../items/add_complex/add_complex_item_widget.dart';
 import '../items/general/item_widget.dart';
 import '../items/general/item_widget_factory.dart';
 import '../items/sensors/sensor_item_widget.dart';
@@ -11,24 +13,28 @@ import '../items/sensors/sensor_item_widget.dart';
 class RoomsViewModel extends BaseViewModel {
   final _roomsStore = locator<AppDatabase>().roomsStore;
   final _itemsStore = locator<AppDatabase>().itemsStore;
-  final _inboxStore = locator<AppDatabase>().inboxStore;
   final _itemRepository = locator<ItemRepository>();
 
-  Stream<int> get countInboxStream => _inboxStore.count();
+  Stream<int> get countInboxStream => _itemsStore.watchInboxItemsCount();
 
   Stream<List<Room>> get roomsStream => _roomsStore.all().watch().distinct();
 
   Stream<bool> get hasRoomsStream =>
       _roomsStore.all().watch().map((event) => event.isNotEmpty);
 
-  Stream<Map<int, List<Item>>> get itemsByRoomIdStream =>
-      _itemsStore.watchGroupedByRoomId().distinct();
+  Stream<Map<int, List<Item>>> itemsByRoomIdStream(
+          Map<int, RoomItemsSortOption> sortOptions) =>
+      _itemsStore.watchGroupedByRoomId(sortOptions: sortOptions).distinct();
 
   final pageController = PageController();
   int currentPage = 0;
   Key pageViewKey = UniqueKey();
 
   final int? initialRoomId;
+
+  bool _itemsReorderEnabled = false;
+
+  bool get itemsReorderEnabled => _itemsReorderEnabled;
 
   RoomsViewModel(this.initialRoomId) {
     print('RoomsViewModel: $initialRoomId');
@@ -37,7 +43,8 @@ class RoomsViewModel extends BaseViewModel {
         return;
       }
       if (initialRoomId != null) {
-        final index = rooms.indexWhere((element) => element.id == initialRoomId);
+        final index =
+            rooms.indexWhere((element) => element.id == initialRoomId);
         if (index != -1) {
           currentPage = index;
         }
@@ -51,6 +58,7 @@ class RoomsViewModel extends BaseViewModel {
       pageController.animateToPage(index,
           duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
     }
+    _itemsReorderEnabled = false;
     currentPage = index;
     notifyListeners();
   }
@@ -81,19 +89,26 @@ class RoomsViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> onRefresh() => _itemRepository.fetchData(insertToInbox: false);
+  Future<void> onRefresh() => _itemRepository.fetchData();
 
   List<ItemWidget> buildItemWidgets(
           BuildContext context, List<Item> items, ColorScheme colorScheme) =>
       items
-          .map((e) =>
-              ItemWidgetFactory.buildItem(item: e, colorScheme: colorScheme))
+          .map((e) => ItemWidgetFactory.buildItem(
+              item: e,
+              colorScheme: colorScheme,
+              disableTap: itemsReorderEnabled))
           .toList();
 
   List<SensorItemWidget> buildSensorItemWidgets(
           BuildContext context, List<Item> items, ColorScheme colorScheme) =>
       items
-          .map((e) => SensorItemWidget(item: e, colorScheme: colorScheme))
+          .map((e) => SensorItemWidget(
+                item: e,
+                colorScheme: colorScheme,
+                disableTap: itemsReorderEnabled,
+                initiallyExpanded: itemsReorderEnabled,
+              ))
           .toList();
 
   Future<int?> currentRoomId() async {
@@ -102,5 +117,41 @@ class RoomsViewModel extends BaseViewModel {
       return null;
     }
     return rooms[currentPage].id;
+  }
+
+  Future<void> onReorderItems(List<String> keys, int roomId) async {
+    print('onReorderItems: $keys');
+    final ohNames = keys.map((e) => e.substring(3, e.length - 3)).toList();
+    print('onReorderItems: $ohNames');
+    keys.remove(AddComplexItemWidget.keyName);
+
+    int index = 0;
+    for (final ohName in ohNames) {
+      print('ohName: $ohName, index: $index');
+      await _itemsStore.updateManualOrderIndexByName(ohName, index);
+      index++;
+    }
+
+    notifyListeners();
+  }
+
+  Future<void> onReorderSensors(List<String> oldSensorOrderNames, int oldIndex,
+      int newIndex, int roomId) async {
+    print('onReorderSensors: $oldSensorOrderNames');
+
+    final newSensorOrderNames = List<String>.from(oldSensorOrderNames);
+    newSensorOrderNames.removeAt(oldIndex);
+    newSensorOrderNames.insert(newIndex, oldSensorOrderNames[oldIndex]);
+    print('newSensorOrderNames: $newSensorOrderNames');
+    for (var i = 0; i < newSensorOrderNames.length; i++) {
+      await _itemsStore.updateManualOrderIndexByName(newSensorOrderNames[i], i);
+    }
+
+    notifyListeners();
+  }
+
+  void toggleItemsReorder() {
+    _itemsReorderEnabled = !_itemsReorderEnabled;
+    notifyListeners();
   }
 }

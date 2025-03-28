@@ -68,7 +68,7 @@ class SwitchItemControl extends StatelessWidget {
       if (withIcon) const Gap(extraLargePadding),
       if (withIcon)
         Icon(
-          item.icon ?? item.type.icon,
+          item.icon ?? item.type!.icon,
           color: isOn ? colorScheme.primary : Colors.grey,
           size: iconSize,
         )

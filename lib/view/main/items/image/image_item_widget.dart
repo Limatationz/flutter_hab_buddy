@@ -12,8 +12,9 @@ import '../general/item_widget_factory.dart';
 import 'image_item_dialog.dart';
 
 class ImageItemWidget extends SmallItemWidget {
+  final bool disableTap;
   const ImageItemWidget(
-      {super.key, required super.item, required super.colorScheme});
+      {super.key, required super.item, required super.colorScheme, this.disableTap = false});
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +30,7 @@ class ImageItemWidget extends SmallItemWidget {
               key: ValueKey(itemState.state.toString()),
               onLongTap: () => onLongTap(context),
               colorScheme: colorScheme,
+              disableTap: disableTap,
               backgroundImage: image != null
                   ? DecorationImage(
                       image: MemoryImage(base64Decode(image)),

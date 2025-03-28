@@ -85,7 +85,7 @@ class _ItemSelectViewState extends State<ItemSelectView> {
             (itemWithState) => setState(() => selectedItem = itemWithState),
           );
     }
-    _itemsStore.all().get().then((items) => setState(() => this.items = items));
+    _itemsStore.nonInbox().get().then((items) => setState(() => this.items = items));
   }
 
   @override
@@ -186,7 +186,7 @@ class ItemSelectEntry extends ISuspensionBean {
 
   String get label => item.label;
 
-  ItemType get type => item.type;
+  ItemType get type => item.type!;
 
   IconData get icon => item.icon ?? type.icon;
 

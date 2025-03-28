@@ -3,614 +3,6 @@
 part of 'app_database.dart';
 
 // ignore_for_file: type=lint
-class $InboxTableTable extends InboxTable
-    with TableInfo<$InboxTableTable, InboxEntry> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $InboxTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _typeMeta = const VerificationMeta('type');
-  @override
-  late final GeneratedColumnWithTypeConverter<OhItemType, String> type =
-      GeneratedColumn<String>('type', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<OhItemType>($InboxTableTable.$convertertype);
-  static const VerificationMeta _nameMeta = const VerificationMeta('name');
-  @override
-  late final GeneratedColumn<String> name = GeneratedColumn<String>(
-      'name', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _labelMeta = const VerificationMeta('label');
-  @override
-  late final GeneratedColumn<String> label = GeneratedColumn<String>(
-      'label', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _categoryMeta =
-      const VerificationMeta('category');
-  @override
-  late final GeneratedColumn<String> category = GeneratedColumn<String>(
-      'category', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _tagsMeta = const VerificationMeta('tags');
-  @override
-  late final GeneratedColumnWithTypeConverter<List<String>?, String> tags =
-      GeneratedColumn<String>('tags', aliasedName, true,
-              type: DriftSqlType.string, requiredDuringInsert: false)
-          .withConverter<List<String>?>($InboxTableTable.$convertertagsn);
-  static const VerificationMeta _groupsMeta = const VerificationMeta('groups');
-  @override
-  late final GeneratedColumnWithTypeConverter<List<String>?, String> groups =
-      GeneratedColumn<String>('groups', aliasedName, true,
-              type: DriftSqlType.string, requiredDuringInsert: false)
-          .withConverter<List<String>?>($InboxTableTable.$convertergroupsn);
-  static const VerificationMeta _stateMeta = const VerificationMeta('state');
-  @override
-  late final GeneratedColumn<String> state = GeneratedColumn<String>(
-      'state', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _unitSymbolMeta =
-      const VerificationMeta('unitSymbol');
-  @override
-  late final GeneratedColumn<String> unitSymbol = GeneratedColumn<String>(
-      'unit_symbol', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _transformedStateMeta =
-      const VerificationMeta('transformedState');
-  @override
-  late final GeneratedColumn<String> transformedState = GeneratedColumn<String>(
-      'transformed_state', aliasedName, true,
-      type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _stateDescriptionMeta =
-      const VerificationMeta('stateDescription');
-  @override
-  late final GeneratedColumnWithTypeConverter<StateDescription?, String>
-      stateDescription = GeneratedColumn<String>(
-              'state_description', aliasedName, true,
-              type: DriftSqlType.string, requiredDuringInsert: false)
-          .withConverter<StateDescription?>(
-              $InboxTableTable.$converterstateDescriptionn);
-  static const VerificationMeta _commandDescriptionMeta =
-      const VerificationMeta('commandDescription');
-  @override
-  late final GeneratedColumnWithTypeConverter<CommandDescription?, String>
-      commandDescription = GeneratedColumn<String>(
-              'command_description', aliasedName, true,
-              type: DriftSqlType.string, requiredDuringInsert: false)
-          .withConverter<CommandDescription?>(
-              $InboxTableTable.$convertercommandDescriptionn);
-  @override
-  List<GeneratedColumn> get $columns => [
-        type,
-        name,
-        label,
-        category,
-        tags,
-        groups,
-        state,
-        unitSymbol,
-        transformedState,
-        stateDescription,
-        commandDescription
-      ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'inbox_table';
-  @override
-  VerificationContext validateIntegrity(Insertable<InboxEntry> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    context.handle(_typeMeta, const VerificationResult.success());
-    if (data.containsKey('name')) {
-      context.handle(
-          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
-    } else if (isInserting) {
-      context.missing(_nameMeta);
-    }
-    if (data.containsKey('label')) {
-      context.handle(
-          _labelMeta, label.isAcceptableOrUnknown(data['label']!, _labelMeta));
-    } else if (isInserting) {
-      context.missing(_labelMeta);
-    }
-    if (data.containsKey('category')) {
-      context.handle(_categoryMeta,
-          category.isAcceptableOrUnknown(data['category']!, _categoryMeta));
-    }
-    context.handle(_tagsMeta, const VerificationResult.success());
-    context.handle(_groupsMeta, const VerificationResult.success());
-    if (data.containsKey('state')) {
-      context.handle(
-          _stateMeta, state.isAcceptableOrUnknown(data['state']!, _stateMeta));
-    } else if (isInserting) {
-      context.missing(_stateMeta);
-    }
-    if (data.containsKey('unit_symbol')) {
-      context.handle(
-          _unitSymbolMeta,
-          unitSymbol.isAcceptableOrUnknown(
-              data['unit_symbol']!, _unitSymbolMeta));
-    }
-    if (data.containsKey('transformed_state')) {
-      context.handle(
-          _transformedStateMeta,
-          transformedState.isAcceptableOrUnknown(
-              data['transformed_state']!, _transformedStateMeta));
-    }
-    context.handle(_stateDescriptionMeta, const VerificationResult.success());
-    context.handle(_commandDescriptionMeta, const VerificationResult.success());
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {name};
-  @override
-  InboxEntry map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return InboxEntry(
-      type: $InboxTableTable.$convertertype.fromSql(attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}type'])!),
-      name: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
-      label: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}label'])!,
-      category: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}category']),
-      tags: $InboxTableTable.$convertertagsn.fromSql(attachedDatabase
-          .typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}tags'])),
-      groups: $InboxTableTable.$convertergroupsn.fromSql(attachedDatabase
-          .typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}groups'])),
-      state: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}state'])!,
-      unitSymbol: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}unit_symbol']),
-      transformedState: attachedDatabase.typeMapping.read(
-          DriftSqlType.string, data['${effectivePrefix}transformed_state']),
-      stateDescription: $InboxTableTable.$converterstateDescriptionn.fromSql(
-          attachedDatabase.typeMapping.read(DriftSqlType.string,
-              data['${effectivePrefix}state_description'])),
-      commandDescription: $InboxTableTable.$convertercommandDescriptionn
-          .fromSql(attachedDatabase.typeMapping.read(DriftSqlType.string,
-              data['${effectivePrefix}command_description'])),
-    );
-  }
-
-  @override
-  $InboxTableTable createAlias(String alias) {
-    return $InboxTableTable(attachedDatabase, alias);
-  }
-
-  static JsonTypeConverter2<OhItemType, String, String> $convertertype =
-      const EnumNameConverter<OhItemType>(OhItemType.values);
-  static TypeConverter<List<String>, String> $convertertags =
-      const StringListConverter();
-  static TypeConverter<List<String>?, String?> $convertertagsn =
-      NullAwareTypeConverter.wrap($convertertags);
-  static TypeConverter<List<String>, String> $convertergroups =
-      const StringListConverter();
-  static TypeConverter<List<String>?, String?> $convertergroupsn =
-      NullAwareTypeConverter.wrap($convertergroups);
-  static TypeConverter<StateDescription, String> $converterstateDescription =
-      const StateDescriptionConverter();
-  static TypeConverter<StateDescription?, String?> $converterstateDescriptionn =
-      NullAwareTypeConverter.wrap($converterstateDescription);
-  static TypeConverter<CommandDescription, String>
-      $convertercommandDescription = const CommandDescriptionConverter();
-  static TypeConverter<CommandDescription?, String?>
-      $convertercommandDescriptionn =
-      NullAwareTypeConverter.wrap($convertercommandDescription);
-}
-
-class InboxEntry extends DataClass implements Insertable<InboxEntry> {
-  final OhItemType type;
-  final String name;
-  final String label;
-  final String? category;
-  final List<String>? tags;
-  final List<String>? groups;
-  final String state;
-  final String? unitSymbol;
-  final String? transformedState;
-  final StateDescription? stateDescription;
-  final CommandDescription? commandDescription;
-  const InboxEntry(
-      {required this.type,
-      required this.name,
-      required this.label,
-      this.category,
-      this.tags,
-      this.groups,
-      required this.state,
-      this.unitSymbol,
-      this.transformedState,
-      this.stateDescription,
-      this.commandDescription});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    {
-      map['type'] =
-          Variable<String>($InboxTableTable.$convertertype.toSql(type));
-    }
-    map['name'] = Variable<String>(name);
-    map['label'] = Variable<String>(label);
-    if (!nullToAbsent || category != null) {
-      map['category'] = Variable<String>(category);
-    }
-    if (!nullToAbsent || tags != null) {
-      map['tags'] =
-          Variable<String>($InboxTableTable.$convertertagsn.toSql(tags));
-    }
-    if (!nullToAbsent || groups != null) {
-      map['groups'] =
-          Variable<String>($InboxTableTable.$convertergroupsn.toSql(groups));
-    }
-    map['state'] = Variable<String>(state);
-    if (!nullToAbsent || unitSymbol != null) {
-      map['unit_symbol'] = Variable<String>(unitSymbol);
-    }
-    if (!nullToAbsent || transformedState != null) {
-      map['transformed_state'] = Variable<String>(transformedState);
-    }
-    if (!nullToAbsent || stateDescription != null) {
-      map['state_description'] = Variable<String>(
-          $InboxTableTable.$converterstateDescriptionn.toSql(stateDescription));
-    }
-    if (!nullToAbsent || commandDescription != null) {
-      map['command_description'] = Variable<String>($InboxTableTable
-          .$convertercommandDescriptionn
-          .toSql(commandDescription));
-    }
-    return map;
-  }
-
-  InboxTableCompanion toCompanion(bool nullToAbsent) {
-    return InboxTableCompanion(
-      type: Value(type),
-      name: Value(name),
-      label: Value(label),
-      category: category == null && nullToAbsent
-          ? const Value.absent()
-          : Value(category),
-      tags: tags == null && nullToAbsent ? const Value.absent() : Value(tags),
-      groups:
-          groups == null && nullToAbsent ? const Value.absent() : Value(groups),
-      state: Value(state),
-      unitSymbol: unitSymbol == null && nullToAbsent
-          ? const Value.absent()
-          : Value(unitSymbol),
-      transformedState: transformedState == null && nullToAbsent
-          ? const Value.absent()
-          : Value(transformedState),
-      stateDescription: stateDescription == null && nullToAbsent
-          ? const Value.absent()
-          : Value(stateDescription),
-      commandDescription: commandDescription == null && nullToAbsent
-          ? const Value.absent()
-          : Value(commandDescription),
-    );
-  }
-
-  factory InboxEntry.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return InboxEntry(
-      type: $InboxTableTable.$convertertype
-          .fromJson(serializer.fromJson<String>(json['type'])),
-      name: serializer.fromJson<String>(json['name']),
-      label: serializer.fromJson<String>(json['label']),
-      category: serializer.fromJson<String?>(json['category']),
-      tags: serializer.fromJson<List<String>?>(json['tags']),
-      groups: serializer.fromJson<List<String>?>(json['groups']),
-      state: serializer.fromJson<String>(json['state']),
-      unitSymbol: serializer.fromJson<String?>(json['unitSymbol']),
-      transformedState: serializer.fromJson<String?>(json['transformedState']),
-      stateDescription:
-          serializer.fromJson<StateDescription?>(json['stateDescription']),
-      commandDescription:
-          serializer.fromJson<CommandDescription?>(json['commandDescription']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'type': serializer
-          .toJson<String>($InboxTableTable.$convertertype.toJson(type)),
-      'name': serializer.toJson<String>(name),
-      'label': serializer.toJson<String>(label),
-      'category': serializer.toJson<String?>(category),
-      'tags': serializer.toJson<List<String>?>(tags),
-      'groups': serializer.toJson<List<String>?>(groups),
-      'state': serializer.toJson<String>(state),
-      'unitSymbol': serializer.toJson<String?>(unitSymbol),
-      'transformedState': serializer.toJson<String?>(transformedState),
-      'stateDescription':
-          serializer.toJson<StateDescription?>(stateDescription),
-      'commandDescription':
-          serializer.toJson<CommandDescription?>(commandDescription),
-    };
-  }
-
-  InboxEntry copyWith(
-          {OhItemType? type,
-          String? name,
-          String? label,
-          Value<String?> category = const Value.absent(),
-          Value<List<String>?> tags = const Value.absent(),
-          Value<List<String>?> groups = const Value.absent(),
-          String? state,
-          Value<String?> unitSymbol = const Value.absent(),
-          Value<String?> transformedState = const Value.absent(),
-          Value<StateDescription?> stateDescription = const Value.absent(),
-          Value<CommandDescription?> commandDescription =
-              const Value.absent()}) =>
-      InboxEntry(
-        type: type ?? this.type,
-        name: name ?? this.name,
-        label: label ?? this.label,
-        category: category.present ? category.value : this.category,
-        tags: tags.present ? tags.value : this.tags,
-        groups: groups.present ? groups.value : this.groups,
-        state: state ?? this.state,
-        unitSymbol: unitSymbol.present ? unitSymbol.value : this.unitSymbol,
-        transformedState: transformedState.present
-            ? transformedState.value
-            : this.transformedState,
-        stateDescription: stateDescription.present
-            ? stateDescription.value
-            : this.stateDescription,
-        commandDescription: commandDescription.present
-            ? commandDescription.value
-            : this.commandDescription,
-      );
-  InboxEntry copyWithCompanion(InboxTableCompanion data) {
-    return InboxEntry(
-      type: data.type.present ? data.type.value : this.type,
-      name: data.name.present ? data.name.value : this.name,
-      label: data.label.present ? data.label.value : this.label,
-      category: data.category.present ? data.category.value : this.category,
-      tags: data.tags.present ? data.tags.value : this.tags,
-      groups: data.groups.present ? data.groups.value : this.groups,
-      state: data.state.present ? data.state.value : this.state,
-      unitSymbol:
-          data.unitSymbol.present ? data.unitSymbol.value : this.unitSymbol,
-      transformedState: data.transformedState.present
-          ? data.transformedState.value
-          : this.transformedState,
-      stateDescription: data.stateDescription.present
-          ? data.stateDescription.value
-          : this.stateDescription,
-      commandDescription: data.commandDescription.present
-          ? data.commandDescription.value
-          : this.commandDescription,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('InboxEntry(')
-          ..write('type: $type, ')
-          ..write('name: $name, ')
-          ..write('label: $label, ')
-          ..write('category: $category, ')
-          ..write('tags: $tags, ')
-          ..write('groups: $groups, ')
-          ..write('state: $state, ')
-          ..write('unitSymbol: $unitSymbol, ')
-          ..write('transformedState: $transformedState, ')
-          ..write('stateDescription: $stateDescription, ')
-          ..write('commandDescription: $commandDescription')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      type,
-      name,
-      label,
-      category,
-      tags,
-      groups,
-      state,
-      unitSymbol,
-      transformedState,
-      stateDescription,
-      commandDescription);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is InboxEntry &&
-          other.type == this.type &&
-          other.name == this.name &&
-          other.label == this.label &&
-          other.category == this.category &&
-          other.tags == this.tags &&
-          other.groups == this.groups &&
-          other.state == this.state &&
-          other.unitSymbol == this.unitSymbol &&
-          other.transformedState == this.transformedState &&
-          other.stateDescription == this.stateDescription &&
-          other.commandDescription == this.commandDescription);
-}
-
-class InboxTableCompanion extends UpdateCompanion<InboxEntry> {
-  final Value<OhItemType> type;
-  final Value<String> name;
-  final Value<String> label;
-  final Value<String?> category;
-  final Value<List<String>?> tags;
-  final Value<List<String>?> groups;
-  final Value<String> state;
-  final Value<String?> unitSymbol;
-  final Value<String?> transformedState;
-  final Value<StateDescription?> stateDescription;
-  final Value<CommandDescription?> commandDescription;
-  final Value<int> rowid;
-  const InboxTableCompanion({
-    this.type = const Value.absent(),
-    this.name = const Value.absent(),
-    this.label = const Value.absent(),
-    this.category = const Value.absent(),
-    this.tags = const Value.absent(),
-    this.groups = const Value.absent(),
-    this.state = const Value.absent(),
-    this.unitSymbol = const Value.absent(),
-    this.transformedState = const Value.absent(),
-    this.stateDescription = const Value.absent(),
-    this.commandDescription = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  InboxTableCompanion.insert({
-    required OhItemType type,
-    required String name,
-    required String label,
-    this.category = const Value.absent(),
-    this.tags = const Value.absent(),
-    this.groups = const Value.absent(),
-    required String state,
-    this.unitSymbol = const Value.absent(),
-    this.transformedState = const Value.absent(),
-    this.stateDescription = const Value.absent(),
-    this.commandDescription = const Value.absent(),
-    this.rowid = const Value.absent(),
-  })  : type = Value(type),
-        name = Value(name),
-        label = Value(label),
-        state = Value(state);
-  static Insertable<InboxEntry> custom({
-    Expression<String>? type,
-    Expression<String>? name,
-    Expression<String>? label,
-    Expression<String>? category,
-    Expression<String>? tags,
-    Expression<String>? groups,
-    Expression<String>? state,
-    Expression<String>? unitSymbol,
-    Expression<String>? transformedState,
-    Expression<String>? stateDescription,
-    Expression<String>? commandDescription,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (type != null) 'type': type,
-      if (name != null) 'name': name,
-      if (label != null) 'label': label,
-      if (category != null) 'category': category,
-      if (tags != null) 'tags': tags,
-      if (groups != null) 'groups': groups,
-      if (state != null) 'state': state,
-      if (unitSymbol != null) 'unit_symbol': unitSymbol,
-      if (transformedState != null) 'transformed_state': transformedState,
-      if (stateDescription != null) 'state_description': stateDescription,
-      if (commandDescription != null) 'command_description': commandDescription,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  InboxTableCompanion copyWith(
-      {Value<OhItemType>? type,
-      Value<String>? name,
-      Value<String>? label,
-      Value<String?>? category,
-      Value<List<String>?>? tags,
-      Value<List<String>?>? groups,
-      Value<String>? state,
-      Value<String?>? unitSymbol,
-      Value<String?>? transformedState,
-      Value<StateDescription?>? stateDescription,
-      Value<CommandDescription?>? commandDescription,
-      Value<int>? rowid}) {
-    return InboxTableCompanion(
-      type: type ?? this.type,
-      name: name ?? this.name,
-      label: label ?? this.label,
-      category: category ?? this.category,
-      tags: tags ?? this.tags,
-      groups: groups ?? this.groups,
-      state: state ?? this.state,
-      unitSymbol: unitSymbol ?? this.unitSymbol,
-      transformedState: transformedState ?? this.transformedState,
-      stateDescription: stateDescription ?? this.stateDescription,
-      commandDescription: commandDescription ?? this.commandDescription,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (type.present) {
-      map['type'] =
-          Variable<String>($InboxTableTable.$convertertype.toSql(type.value));
-    }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
-    }
-    if (label.present) {
-      map['label'] = Variable<String>(label.value);
-    }
-    if (category.present) {
-      map['category'] = Variable<String>(category.value);
-    }
-    if (tags.present) {
-      map['tags'] =
-          Variable<String>($InboxTableTable.$convertertagsn.toSql(tags.value));
-    }
-    if (groups.present) {
-      map['groups'] = Variable<String>(
-          $InboxTableTable.$convertergroupsn.toSql(groups.value));
-    }
-    if (state.present) {
-      map['state'] = Variable<String>(state.value);
-    }
-    if (unitSymbol.present) {
-      map['unit_symbol'] = Variable<String>(unitSymbol.value);
-    }
-    if (transformedState.present) {
-      map['transformed_state'] = Variable<String>(transformedState.value);
-    }
-    if (stateDescription.present) {
-      map['state_description'] = Variable<String>($InboxTableTable
-          .$converterstateDescriptionn
-          .toSql(stateDescription.value));
-    }
-    if (commandDescription.present) {
-      map['command_description'] = Variable<String>($InboxTableTable
-          .$convertercommandDescriptionn
-          .toSql(commandDescription.value));
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('InboxTableCompanion(')
-          ..write('type: $type, ')
-          ..write('name: $name, ')
-          ..write('label: $label, ')
-          ..write('category: $category, ')
-          ..write('tags: $tags, ')
-          ..write('groups: $groups, ')
-          ..write('state: $state, ')
-          ..write('unitSymbol: $unitSymbol, ')
-          ..write('transformedState: $transformedState, ')
-          ..write('stateDescription: $stateDescription, ')
-          ..write('commandDescription: $commandDescription, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $RoomsTableTable extends RoomsTable
     with TableInfo<$RoomsTableTable, Room> {
   @override
@@ -637,7 +29,6 @@ class $RoomsTableTable extends RoomsTable
   late final GeneratedColumn<String> description = GeneratedColumn<String>(
       'description', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _iconMeta = const VerificationMeta('icon');
   @override
   late final GeneratedColumnWithTypeConverter<IconData?, String> icon =
       GeneratedColumn<String>('icon', aliasedName, true,
@@ -660,8 +51,15 @@ class $RoomsTableTable extends RoomsTable
       'sort_key', aliasedName, false,
       type: DriftSqlType.int, requiredDuringInsert: true);
   @override
+  late final GeneratedColumnWithTypeConverter<RoomItemsSortOption, String>
+      itemsSortOption = GeneratedColumn<String>(
+              'items_sort_option', aliasedName, false,
+              type: DriftSqlType.string, requiredDuringInsert: true)
+          .withConverter<RoomItemsSortOption>(
+              $RoomsTableTable.$converteritemsSortOption);
+  @override
   List<GeneratedColumn> get $columns =>
-      [id, name, description, icon, color, level, sortKey];
+      [id, name, description, icon, color, level, sortKey, itemsSortOption];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -687,7 +85,6 @@ class $RoomsTableTable extends RoomsTable
           description.isAcceptableOrUnknown(
               data['description']!, _descriptionMeta));
     }
-    context.handle(_iconMeta, const VerificationResult.success());
     if (data.containsKey('color')) {
       context.handle(
           _colorMeta, color.isAcceptableOrUnknown(data['color']!, _colorMeta));
@@ -726,6 +123,9 @@ class $RoomsTableTable extends RoomsTable
           .read(DriftSqlType.int, data['${effectivePrefix}level']),
       sortKey: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}sort_key'])!,
+      itemsSortOption: $RoomsTableTable.$converteritemsSortOption.fromSql(
+          attachedDatabase.typeMapping.read(DriftSqlType.string,
+              data['${effectivePrefix}items_sort_option'])!),
     );
   }
 
@@ -738,6 +138,9 @@ class $RoomsTableTable extends RoomsTable
       const IconDataConverter();
   static TypeConverter<IconData?, String?> $convertericonn =
       NullAwareTypeConverter.wrap($convertericon);
+  static JsonTypeConverter2<RoomItemsSortOption, String, String>
+      $converteritemsSortOption =
+      const EnumNameConverter<RoomItemsSortOption>(RoomItemsSortOption.values);
 }
 
 class Room extends DataClass implements Insertable<Room> {
@@ -748,6 +151,7 @@ class Room extends DataClass implements Insertable<Room> {
   final String? color;
   final int? level;
   final int sortKey;
+  final RoomItemsSortOption itemsSortOption;
   const Room(
       {required this.id,
       required this.name,
@@ -755,7 +159,8 @@ class Room extends DataClass implements Insertable<Room> {
       this.icon,
       this.color,
       this.level,
-      required this.sortKey});
+      required this.sortKey,
+      required this.itemsSortOption});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -775,6 +180,10 @@ class Room extends DataClass implements Insertable<Room> {
       map['level'] = Variable<int>(level);
     }
     map['sort_key'] = Variable<int>(sortKey);
+    {
+      map['items_sort_option'] = Variable<String>(
+          $RoomsTableTable.$converteritemsSortOption.toSql(itemsSortOption));
+    }
     return map;
   }
 
@@ -791,6 +200,7 @@ class Room extends DataClass implements Insertable<Room> {
       level:
           level == null && nullToAbsent ? const Value.absent() : Value(level),
       sortKey: Value(sortKey),
+      itemsSortOption: Value(itemsSortOption),
     );
   }
 
@@ -805,6 +215,8 @@ class Room extends DataClass implements Insertable<Room> {
       color: serializer.fromJson<String?>(json['color']),
       level: serializer.fromJson<int?>(json['level']),
       sortKey: serializer.fromJson<int>(json['sortKey']),
+      itemsSortOption: $RoomsTableTable.$converteritemsSortOption
+          .fromJson(serializer.fromJson<String>(json['itemsSortOption'])),
     );
   }
   @override
@@ -818,6 +230,8 @@ class Room extends DataClass implements Insertable<Room> {
       'color': serializer.toJson<String?>(color),
       'level': serializer.toJson<int?>(level),
       'sortKey': serializer.toJson<int>(sortKey),
+      'itemsSortOption': serializer.toJson<String>(
+          $RoomsTableTable.$converteritemsSortOption.toJson(itemsSortOption)),
     };
   }
 
@@ -828,7 +242,8 @@ class Room extends DataClass implements Insertable<Room> {
           Value<IconData?> icon = const Value.absent(),
           Value<String?> color = const Value.absent(),
           Value<int?> level = const Value.absent(),
-          int? sortKey}) =>
+          int? sortKey,
+          RoomItemsSortOption? itemsSortOption}) =>
       Room(
         id: id ?? this.id,
         name: name ?? this.name,
@@ -837,6 +252,7 @@ class Room extends DataClass implements Insertable<Room> {
         color: color.present ? color.value : this.color,
         level: level.present ? level.value : this.level,
         sortKey: sortKey ?? this.sortKey,
+        itemsSortOption: itemsSortOption ?? this.itemsSortOption,
       );
   Room copyWithCompanion(RoomsTableCompanion data) {
     return Room(
@@ -848,6 +264,9 @@ class Room extends DataClass implements Insertable<Room> {
       color: data.color.present ? data.color.value : this.color,
       level: data.level.present ? data.level.value : this.level,
       sortKey: data.sortKey.present ? data.sortKey.value : this.sortKey,
+      itemsSortOption: data.itemsSortOption.present
+          ? data.itemsSortOption.value
+          : this.itemsSortOption,
     );
   }
 
@@ -860,14 +279,15 @@ class Room extends DataClass implements Insertable<Room> {
           ..write('icon: $icon, ')
           ..write('color: $color, ')
           ..write('level: $level, ')
-          ..write('sortKey: $sortKey')
+          ..write('sortKey: $sortKey, ')
+          ..write('itemsSortOption: $itemsSortOption')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, name, description, icon, color, level, sortKey);
+  int get hashCode => Object.hash(
+      id, name, description, icon, color, level, sortKey, itemsSortOption);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -878,7 +298,8 @@ class Room extends DataClass implements Insertable<Room> {
           other.icon == this.icon &&
           other.color == this.color &&
           other.level == this.level &&
-          other.sortKey == this.sortKey);
+          other.sortKey == this.sortKey &&
+          other.itemsSortOption == this.itemsSortOption);
 }
 
 class RoomsTableCompanion extends UpdateCompanion<Room> {
@@ -889,6 +310,7 @@ class RoomsTableCompanion extends UpdateCompanion<Room> {
   final Value<String?> color;
   final Value<int?> level;
   final Value<int> sortKey;
+  final Value<RoomItemsSortOption> itemsSortOption;
   const RoomsTableCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
@@ -897,6 +319,7 @@ class RoomsTableCompanion extends UpdateCompanion<Room> {
     this.color = const Value.absent(),
     this.level = const Value.absent(),
     this.sortKey = const Value.absent(),
+    this.itemsSortOption = const Value.absent(),
   });
   RoomsTableCompanion.insert({
     this.id = const Value.absent(),
@@ -906,8 +329,10 @@ class RoomsTableCompanion extends UpdateCompanion<Room> {
     this.color = const Value.absent(),
     this.level = const Value.absent(),
     required int sortKey,
+    required RoomItemsSortOption itemsSortOption,
   })  : name = Value(name),
-        sortKey = Value(sortKey);
+        sortKey = Value(sortKey),
+        itemsSortOption = Value(itemsSortOption);
   static Insertable<Room> custom({
     Expression<int>? id,
     Expression<String>? name,
@@ -916,6 +341,7 @@ class RoomsTableCompanion extends UpdateCompanion<Room> {
     Expression<String>? color,
     Expression<int>? level,
     Expression<int>? sortKey,
+    Expression<String>? itemsSortOption,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -925,6 +351,7 @@ class RoomsTableCompanion extends UpdateCompanion<Room> {
       if (color != null) 'color': color,
       if (level != null) 'level': level,
       if (sortKey != null) 'sort_key': sortKey,
+      if (itemsSortOption != null) 'items_sort_option': itemsSortOption,
     });
   }
 
@@ -935,7 +362,8 @@ class RoomsTableCompanion extends UpdateCompanion<Room> {
       Value<IconData?>? icon,
       Value<String?>? color,
       Value<int?>? level,
-      Value<int>? sortKey}) {
+      Value<int>? sortKey,
+      Value<RoomItemsSortOption>? itemsSortOption}) {
     return RoomsTableCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
@@ -944,6 +372,7 @@ class RoomsTableCompanion extends UpdateCompanion<Room> {
       color: color ?? this.color,
       level: level ?? this.level,
       sortKey: sortKey ?? this.sortKey,
+      itemsSortOption: itemsSortOption ?? this.itemsSortOption,
     );
   }
 
@@ -972,6 +401,11 @@ class RoomsTableCompanion extends UpdateCompanion<Room> {
     if (sortKey.present) {
       map['sort_key'] = Variable<int>(sortKey.value);
     }
+    if (itemsSortOption.present) {
+      map['items_sort_option'] = Variable<String>($RoomsTableTable
+          .$converteritemsSortOption
+          .toSql(itemsSortOption.value));
+    }
     return map;
   }
 
@@ -984,7 +418,8 @@ class RoomsTableCompanion extends UpdateCompanion<Room> {
           ..write('icon: $icon, ')
           ..write('color: $color, ')
           ..write('level: $level, ')
-          ..write('sortKey: $sortKey')
+          ..write('sortKey: $sortKey, ')
+          ..write('itemsSortOption: $itemsSortOption')
           ..write(')'))
         .toString();
   }
@@ -996,13 +431,11 @@ class $ItemsTableTable extends ItemsTable
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $ItemsTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _typeMeta = const VerificationMeta('type');
   @override
-  late final GeneratedColumnWithTypeConverter<ItemType, String> type =
-      GeneratedColumn<String>('type', aliasedName, false,
-              type: DriftSqlType.string, requiredDuringInsert: true)
-          .withConverter<ItemType>($ItemsTableTable.$convertertype);
-  static const VerificationMeta _ohTypeMeta = const VerificationMeta('ohType');
+  late final GeneratedColumnWithTypeConverter<ItemType?, String> type =
+      GeneratedColumn<String>('type', aliasedName, true,
+              type: DriftSqlType.string, requiredDuringInsert: false)
+          .withConverter<ItemType?>($ItemsTableTable.$convertertypen);
   @override
   late final GeneratedColumnWithTypeConverter<OhItemType, String> ohType =
       GeneratedColumn<String>('oh_type', aliasedName, false,
@@ -1031,14 +464,11 @@ class $ItemsTableTable extends ItemsTable
   late final GeneratedColumn<String> ohCategory = GeneratedColumn<String>(
       'oh_category', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _ohTagsMeta = const VerificationMeta('ohTags');
   @override
   late final GeneratedColumnWithTypeConverter<List<String>?, String> ohTags =
       GeneratedColumn<String>('oh_tags', aliasedName, true,
               type: DriftSqlType.string, requiredDuringInsert: false)
           .withConverter<List<String>?>($ItemsTableTable.$converterohTagsn);
-  static const VerificationMeta _ohGroupsMeta =
-      const VerificationMeta('ohGroups');
   @override
   late final GeneratedColumnWithTypeConverter<List<String>?, String> ohGroups =
       GeneratedColumn<String>('oh_groups', aliasedName, true,
@@ -1047,9 +477,9 @@ class $ItemsTableTable extends ItemsTable
   static const VerificationMeta _roomIdMeta = const VerificationMeta('roomId');
   @override
   late final GeneratedColumn<int> roomId = GeneratedColumn<int>(
-      'room_id', aliasedName, false,
+      'room_id', aliasedName, true,
       type: DriftSqlType.int,
-      requiredDuringInsert: true,
+      requiredDuringInsert: false,
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('REFERENCES rooms_table (id)'));
   static const VerificationMeta _isFavoriteMeta =
@@ -1062,7 +492,6 @@ class $ItemsTableTable extends ItemsTable
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('CHECK ("is_favorite" IN (0, 1))'),
       defaultValue: const Constant(false));
-  static const VerificationMeta _iconMeta = const VerificationMeta('icon');
   @override
   late final GeneratedColumnWithTypeConverter<IconData?, String> icon =
       GeneratedColumn<String>('icon', aliasedName, true,
@@ -1083,8 +512,14 @@ class $ItemsTableTable extends ItemsTable
       type: DriftSqlType.double,
       requiredDuringInsert: false,
       defaultValue: const Constant(0));
-  static const VerificationMeta _complexJsonMeta =
-      const VerificationMeta('complexJson');
+  static const VerificationMeta _manualOrderIndexMeta =
+      const VerificationMeta('manualOrderIndex');
+  @override
+  late final GeneratedColumn<int> manualOrderIndex = GeneratedColumn<int>(
+      'manual_order_index', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(0));
   @override
   late final GeneratedColumnWithTypeConverter<Map<String, dynamic>?, String>
       complexJson = GeneratedColumn<String>('complex_json', aliasedName, true,
@@ -1106,6 +541,7 @@ class $ItemsTableTable extends ItemsTable
         icon,
         score,
         newScore,
+        manualOrderIndex,
         complexJson
       ];
   @override
@@ -1118,8 +554,6 @@ class $ItemsTableTable extends ItemsTable
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    context.handle(_typeMeta, const VerificationResult.success());
-    context.handle(_ohTypeMeta, const VerificationResult.success());
     if (data.containsKey('oh_name')) {
       context.handle(_ohNameMeta,
           ohName.isAcceptableOrUnknown(data['oh_name']!, _ohNameMeta));
@@ -1144,13 +578,9 @@ class $ItemsTableTable extends ItemsTable
           ohCategory.isAcceptableOrUnknown(
               data['oh_category']!, _ohCategoryMeta));
     }
-    context.handle(_ohTagsMeta, const VerificationResult.success());
-    context.handle(_ohGroupsMeta, const VerificationResult.success());
     if (data.containsKey('room_id')) {
       context.handle(_roomIdMeta,
           roomId.isAcceptableOrUnknown(data['room_id']!, _roomIdMeta));
-    } else if (isInserting) {
-      context.missing(_roomIdMeta);
     }
     if (data.containsKey('is_favorite')) {
       context.handle(
@@ -1158,7 +588,6 @@ class $ItemsTableTable extends ItemsTable
           isFavorite.isAcceptableOrUnknown(
               data['is_favorite']!, _isFavoriteMeta));
     }
-    context.handle(_iconMeta, const VerificationResult.success());
     if (data.containsKey('score')) {
       context.handle(
           _scoreMeta, score.isAcceptableOrUnknown(data['score']!, _scoreMeta));
@@ -1167,7 +596,12 @@ class $ItemsTableTable extends ItemsTable
       context.handle(_newScoreMeta,
           newScore.isAcceptableOrUnknown(data['new_score']!, _newScoreMeta));
     }
-    context.handle(_complexJsonMeta, const VerificationResult.success());
+    if (data.containsKey('manual_order_index')) {
+      context.handle(
+          _manualOrderIndexMeta,
+          manualOrderIndex.isAcceptableOrUnknown(
+              data['manual_order_index']!, _manualOrderIndexMeta));
+    }
     return context;
   }
 
@@ -1177,8 +611,9 @@ class $ItemsTableTable extends ItemsTable
   Item map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return Item(
-      type: $ItemsTableTable.$convertertype.fromSql(attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}type'])!),
+      type: $ItemsTableTable.$convertertypen.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}type'])),
       ohType: $ItemsTableTable.$converterohType.fromSql(attachedDatabase
           .typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}oh_type'])!),
@@ -1197,7 +632,7 @@ class $ItemsTableTable extends ItemsTable
           .typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}oh_groups'])),
       roomId: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}room_id'])!,
+          .read(DriftSqlType.int, data['${effectivePrefix}room_id']),
       isFavorite: attachedDatabase.typeMapping
           .read(DriftSqlType.bool, data['${effectivePrefix}is_favorite'])!,
       icon: $ItemsTableTable.$convertericonn.fromSql(attachedDatabase
@@ -1207,6 +642,8 @@ class $ItemsTableTable extends ItemsTable
           .read(DriftSqlType.double, data['${effectivePrefix}score'])!,
       newScore: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}new_score'])!,
+      manualOrderIndex: attachedDatabase.typeMapping.read(
+          DriftSqlType.int, data['${effectivePrefix}manual_order_index'])!,
       complexJson: $ItemsTableTable.$convertercomplexJson.fromSql(
           attachedDatabase.typeMapping.read(
               DriftSqlType.string, data['${effectivePrefix}complex_json'])),
@@ -1220,6 +657,8 @@ class $ItemsTableTable extends ItemsTable
 
   static JsonTypeConverter2<ItemType, String, String> $convertertype =
       const EnumNameConverter<ItemType>(ItemType.values);
+  static JsonTypeConverter2<ItemType?, String?, String?> $convertertypen =
+      JsonTypeConverter2.asNullable($convertertype);
   static JsonTypeConverter2<OhItemType, String, String> $converterohType =
       const EnumNameConverter<OhItemType>(OhItemType.values);
   static TypeConverter<List<String>, String> $converterohTags =
@@ -1239,7 +678,7 @@ class $ItemsTableTable extends ItemsTable
 }
 
 class Item extends DataClass implements Insertable<Item> {
-  final ItemType type;
+  final ItemType? type;
   final OhItemType ohType;
   final String ohName;
   final String ohLabel;
@@ -1247,14 +686,15 @@ class Item extends DataClass implements Insertable<Item> {
   final String? ohCategory;
   final List<String>? ohTags;
   final List<String>? ohGroups;
-  final int roomId;
+  final int? roomId;
   final bool isFavorite;
   final IconData? icon;
   final double score;
   final double newScore;
+  final int manualOrderIndex;
   final Map<String, dynamic>? complexJson;
   const Item(
-      {required this.type,
+      {this.type,
       required this.ohType,
       required this.ohName,
       required this.ohLabel,
@@ -1262,18 +702,19 @@ class Item extends DataClass implements Insertable<Item> {
       this.ohCategory,
       this.ohTags,
       this.ohGroups,
-      required this.roomId,
+      this.roomId,
       required this.isFavorite,
       this.icon,
       required this.score,
       required this.newScore,
+      required this.manualOrderIndex,
       this.complexJson});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    {
+    if (!nullToAbsent || type != null) {
       map['type'] =
-          Variable<String>($ItemsTableTable.$convertertype.toSql(type));
+          Variable<String>($ItemsTableTable.$convertertypen.toSql(type));
     }
     {
       map['oh_type'] =
@@ -1295,7 +736,9 @@ class Item extends DataClass implements Insertable<Item> {
       map['oh_groups'] = Variable<String>(
           $ItemsTableTable.$converterohGroupsn.toSql(ohGroups));
     }
-    map['room_id'] = Variable<int>(roomId);
+    if (!nullToAbsent || roomId != null) {
+      map['room_id'] = Variable<int>(roomId);
+    }
     map['is_favorite'] = Variable<bool>(isFavorite);
     if (!nullToAbsent || icon != null) {
       map['icon'] =
@@ -1303,6 +746,7 @@ class Item extends DataClass implements Insertable<Item> {
     }
     map['score'] = Variable<double>(score);
     map['new_score'] = Variable<double>(newScore);
+    map['manual_order_index'] = Variable<int>(manualOrderIndex);
     if (!nullToAbsent || complexJson != null) {
       map['complex_json'] = Variable<String>(
           $ItemsTableTable.$convertercomplexJson.toSql(complexJson));
@@ -1312,7 +756,7 @@ class Item extends DataClass implements Insertable<Item> {
 
   ItemsTableCompanion toCompanion(bool nullToAbsent) {
     return ItemsTableCompanion(
-      type: Value(type),
+      type: type == null && nullToAbsent ? const Value.absent() : Value(type),
       ohType: Value(ohType),
       ohName: Value(ohName),
       ohLabel: Value(ohLabel),
@@ -1327,11 +771,13 @@ class Item extends DataClass implements Insertable<Item> {
       ohGroups: ohGroups == null && nullToAbsent
           ? const Value.absent()
           : Value(ohGroups),
-      roomId: Value(roomId),
+      roomId:
+          roomId == null && nullToAbsent ? const Value.absent() : Value(roomId),
       isFavorite: Value(isFavorite),
       icon: icon == null && nullToAbsent ? const Value.absent() : Value(icon),
       score: Value(score),
       newScore: Value(newScore),
+      manualOrderIndex: Value(manualOrderIndex),
       complexJson: complexJson == null && nullToAbsent
           ? const Value.absent()
           : Value(complexJson),
@@ -1342,8 +788,8 @@ class Item extends DataClass implements Insertable<Item> {
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return Item(
-      type: $ItemsTableTable.$convertertype
-          .fromJson(serializer.fromJson<String>(json['type'])),
+      type: $ItemsTableTable.$convertertypen
+          .fromJson(serializer.fromJson<String?>(json['type'])),
       ohType: $ItemsTableTable.$converterohType
           .fromJson(serializer.fromJson<String>(json['ohType'])),
       ohName: serializer.fromJson<String>(json['ohName']),
@@ -1352,11 +798,12 @@ class Item extends DataClass implements Insertable<Item> {
       ohCategory: serializer.fromJson<String?>(json['ohCategory']),
       ohTags: serializer.fromJson<List<String>?>(json['ohTags']),
       ohGroups: serializer.fromJson<List<String>?>(json['ohGroups']),
-      roomId: serializer.fromJson<int>(json['roomId']),
+      roomId: serializer.fromJson<int?>(json['roomId']),
       isFavorite: serializer.fromJson<bool>(json['isFavorite']),
       icon: serializer.fromJson<IconData?>(json['icon']),
       score: serializer.fromJson<double>(json['score']),
       newScore: serializer.fromJson<double>(json['newScore']),
+      manualOrderIndex: serializer.fromJson<int>(json['manualOrderIndex']),
       complexJson:
           serializer.fromJson<Map<String, dynamic>?>(json['complexJson']),
     );
@@ -1366,7 +813,7 @@ class Item extends DataClass implements Insertable<Item> {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'type': serializer
-          .toJson<String>($ItemsTableTable.$convertertype.toJson(type)),
+          .toJson<String?>($ItemsTableTable.$convertertypen.toJson(type)),
       'ohType': serializer
           .toJson<String>($ItemsTableTable.$converterohType.toJson(ohType)),
       'ohName': serializer.toJson<String>(ohName),
@@ -1375,17 +822,18 @@ class Item extends DataClass implements Insertable<Item> {
       'ohCategory': serializer.toJson<String?>(ohCategory),
       'ohTags': serializer.toJson<List<String>?>(ohTags),
       'ohGroups': serializer.toJson<List<String>?>(ohGroups),
-      'roomId': serializer.toJson<int>(roomId),
+      'roomId': serializer.toJson<int?>(roomId),
       'isFavorite': serializer.toJson<bool>(isFavorite),
       'icon': serializer.toJson<IconData?>(icon),
       'score': serializer.toJson<double>(score),
       'newScore': serializer.toJson<double>(newScore),
+      'manualOrderIndex': serializer.toJson<int>(manualOrderIndex),
       'complexJson': serializer.toJson<Map<String, dynamic>?>(complexJson),
     };
   }
 
   Item copyWith(
-          {ItemType? type,
+          {Value<ItemType?> type = const Value.absent(),
           OhItemType? ohType,
           String? ohName,
           String? ohLabel,
@@ -1393,14 +841,15 @@ class Item extends DataClass implements Insertable<Item> {
           Value<String?> ohCategory = const Value.absent(),
           Value<List<String>?> ohTags = const Value.absent(),
           Value<List<String>?> ohGroups = const Value.absent(),
-          int? roomId,
+          Value<int?> roomId = const Value.absent(),
           bool? isFavorite,
           Value<IconData?> icon = const Value.absent(),
           double? score,
           double? newScore,
+          int? manualOrderIndex,
           Value<Map<String, dynamic>?> complexJson = const Value.absent()}) =>
       Item(
-        type: type ?? this.type,
+        type: type.present ? type.value : this.type,
         ohType: ohType ?? this.ohType,
         ohName: ohName ?? this.ohName,
         ohLabel: ohLabel ?? this.ohLabel,
@@ -1408,11 +857,12 @@ class Item extends DataClass implements Insertable<Item> {
         ohCategory: ohCategory.present ? ohCategory.value : this.ohCategory,
         ohTags: ohTags.present ? ohTags.value : this.ohTags,
         ohGroups: ohGroups.present ? ohGroups.value : this.ohGroups,
-        roomId: roomId ?? this.roomId,
+        roomId: roomId.present ? roomId.value : this.roomId,
         isFavorite: isFavorite ?? this.isFavorite,
         icon: icon.present ? icon.value : this.icon,
         score: score ?? this.score,
         newScore: newScore ?? this.newScore,
+        manualOrderIndex: manualOrderIndex ?? this.manualOrderIndex,
         complexJson: complexJson.present ? complexJson.value : this.complexJson,
       );
   Item copyWithCompanion(ItemsTableCompanion data) {
@@ -1433,6 +883,9 @@ class Item extends DataClass implements Insertable<Item> {
       icon: data.icon.present ? data.icon.value : this.icon,
       score: data.score.present ? data.score.value : this.score,
       newScore: data.newScore.present ? data.newScore.value : this.newScore,
+      manualOrderIndex: data.manualOrderIndex.present
+          ? data.manualOrderIndex.value
+          : this.manualOrderIndex,
       complexJson:
           data.complexJson.present ? data.complexJson.value : this.complexJson,
     );
@@ -1454,6 +907,7 @@ class Item extends DataClass implements Insertable<Item> {
           ..write('icon: $icon, ')
           ..write('score: $score, ')
           ..write('newScore: $newScore, ')
+          ..write('manualOrderIndex: $manualOrderIndex, ')
           ..write('complexJson: $complexJson')
           ..write(')'))
         .toString();
@@ -1474,6 +928,7 @@ class Item extends DataClass implements Insertable<Item> {
       icon,
       score,
       newScore,
+      manualOrderIndex,
       complexJson);
   @override
   bool operator ==(Object other) =>
@@ -1492,11 +947,12 @@ class Item extends DataClass implements Insertable<Item> {
           other.icon == this.icon &&
           other.score == this.score &&
           other.newScore == this.newScore &&
+          other.manualOrderIndex == this.manualOrderIndex &&
           other.complexJson == this.complexJson);
 }
 
 class ItemsTableCompanion extends UpdateCompanion<Item> {
-  final Value<ItemType> type;
+  final Value<ItemType?> type;
   final Value<OhItemType> ohType;
   final Value<String> ohName;
   final Value<String> ohLabel;
@@ -1504,11 +960,12 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
   final Value<String?> ohCategory;
   final Value<List<String>?> ohTags;
   final Value<List<String>?> ohGroups;
-  final Value<int> roomId;
+  final Value<int?> roomId;
   final Value<bool> isFavorite;
   final Value<IconData?> icon;
   final Value<double> score;
   final Value<double> newScore;
+  final Value<int> manualOrderIndex;
   final Value<Map<String, dynamic>?> complexJson;
   final Value<int> rowid;
   const ItemsTableCompanion({
@@ -1525,11 +982,12 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
     this.icon = const Value.absent(),
     this.score = const Value.absent(),
     this.newScore = const Value.absent(),
+    this.manualOrderIndex = const Value.absent(),
     this.complexJson = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   ItemsTableCompanion.insert({
-    required ItemType type,
+    this.type = const Value.absent(),
     required OhItemType ohType,
     required String ohName,
     required String ohLabel,
@@ -1537,18 +995,17 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
     this.ohCategory = const Value.absent(),
     this.ohTags = const Value.absent(),
     this.ohGroups = const Value.absent(),
-    required int roomId,
+    this.roomId = const Value.absent(),
     this.isFavorite = const Value.absent(),
     this.icon = const Value.absent(),
     this.score = const Value.absent(),
     this.newScore = const Value.absent(),
+    this.manualOrderIndex = const Value.absent(),
     this.complexJson = const Value.absent(),
     this.rowid = const Value.absent(),
-  })  : type = Value(type),
-        ohType = Value(ohType),
+  })  : ohType = Value(ohType),
         ohName = Value(ohName),
-        ohLabel = Value(ohLabel),
-        roomId = Value(roomId);
+        ohLabel = Value(ohLabel);
   static Insertable<Item> custom({
     Expression<String>? type,
     Expression<String>? ohType,
@@ -1563,6 +1020,7 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
     Expression<String>? icon,
     Expression<double>? score,
     Expression<double>? newScore,
+    Expression<int>? manualOrderIndex,
     Expression<String>? complexJson,
     Expression<int>? rowid,
   }) {
@@ -1580,13 +1038,14 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
       if (icon != null) 'icon': icon,
       if (score != null) 'score': score,
       if (newScore != null) 'new_score': newScore,
+      if (manualOrderIndex != null) 'manual_order_index': manualOrderIndex,
       if (complexJson != null) 'complex_json': complexJson,
       if (rowid != null) 'rowid': rowid,
     });
   }
 
   ItemsTableCompanion copyWith(
-      {Value<ItemType>? type,
+      {Value<ItemType?>? type,
       Value<OhItemType>? ohType,
       Value<String>? ohName,
       Value<String>? ohLabel,
@@ -1594,11 +1053,12 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
       Value<String?>? ohCategory,
       Value<List<String>?>? ohTags,
       Value<List<String>?>? ohGroups,
-      Value<int>? roomId,
+      Value<int?>? roomId,
       Value<bool>? isFavorite,
       Value<IconData?>? icon,
       Value<double>? score,
       Value<double>? newScore,
+      Value<int>? manualOrderIndex,
       Value<Map<String, dynamic>?>? complexJson,
       Value<int>? rowid}) {
     return ItemsTableCompanion(
@@ -1615,6 +1075,7 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
       icon: icon ?? this.icon,
       score: score ?? this.score,
       newScore: newScore ?? this.newScore,
+      manualOrderIndex: manualOrderIndex ?? this.manualOrderIndex,
       complexJson: complexJson ?? this.complexJson,
       rowid: rowid ?? this.rowid,
     );
@@ -1625,7 +1086,7 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
     final map = <String, Expression>{};
     if (type.present) {
       map['type'] =
-          Variable<String>($ItemsTableTable.$convertertype.toSql(type.value));
+          Variable<String>($ItemsTableTable.$convertertypen.toSql(type.value));
     }
     if (ohType.present) {
       map['oh_type'] = Variable<String>(
@@ -1667,6 +1128,9 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
     if (newScore.present) {
       map['new_score'] = Variable<double>(newScore.value);
     }
+    if (manualOrderIndex.present) {
+      map['manual_order_index'] = Variable<int>(manualOrderIndex.value);
+    }
     if (complexJson.present) {
       map['complex_json'] = Variable<String>(
           $ItemsTableTable.$convertercomplexJson.toSql(complexJson.value));
@@ -1693,6 +1157,7 @@ class ItemsTableCompanion extends UpdateCompanion<Item> {
           ..write('icon: $icon, ')
           ..write('score: $score, ')
           ..write('newScore: $newScore, ')
+          ..write('manualOrderIndex: $manualOrderIndex, ')
           ..write('complexJson: $complexJson, ')
           ..write('rowid: $rowid')
           ..write(')'))
@@ -1725,8 +1190,6 @@ class $ItemStatesTableTable extends ItemStatesTable
   late final GeneratedColumn<String> transformedState = GeneratedColumn<String>(
       'transformed_state', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _stateDescriptionMeta =
-      const VerificationMeta('stateDescription');
   @override
   late final GeneratedColumnWithTypeConverter<StateDescription?, String>
       stateDescription = GeneratedColumn<String>(
@@ -1734,8 +1197,6 @@ class $ItemStatesTableTable extends ItemStatesTable
               type: DriftSqlType.string, requiredDuringInsert: false)
           .withConverter<StateDescription?>(
               $ItemStatesTableTable.$converterstateDescriptionn);
-  static const VerificationMeta _commandDescriptionMeta =
-      const VerificationMeta('commandDescription');
   @override
   late final GeneratedColumnWithTypeConverter<CommandDescription?, String>
       commandDescription = GeneratedColumn<String>(
@@ -1786,8 +1247,6 @@ class $ItemStatesTableTable extends ItemStatesTable
           transformedState.isAcceptableOrUnknown(
               data['transformed_state']!, _transformedStateMeta));
     }
-    context.handle(_stateDescriptionMeta, const VerificationResult.success());
-    context.handle(_commandDescriptionMeta, const VerificationResult.success());
     if (data.containsKey('oh_unit_symbol')) {
       context.handle(
           _ohUnitSymbolMeta,
@@ -2119,35 +1578,27 @@ class $RulesTableTable extends RulesTable
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
       'name', aliasedName, true,
       type: DriftSqlType.string, requiredDuringInsert: false);
-  static const VerificationMeta _tagsMeta = const VerificationMeta('tags');
   @override
   late final GeneratedColumnWithTypeConverter<List<String>?, String> tags =
       GeneratedColumn<String>('tags', aliasedName, true,
               type: DriftSqlType.string, requiredDuringInsert: false)
           .withConverter<List<String>?>($RulesTableTable.$convertertagsn);
-  static const VerificationMeta _statusMeta = const VerificationMeta('status');
   @override
   late final GeneratedColumnWithTypeConverter<RuleStatusInfo?, String> status =
       GeneratedColumn<String>('status', aliasedName, true,
               type: DriftSqlType.string, requiredDuringInsert: false)
           .withConverter<RuleStatusInfo?>($RulesTableTable.$converterstatus);
-  static const VerificationMeta _actionsMeta =
-      const VerificationMeta('actions');
   @override
   late final GeneratedColumnWithTypeConverter<List<ActionDTO>?, String>
       actions = GeneratedColumn<String>('actions', aliasedName, true,
               type: DriftSqlType.string, requiredDuringInsert: false)
           .withConverter<List<ActionDTO>?>($RulesTableTable.$converteractions);
-  static const VerificationMeta _conditionsMeta =
-      const VerificationMeta('conditions');
   @override
   late final GeneratedColumnWithTypeConverter<List<ConditionDTO>?, String>
       conditions = GeneratedColumn<String>('conditions', aliasedName, true,
               type: DriftSqlType.string, requiredDuringInsert: false)
           .withConverter<List<ConditionDTO>?>(
               $RulesTableTable.$converterconditions);
-  static const VerificationMeta _configurationMeta =
-      const VerificationMeta('configuration');
   @override
   late final GeneratedColumnWithTypeConverter<Map<String, dynamic>?, String>
       configuration = GeneratedColumn<String>(
@@ -2155,8 +1606,6 @@ class $RulesTableTable extends RulesTable
               type: DriftSqlType.string, requiredDuringInsert: false)
           .withConverter<Map<String, dynamic>?>(
               $RulesTableTable.$converterconfiguration);
-  static const VerificationMeta _configDescriptionsMeta =
-      const VerificationMeta('configDescriptions');
   @override
   late final GeneratedColumnWithTypeConverter<
           List<ConfigDescriptionParameterDTO>?, String> configDescriptions =
@@ -2164,8 +1613,6 @@ class $RulesTableTable extends RulesTable
               type: DriftSqlType.string, requiredDuringInsert: false)
           .withConverter<List<ConfigDescriptionParameterDTO>?>(
               $RulesTableTable.$converterconfigDescriptions);
-  static const VerificationMeta _triggersMeta =
-      const VerificationMeta('triggers');
   @override
   late final GeneratedColumnWithTypeConverter<List<RuleTrigger>?, String>
       triggers = GeneratedColumn<String>('triggers', aliasedName, true,
@@ -2214,13 +1661,6 @@ class $RulesTableTable extends RulesTable
       context.handle(
           _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
     }
-    context.handle(_tagsMeta, const VerificationResult.success());
-    context.handle(_statusMeta, const VerificationResult.success());
-    context.handle(_actionsMeta, const VerificationResult.success());
-    context.handle(_conditionsMeta, const VerificationResult.success());
-    context.handle(_configurationMeta, const VerificationResult.success());
-    context.handle(_configDescriptionsMeta, const VerificationResult.success());
-    context.handle(_triggersMeta, const VerificationResult.success());
     if (data.containsKey('editable')) {
       context.handle(_editableMeta,
           editable.isAcceptableOrUnknown(data['editable']!, _editableMeta));
@@ -2660,13 +2100,11 @@ class RulesTableCompanion extends UpdateCompanion<Rule> {
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
-  late final $InboxTableTable inboxTable = $InboxTableTable(this);
   late final $RoomsTableTable roomsTable = $RoomsTableTable(this);
   late final $ItemsTableTable itemsTable = $ItemsTableTable(this);
   late final $ItemStatesTableTable itemStatesTable =
       $ItemStatesTableTable(this);
   late final $RulesTableTable rulesTable = $RulesTableTable(this);
-  late final InboxStore inboxStore = InboxStore(this as AppDatabase);
   late final RoomsStore roomsStore = RoomsStore(this as AppDatabase);
   late final ItemsStore itemsStore = ItemsStore(this as AppDatabase);
   late final RulesStore rulesStore = RulesStore(this as AppDatabase);
@@ -2675,283 +2113,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [inboxTable, roomsTable, itemsTable, itemStatesTable, rulesTable];
+      [roomsTable, itemsTable, itemStatesTable, rulesTable];
 }
 
-typedef $$InboxTableTableCreateCompanionBuilder = InboxTableCompanion Function({
-  required OhItemType type,
-  required String name,
-  required String label,
-  Value<String?> category,
-  Value<List<String>?> tags,
-  Value<List<String>?> groups,
-  required String state,
-  Value<String?> unitSymbol,
-  Value<String?> transformedState,
-  Value<StateDescription?> stateDescription,
-  Value<CommandDescription?> commandDescription,
-  Value<int> rowid,
-});
-typedef $$InboxTableTableUpdateCompanionBuilder = InboxTableCompanion Function({
-  Value<OhItemType> type,
-  Value<String> name,
-  Value<String> label,
-  Value<String?> category,
-  Value<List<String>?> tags,
-  Value<List<String>?> groups,
-  Value<String> state,
-  Value<String?> unitSymbol,
-  Value<String?> transformedState,
-  Value<StateDescription?> stateDescription,
-  Value<CommandDescription?> commandDescription,
-  Value<int> rowid,
-});
-
-class $$InboxTableTableFilterComposer
-    extends Composer<_$AppDatabase, $InboxTableTable> {
-  $$InboxTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnWithTypeConverterFilters<OhItemType, OhItemType, String> get type =>
-      $composableBuilder(
-          column: $table.type,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
-
-  ColumnFilters<String> get name => $composableBuilder(
-      column: $table.name, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get label => $composableBuilder(
-      column: $table.label, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get category => $composableBuilder(
-      column: $table.category, builder: (column) => ColumnFilters(column));
-
-  ColumnWithTypeConverterFilters<List<String>?, List<String>, String>
-      get tags => $composableBuilder(
-          column: $table.tags,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
-
-  ColumnWithTypeConverterFilters<List<String>?, List<String>, String>
-      get groups => $composableBuilder(
-          column: $table.groups,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
-
-  ColumnFilters<String> get state => $composableBuilder(
-      column: $table.state, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get unitSymbol => $composableBuilder(
-      column: $table.unitSymbol, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get transformedState => $composableBuilder(
-      column: $table.transformedState,
-      builder: (column) => ColumnFilters(column));
-
-  ColumnWithTypeConverterFilters<StateDescription?, StateDescription, String>
-      get stateDescription => $composableBuilder(
-          column: $table.stateDescription,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
-
-  ColumnWithTypeConverterFilters<CommandDescription?, CommandDescription,
-          String>
-      get commandDescription => $composableBuilder(
-          column: $table.commandDescription,
-          builder: (column) => ColumnWithTypeConverterFilters(column));
-}
-
-class $$InboxTableTableOrderingComposer
-    extends Composer<_$AppDatabase, $InboxTableTable> {
-  $$InboxTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get type => $composableBuilder(
-      column: $table.type, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get name => $composableBuilder(
-      column: $table.name, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get label => $composableBuilder(
-      column: $table.label, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get category => $composableBuilder(
-      column: $table.category, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get tags => $composableBuilder(
-      column: $table.tags, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get groups => $composableBuilder(
-      column: $table.groups, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get state => $composableBuilder(
-      column: $table.state, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get unitSymbol => $composableBuilder(
-      column: $table.unitSymbol, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get transformedState => $composableBuilder(
-      column: $table.transformedState,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get stateDescription => $composableBuilder(
-      column: $table.stateDescription,
-      builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get commandDescription => $composableBuilder(
-      column: $table.commandDescription,
-      builder: (column) => ColumnOrderings(column));
-}
-
-class $$InboxTableTableAnnotationComposer
-    extends Composer<_$AppDatabase, $InboxTableTable> {
-  $$InboxTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumnWithTypeConverter<OhItemType, String> get type =>
-      $composableBuilder(column: $table.type, builder: (column) => column);
-
-  GeneratedColumn<String> get name =>
-      $composableBuilder(column: $table.name, builder: (column) => column);
-
-  GeneratedColumn<String> get label =>
-      $composableBuilder(column: $table.label, builder: (column) => column);
-
-  GeneratedColumn<String> get category =>
-      $composableBuilder(column: $table.category, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<List<String>?, String> get tags =>
-      $composableBuilder(column: $table.tags, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<List<String>?, String> get groups =>
-      $composableBuilder(column: $table.groups, builder: (column) => column);
-
-  GeneratedColumn<String> get state =>
-      $composableBuilder(column: $table.state, builder: (column) => column);
-
-  GeneratedColumn<String> get unitSymbol => $composableBuilder(
-      column: $table.unitSymbol, builder: (column) => column);
-
-  GeneratedColumn<String> get transformedState => $composableBuilder(
-      column: $table.transformedState, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<StateDescription?, String>
-      get stateDescription => $composableBuilder(
-          column: $table.stateDescription, builder: (column) => column);
-
-  GeneratedColumnWithTypeConverter<CommandDescription?, String>
-      get commandDescription => $composableBuilder(
-          column: $table.commandDescription, builder: (column) => column);
-}
-
-class $$InboxTableTableTableManager extends RootTableManager<
-    _$AppDatabase,
-    $InboxTableTable,
-    InboxEntry,
-    $$InboxTableTableFilterComposer,
-    $$InboxTableTableOrderingComposer,
-    $$InboxTableTableAnnotationComposer,
-    $$InboxTableTableCreateCompanionBuilder,
-    $$InboxTableTableUpdateCompanionBuilder,
-    (InboxEntry, BaseReferences<_$AppDatabase, $InboxTableTable, InboxEntry>),
-    InboxEntry,
-    PrefetchHooks Function()> {
-  $$InboxTableTableTableManager(_$AppDatabase db, $InboxTableTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$InboxTableTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$InboxTableTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$InboxTableTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<OhItemType> type = const Value.absent(),
-            Value<String> name = const Value.absent(),
-            Value<String> label = const Value.absent(),
-            Value<String?> category = const Value.absent(),
-            Value<List<String>?> tags = const Value.absent(),
-            Value<List<String>?> groups = const Value.absent(),
-            Value<String> state = const Value.absent(),
-            Value<String?> unitSymbol = const Value.absent(),
-            Value<String?> transformedState = const Value.absent(),
-            Value<StateDescription?> stateDescription = const Value.absent(),
-            Value<CommandDescription?> commandDescription =
-                const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              InboxTableCompanion(
-            type: type,
-            name: name,
-            label: label,
-            category: category,
-            tags: tags,
-            groups: groups,
-            state: state,
-            unitSymbol: unitSymbol,
-            transformedState: transformedState,
-            stateDescription: stateDescription,
-            commandDescription: commandDescription,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required OhItemType type,
-            required String name,
-            required String label,
-            Value<String?> category = const Value.absent(),
-            Value<List<String>?> tags = const Value.absent(),
-            Value<List<String>?> groups = const Value.absent(),
-            required String state,
-            Value<String?> unitSymbol = const Value.absent(),
-            Value<String?> transformedState = const Value.absent(),
-            Value<StateDescription?> stateDescription = const Value.absent(),
-            Value<CommandDescription?> commandDescription =
-                const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              InboxTableCompanion.insert(
-            type: type,
-            name: name,
-            label: label,
-            category: category,
-            tags: tags,
-            groups: groups,
-            state: state,
-            unitSymbol: unitSymbol,
-            transformedState: transformedState,
-            stateDescription: stateDescription,
-            commandDescription: commandDescription,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ));
-}
-
-typedef $$InboxTableTableProcessedTableManager = ProcessedTableManager<
-    _$AppDatabase,
-    $InboxTableTable,
-    InboxEntry,
-    $$InboxTableTableFilterComposer,
-    $$InboxTableTableOrderingComposer,
-    $$InboxTableTableAnnotationComposer,
-    $$InboxTableTableCreateCompanionBuilder,
-    $$InboxTableTableUpdateCompanionBuilder,
-    (InboxEntry, BaseReferences<_$AppDatabase, $InboxTableTable, InboxEntry>),
-    InboxEntry,
-    PrefetchHooks Function()>;
 typedef $$RoomsTableTableCreateCompanionBuilder = RoomsTableCompanion Function({
   Value<int> id,
   required String name,
@@ -2960,6 +2124,7 @@ typedef $$RoomsTableTableCreateCompanionBuilder = RoomsTableCompanion Function({
   Value<String?> color,
   Value<int?> level,
   required int sortKey,
+  required RoomItemsSortOption itemsSortOption,
 });
 typedef $$RoomsTableTableUpdateCompanionBuilder = RoomsTableCompanion Function({
   Value<int> id,
@@ -2969,6 +2134,7 @@ typedef $$RoomsTableTableUpdateCompanionBuilder = RoomsTableCompanion Function({
   Value<String?> color,
   Value<int?> level,
   Value<int> sortKey,
+  Value<RoomItemsSortOption> itemsSortOption,
 });
 
 final class $$RoomsTableTableReferences
@@ -2983,7 +2149,7 @@ final class $$RoomsTableTableReferences
 
   $$ItemsTableTableProcessedTableManager get itemsTableRefs {
     final manager = $$ItemsTableTableTableManager($_db, $_db.itemsTable)
-        .filter((f) => f.roomId.id($_item.id));
+        .filter((f) => f.roomId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_itemsTableRefsTable($_db));
     return ProcessedTableManager(
@@ -3022,6 +2188,12 @@ class $$RoomsTableTableFilterComposer
 
   ColumnFilters<int> get sortKey => $composableBuilder(
       column: $table.sortKey, builder: (column) => ColumnFilters(column));
+
+  ColumnWithTypeConverterFilters<RoomItemsSortOption, RoomItemsSortOption,
+          String>
+      get itemsSortOption => $composableBuilder(
+          column: $table.itemsSortOption,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
 
   Expression<bool> itemsTableRefs(
       Expression<bool> Function($$ItemsTableTableFilterComposer f) f) {
@@ -3074,6 +2246,10 @@ class $$RoomsTableTableOrderingComposer
 
   ColumnOrderings<int> get sortKey => $composableBuilder(
       column: $table.sortKey, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get itemsSortOption => $composableBuilder(
+      column: $table.itemsSortOption,
+      builder: (column) => ColumnOrderings(column));
 }
 
 class $$RoomsTableTableAnnotationComposer
@@ -3105,6 +2281,10 @@ class $$RoomsTableTableAnnotationComposer
 
   GeneratedColumn<int> get sortKey =>
       $composableBuilder(column: $table.sortKey, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<RoomItemsSortOption, String>
+      get itemsSortOption => $composableBuilder(
+          column: $table.itemsSortOption, builder: (column) => column);
 
   Expression<T> itemsTableRefs<T extends Object>(
       Expression<T> Function($$ItemsTableTableAnnotationComposer a) f) {
@@ -3158,6 +2338,7 @@ class $$RoomsTableTableTableManager extends RootTableManager<
             Value<String?> color = const Value.absent(),
             Value<int?> level = const Value.absent(),
             Value<int> sortKey = const Value.absent(),
+            Value<RoomItemsSortOption> itemsSortOption = const Value.absent(),
           }) =>
               RoomsTableCompanion(
             id: id,
@@ -3167,6 +2348,7 @@ class $$RoomsTableTableTableManager extends RootTableManager<
             color: color,
             level: level,
             sortKey: sortKey,
+            itemsSortOption: itemsSortOption,
           ),
           createCompanionCallback: ({
             Value<int> id = const Value.absent(),
@@ -3176,6 +2358,7 @@ class $$RoomsTableTableTableManager extends RootTableManager<
             Value<String?> color = const Value.absent(),
             Value<int?> level = const Value.absent(),
             required int sortKey,
+            required RoomItemsSortOption itemsSortOption,
           }) =>
               RoomsTableCompanion.insert(
             id: id,
@@ -3185,6 +2368,7 @@ class $$RoomsTableTableTableManager extends RootTableManager<
             color: color,
             level: level,
             sortKey: sortKey,
+            itemsSortOption: itemsSortOption,
           ),
           withReferenceMapper: (p0) => p0
               .map((e) => (
@@ -3200,7 +2384,7 @@ class $$RoomsTableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (itemsTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<Room, $RoomsTableTable, Item>(
                         currentTable: table,
                         referencedTable: $$RoomsTableTableReferences
                             ._itemsTableRefsTable(db),
@@ -3231,7 +2415,7 @@ typedef $$RoomsTableTableProcessedTableManager = ProcessedTableManager<
     Room,
     PrefetchHooks Function({bool itemsTableRefs})>;
 typedef $$ItemsTableTableCreateCompanionBuilder = ItemsTableCompanion Function({
-  required ItemType type,
+  Value<ItemType?> type,
   required OhItemType ohType,
   required String ohName,
   required String ohLabel,
@@ -3239,16 +2423,17 @@ typedef $$ItemsTableTableCreateCompanionBuilder = ItemsTableCompanion Function({
   Value<String?> ohCategory,
   Value<List<String>?> ohTags,
   Value<List<String>?> ohGroups,
-  required int roomId,
+  Value<int?> roomId,
   Value<bool> isFavorite,
   Value<IconData?> icon,
   Value<double> score,
   Value<double> newScore,
+  Value<int> manualOrderIndex,
   Value<Map<String, dynamic>?> complexJson,
   Value<int> rowid,
 });
 typedef $$ItemsTableTableUpdateCompanionBuilder = ItemsTableCompanion Function({
-  Value<ItemType> type,
+  Value<ItemType?> type,
   Value<OhItemType> ohType,
   Value<String> ohName,
   Value<String> ohLabel,
@@ -3256,11 +2441,12 @@ typedef $$ItemsTableTableUpdateCompanionBuilder = ItemsTableCompanion Function({
   Value<String?> ohCategory,
   Value<List<String>?> ohTags,
   Value<List<String>?> ohGroups,
-  Value<int> roomId,
+  Value<int?> roomId,
   Value<bool> isFavorite,
   Value<IconData?> icon,
   Value<double> score,
   Value<double> newScore,
+  Value<int> manualOrderIndex,
   Value<Map<String, dynamic>?> complexJson,
   Value<int> rowid,
 });
@@ -3273,9 +2459,11 @@ final class $$ItemsTableTableReferences
       db.roomsTable.createAlias(
           $_aliasNameGenerator(db.itemsTable.roomId, db.roomsTable.id));
 
-  $$RoomsTableTableProcessedTableManager get roomId {
+  $$RoomsTableTableProcessedTableManager? get roomId {
+    final $_column = $_itemColumn<int>('room_id');
+    if ($_column == null) return null;
     final manager = $$RoomsTableTableTableManager($_db, $_db.roomsTable)
-        .filter((f) => f.id($_item.roomId));
+        .filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_roomIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -3290,8 +2478,8 @@ final class $$ItemsTableTableReferences
 
   $$ItemStatesTableTableProcessedTableManager get itemStatesTableRefs {
     final manager =
-        $$ItemStatesTableTableTableManager($_db, $_db.itemStatesTable)
-            .filter((f) => f.ohName.ohName($_item.ohName));
+        $$ItemStatesTableTableTableManager($_db, $_db.itemStatesTable).filter(
+            (f) => f.ohName.ohName.sqlEquals($_itemColumn<String>('oh_name')!));
 
     final cache =
         $_typedResult.readTableOrNull(_itemStatesTableRefsTable($_db));
@@ -3309,7 +2497,7 @@ class $$ItemsTableTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnWithTypeConverterFilters<ItemType, ItemType, String> get type =>
+  ColumnWithTypeConverterFilters<ItemType?, ItemType, String> get type =>
       $composableBuilder(
           column: $table.type,
           builder: (column) => ColumnWithTypeConverterFilters(column));
@@ -3354,6 +2542,10 @@ class $$ItemsTableTableFilterComposer
 
   ColumnFilters<double> get newScore => $composableBuilder(
       column: $table.newScore, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get manualOrderIndex => $composableBuilder(
+      column: $table.manualOrderIndex,
+      builder: (column) => ColumnFilters(column));
 
   ColumnWithTypeConverterFilters<Map<String, dynamic>?, Map<String, dynamic>,
           String>
@@ -3448,6 +2640,10 @@ class $$ItemsTableTableOrderingComposer
   ColumnOrderings<double> get newScore => $composableBuilder(
       column: $table.newScore, builder: (column) => ColumnOrderings(column));
 
+  ColumnOrderings<int> get manualOrderIndex => $composableBuilder(
+      column: $table.manualOrderIndex,
+      builder: (column) => ColumnOrderings(column));
+
   ColumnOrderings<String> get complexJson => $composableBuilder(
       column: $table.complexJson, builder: (column) => ColumnOrderings(column));
 
@@ -3481,7 +2677,7 @@ class $$ItemsTableTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumnWithTypeConverter<ItemType, String> get type =>
+  GeneratedColumnWithTypeConverter<ItemType?, String> get type =>
       $composableBuilder(column: $table.type, builder: (column) => column);
 
   GeneratedColumnWithTypeConverter<OhItemType, String> get ohType =>
@@ -3516,6 +2712,9 @@ class $$ItemsTableTableAnnotationComposer
 
   GeneratedColumn<double> get newScore =>
       $composableBuilder(column: $table.newScore, builder: (column) => column);
+
+  GeneratedColumn<int> get manualOrderIndex => $composableBuilder(
+      column: $table.manualOrderIndex, builder: (column) => column);
 
   GeneratedColumnWithTypeConverter<Map<String, dynamic>?, String>
       get complexJson => $composableBuilder(
@@ -3586,7 +2785,7 @@ class $$ItemsTableTableTableManager extends RootTableManager<
           createComputedFieldComposer: () =>
               $$ItemsTableTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
-            Value<ItemType> type = const Value.absent(),
+            Value<ItemType?> type = const Value.absent(),
             Value<OhItemType> ohType = const Value.absent(),
             Value<String> ohName = const Value.absent(),
             Value<String> ohLabel = const Value.absent(),
@@ -3594,11 +2793,12 @@ class $$ItemsTableTableTableManager extends RootTableManager<
             Value<String?> ohCategory = const Value.absent(),
             Value<List<String>?> ohTags = const Value.absent(),
             Value<List<String>?> ohGroups = const Value.absent(),
-            Value<int> roomId = const Value.absent(),
+            Value<int?> roomId = const Value.absent(),
             Value<bool> isFavorite = const Value.absent(),
             Value<IconData?> icon = const Value.absent(),
             Value<double> score = const Value.absent(),
             Value<double> newScore = const Value.absent(),
+            Value<int> manualOrderIndex = const Value.absent(),
             Value<Map<String, dynamic>?> complexJson = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
@@ -3616,11 +2816,12 @@ class $$ItemsTableTableTableManager extends RootTableManager<
             icon: icon,
             score: score,
             newScore: newScore,
+            manualOrderIndex: manualOrderIndex,
             complexJson: complexJson,
             rowid: rowid,
           ),
           createCompanionCallback: ({
-            required ItemType type,
+            Value<ItemType?> type = const Value.absent(),
             required OhItemType ohType,
             required String ohName,
             required String ohLabel,
@@ -3628,11 +2829,12 @@ class $$ItemsTableTableTableManager extends RootTableManager<
             Value<String?> ohCategory = const Value.absent(),
             Value<List<String>?> ohTags = const Value.absent(),
             Value<List<String>?> ohGroups = const Value.absent(),
-            required int roomId,
+            Value<int?> roomId = const Value.absent(),
             Value<bool> isFavorite = const Value.absent(),
             Value<IconData?> icon = const Value.absent(),
             Value<double> score = const Value.absent(),
             Value<double> newScore = const Value.absent(),
+            Value<int> manualOrderIndex = const Value.absent(),
             Value<Map<String, dynamic>?> complexJson = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
@@ -3650,6 +2852,7 @@ class $$ItemsTableTableTableManager extends RootTableManager<
             icon: icon,
             score: score,
             newScore: newScore,
+            manualOrderIndex: manualOrderIndex,
             complexJson: complexJson,
             rowid: rowid,
           ),
@@ -3695,7 +2898,8 @@ class $$ItemsTableTableTableManager extends RootTableManager<
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (itemStatesTableRefs)
-                    await $_getPrefetchedData(
+                    await $_getPrefetchedData<Item, $ItemsTableTable,
+                            ItemState>(
                         currentTable: table,
                         referencedTable: $$ItemsTableTableReferences
                             ._itemStatesTableRefsTable(db),
@@ -3756,8 +2960,10 @@ final class $$ItemStatesTableTableReferences
           db.itemStatesTable.ohName, db.itemsTable.ohName));
 
   $$ItemsTableTableProcessedTableManager get ohName {
+    final $_column = $_itemColumn<String>('oh_name')!;
+
     final manager = $$ItemsTableTableTableManager($_db, $_db.itemsTable)
-        .filter((f) => f.ohName($_item.ohName));
+        .filter((f) => f.ohName.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_ohNameTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
@@ -4298,8 +3504,6 @@ typedef $$RulesTableTableProcessedTableManager = ProcessedTableManager<
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
-  $$InboxTableTableTableManager get inboxTable =>
-      $$InboxTableTableTableManager(_db, _db.inboxTable);
   $$RoomsTableTableTableManager get roomsTable =>
       $$RoomsTableTableTableManager(_db, _db.roomsTable);
   $$ItemsTableTableTableManager get itemsTable =>

@@ -13,15 +13,15 @@ class InboxEntryAddViewModel extends BaseViewModel {
 
   Stream<List<Room>> get roomsStream => _roomsStore.all().watch();
 
-  final InboxEntry entry;
+  final Item entry;
   final fbKey = GlobalKey<FormBuilderState>();
   IconData? itemIcon;
   int? addRoomId;
   bool isFavorite = false;
 
   InboxEntryAddViewModel(this.entry) {
-    if (ItemType.forEntryType(entry.type).length == 1) {
-      itemIcon = ItemType.forEntryType(entry.type).first.icon;
+    if (ItemType.forEntryType(entry.ohType).length == 1) {
+      itemIcon = ItemType.forEntryType(entry.ohType).first.icon;
     }
   }
 
@@ -33,7 +33,7 @@ class InboxEntryAddViewModel extends BaseViewModel {
       final String? customLabel = data["customLabel"];
 
       return _itemsRepository.addItemFromInbox(
-          itemName: entry.name,
+          item: entry,
           type: itemType,
           roomId: roomId,
           customLabel: customLabel,

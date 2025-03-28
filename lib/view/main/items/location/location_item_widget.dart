@@ -13,19 +13,16 @@ import 'location_util.dart';
 import 'openhab_map_widget.dart';
 
 class LocationItemWidget extends MediumItemWidget {
+  final bool disableTap;
   LocationItemWidget(
-      {super.key, required super.item, required super.colorScheme})
+      {super.key, required super.item, required super.colorScheme, this.disableTap = false})
       : assert(item != null);
-
-  final _itemRepository = locator<ItemRepository>();
 
   @override
   Widget build(BuildContext context) {
-    print("location widget");
     return ItemStateInjector(
         itemName: item!.ohName,
         builder: (state) {
-          print("location state: ${state.state}");
           final location =
               OpenhabLocation.fromItemState(state.state, item!.label, false);
           return WidgetContainer(
@@ -33,6 +30,7 @@ class LocationItemWidget extends MediumItemWidget {
               onLongTap: () => onLongTap(context, location),
               padding: const EdgeInsets.all(0),
               colorScheme: colorScheme,
+              disableTap: disableTap,
               child: AbsorbPointer(
                   child: OpenhabMapWidget(
                 location: location,

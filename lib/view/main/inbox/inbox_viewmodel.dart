@@ -1,40 +1,39 @@
+import 'package:azlistview_plus/azlistview_plus.dart';
 import 'package:flutter/widgets.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../core/database/app_database.dart';
-import '../../../core/database/inbox/inbox_list_entry.dart';
 import '../../../locator.dart';
 
 class InboxViewModel extends BaseViewModel {
-  final _inboxStore = locator.get<AppDatabase>().inboxStore;
+  final _itemsStore = locator.get<AppDatabase>().itemsStore;
 
-  Stream<List<InboxListEntry>> get inbox => _inboxStore
-      .all()
-      .watch()
-      .map((list) => list.map((e) => InboxListEntry(e)).toList());
+  Stream<List<InboxItemEntry>> get inbox => _itemsStore
+      .inbox()
+      .watch().map((items) => items.map((e) => InboxItemEntry(e)).toList());
 
   final ScrollController scrollController = ScrollController();
   final textEditingController = TextEditingController();
 
   final BehaviorSubject<String> _searchSubject = BehaviorSubject.seeded('');
 
-  Stream<List<InboxListEntry>> get filteredInbox =>
+  Stream<List<InboxItemEntry>> get filteredInbox =>
       Rx.combineLatest2(inbox, _searchSubject.stream,
-          (List<InboxListEntry> inbox, String search) {
+          (List<InboxItemEntry> inbox, String search) {
         if (search.isEmpty) {
           return inbox;
         }
         return inbox
             .where((element) =>
-                element.entry.label
+                element.entry.ohLabel
                     .toLowerCase()
                     .contains(search.toLowerCase()) ||
-                (element.entry.category
+                (element.entry.ohCategory
                         ?.toLowerCase()
                         .contains(search.toLowerCase()) ??
                     false) ||
-                element.entry.name.toLowerCase().contains(search.toLowerCase()))
+                element.entry.ohName.toLowerCase().contains(search.toLowerCase()))
             .toList();
       });
   final searchFocusNode = FocusNode();
@@ -49,4 +48,14 @@ class InboxViewModel extends BaseViewModel {
     textEditingController.clear();
     searchFocusNode.unfocus();
   }
+}
+
+class InboxItemEntry extends ISuspensionBean {
+  final Item entry;
+
+  InboxItemEntry(this.entry);
+
+  @override
+  String getSuspensionTag() => entry.ohName;
+
 }

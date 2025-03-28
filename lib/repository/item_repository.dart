@@ -14,8 +14,9 @@ import 'package:tuple/tuple.dart';
 
 import '../core/database/app_database.dart';
 import '../core/database/items/item_type.dart';
+import '../core/database/items/items_table.dart';
 import '../core/database/items/oh_item_type.dart';
-import '../core/network/converters/inbox.dart';
+import '../core/network/converters/item.dart';
 import '../core/network/generated/client_index.dart';
 import '../core/services/snackbar_service.dart';
 import '../locator.dart';
@@ -26,7 +27,6 @@ class ItemRepository {
   final _loginRepository = locator<LoginRepository>();
   final _chartRepository = locator<ChartRepository>();
   final _itemsStore = locator<AppDatabase>().itemsStore;
-  final _inboxStore = locator<AppDatabase>().inboxStore;
   final _snackbarService = locator<SnackbarService>();
 
   Stream<DateTime> get clockStream =>
@@ -36,15 +36,17 @@ class ItemRepository {
     observeEvents();
   }
 
-  Future<void> fetchData({bool insertToInbox = true}) async {
+  Future<void> fetchData() async {
     await _loginRepository.firstConnectionComplete.future;
     final result = await locator<OpenHAB>().itemsGet();
     if (result.isSuccessful) {
+      final List<ItemsTableCompanion> itemsToStore = [];
+      final List<ItemStatesTableCompanion> itemStatesToInsert = [];
+      final List<ItemsTableCompanion> itemsToUpdate = [];
+      final List<ItemStatesTableCompanion> itemStatesToUpdate = [];
+      final List<Item> itemsToDelete = [];
+
       final storedItems = await _itemsStore.all().get();
-      if (insertToInbox) {
-        await _inboxStore.deleteData();
-      }
-      final addToInbox = <InboxEntry>[];
 
       for (final item in result.body!) {
         final storedItem = storedItems
@@ -52,24 +54,30 @@ class ItemRepository {
         if (storedItem == null) {
           // Item is not stored yet
           final dbItem = item.asDatabaseModel();
-          if (dbItem != null && insertToInbox) {
-            addToInbox.add(dbItem);
+          if (dbItem != null) {
+            itemsToStore.add(dbItem);
+          }
+
+          final itemState = item.asItemStateUpdate();
+          if (itemState != null) {
+            itemStatesToInsert.add(itemState);
           }
         } else {
           // Item is already stored -> update
-          final update = item.asItemUpdate();
+          final update = item.asDatabaseModel();
           if (update != null) {
-            await _itemsStore.updateByName(update);
+            itemsToUpdate.add(update);
           }
 
           // state update
           final stateUpdate = item.asItemStateUpdate();
           if (stateUpdate != null) {
-            await _itemsStore.updateStateByName(stateUpdate);
+            itemStatesToUpdate.add(stateUpdate);
           }
 
           // get new chart data if item is readonly
-          if ((item.stateDescription?.readOnly ?? false) &&
+          if (!storedItem.isInInbox &&
+              (item.stateDescription?.readOnly ?? false) &&
               item.name != null &&
               storedItem.type != ItemType.complexComponent) {
             _chartRepository.fetchChartDataByName(item.name!);
@@ -79,15 +87,33 @@ class ItemRepository {
         }
       }
 
-      // Delete all items that are not available anymore if they are not complex
-      for (final item in storedItems) {
-        if (!ItemType.complexTypes.contains(item.type)) {
-          await _itemsStore.deleteDataByName(item.ohName);
-        }
+      // Insert new items
+      if (itemsToStore.isNotEmpty) {
+        await _itemsStore.insertOrUpdate(itemsToStore);
       }
 
-      if (insertToInbox) {
-        await _inboxStore.insertOrUpdate(addToInbox);
+      // Insert new item states
+      if (itemStatesToInsert.isNotEmpty) {
+        await _itemsStore.insertOrUpdateStates(itemStatesToInsert);
+      }
+
+      // Update items
+      if (itemsToUpdate.isNotEmpty) {
+        await _itemsStore.updateByName(itemsToUpdate);
+      }
+
+      // Update item states
+      if (itemStatesToUpdate.isNotEmpty) {
+        await _itemsStore.updateStateByName(itemStatesToUpdate);
+      }
+
+      // Delete all items that are not available anymore if they are not complex
+      if (itemsToDelete.isNotEmpty) {
+        final validItems = itemsToDelete
+            .where((element) => !ItemType.complexTypes.contains(element.type))
+            .toList();
+        await _itemsStore
+            .deleteDataByNames(validItems.map((e) => e.ohName).toList());
       }
     } else {
       print(result.error);
@@ -95,24 +121,19 @@ class ItemRepository {
   }
 
   Future<void> fetchDataByName(String itemName) async {
-    final result = await locator<OpenHAB>().itemsItemnameGet(itemname: itemName);
+    final result =
+        await locator<OpenHAB>().itemsItemnameGet(itemname: itemName);
     if (result.isSuccessful && result.body != null) {
       final item = result.body!.asDatabaseModel();
       if (item != null) {
-        await _inboxStore.insertOrUpdateSingle(item);
+        await _itemsStore.insertOrUpdateSingle(item);
       }
     }
   }
 
-  Future<List<String>> getItemNamesByOhType(OhItemType type,
-      {bool onlyInbox = false}) async {
-    final inboxItems = await _inboxStore.byType(type).get();
-    if (!onlyInbox) {
-      final items = await _itemsStore.byOhType(type).get();
-      return [...inboxItems.map((e) => e.name), ...items.map((e) => e.ohName)];
-    } else {
-      return inboxItems.map((e) => e.name).toList();
-    }
+  Future<List<String>> getItemNamesByOhType(OhItemType type) async {
+    final items = await _itemsStore.byOhType(type).get();
+    return items.map((e) => e.ohName).toList();
   }
 
   Future<List<Item>> getItemsByTypes(
@@ -122,65 +143,35 @@ class ItemRepository {
   }
 
   Future<bool> addItemFromInbox(
-      {required String itemName,
+      {required Item item,
       required ItemType type,
       required int roomId,
       IconData? icon,
       String? customLabel,
       bool? isFavorite}) async {
     // get item from inbox
-    final inboxItem = await _inboxStore.byName(itemName).getSingleOrNull();
-    if (inboxItem == null) {
+    if (!item.isInInbox) {
+      // item is no more in inbox
       return false;
     }
 
-    // create item
-    final item = ItemsTableCompanion.insert(
-      type: type,
-      ohType: inboxItem.type,
-      ohName: inboxItem.name,
-      ohLabel: inboxItem.label,
-      ohCategory: inboxItem.category != null
-          ? Value(inboxItem.category!)
-          : const Value.absent(),
-      ohTags: inboxItem.tags != null
-          ? Value(inboxItem.tags!)
-          : const Value.absent(),
-      ohGroups: inboxItem.groups != null
-          ? Value(inboxItem.groups!)
-          : const Value.absent(),
-      roomId: roomId,
-      icon: icon != null ? Value(icon) : const Value.absent(),
-      customLabel:
-          customLabel != null ? Value(customLabel) : const Value.absent(),
-      isFavorite: Value(isFavorite ?? false),
-    );
-
-    // create state
-    final state = ItemStatesTableCompanion.insert(
-      ohName: inboxItem.name,
-      state: inboxItem.state,
-      stateDescription: inboxItem.stateDescription != null
-          ? Value(inboxItem.stateDescription!)
-          : const Value.absent(),
-      commandDescription: inboxItem.commandDescription != null
-          ? Value(inboxItem.commandDescription!)
-          : const Value.absent(),
-      transformedState: inboxItem.transformedState != null
-          ? Value(inboxItem.transformedState!)
-          : const Value.absent(),
-      ohUnitSymbol: inboxItem.unitSymbol != null
-          ? Value(inboxItem.unitSymbol!)
-          : const Value.absent(),
-    );
+    // update item
+    final updatedItem = item
+        .copyWith(
+          type: Value(type),
+          roomId: Value(roomId),
+          icon: icon != null ? Value(icon) : const Value.absent(),
+          customLabel:
+              customLabel != null ? Value(customLabel) : const Value.absent(),
+          isFavorite: isFavorite ?? false,
+        )
+        .toCompanion(false);
 
     // db things
-    await _itemsStore.insertOrUpdateSingle(item);
-    await _itemsStore.insertOrUpdateState(state);
-    await _inboxStore.deleteDataByName(item.ohName.value);
+    await _itemsStore.updateByNameSingle(updatedItem);
 
     // fetch chart data
-    _chartRepository.fetchChartDataByName(item.ohName.value);
+    _chartRepository.fetchChartDataByName(item.ohName);
 
     return true;
   }
@@ -233,7 +224,8 @@ class ItemRepository {
   }
 
   Future<void> colorAction(String itemName, HsbColor value) async {
-    return _sendAction(itemName, "${value.hue},${value.saturation},${value.brightness}");
+    return _sendAction(
+        itemName, "${value.hue},${value.saturation},${value.brightness}");
   }
 
   Future<void> rollershutterAction(String itemName, bool up) async {
@@ -241,7 +233,8 @@ class ItemRepository {
     return _sendAction(itemName, body);
   }
 
-  Future<void> locationAction(String itemName, double latitude, double longitude) async {
+  Future<void> locationAction(
+      String itemName, double latitude, double longitude) async {
     return _sendAction(itemName, "$latitude,$longitude");
   }
 
@@ -261,7 +254,6 @@ class ItemRepository {
       if (dio.statusCode != 200) {
         showActionErrorToast();
       }
-      await fetchData(insertToInbox: false);
     } catch (e, s) {
       Logger().e(
           "Error on Item Action. Name: $itemName, Body: $body, Error: $e",
@@ -271,17 +263,19 @@ class ItemRepository {
   }
 
   Future<void> getStatusOfItem(String itemName) async {
-    final result = await locator<OpenHAB>().itemsItemnameGet(itemname: itemName);
+    final result =
+        await locator<OpenHAB>().itemsItemnameGet(itemname: itemName);
     if (result.isSuccessful && result.body != null) {
-      final update = result.body!.asItemUpdate();
+      final update = result.body!.asDatabaseModel();
       if (update != null) {
-        _itemsStore.updateByName(update);
+        _itemsStore.updateByNameSingle(update);
       }
     }
   }
 
   Future<String?> fetchStatusOfItem(String itemName) async {
-    final result = await locator<OpenHAB>().itemsItemnameGet(itemname: itemName);
+    final result =
+        await locator<OpenHAB>().itemsItemnameGet(itemname: itemName);
     if (result.isSuccessful && result.body != null) {
       return result.body!.state;
     }
@@ -331,5 +325,5 @@ class ItemRepository {
       _itemsStore.updateFavoriteByName(name, favorite);
 
   Future<void> insertOrUpdateState(ItemStatesTableCompanion state) =>
-      _itemsStore.insertOrUpdateState(state);
+      _itemsStore.insertOrUpdateStateSingle(state);
 }

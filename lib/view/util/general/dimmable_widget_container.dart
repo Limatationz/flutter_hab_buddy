@@ -19,6 +19,7 @@ class DimmableWidgetContainer extends StatefulWidget {
   final Function(double)? onDragDone;
   final bool reversed;
   final ColorScheme? colorScheme;
+  final bool disableTap;
 
   const DimmableWidgetContainer(
       {super.key,
@@ -37,7 +38,8 @@ class DimmableWidgetContainer extends StatefulWidget {
       this.colorScheme,
       this.width,
       this.height,
-      this.reversed = false});
+      this.reversed = false,
+      this.disableTap = false});
 
   @override
   State<DimmableWidgetContainer> createState() =>
@@ -98,7 +100,7 @@ class _DimmableWidgetContainerState extends State<DimmableWidgetContainer> {
                         widget.backgroundColor ?? getBackgroundColor(context)),
                 padding: widget.padding,
                 child: widget.child)));
-    if (widget.onTap != null || widget.onLongTap != null) {
+    if ((widget.onTap != null || widget.onLongTap != null) && !widget.disableTap) {
       return Padding(
           padding: widget.margin,
           child: GestureDetector(
@@ -140,8 +142,7 @@ class _DimmableWidgetContainerState extends State<DimmableWidgetContainer> {
   Color getBackgroundColor(BuildContext context) =>
       widget.backgroundColor ??
       ElevationOverlay.applySurfaceTint(
-          widget.colorScheme?.surface ??
-              Theme.of(context).colorScheme.surface,
+          widget.colorScheme?.surface ?? Theme.of(context).colorScheme.surface,
           widget.colorScheme?.surfaceTint ??
               Theme.of(context).colorScheme.surfaceTint,
           1);

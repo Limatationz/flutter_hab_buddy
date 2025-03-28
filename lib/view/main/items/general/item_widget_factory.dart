@@ -38,61 +38,102 @@ typedef OnItemStateChanged = void Function(dynamic value);
 
 class ItemWidgetFactory {
   static ItemWidget buildItem(
-      {required Item item, required ColorScheme colorScheme}) {
+      {required Item item,
+      required ColorScheme colorScheme,
+      bool disableTap = false}) {
     switch (item.ohType) {
       case OhItemType.button:
         return SwitchItemWidget(
           item: item,
           colorScheme: colorScheme,
+          disableTap: disableTap,
         );
       case OhItemType.dimmer:
-        return DimmerItemWidget(item: item, colorScheme: colorScheme);
+        return DimmerItemWidget(
+          item: item,
+          colorScheme: colorScheme,
+          disableTap: disableTap,
+        );
       case OhItemType.rollershutter:
-        return RollershutterItemWidget(item: item, colorScheme: colorScheme);
+        return RollershutterItemWidget(
+          item: item,
+          colorScheme: colorScheme,
+          disableTap: disableTap,
+        );
       case OhItemType.string:
         if (item.type == ItemType.weather) {
-          return WeatherCurrentWidget(item: item, colorScheme: colorScheme);
+          return WeatherCurrentWidget(
+            item: item,
+            colorScheme: colorScheme,
+            disableTap: disableTap,
+          );
         } else if (item.type == ItemType.weatherForecast) {
-          return WeatherForecastWidget(item: item, colorScheme: colorScheme);
+          return WeatherForecastWidget(
+            item: item,
+            colorScheme: colorScheme,
+            disableTap: disableTap,
+          );
         }
         return TextItemWidget(
           item: item,
           colorScheme: colorScheme,
+          disableTap: disableTap,
         );
       case OhItemType.number:
         if (item.type == ItemType.thermostat) {
           return ThermostatItemWidget(
             item: item,
             colorScheme: colorScheme,
+            disableTap: disableTap,
           );
         }
         return TextItemWidget(
           item: item,
           colorScheme: colorScheme,
+          disableTap: disableTap,
         );
       case OhItemType.player:
         if (item.type == ItemType.complexPlayer) {
           return ComplexPlayerItemWidget(
             item: item,
             colorScheme: colorScheme,
+            disableTap: disableTap,
           );
         }
         return PlayerItemWidget(
           item: item,
           colorScheme: colorScheme,
+          disableTap: disableTap,
         );
       case OhItemType.dateTime:
-        return ClockItemWidget(item: item, colorScheme: colorScheme);
+        return ClockItemWidget(
+          item: item,
+          colorScheme: colorScheme,
+          disableTap: disableTap,
+        );
       case OhItemType.image:
-        return ImageItemWidget(item: item, colorScheme: colorScheme);
+        return ImageItemWidget(
+          item: item,
+          colorScheme: colorScheme,
+          disableTap: disableTap,
+        );
       case OhItemType.color:
-        return ColorItemWidget(item: item, colorScheme: colorScheme);
+        return ColorItemWidget(
+          item: item,
+          colorScheme: colorScheme,
+          disableTap: disableTap,
+        );
       case OhItemType.location:
-        return LocationItemWidget(item: item, colorScheme: colorScheme);
+        return LocationItemWidget(
+          item: item,
+          colorScheme: colorScheme,
+          disableTap: disableTap,
+        );
       default:
         return TextItemWidget(
           item: item,
           colorScheme: colorScheme,
+          disableTap: disableTap,
         );
     }
   }
@@ -183,28 +224,28 @@ class ItemWidgetFactory {
     late final Widget child;
     if (item.type == ItemType.complexPlayer) {
       child = ComplexPlayerAddSheet(
-          roomId: item.roomId,
+          roomId: item.roomId!,
           complexPlayerData: ComplexPlayerData.fromJson(item.complexJson!));
     } else if (item.type == ItemType.clock) {
       child = ClockAddSheet(
-        roomId: item.roomId,
+        roomId: item.roomId!,
         item: item,
       );
     } else if (item.type == ItemType.weather) {
       child = WeatherAddSheet(
-        roomId: item.roomId,
+        roomId: item.roomId!,
         item: item,
         type: WeatherRequestType.current,
       );
     } else if (item.type == ItemType.weatherForecast) {
       child = WeatherAddSheet(
-        roomId: item.roomId,
+        roomId: item.roomId!,
         item: item,
         type: WeatherRequestType.forecast,
       );
     } else if (item.type == ItemType.thermostat) {
       child = ThermostatAddSheet(
-        roomId: item.roomId,
+        roomId: item.roomId!,
         thermostatData: item.complexJson != null
             ? ThermostatData.fromJson(item.complexJson!)
             : null,

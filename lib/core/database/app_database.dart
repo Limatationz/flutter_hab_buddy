@@ -1,15 +1,8 @@
-import 'dart:io';
-
 import 'package:drift/drift.dart';
-import 'package:drift/native.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart' show IconData;
-import 'package:path_provider/path_provider.dart';
-import 'package:sqlite3/sqlite3.dart';
-import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
-import 'package:path/path.dart' as p;
-import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
+import 'package:rx_shared_preferences/rx_shared_preferences.dart';
 
 import '../../locator.dart';
 import '../../util/shared_prefs_keys.dart';
@@ -20,8 +13,6 @@ import 'converter/json_converter.dart';
 import 'converter/rule_converters.dart';
 import 'converter/state_description_converter.dart';
 import 'converter/string_list_converter.dart';
-import 'inbox/inbox_store.dart';
-import 'inbox/inbox_table.dart';
 import 'items/item_type.dart';
 import 'items/items_store.dart';
 import 'items/items_table.dart';
@@ -36,13 +27,11 @@ import 'state/item_states_table.dart';
 part 'app_database.g.dart';
 
 @DriftDatabase(tables: [
-  InboxTable,
   RoomsTable,
   ItemsTable,
   ItemStatesTable,
   RulesTable,
 ], daos: [
-  InboxStore,
   RoomsStore,
   ItemsStore,
   RulesStore,
@@ -81,10 +70,10 @@ class AppDatabase extends _$AppDatabase {
     await customStatement("UPDATE items_table SET score = new_score");
 
     // reset score if time is over
-    final prefs = locator<StreamingSharedPreferences>();
+    final prefs = locator<RxSharedPreferences>();
     final lastScoreReset =
-        prefs.getInt(lastItemScoreResetKey, defaultValue: 0).getValue();
-    if (lastScoreReset == 0) {
+        await prefs.getInt(lastItemScoreResetKey);
+    if (lastScoreReset == null) {
       // First start
       prefs.setInt(
           lastItemScoreResetKey, DateTime.now().millisecondsSinceEpoch);

@@ -14,4 +14,19 @@ class RoomsTable extends Table {
   TextColumn get color => text().nullable()();
   IntColumn get level => integer().nullable()();
   IntColumn get sortKey => integer()();
+  TextColumn get itemsSortOption => textEnum<RoomItemsSortOption>()();
+}
+
+enum RoomItemsSortOption {
+  byScore,
+  manual;
+
+  String get localized { // TODO: translate
+    switch (this) {
+      case RoomItemsSortOption.byScore:
+        return "Score";
+      case RoomItemsSortOption.manual:
+        return "Manual";
+    }
+  }
 }

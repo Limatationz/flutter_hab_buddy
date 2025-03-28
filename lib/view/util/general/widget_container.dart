@@ -14,6 +14,7 @@ class WidgetContainer extends StatelessWidget {
   final ColorScheme? colorScheme;
   final double? width;
   final double? height;
+  final bool disableTap;
 
   const WidgetContainer(
       {super.key,
@@ -27,7 +28,8 @@ class WidgetContainer extends StatelessWidget {
       this.backgroundImage,
       this.colorScheme,
       this.width,
-      this.height});
+      this.height,
+      this.disableTap = false});
 
   @override
   Widget build(BuildContext context) {
@@ -47,18 +49,14 @@ class WidgetContainer extends StatelessWidget {
                   color: backgroundColor ??
                       ElevationOverlay.applySurfaceTint(
                           colorScheme?.surface ??
-                              Theme.of(context)
-                                  .colorScheme
-                                  .surface,
+                              Theme.of(context).colorScheme.surface,
                           colorScheme?.surfaceTint ??
-                              Theme.of(context)
-                                  .colorScheme
-                                  .surfaceTint,
+                              Theme.of(context).colorScheme.surfaceTint,
                           1),
                 ),
                 padding: padding,
                 child: child)));
-    if (onTap != null || onLongTap != null) {
+    if ((onTap != null || onLongTap != null) && !disableTap) {
       return Padding(
           padding: margin,
           child: InkWell(
@@ -67,7 +65,8 @@ class WidgetContainer extends StatelessWidget {
               onTap: () => onTap?.call(),
               onLongPress: () => onLongTap?.call(),
               child: widget));
+    } else {
+      return Padding(padding: margin, child: widget);
     }
-    return Padding(padding: margin, child: widget);
   }
 }

@@ -36,7 +36,6 @@ class ThermostatAddSheet extends StatefulWidget {
 class _ThermostatAddSheetState extends State<ThermostatAddSheet> {
   final _formKey = GlobalKey<FormBuilderState>();
   final _itemsStore = locator<AppDatabase>().itemsStore;
-  final _inboxStore = locator<AppDatabase>().inboxStore;
   final _itemsRepository = locator<ItemRepository>();
   final _snackBarService = locator<SnackbarService>();
 
@@ -133,8 +132,7 @@ class _ThermostatAddSheetState extends State<ThermostatAddSheet> {
                 )),
             const Gap(24),
             FutureBuilder(
-                future: _itemsRepository.getItemNamesByOhType(OhItemType.number,
-                    onlyInbox: true),
+                future: _itemsRepository.getItemNamesByOhType(OhItemType.number),
                 builder: (context, future) {
                   if (future.data?.isEmpty ?? true) {
                     return const SizedBox.shrink();
@@ -149,12 +147,10 @@ class _ThermostatAddSheetState extends State<ThermostatAddSheet> {
                       validator: FormBuilderValidators.required(),
                       onChanged: (value) {
                         if (value != null) {
-                          heatingSetpointStateStream = _inboxStore
-                              .byName(value)
+                          heatingSetpointStateStream = _itemsStore
+                              .stateByName(value)
                               .watchSingleOrNull()
-                              .whereNotNull()
-                              .map((event) =>
-                                  ItemStateFromInboxEntry.convert(event));
+                              .whereNotNull();
                         } else {
                           heatingSetpointStateStream = null;
                         }
@@ -183,12 +179,10 @@ class _ThermostatAddSheetState extends State<ThermostatAddSheet> {
                       validator: FormBuilderValidators.required(),
                       onChanged: (value) {
                         if (value != null) {
-                          currentTemperatureStateStream = _inboxStore
-                              .byName(value)
+                          currentTemperatureStateStream = _itemsStore
+                              .stateByName(value)
                               .watchSingleOrNull()
-                              .whereNotNull()
-                              .map((event) =>
-                                  ItemStateFromInboxEntry.convert(event));
+                              .whereNotNull();
                         } else {
                           currentTemperatureStateStream = null;
                         }
@@ -215,12 +209,10 @@ class _ThermostatAddSheetState extends State<ThermostatAddSheet> {
                           "The Number Item that contains the current humidity",
                       onChanged: (value) {
                         if (value != null) {
-                          currentHumidityStateStream = _inboxStore
-                              .byName(value)
+                          currentHumidityStateStream = _itemsStore
+                              .stateByName(value)
                               .watchSingleOrNull()
-                              .whereNotNull()
-                              .map((event) =>
-                                  ItemStateFromInboxEntry.convert(event));
+                              .whereNotNull();
                         } else {
                           currentHumidityStateStream = null;
                         }
@@ -247,12 +239,10 @@ class _ThermostatAddSheetState extends State<ThermostatAddSheet> {
                       required: false,
                       onChanged: (value) {
                         if (value != null) {
-                          modeStateStream = _inboxStore
-                              .byName(value)
+                          modeStateStream = _itemsStore
+                              .stateByName(value)
                               .watchSingleOrNull()
-                              .whereNotNull()
-                              .map((event) =>
-                                  ItemStateFromInboxEntry.convert(event));
+                              .whereNotNull();
                         } else {
                           modeStateStream = null;
                         }
@@ -281,7 +271,7 @@ class _ThermostatAddSheetState extends State<ThermostatAddSheet> {
       final setpointItem = values["heatingSetpoint"] as String;
 
       final inboxSetpointItem =
-          await _inboxStore.byName(setpointItem).getSingleOrNull();
+          await _itemsStore.byName(setpointItem).getSingleOrNull();
       final storedSetpointItem =
           await _itemsStore.byName(setpointItem).getSingleOrNull();
       if (inboxSetpointItem == null && storedSetpointItem == null) {
@@ -302,41 +292,41 @@ class _ThermostatAddSheetState extends State<ThermostatAddSheet> {
           modeItemName: modeItem,);
 
       final currentTemperatureInboxItemData =
-          await _inboxStore.byName(currentTemperatureItem).getSingleOrNull() ;
+          await _itemsStore.byName(currentTemperatureItem).getSingleOrNull() ;
       final currentTemperatureStoredItemData =
           await _itemsStore.byName(currentTemperatureItem).getSingleOrNull();
       final currentHumidityItemData = currentHumidityItem != null
-          ? await _inboxStore.byName(currentHumidityItem).getSingleOrNull()
+          ? await _itemsStore.byName(currentHumidityItem).getSingleOrNull()
           : null;
       final modeItemData = modeItem != null
-          ? await _inboxStore.byName(modeItem).getSingleOrNull()
+          ? await _itemsStore.byName(modeItem).getSingleOrNull()
           : null;
 
       if (inboxSetpointItem != null &&
           (currentTemperatureInboxItemData != null || currentTemperatureStoredItemData != null)) {
         // add
         final setpointSuccess = await _itemsRepository.addItemFromInbox(
-            itemName: inboxSetpointItem.name,
+            item: inboxSetpointItem,
             type: ItemType.thermostat,
             roomId: widget.roomId);
         await _itemsStore.updateComplexJsonByName(
             thermostatItem.toJson(), setpointItem);
 
         final currentTemperatureSuccess = currentTemperatureInboxItemData != null ? await _itemsRepository.addItemFromInbox(
-            itemName: currentTemperatureInboxItemData.name,
+            item: currentTemperatureInboxItemData,
             type: ItemType.complexComponent,
             roomId: widget.roomId) : true;
 
         final currentHumiditySuccess = currentHumidityItemData != null
             ? await _itemsRepository.addItemFromInbox(
-                itemName: currentHumidityItemData.name,
+            item: currentHumidityItemData,
                 type: ItemType.complexComponent,
                 roomId: widget.roomId)
             : true;
 
         final modeSuccess = modeItemData != null
             ? await _itemsRepository.addItemFromInbox(
-                itemName: modeItemData.name,
+            item: modeItemData,
                 type: ItemType.complexComponent,
                 roomId: widget.roomId)
             : true;
@@ -353,12 +343,12 @@ class _ThermostatAddSheetState extends State<ThermostatAddSheet> {
         // check what changed
         final oldThermostatItem = widget.thermostatData;
         if (oldThermostatItem != null) {
-          if (oldThermostatItem.currentTemperatureItemName != currentTemperatureItem) {
+          if (oldThermostatItem.currentTemperatureItemName != currentTemperatureItem && currentTemperatureInboxItemData != null) {
             await _itemsStore
                 .deleteDataByName(oldThermostatItem.currentTemperatureItemName);
 
             await _itemsRepository.addItemFromInbox(
-                itemName: currentTemperatureItem,
+                item: currentTemperatureInboxItemData,
                 type: ItemType.complexComponent,
                 roomId: widget.roomId);
           }
@@ -371,7 +361,7 @@ class _ThermostatAddSheetState extends State<ThermostatAddSheet> {
             }
 
             await _itemsRepository.addItemFromInbox(
-                itemName: currentHumidityItemData.name,
+                item: currentHumidityItemData,
                 type: ItemType.complexComponent,
                 roomId: widget.roomId);
           }
@@ -383,7 +373,7 @@ class _ThermostatAddSheetState extends State<ThermostatAddSheet> {
             }
 
             await _itemsRepository.addItemFromInbox(
-                itemName: modeItemData!.name,
+                item: modeItemData,
                 type: ItemType.complexComponent,
                 roomId: widget.roomId);
           }

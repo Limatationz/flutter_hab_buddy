@@ -22,7 +22,7 @@ import '../../rooms/add/room_add_sheet.dart';
 import 'inbox_entry_add_viewmodel.dart';
 
 class InboxEntryAddSheet extends StatelessWidget {
-  final InboxEntry entry;
+  final Item entry;
   final int? roomId;
 
   const InboxEntryAddSheet({super.key, required this.entry, this.roomId});
@@ -58,24 +58,24 @@ class InboxEntryAddSheet extends StatelessWidget {
                         )),
                   ]),
                   const HeadlinePaddingBox(),
-                  HeadlineValueIcon(title: "Name", data: entry.name),
-                  HeadlineValueIcon(title: "Label", data: entry.label),
-                  if (entry.category != null)
-                    HeadlineValueIcon(title: "Category", data: entry.category!),
+                  HeadlineValueIcon(title: "Name", data: entry.ohName),
+                  HeadlineValueIcon(title: "Label", data: entry.ohLabel),
+                  if (entry.ohCategory != null)
+                    HeadlineValueIcon(title: "Category", data: entry.ohCategory!),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (entry.tags != null)
+                      if (entry.ohTags != null)
                         Expanded(
                             child: HeadlineValueIcon(
-                                title: "Tags", data: entry.tags!.join(", "))),
-                      if (entry.groups != null && entry.tags != null)
+                                title: "Tags", data: entry.ohTags!.join(", "))),
+                      if (entry.ohGroups != null && entry.ohTags != null)
                         const Gap(listSpacing),
-                      if (entry.groups != null)
+                      if (entry.ohGroups != null)
                         Expanded(
                             child: HeadlineValueIcon(
                                 title: "Groups",
-                                data: entry.groups!.join(", "))),
+                                data: entry.ohGroups!.join(", "))),
                     ],
                   ),
                   Row(
@@ -85,13 +85,13 @@ class InboxEntryAddSheet extends StatelessWidget {
                         flex: 3,
                         child: BaseFormDropdown<ItemType>(
                           name: "itemType",
-                          items: ItemType.forEntryType(entry.type)
+                          items: ItemType.forEntryType(entry.ohType)
                               .map((e) => DropdownMenuItem(
                                   value: e, child: Text(e.description)))
                               .toList(),
                           initialValue:
-                              ItemType.forEntryType(entry.type).length == 1
-                                  ? ItemType.forEntryType(entry.type).first
+                              ItemType.forEntryType(entry.ohType).length == 1
+                                  ? ItemType.forEntryType(entry.ohType).first
                                   : null,
                           validator: FormBuilderValidators.required(),
                           label: S.of(context).itemType,
@@ -148,7 +148,7 @@ class InboxEntryAddSheet extends StatelessWidget {
                     name: "customLabel",
                     label: S.of(context).customLabel,
                     helperText: S.of(context).customLabelHelp,
-                    hintText: entry.label,
+                    hintText: entry.ohLabel,
                     validator: FormBuilderValidators.maxLength(50, checkNullOrEmpty: false),
                     required: false,
                   ),

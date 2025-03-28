@@ -76,14 +76,3 @@ extension FormattedState on ItemState {
 
   bool get isReadOnly => stateDescription?.readOnly ?? false;
 }
-
-extension ItemStateFromInboxEntry on ItemState {
-  static ItemState convert(InboxEntry state) => ItemState(
-        ohName: state.name,
-        state: state.state,
-        transformedState: state.transformedState,
-        stateDescription: state.stateDescription,
-        commandDescription: state.commandDescription,
-        ohUnitSymbol: state.unitSymbol,
-      );
-}

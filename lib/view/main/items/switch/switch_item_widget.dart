@@ -14,8 +14,14 @@ import '../general/item_widget_factory.dart';
 import 'switch_item_dialog.dart';
 
 class SwitchItemWidget extends SmallItemWidget {
+  final bool disableTap;
+
   SwitchItemWidget(
-      {super.key, required super.item, required super.colorScheme}) : assert(item != null);
+      {super.key,
+      required super.item,
+      required super.colorScheme,
+      this.disableTap = false})
+      : assert(item != null);
 
   final _itemRepository = locator<ItemRepository>();
 
@@ -31,24 +37,22 @@ class SwitchItemWidget extends SmallItemWidget {
               onLongTap: () => onLongTap(context),
               value: isOn ? 100 : 0,
               colorScheme: colorScheme,
+              disableTap: disableTap,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-              Expanded(child: AutoHyphenatingText(item!.label,
-                      maxLines: 3,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium)),
+                  Expanded(
+                      child: AutoHyphenatingText(item!.label,
+                          maxLines: 3,
+                          style: Theme.of(context).textTheme.titleMedium)),
                   Align(
                       alignment: Alignment.bottomRight,
                       child: Icon(
-                        item!.icon ?? item!.type.icon,
+                        item!.icon ?? item!.type!.icon,
                         size: iconSize,
                         color: isOn
-                            ? Theme.of(context)
-                                .colorScheme
-                                .onSurface
+                            ? Theme.of(context).colorScheme.onSurface
                             : Colors.grey,
                       )),
                 ],
@@ -61,5 +65,11 @@ class SwitchItemWidget extends SmallItemWidget {
   }
 
   void onLongTap(BuildContext context) => ItemWidgetFactory.openDialog(
-      context, SwitchItemDialog(itemName: item!.ohName, colorScheme: colorScheme,), item!, colorScheme);
+      context,
+      SwitchItemDialog(
+        itemName: item!.ohName,
+        colorScheme: colorScheme,
+      ),
+      item!,
+      colorScheme);
 }

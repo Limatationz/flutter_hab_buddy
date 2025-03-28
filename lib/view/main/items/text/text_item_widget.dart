@@ -10,8 +10,9 @@ import '../general/item_widget_factory.dart';
 import 'text_item_dialog.dart';
 
 class TextItemWidget extends SmallItemWidget {
+  final bool disableTap;
   const TextItemWidget(
-      {super.key, required super.item, required super.colorScheme});
+      {super.key, required super.item, required super.colorScheme, this.disableTap = false});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,7 @@ class TextItemWidget extends SmallItemWidget {
               key: ValueKey(itemState.state.toString()),
               onLongTap: () => onLongTap(context),
               colorScheme: colorScheme,
+              disableTap: disableTap,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

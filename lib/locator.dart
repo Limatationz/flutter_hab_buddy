@@ -1,7 +1,8 @@
 import 'package:get_it/get_it.dart';
-import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
+import 'package:rx_shared_preferences/rx_shared_preferences.dart';
 
 import 'core/database/app_database.dart';
+import 'core/database/favourites/favourites_view_settings_store.dart';
 import 'core/routing/navigation_service.dart';
 import 'core/services/wakelock_service.dart';
 import 'core/services/snackbar_service.dart';
@@ -15,8 +16,8 @@ final locator = GetIt.instance;
 
 void setupLocator() {
   // shared preferences
-  locator.registerSingletonAsync<StreamingSharedPreferences>(
-      () async => StreamingSharedPreferences.instance);
+  locator.registerSingleton<RxSharedPreferences>(
+      RxSharedPreferences.getInstance());
 
   // navigation service
   locator.registerSingleton(NavigationService());
@@ -25,11 +26,11 @@ void setupLocator() {
   locator.registerSingleton(SnackbarService());
 
   // other services
-  locator.registerSingletonWithDependencies(() => WakelockService(),
-      dependsOn: [StreamingSharedPreferences]);
+  locator.registerLazySingleton(() => WakelockService());
 
   // database
   locator.registerLazySingleton(() => AppDatabase.defaults());
+  locator.registerLazySingleton(() => FavouriteViewSettingsStore());
 
   locator.registerSingleton(LoginRepository());
 

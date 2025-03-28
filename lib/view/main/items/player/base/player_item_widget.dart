@@ -13,8 +13,14 @@ import '../../general/item_widget_factory.dart';
 import 'player_item_dialog.dart';
 
 class PlayerItemWidget extends MediumWidthItemWidget {
+  final bool disableTap;
+
   PlayerItemWidget(
-      {super.key, required super.item, required super.colorScheme}) : assert(item != null);
+      {super.key,
+      required super.item,
+      required super.colorScheme,
+      this.disableTap = false})
+      : assert(item != null);
 
   final _itemRepository = locator<ItemRepository>();
 
@@ -28,15 +34,14 @@ class PlayerItemWidget extends MediumWidthItemWidget {
               key: ValueKey(itemState.state.toString()),
               onLongTap: () => onLongTap(context),
               colorScheme: colorScheme,
+              disableTap: disableTap,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   AutoHyphenatingText(item!.label,
                       maxLines: 3,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium),
+                      style: Theme.of(context).textTheme.titleMedium),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [

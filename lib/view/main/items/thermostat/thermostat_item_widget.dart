@@ -8,10 +8,12 @@ import 'thermostat_data.dart';
 import 'thermostat_item_base_widget.dart';
 
 class ThermostatItemWidget extends MediumWidthItemWidget {
+  final bool disableTap;
   ThermostatItemWidget({
     super.key,
     required super.item,
     required super.colorScheme,
+    this.disableTap = false,
   }) : assert(item != null);
 
   final _itemsStore = locator<AppDatabase>().itemsStore;
@@ -42,6 +44,7 @@ class ThermostatItemWidget extends MediumWidthItemWidget {
               .watchSingleOrNull()
               .whereNotNull()
           : null,
+      disableTap: disableTap,
     );
   }
 }

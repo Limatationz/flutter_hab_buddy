@@ -31,25 +31,14 @@ class ItemEditViewModel extends BaseViewModel {
       final int roomId = data["roomId"];
       final String? customLabel = data["customLabel"];
 
-      final update = ItemsTableCompanion.insert(
-        type: itemType,
-        ohType: item.ohType,
-        ohName: item.ohName,
-        ohLabel: item.ohLabel,
-        ohCategory: item.ohCategory != null
-            ? Value(item.ohCategory!)
-            : const Value.absent(),
-        ohTags:
-            item.ohTags != null ? Value(item.ohTags!) : const Value.absent(),
-        ohGroups: item.ohGroups != null
-            ? Value(item.ohGroups!)
-            : const Value.absent(),
-        roomId: roomId,
+      final update = item.copyWith(
+        type: Value(itemType),
+        roomId: Value(roomId),
         icon: itemIcon != null ? Value(itemIcon) : const Value.absent(),
         customLabel:
             customLabel != null ? Value(customLabel) : const Value.absent(),
-      );
-      await _itemsStore.updateByName(update);
+      ).toCompanion(false);
+      await _itemsStore.updateByNameSingle(update);
       return true;
     }
     return false;

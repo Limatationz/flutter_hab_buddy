@@ -22,12 +22,14 @@ const dayWidgetWidth = 60.0;
 
 class WeatherForecastWidget extends LargeWidthItemWidget {
   final Stream<WeatherLocationData?>? locationStream;
+  final bool disableTap;
 
   WeatherForecastWidget({
     super.key,
     required super.item,
     required super.colorScheme,
     this.locationStream,
+    this.disableTap = false,
   });
 
   bool get isMock => item == null;
@@ -95,6 +97,7 @@ class WeatherForecastWidget extends LargeWidthItemWidget {
                     context,
                   )
               : null,
+          disableTap: disableTap,
           child: LayoutBuilder(builder: (context, constraints) {
             final width = constraints.maxWidth;
             final days = width ~/ dayWidgetWidth;

@@ -13,6 +13,7 @@ class PillContainer extends StatelessWidget {
   final ColorScheme? colorScheme;
   final double? width;
   final double? height;
+  final bool disableTap;
 
   const PillContainer(
       {super.key,
@@ -25,7 +26,8 @@ class PillContainer extends StatelessWidget {
       this.backgroundColor,
       this.colorScheme,
       this.width,
-      this.height});
+      this.height,
+      this.disableTap = false});
 
   @override
   Widget build(BuildContext context) {
@@ -43,19 +45,15 @@ class PillContainer extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: backgroundColor ??
                       ElevationOverlay.applySurfaceTint(
-                          colorScheme?.background ??
-                              Theme.of(context)
-                                  .colorScheme
-                                  .background,
+                          colorScheme?.surface ??
+                              Theme.of(context).colorScheme.surface,
                           colorScheme?.surfaceTint ??
-                              Theme.of(context)
-                                  .colorScheme
-                                  .surfaceTint,
+                              Theme.of(context).colorScheme.surfaceTint,
                           1),
                 ),
                 padding: padding,
                 child: child)));
-    if (onTap != null || onLongTap != null) {
+    if ((onTap != null || onLongTap != null) && !disableTap) {
       return Padding(
           padding: margin,
           child: InkWell(
@@ -64,7 +62,8 @@ class PillContainer extends StatelessWidget {
               onTap: () => onTap?.call(),
               onLongPress: () => onLongTap?.call(),
               child: widget));
+    } else {
+      return Padding(padding: margin, child: widget);
     }
-    return Padding(padding: margin, child: widget);
   }
 }

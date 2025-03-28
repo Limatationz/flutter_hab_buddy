@@ -24,6 +24,7 @@ class ComplexPlayerItemBaseWidget extends MediumWidthItemWidget {
   final Stream<ItemState>? currentDurationStateStream;
   final Stream<ItemState>? totalDurationStateStream;
   final Stream<ItemState>? volumeDimmerStateStream;
+  final bool disableTap;
 
   ComplexPlayerItemBaseWidget({
     super.key,
@@ -34,6 +35,7 @@ class ComplexPlayerItemBaseWidget extends MediumWidthItemWidget {
     this.currentDurationStateStream,
     this.totalDurationStateStream,
     this.volumeDimmerStateStream,
+    this.disableTap = false,
   });
 
   final _itemRepository = locator<ItemRepository>();
@@ -66,6 +68,7 @@ class ComplexPlayerItemBaseWidget extends MediumWidthItemWidget {
               key: ValueKey(playerState.toString()),
               onLongTap: item != null ? () => onLongTap(context) : null,
               colorScheme: colorScheme,
+              disableTap: disableTap,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -1,4 +1,5 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:collection/collection.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart' hide ConnectionState;
 import 'package:go_router/go_router.dart';
@@ -6,6 +7,7 @@ import 'package:stacked/stacked.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/database/items/item_type.dart';
+import '../../../core/database/rooms/rooms_table.dart';
 import '../../../core/services/wakelock_service.dart';
 import '../../../locator.dart';
 import '../../../main.dart';
@@ -30,16 +32,17 @@ class SettingsViewModel extends BaseViewModel {
   Stream<DateTime?> get lastSSEConnectionStart =>
       _loginRepository.connectivityManager.sseLastConnection;
 
-  Stream<DateTime?> get lastSSEUpdate => _loginRepository.connectivityManager.sseLastMessage;
+  Stream<DateTime?> get lastSSEUpdate =>
+      _loginRepository.connectivityManager.sseLastMessage;
 
   AdaptiveThemeMode getThemeMode(BuildContext context) {
-    return AdaptiveTheme
-        .of(context)
-        .mode;
+    return AdaptiveTheme.of(context).mode;
   }
 
   bool get missingRemoteSetup => !_loginRepository.hasRemoteLoginData;
+
   bool get missingCloudSetup => !_loginRepository.hasCloudLoginData;
+
   bool get missingApiSetup => !_loginRepository.hasApiLoginData;
 
   SettingsViewModel() {
@@ -51,9 +54,7 @@ class SettingsViewModel extends BaseViewModel {
 
   void setTheme(BuildContext context, AdaptiveThemeMode newMode) {
     AdaptiveTheme.of(context).setThemeMode(newMode);
-    final theme = AdaptiveTheme
-        .of(context)
-        .theme;
+    final theme = AdaptiveTheme.of(context).theme;
     setSystemOverlay(theme);
   }
 
@@ -63,15 +64,18 @@ class SettingsViewModel extends BaseViewModel {
   }
 
   Future<void> addRemoteSetup(BuildContext context) async {
-    context.pushNamed(LoginRemoteSetupView.routeName, queryParameters: {'type': "remote"});
+    context.pushNamed(LoginRemoteSetupView.routeName,
+        queryParameters: {'type': "remote"});
   }
 
   Future<void> addCloudSetup(BuildContext context) async {
-    context.pushNamed(LoginRemoteSetupView.routeName, queryParameters: {'type': "cloud"});
+    context.pushNamed(LoginRemoteSetupView.routeName,
+        queryParameters: {'type': "cloud"});
   }
 
   Future<void> addApiSetup(BuildContext context) async {
-    final result = await context.pushNamed(LoginApiSetupView.routeName, queryParameters: {'type': "fromSettings"});
+    final result = await context.pushNamed(LoginApiSetupView.routeName,
+        queryParameters: {'type': "fromSettings"});
     _automationRepository.fetchData();
   }
 
@@ -87,26 +91,41 @@ class SettingsViewModel extends BaseViewModel {
   }
 
   static Future<void> insertDummyDataMunich() async {
-    final _itemsRepository = locator<ItemRepository>();
-    final _db = locator<AppDatabase>();
+    final itemsRepository = locator<ItemRepository>();
+    final db = locator<AppDatabase>();
+    await itemsRepository.fetchData();
 
     // create rooms
-    final roomStore = _db.roomsStore;
+    final roomStore = db.roomsStore;
 
     final rooms = [
       RoomsTableCompanion.insert(
-          name: "Schlafzimmer", icon: Value(Icons.bed),
-          color: Value("#CEFDFF"), sortKey: 0),
+          name: "Schlafzimmer",
+          description: Value("Sorted by Score"),
+          icon: Value(Icons.bed),
+          color: Value("#CEFDFF"),
+          sortKey: 0,
+          itemsSortOption: RoomItemsSortOption.manual),
       RoomsTableCompanion.insert(
-          name: "Küche", icon: Value(Icons.kitchen),
-          color: Value("#EE964B"), sortKey: 1),
+          name: "Küche",
+          description: Value("Sorted by Score"),
+          icon: Value(Icons.kitchen),
+          color: Value("#EE964B"),
+          sortKey: 1,
+          itemsSortOption: RoomItemsSortOption.manual),
       RoomsTableCompanion.insert(
-          name: "Flur", color: Value("#4062BB"), sortKey: 2),
+          name: "Flur",
+          description: Value("Sorted by Score"),
+          color: Value("#4062BB"),
+          sortKey: 2,
+          itemsSortOption: RoomItemsSortOption.byScore),
       RoomsTableCompanion.insert(
           name: "Bad",
+          description: Value("Sorted Manual"),
           icon: Value(Icons.bathtub),
           color: Value("#00FF00"),
-          sortKey: 3),
+          sortKey: 3,
+          itemsSortOption: RoomItemsSortOption.manual),
     ];
 
     // bedRoom
@@ -121,126 +140,160 @@ class SettingsViewModel extends BaseViewModel {
     // bathRoom
     final bathRoom = await roomStore.insertOrUpdateSingleWithId(rooms[3]);
 
-    final inboxStore = _db.inboxStore;
-    final inboxItemNames = (await inboxStore.all().get()).map((e) => e.name);
+    final itemsStore = db.itemsStore;
+    final items = await itemsStore.inbox().get();
 
     // create items
-    if (inboxItemNames.contains("Lampe_Bad")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "Lampe_Bad",
+    final lampeBadItem = items.firstWhereOrNull((element) => element.ohName == "Lampe_Bad");
+    if (lampeBadItem != null) {
+      await itemsRepository.addItemFromInbox(
+          item: lampeBadItem,
           type: ItemType.light,
           roomId: bathRoom,
           isFavorite: true);
     }
-    if (inboxItemNames.contains("Rollo_Tuer")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "Rollo_Tuer",
+
+    final rolloTuerItem = items.firstWhereOrNull((element) => element.ohName == "Rollo_Tuer");
+    if (rolloTuerItem != null) {
+      await itemsRepository.addItemFromInbox(
+          item: rolloTuerItem,
           type: ItemType.rollerShutter,
           roomId: bedRoom,
           isFavorite: true);
     }
-    if (inboxItemNames.contains("Rollos_Fenster")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "Rollos_Fenster",
+
+    final rollosFensterItem = items.firstWhereOrNull((element) => element.ohName == "Rollos_Fenster");
+    if (rollosFensterItem != null) {
+      await itemsRepository.addItemFromInbox(
+          item: rollosFensterItem,
           type: ItemType.rollerShutter,
           roomId: bedRoom,
           isFavorite: true);
     }
-    if (inboxItemNames.contains("Lampe_Wohnzimmer")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "Lampe_Wohnzimmer",
+
+    final lampeWohnzimmerItem = items.firstWhereOrNull((element) => element.ohName == "Lampe_Wohnzimmer");
+    if (lampeWohnzimmerItem != null) {
+      await itemsRepository.addItemFromInbox(
+          item: lampeWohnzimmerItem,
           type: ItemType.light,
           roomId: bedRoom,
           isFavorite: true);
     }
-    if (inboxItemNames.contains("Thermometer_Bad_Temperatur")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "Thermometer_Bad_Temperatur",
+
+    final thermometerBadTemperaturItem = items.firstWhereOrNull((element) => element.ohName == "Thermometer_Bad_Temperatur");
+    if (thermometerBadTemperaturItem != null) {
+      await itemsRepository.addItemFromInbox(
+          item: thermometerBadTemperaturItem,
           type: ItemType.temperature,
           roomId: bathRoom,
           isFavorite: true);
     }
-    if (inboxItemNames.contains("Thermometer_Bad_Luftfeuchtigkeit")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "Thermometer_Bad_Luftfeuchtigkeit",
+
+    final thermometerBadLuftfeuchtigkeitItem = items.firstWhereOrNull((element) => element.ohName == "Thermometer_Bad_Luftfeuchtigkeit");
+    if (thermometerBadLuftfeuchtigkeitItem != null) {
+      await itemsRepository.addItemFromInbox(
+          item: thermometerBadLuftfeuchtigkeitItem,
           type: ItemType.humidity,
           roomId: bathRoom);
     }
-    if (inboxItemNames.contains("Thermometer_Schlafzimmer_Temperatur")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "Thermometer_Schlafzimmer_Temperatur",
+
+    final thermometerSchlafzimmerTemperaturItem = items.firstWhereOrNull((element) => element.ohName == "Thermometer_Schlafzimmer_Temperatur");
+    if (thermometerSchlafzimmerTemperaturItem != null) {
+      await itemsRepository.addItemFromInbox(
+          item: thermometerSchlafzimmerTemperaturItem,
           type: ItemType.temperature,
           roomId: bedRoom,
           isFavorite: true);
     }
-    if (inboxItemNames.contains("CO2Sensor_CO2")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "CO2Sensor_CO2",
+
+    final co2SensorCo2Item = items.firstWhereOrNull((element) => element.ohName == "CO2Sensor_CO2");
+    if (co2SensorCo2Item != null) {
+      await itemsRepository.addItemFromInbox(
+          item: co2SensorCo2Item,
           type: ItemType.airQuality,
           roomId: bedRoom,
           isFavorite: true);
     }
-    if (inboxItemNames.contains("Szene_Tv")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "Szene_Tv",
+
+    final szeneTvItem = items.firstWhereOrNull((element) => element.ohName == "Szene_Tv");
+    if (szeneTvItem != null) {
+      await itemsRepository.addItemFromInbox(
+          item: szeneTvItem,
           type: ItemType.button,
           roomId: bedRoom,
           isFavorite: true);
     }
-    if (inboxItemNames.contains("Lampe_Kueche")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "Lampe_Kueche",
+
+    final lampeKuecheItem = items.firstWhereOrNull((element) => element.ohName == "Lampe_Kueche");
+    if (lampeKuecheItem != null) {
+      await itemsRepository.addItemFromInbox(
+          item: lampeKuecheItem,
           type: ItemType.light,
           roomId: kitchen,
           isFavorite: true);
     }
-    if (inboxItemNames.contains("Bewegungsmelder_Kueche_Bewegung")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "Bewegungsmelder_Kueche_Bewegung",
+
+    final bewegungsmelderKuecheBewegungItem = items.firstWhereOrNull((element) => element.ohName == "Bewegungsmelder_Kueche_Bewegung");
+    if (bewegungsmelderKuecheBewegungItem != null) {
+      await itemsRepository.addItemFromInbox(
+          item: bewegungsmelderKuecheBewegungItem,
           type: ItemType.presence,
           roomId: kitchen,
           isFavorite: true);
     }
-    if (inboxItemNames.contains("Lampe_Flur")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "Lampe_Flur",
+
+    final lampeFlurItem = items.firstWhereOrNull((element) => element.ohName == "Lampe_Flur");
+    if (lampeFlurItem != null) {
+      await itemsRepository.addItemFromInbox(
+          item: lampeFlurItem,
           type: ItemType.light,
           roomId: hallway,
           isFavorite: true);
     }
-    if (inboxItemNames.contains("Bewegungsmelder_Flur_Bewegung")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "Bewegungsmelder_Flur_Bewegung",
+
+    final bewegungsmelderFlurBewegungItem = items.firstWhereOrNull((element) => element.ohName == "Bewegungsmelder_Flur_Bewegung");
+    if (bewegungsmelderFlurBewegungItem != null) {
+      await itemsRepository.addItemFromInbox(
+          item: bewegungsmelderFlurBewegungItem,
           type: ItemType.presence,
           roomId: hallway,
           isFavorite: true);
     }
 
-    await _itemsRepository.fetchData();
   }
 
-
   static Future<void> insertDummyDataHof() async {
-    final _itemsRepository = locator<ItemRepository>();
-    final _db = locator<AppDatabase>();
+    final itemsRepository = locator<ItemRepository>();
+    final db = locator<AppDatabase>();
+    await itemsRepository.fetchData();
 
     // create rooms
     final roomStore = locator<AppDatabase>().roomsStore;
 
     final rooms = [
       RoomsTableCompanion.insert(
-          name: "Erik", icon: Value(Icons.bed),
-          color: Value("#CEFDFF"), sortKey: 0),
+          name: "Erik",
+          icon: Value(Icons.bed),
+          color: Value("#CEFDFF"),
+          sortKey: 0,
+          itemsSortOption: RoomItemsSortOption.byScore),
       RoomsTableCompanion.insert(
-          name: "Wohnzimmer", icon: Value(Icons.tv),
-          color: Value("#EE964B"), sortKey: 1),
+          name: "Wohnzimmer",
+          icon: Value(Icons.tv),
+          color: Value("#EE964B"),
+          sortKey: 1,
+          itemsSortOption: RoomItemsSortOption.manual),
       RoomsTableCompanion.insert(
-          name: "Malte", color: Value("#4062BB"), sortKey: 2),
+          name: "Malte",
+          color: Value("#4062BB"),
+          sortKey: 2,
+          itemsSortOption: RoomItemsSortOption.byScore),
       RoomsTableCompanion.insert(
           name: "Bad",
           icon: Value(Icons.bathtub),
           color: Value("#00FF00"),
-          sortKey: 3),
+          sortKey: 3,
+          itemsSortOption: RoomItemsSortOption.manual),
     ];
 
     // Eriks Room
@@ -255,108 +308,128 @@ class SettingsViewModel extends BaseViewModel {
     // bathRoom
     final bathRoom = await roomStore.insertOrUpdateSingleWithId(rooms[3]);
 
-    final inboxStore = _db.inboxStore;
-    final inboxItemNames = (await inboxStore.all().get()).map((e) => e.name);
+    final itemsStore = db.itemsStore;
+    final items = await itemsStore.inbox().get();
 
     // create items
     // Erik
-    if (inboxItemNames.contains("Erik_pos3")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "Erik_pos3",
+    final erikPos3Item = items.firstWhereOrNull((element) => element.ohName == "Erik_pos3");
+    if (erikPos3Item != null) {
+      await itemsRepository.addItemFromInbox(
+          item: erikPos3Item,
           type: ItemType.rollerShutter,
           roomId: erikRoom,
           isFavorite: true);
     }
-    if (inboxItemNames.contains("stripe_erik_brightness")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "stripe_erik_brightness",
+
+    final stripeErikBrightnessItem = items.firstWhereOrNull((element) => element.ohName == "stripe_erik_brightness");
+    if (stripeErikBrightnessItem != null) {
+      await itemsRepository.addItemFromInbox(
+          item: stripeErikBrightnessItem,
           type: ItemType.light,
           roomId: erikRoom,
           isFavorite: true);
     }
-    if (inboxItemNames.contains("Thermostat_Erik_Temperature")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "Thermostat_Erik_Temperature",
+
+    final thermostatErikTemperatureItem = items.firstWhereOrNull((element) => element.ohName == "Thermostat_Erik_Temperature");
+    if (thermostatErikTemperatureItem != null) {
+      await itemsRepository.addItemFromInbox(
+          item: thermostatErikTemperatureItem,
           type: ItemType.temperature,
           roomId: erikRoom,
           isFavorite: true);
     }
-    if (inboxItemNames.contains("Thermostat_Erik_Actual_Humidity")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "Thermostat_Erik_Actual_Humidity",
+
+    final thermostatErikActualHumidityItem = items.firstWhereOrNull((element) => element.ohName == "Thermostat_Erik_Actual_Humidity");
+    if (thermostatErikActualHumidityItem != null) {
+      await itemsRepository.addItemFromInbox(
+          item: thermostatErikActualHumidityItem,
           type: ItemType.humidity,
           roomId: erikRoom,
           isFavorite: true);
     }
 
     // Malte
-    if (inboxItemNames.contains("Erik_pos3")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "Erik_pos3",
+    final erikPos3Item2 = items.firstWhereOrNull((element) => element.ohName == "Erik_pos3");
+    if (erikPos3Item2 != null) {
+      await itemsRepository.addItemFromInbox(
+          item: erikPos3Item2,
           type: ItemType.rollerShutter,
           roomId: malteRoom,
           isFavorite: true);
     }
-    if (inboxItemNames.contains("Lampe_Malte")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "Lampe_Malte",
+
+    final lampeMalteItem = items.firstWhereOrNull((element) => element.ohName == "Lampe_Malte");
+    if (lampeMalteItem != null) {
+      await itemsRepository.addItemFromInbox(
+          item: lampeMalteItem,
           type: ItemType.light,
           roomId: malteRoom,
           isFavorite: true);
     }
-    if (inboxItemNames.contains("Thermostat_Malte_Temperature")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "Thermostat_Malte_Temperature",
+
+    final thermostatMalteTemperatureItem = items.firstWhereOrNull((element) => element.ohName == "Thermostat_Malte_Temperature");
+    if (thermostatMalteTemperatureItem != null) {
+      await itemsRepository.addItemFromInbox(
+          item: thermostatMalteTemperatureItem,
           type: ItemType.temperature,
           roomId: malteRoom,
           isFavorite: true);
     }
-    if (inboxItemNames.contains("Thermostat_Malte_Actual_Humidity")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "Thermostat_Malte_Actual_Humidity",
+
+    final thermostatMalteActualHumidityItem = items.firstWhereOrNull((element) => element.ohName == "Thermostat_Malte_Actual_Humidity");
+    if (thermostatMalteActualHumidityItem != null) {
+      await itemsRepository.addItemFromInbox(
+          item: thermostatMalteActualHumidityItem,
           type: ItemType.humidity,
           roomId: malteRoom,
           isFavorite: true);
     }
 
     // livingRoom
-    if (inboxItemNames.contains("Thermostat_Wohnzimmer_Actual_Temperature")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "Thermostat_Wohnzimmer_Actual_Temperature",
+    final thermostatWohnzimmerActualTemperatureItem = items.firstWhereOrNull((element) => element.ohName == "Thermostat_Wohnzimmer_Actual_Temperature");
+    if (thermostatWohnzimmerActualTemperatureItem != null) {
+      await itemsRepository.addItemFromInbox(
+          item: thermostatWohnzimmerActualTemperatureItem,
           type: ItemType.temperature,
           roomId: livingRoom,
           isFavorite: true);
     }
-    if (inboxItemNames.contains("Thermostat_Wohnzimmer_Actual_Humidity")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "Thermostat_Wohnzimmer_Actual_Humidity",
+
+    final thermostatWohnzimmerActualHumidityItem = items.firstWhereOrNull((element) => element.ohName == "Thermostat_Wohnzimmer_Actual_Humidity");
+    if (thermostatWohnzimmerActualHumidityItem != null) {
+      await itemsRepository.addItemFromInbox(
+          item: thermostatWohnzimmerActualHumidityItem,
           type: ItemType.humidity,
           roomId: livingRoom);
     }
 
     // Bathroom
-    if (inboxItemNames.contains("Thermostat_Bad_EG_Actual_Humidity")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "Thermostat_Bad_EG_Actual_Humidity",
+    final thermostatBadEgActualHumidityItem = items.firstWhereOrNull((element) => element.ohName == "Thermostat_Bad_EG_Actual_Humidity");
+    if (thermostatBadEgActualHumidityItem != null) {
+      await itemsRepository.addItemFromInbox(
+          item: thermostatBadEgActualHumidityItem,
           type: ItemType.humidity,
           roomId: bathRoom,
           isFavorite: true);
     }
-    if (inboxItemNames.contains("Thermostat_Bad_EG_Actual_Temperature")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "Thermostat_Bad_EG_Actual_Temperature",
+
+    final thermostatBadEgActualTemperatureItem = items.firstWhereOrNull((element) => element.ohName == "Thermostat_Bad_EG_Actual_Temperature");
+    if (thermostatBadEgActualTemperatureItem != null) {
+      await itemsRepository.addItemFromInbox(
+          item: thermostatBadEgActualTemperatureItem,
           type: ItemType.temperature,
           roomId: bathRoom,
           isFavorite: true);
     }
-    if (inboxItemNames.contains("Fenster_Sensor_Bad_Fensterkontakt")) {
-      await _itemsRepository.addItemFromInbox(
-          itemName: "Fenster_Sensor_Bad_Fensterkontakt",
+
+    final fensterSensorBadFensterkontaktItem = items.firstWhereOrNull((element) => element.ohName == "Fenster_Sensor_Bad_Fensterkontakt");
+    if (fensterSensorBadFensterkontaktItem != null) {
+      await itemsRepository.addItemFromInbox(
+          item: fensterSensorBadFensterkontaktItem,
           type: ItemType.windowContact,
           roomId: bathRoom,
           isFavorite: true);
     }
-
-    await _itemsRepository.fetchData();
   }
 }

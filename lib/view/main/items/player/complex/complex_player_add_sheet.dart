@@ -36,7 +36,6 @@ class ComplexPlayerAddSheet extends StatefulWidget {
 class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
   final _formKey = GlobalKey<FormBuilderState>();
   final _itemsStore = locator<AppDatabase>().itemsStore;
-  final _inboxStore = locator<AppDatabase>().inboxStore;
   final _itemsRepository = locator<ItemRepository>();
   final _snackBarService = locator<SnackbarService>();
 
@@ -140,8 +139,8 @@ class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
                 )),
             const Gap(24),
             FutureBuilder(
-                future: _itemsRepository.getItemNamesByOhType(OhItemType.player,
-                    onlyInbox: true),
+                future:
+                    _itemsRepository.getItemNamesByOhType(OhItemType.player),
                 builder: (context, future) {
                   if (future.data?.isEmpty ?? true) {
                     return const SizedBox.shrink();
@@ -156,12 +155,10 @@ class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
                       validator: FormBuilderValidators.required(),
                       onChanged: (value) {
                         if (value != null) {
-                          playerStateStream = _inboxStore
-                              .byName(value)
+                          playerStateStream = _itemsStore
+                              .stateByName(value)
                               .watchSingleOrNull()
-                              .whereNotNull()
-                              .map((event) =>
-                                  ItemStateFromInboxEntry.convert(event));
+                              .whereNotNull();
                         } else {
                           playerStateStream = null;
                         }
@@ -190,12 +187,10 @@ class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
                       validator: FormBuilderValidators.required(),
                       onChanged: (value) {
                         if (value != null) {
-                          totalDurationStateStream = _inboxStore
-                              .byName(value)
+                          totalDurationStateStream = _itemsStore
+                              .stateByName(value)
                               .watchSingleOrNull()
-                              .whereNotNull()
-                              .map((event) =>
-                                  ItemStateFromInboxEntry.convert(event));
+                              .whereNotNull();
                         } else {
                           totalDurationStateStream = null;
                         }
@@ -223,12 +218,10 @@ class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
                       validator: FormBuilderValidators.required(),
                       onChanged: (value) {
                         if (value != null) {
-                          currentDurationStateStream = _inboxStore
-                              .byName(value)
+                          currentDurationStateStream = _itemsStore
+                              .stateByName(value)
                               .watchSingleOrNull()
-                              .whereNotNull()
-                              .map((event) =>
-                                  ItemStateFromInboxEntry.convert(event));
+                              .whereNotNull();
                         } else {
                           currentDurationStateStream = null;
                         }
@@ -255,12 +248,10 @@ class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
                       required: false,
                       onChanged: (value) {
                         if (value != null) {
-                          volumeDimmerStateStream = _inboxStore
-                              .byName(value)
+                          volumeDimmerStateStream = _itemsStore
+                              .stateByName(value)
                               .watchSingleOrNull()
-                              .whereNotNull()
-                              .map((event) =>
-                                  ItemStateFromInboxEntry.convert(event));
+                              .whereNotNull();
                         } else {
                           volumeDimmerStateStream = null;
                         }
@@ -286,12 +277,10 @@ class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
                       required: false,
                       onChanged: (value) {
                         if (value != null) {
-                          imageStateStream = _inboxStore
-                              .byName(value)
+                          imageStateStream = _itemsStore
+                              .stateByName(value)
                               .watchSingleOrNull()
-                              .whereNotNull()
-                              .map((event) =>
-                                  ItemStateFromInboxEntry.convert(event));
+                              .whereNotNull();
                         } else {
                           imageStateStream = null;
                         }
@@ -320,7 +309,7 @@ class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
       final playerItemName = values["playerItem"] as String;
 
       final inboxPlayerItem =
-          await _inboxStore.byName(playerItemName).getSingleOrNull();
+          await _itemsStore.byName(playerItemName).getSingleOrNull();
       final storedPlayerItem =
           await _itemsStore.byName(playerItemName).getSingleOrNull();
       if (inboxPlayerItem == null && storedPlayerItem == null) {
@@ -343,14 +332,14 @@ class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
           imageItemName: imageItem);
 
       final totalDurationItemData =
-          await _inboxStore.byName(totalDurationItem).getSingleOrNull();
+          await _itemsStore.byName(totalDurationItem).getSingleOrNull();
       final currentDurationItemData =
-          await _inboxStore.byName(currentDurationItem).getSingleOrNull();
+          await _itemsStore.byName(currentDurationItem).getSingleOrNull();
       final volumeDimmerItemData = volumeDimmerItem != null
-          ? await _inboxStore.byName(volumeDimmerItem).getSingleOrNull()
+          ? await _itemsStore.byName(volumeDimmerItem).getSingleOrNull()
           : null;
       final imageItemData = imageItem != null
-          ? await _inboxStore.byName(imageItem).getSingleOrNull()
+          ? await _itemsStore.byName(imageItem).getSingleOrNull()
           : null;
 
       if (inboxPlayerItem != null &&
@@ -358,32 +347,32 @@ class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
           currentDurationItemData != null) {
         // add
         final playerSuccess = await _itemsRepository.addItemFromInbox(
-            itemName: inboxPlayerItem.name,
+            item: inboxPlayerItem,
             type: ItemType.complexPlayer,
             roomId: widget.roomId);
         await _itemsStore.updateComplexJsonByName(
             complexPlayerItem.toJson(), playerItemName);
 
         final totalDurationSuccess = await _itemsRepository.addItemFromInbox(
-            itemName: totalDurationItemData.name,
+            item: totalDurationItemData,
             type: ItemType.complexComponent,
             roomId: widget.roomId);
 
         final currentDurationSuccess = await _itemsRepository.addItemFromInbox(
-            itemName: currentDurationItemData.name,
+            item: currentDurationItemData,
             type: ItemType.complexComponent,
             roomId: widget.roomId);
 
         final volumeDimmerSuccess = volumeDimmerItemData != null
             ? await _itemsRepository.addItemFromInbox(
-                itemName: volumeDimmerItemData.name,
+                item: volumeDimmerItemData,
                 type: ItemType.complexComponent,
                 roomId: widget.roomId)
             : true;
 
         final imageSuccess = imageItemData != null
             ? await _itemsRepository.addItemFromInbox(
-                itemName: imageItemData.name,
+                item: imageItemData,
                 type: ItemType.complexComponent,
                 roomId: widget.roomId)
             : true;
@@ -401,12 +390,12 @@ class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
         // check what changed
         final oldComplexPlayerItem = widget.complexPlayerData;
         if (oldComplexPlayerItem != null) {
-          if (oldComplexPlayerItem.totalDurationItemName != totalDurationItem) {
+          if (oldComplexPlayerItem.totalDurationItemName != totalDurationItem && totalDurationItemData != null) {
             await _itemsStore
                 .deleteDataByName(oldComplexPlayerItem.totalDurationItemName);
 
             await _itemsRepository.addItemFromInbox(
-                itemName: totalDurationItem,
+                item: totalDurationItemData,
                 type: ItemType.complexComponent,
                 roomId: widget.roomId);
           }
@@ -417,7 +406,7 @@ class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
                 .deleteDataByName(oldComplexPlayerItem.currentDurationItemName);
 
             await _itemsRepository.addItemFromInbox(
-                itemName: currentDurationItemData.name,
+                item: currentDurationItemData,
                 type: ItemType.complexComponent,
                 roomId: widget.roomId);
           }
@@ -429,7 +418,7 @@ class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
             }
 
             await _itemsRepository.addItemFromInbox(
-                itemName: volumeDimmerItemData.name,
+                item: volumeDimmerItemData,
                 type: ItemType.complexComponent,
                 roomId: widget.roomId);
           }
@@ -441,7 +430,7 @@ class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
             }
 
             await _itemsRepository.addItemFromInbox(
-                itemName: imageItemData!.name,
+                item: imageItemData,
                 type: ItemType.complexComponent,
                 roomId: widget.roomId);
           }

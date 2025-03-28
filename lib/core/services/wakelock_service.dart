@@ -1,18 +1,28 @@
+import 'package:rx_shared_preferences/rx_shared_preferences.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../../locator.dart';
 
 class WakelockService {
   static const prefsKey = "wakelockAutoEnabled";
-  final StreamingSharedPreferences _prefs =
-      locator<StreamingSharedPreferences>();
+  final RxSharedPreferences _prefs = locator<RxSharedPreferences>();
   final BehaviorSubject<bool> _enabledSubject = BehaviorSubject.seeded(false);
+
   Stream<bool> get enabledStream => _enabledSubject.stream;
-  Stream<bool> get autoEnabledStream => _prefs
-      .getBool(prefsKey, defaultValue: false);
-  bool get autoEnabled => _prefs.getBool(prefsKey, defaultValue: false).getValue();
+
+  Stream<bool> get autoEnabledStream =>
+      _prefs.getBoolStream(prefsKey).map((e) => e ?? false);
+
+  bool _autoEnabled = false;
+  bool get autoEnabled =>
+      _autoEnabled;
+
+  WakelockService() {
+    autoEnabledStream.listen((value) {
+      _autoEnabled = value;
+    });
+  }
 
   Future enable() async {
     await WakelockPlus.enable();
@@ -25,14 +35,14 @@ class WakelockService {
   }
 
   Future<void> autoEnable() async {
-    final value = _prefs.getBool(prefsKey, defaultValue: false).getValue();
+    final value = await autoEnabled;
     if (value) {
       await enable();
     }
   }
 
   Future<void> autoDisable() async {
-    if(await getCurrentlyEnabled()){
+    if (await getCurrentlyEnabled()) {
       await disable();
     }
   }

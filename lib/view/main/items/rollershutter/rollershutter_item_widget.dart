@@ -14,8 +14,9 @@ import '../general/item_widget_factory.dart';
 import 'rollershutter_item_dialog.dart';
 
 class RollershutterItemWidget extends SmallItemWidget {
+  final bool disableTap;
   RollershutterItemWidget(
-      {super.key, required super.item, required super.colorScheme}) : assert(item != null);
+      {super.key, required super.item, required super.colorScheme, this.disableTap = false}) : assert(item != null);
 
   final _itemRepository = locator<ItemRepository>();
 
@@ -37,6 +38,7 @@ class RollershutterItemWidget extends SmallItemWidget {
               onDragDone: !itemState.isReadOnly ? onDragDone : null,
               colorScheme: colorScheme,
               reversed: true,
+              disableTap: disableTap,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -49,7 +51,7 @@ class RollershutterItemWidget extends SmallItemWidget {
                   Align(
                       alignment: Alignment.bottomRight,
                       child: Icon(
-                        item!.icon ?? item!.type.icon,
+                        item!.icon ?? item!.type!.icon,
                         size: iconSize,
                         color: !isDown
                             ? Theme.of(context)

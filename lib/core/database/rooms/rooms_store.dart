@@ -14,6 +14,8 @@ class RoomsStore extends DatabaseAccessor<AppDatabase> with _$RoomsStoreMixin {
   MultiSelectable<Room> all() =>
       select(roomsTable)..orderBy([(t) => OrderingTerm(expression: t.sortKey)]);
 
+  SingleSelectable<Room> byId(int id) => select(roomsTable)..where((tbl) => tbl.id.equals(id));
+
   Future<int> getLastSortKey() async {
     final allRooms = await all().get();
     if (allRooms.isEmpty) {

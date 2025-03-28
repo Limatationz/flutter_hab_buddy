@@ -21,6 +21,7 @@ class ThermostatItemBaseWidget extends MediumWidthItemWidget {
   final Stream<ItemState>? currentTemperatureStream;
   final Stream<ItemState>? modeStream;
   final Stream<ItemState>? currentHumidityStream;
+  final bool disableTap;
 
   ThermostatItemBaseWidget({
     super.key,
@@ -30,6 +31,7 @@ class ThermostatItemBaseWidget extends MediumWidthItemWidget {
     this.currentTemperatureStream,
     this.modeStream,
     this.currentHumidityStream,
+    this.disableTap = false,
   });
 
   final _itemRepository = locator<ItemRepository>();
@@ -78,6 +80,7 @@ class ThermostatItemBaseWidget extends MediumWidthItemWidget {
                   !(setpointState?.isReadOnly ?? true) ? onDragDone : null,
               onLongTap: item != null ? () => onLongTap(context) : null,
               colorScheme: colorScheme,
+              disableTap: disableTap,
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

@@ -202,11 +202,11 @@ class _ClockAddSheetState extends State<ClockAddSheet> {
         );
 
         final clockItem = ItemsTableCompanion.insert(
-          type: ItemType.clock,
+          type: const Value(ItemType.clock),
           ohType: OhItemType.dateTime,
           ohName: clockItemName,
           ohLabel: "Clock",
-          roomId: widget.roomId,
+          roomId: Value(widget.roomId),
           complexJson: Value(clockData.toJson()),
           score: const Value(double.infinity),
         );
