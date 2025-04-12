@@ -3,6 +3,7 @@ import 'package:drift/drift.dart';
 import '../../../util/list.dart';
 import '../../database/app_database.dart';
 import '../../database/items/oh_item_type.dart';
+import '../../hive/state/item_state.dart';
 import '../generated/openHAB.models.swagger.dart';
 
 extension ItemDBConverter on EnrichedItemDTO {
@@ -16,29 +17,23 @@ extension ItemDBConverter on EnrichedItemDTO {
       ohName: name!,
       ohLabel: label!,
       ohCategory: Value(category),
-      ohTags: Value((tags?.isEmptyCheck ?? true) ? null : tags),
-      ohGroups: Value((groupNames?.isEmptyCheck ?? true) ? null : groupNames),
+      ohTags: (tags?.isEmptyCheck ?? true) ? const Value.absent() : Value(tags),
+      ohGroups: (groupNames?.isEmptyCheck ?? true) ? const Value.absent() : Value(groupNames),
     );
   }
 
-  ItemStatesTableCompanion? asItemStateUpdate() {
+  ItemState? asItemState() {
     if (name == null || label == null || type == null || state == null) {
       return null;
     }
-    return ItemStatesTableCompanion(
-      ohName: Value(name!),
-      state: Value(state!),
-      stateDescription: stateDescription != null
-          ? Value(stateDescription!)
-          : const Value.absent(),
-      transformedState: transformedState != null
-          ? Value(transformedState!)
-          : const Value.absent(),
-      commandDescription: commandDescription != null
-          ? Value(commandDescription!)
-          : const Value.absent(),
+    return ItemState(
+      ohName: name!,
+      state: state!,
+      stateDescription: stateDescription,
+      transformedState: transformedState,
+      commandDescription: commandDescription,
       ohUnitSymbol:
-      unitSymbol != null ? Value(unitSymbol!) : const Value.absent(),
+      unitSymbol,
     );
   }
 }

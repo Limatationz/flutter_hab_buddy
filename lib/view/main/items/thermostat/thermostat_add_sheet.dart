@@ -8,7 +8,7 @@ import '../../../../../core/services/snackbar_service.dart';
 import '../../../../../core/database/app_database.dart';
 import '../../../../../core/database/items/item_type.dart';
 import '../../../../../core/database/items/oh_item_type.dart';
-import '../../../../../core/database/state/item_states_table.dart';
+import '../../../../core/hive/state/item_state.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../../locator.dart';
 import '../../../../../repository/item_repository.dart';
@@ -50,23 +50,19 @@ class _ThermostatAddSheetState extends State<ThermostatAddSheet> {
   void initState() {
     if (!isAdd) {
       heatingSetpointStateStream = _itemsStore
-          .stateByName(widget.thermostatData!.heatingSetpointItemName)
-          .watchSingleOrNull()
+          .watchStateByName(widget.thermostatData!.heatingSetpointItemName)
           .whereNotNull();
       currentTemperatureStateStream = _itemsStore
-          .stateByName(widget.thermostatData!.currentTemperatureItemName)
-          .watchSingleOrNull()
+          .watchStateByName(widget.thermostatData!.currentTemperatureItemName)
           .whereNotNull();
       if (widget.thermostatData!.modeItemName != null) {
         modeStateStream = _itemsStore
-            .stateByName(widget.thermostatData!.modeItemName!)
-            .watchSingleOrNull()
+            .watchStateByName(widget.thermostatData!.modeItemName!)
             .whereNotNull();
       }
       if (widget.thermostatData!.currentHumidityItemName != null) {
         currentHumidityStateStream = _itemsStore
-            .stateByName(widget.thermostatData!.currentHumidityItemName!)
-            .watchSingleOrNull()
+            .watchStateByName(widget.thermostatData!.currentHumidityItemName!)
             .whereNotNull();
       }
     }
@@ -148,8 +144,7 @@ class _ThermostatAddSheetState extends State<ThermostatAddSheet> {
                       onChanged: (value) {
                         if (value != null) {
                           heatingSetpointStateStream = _itemsStore
-                              .stateByName(value)
-                              .watchSingleOrNull()
+                              .watchStateByName(value)
                               .whereNotNull();
                         } else {
                           heatingSetpointStateStream = null;
@@ -180,8 +175,7 @@ class _ThermostatAddSheetState extends State<ThermostatAddSheet> {
                       onChanged: (value) {
                         if (value != null) {
                           currentTemperatureStateStream = _itemsStore
-                              .stateByName(value)
-                              .watchSingleOrNull()
+                              .watchStateByName(value)
                               .whereNotNull();
                         } else {
                           currentTemperatureStateStream = null;
@@ -210,8 +204,7 @@ class _ThermostatAddSheetState extends State<ThermostatAddSheet> {
                       onChanged: (value) {
                         if (value != null) {
                           currentHumidityStateStream = _itemsStore
-                              .stateByName(value)
-                              .watchSingleOrNull()
+                              .watchStateByName(value)
                               .whereNotNull();
                         } else {
                           currentHumidityStateStream = null;
@@ -240,8 +233,7 @@ class _ThermostatAddSheetState extends State<ThermostatAddSheet> {
                       onChanged: (value) {
                         if (value != null) {
                           modeStateStream = _itemsStore
-                              .stateByName(value)
-                              .watchSingleOrNull()
+                              .watchStateByName(value)
                               .whereNotNull();
                         } else {
                           modeStateStream = null;

@@ -405,5 +405,6 @@
   "sendCommandCommandLabel": "Send Command",
   "or": "Or",
   "and": "And",
-  "viewRule": "View Rule"
+  "viewRule": "View Rule",
+  "localeName": "en"
 }

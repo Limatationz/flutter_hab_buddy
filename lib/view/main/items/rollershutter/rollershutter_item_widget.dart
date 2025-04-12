@@ -3,7 +3,7 @@ import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/database/items/items_table.dart';
-import '../../../../core/database/state/item_states_table.dart';
+import '../../../../core/hive/state/item_state.dart';
 import '../../../../locator.dart';
 import '../../../../repository/item_repository.dart';
 import '../../../util/constants.dart';

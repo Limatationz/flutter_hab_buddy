@@ -5,6 +5,7 @@ import 'package:collection/collection.dart';
 import 'dart:convert';
 
 import 'openHAB.enums.swagger.dart' as enums;
+import '../overrides/general.dart';
 
 part 'openHAB.models.swagger.g.dart';
 
@@ -96,21 +97,29 @@ class ConfigDescriptionParameterDTO {
     return identical(this, other) ||
         (other is ConfigDescriptionParameterDTO &&
             (identical(other.context, context) ||
-                const DeepCollectionEquality()
-                    .equals(other.context, context)) &&
+                const DeepCollectionEquality().equals(
+                  other.context,
+                  context,
+                )) &&
             (identical(other.defaultValue, defaultValue) ||
-                const DeepCollectionEquality()
-                    .equals(other.defaultValue, defaultValue)) &&
+                const DeepCollectionEquality().equals(
+                  other.defaultValue,
+                  defaultValue,
+                )) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.required, required) ||
-                const DeepCollectionEquality()
-                    .equals(other.required, required)) &&
+                const DeepCollectionEquality().equals(
+                  other.required,
+                  required,
+                )) &&
             (identical(other.type, type) ||
                 const DeepCollectionEquality().equals(other.type, type)) &&
             (identical(other.min, min) ||
@@ -118,42 +127,64 @@ class ConfigDescriptionParameterDTO {
             (identical(other.max, max) ||
                 const DeepCollectionEquality().equals(other.max, max)) &&
             (identical(other.stepsize, stepsize) ||
-                const DeepCollectionEquality()
-                    .equals(other.stepsize, stepsize)) &&
+                const DeepCollectionEquality().equals(
+                  other.stepsize,
+                  stepsize,
+                )) &&
             (identical(other.pattern, pattern) ||
-                const DeepCollectionEquality()
-                    .equals(other.pattern, pattern)) &&
+                const DeepCollectionEquality().equals(
+                  other.pattern,
+                  pattern,
+                )) &&
             (identical(other.readOnly, readOnly) ||
-                const DeepCollectionEquality()
-                    .equals(other.readOnly, readOnly)) &&
+                const DeepCollectionEquality().equals(
+                  other.readOnly,
+                  readOnly,
+                )) &&
             (identical(other.multiple, multiple) ||
-                const DeepCollectionEquality()
-                    .equals(other.multiple, multiple)) &&
+                const DeepCollectionEquality().equals(
+                  other.multiple,
+                  multiple,
+                )) &&
             (identical(other.multipleLimit, multipleLimit) ||
-                const DeepCollectionEquality()
-                    .equals(other.multipleLimit, multipleLimit)) &&
+                const DeepCollectionEquality().equals(
+                  other.multipleLimit,
+                  multipleLimit,
+                )) &&
             (identical(other.groupName, groupName) ||
-                const DeepCollectionEquality()
-                    .equals(other.groupName, groupName)) &&
+                const DeepCollectionEquality().equals(
+                  other.groupName,
+                  groupName,
+                )) &&
             (identical(other.advanced, advanced) ||
-                const DeepCollectionEquality()
-                    .equals(other.advanced, advanced)) &&
+                const DeepCollectionEquality().equals(
+                  other.advanced,
+                  advanced,
+                )) &&
             (identical(other.verify, verify) ||
                 const DeepCollectionEquality().equals(other.verify, verify)) &&
             (identical(other.limitToOptions, limitToOptions) ||
-                const DeepCollectionEquality()
-                    .equals(other.limitToOptions, limitToOptions)) &&
+                const DeepCollectionEquality().equals(
+                  other.limitToOptions,
+                  limitToOptions,
+                )) &&
             (identical(other.unit, unit) ||
                 const DeepCollectionEquality().equals(other.unit, unit)) &&
             (identical(other.unitLabel, unitLabel) ||
-                const DeepCollectionEquality()
-                    .equals(other.unitLabel, unitLabel)) &&
+                const DeepCollectionEquality().equals(
+                  other.unitLabel,
+                  unitLabel,
+                )) &&
             (identical(other.options, options) ||
-                const DeepCollectionEquality()
-                    .equals(other.options, options)) &&
+                const DeepCollectionEquality().equals(
+                  other.options,
+                  options,
+                )) &&
             (identical(other.filterCriteria, filterCriteria) ||
-                const DeepCollectionEquality()
-                    .equals(other.filterCriteria, filterCriteria)));
+                const DeepCollectionEquality().equals(
+                  other.filterCriteria,
+                  filterCriteria,
+                )));
   }
 
   @override
@@ -188,116 +219,114 @@ class ConfigDescriptionParameterDTO {
 
 extension $ConfigDescriptionParameterDTOExtension
     on ConfigDescriptionParameterDTO {
-  ConfigDescriptionParameterDTO copyWith(
-      {String? context,
-      String? defaultValue,
-      String? description,
-      String? label,
-      String? name,
-      bool? required,
-      enums.ConfigDescriptionParameterDTOType? type,
-      double? min,
-      double? max,
-      double? stepsize,
-      String? pattern,
-      bool? readOnly,
-      bool? multiple,
-      int? multipleLimit,
-      String? groupName,
-      bool? advanced,
-      bool? verify,
-      bool? limitToOptions,
-      String? unit,
-      String? unitLabel,
-      List<ParameterOptionDTO>? options,
-      List<FilterCriteriaDTO>? filterCriteria}) {
+  ConfigDescriptionParameterDTO copyWith({
+    String? context,
+    String? defaultValue,
+    String? description,
+    String? label,
+    String? name,
+    bool? required,
+    enums.ConfigDescriptionParameterDTOType? type,
+    double? min,
+    double? max,
+    double? stepsize,
+    String? pattern,
+    bool? readOnly,
+    bool? multiple,
+    int? multipleLimit,
+    String? groupName,
+    bool? advanced,
+    bool? verify,
+    bool? limitToOptions,
+    String? unit,
+    String? unitLabel,
+    List<ParameterOptionDTO>? options,
+    List<FilterCriteriaDTO>? filterCriteria,
+  }) {
     return ConfigDescriptionParameterDTO(
-        context: context ?? this.context,
-        defaultValue: defaultValue ?? this.defaultValue,
-        description: description ?? this.description,
-        label: label ?? this.label,
-        name: name ?? this.name,
-        required: required ?? this.required,
-        type: type ?? this.type,
-        min: min ?? this.min,
-        max: max ?? this.max,
-        stepsize: stepsize ?? this.stepsize,
-        pattern: pattern ?? this.pattern,
-        readOnly: readOnly ?? this.readOnly,
-        multiple: multiple ?? this.multiple,
-        multipleLimit: multipleLimit ?? this.multipleLimit,
-        groupName: groupName ?? this.groupName,
-        advanced: advanced ?? this.advanced,
-        verify: verify ?? this.verify,
-        limitToOptions: limitToOptions ?? this.limitToOptions,
-        unit: unit ?? this.unit,
-        unitLabel: unitLabel ?? this.unitLabel,
-        options: options ?? this.options,
-        filterCriteria: filterCriteria ?? this.filterCriteria);
+      context: context ?? this.context,
+      defaultValue: defaultValue ?? this.defaultValue,
+      description: description ?? this.description,
+      label: label ?? this.label,
+      name: name ?? this.name,
+      required: required ?? this.required,
+      type: type ?? this.type,
+      min: min ?? this.min,
+      max: max ?? this.max,
+      stepsize: stepsize ?? this.stepsize,
+      pattern: pattern ?? this.pattern,
+      readOnly: readOnly ?? this.readOnly,
+      multiple: multiple ?? this.multiple,
+      multipleLimit: multipleLimit ?? this.multipleLimit,
+      groupName: groupName ?? this.groupName,
+      advanced: advanced ?? this.advanced,
+      verify: verify ?? this.verify,
+      limitToOptions: limitToOptions ?? this.limitToOptions,
+      unit: unit ?? this.unit,
+      unitLabel: unitLabel ?? this.unitLabel,
+      options: options ?? this.options,
+      filterCriteria: filterCriteria ?? this.filterCriteria,
+    );
   }
 
-  ConfigDescriptionParameterDTO copyWithWrapped(
-      {Wrapped<String?>? context,
-      Wrapped<String?>? defaultValue,
-      Wrapped<String?>? description,
-      Wrapped<String?>? label,
-      Wrapped<String?>? name,
-      Wrapped<bool?>? required,
-      Wrapped<enums.ConfigDescriptionParameterDTOType?>? type,
-      Wrapped<double?>? min,
-      Wrapped<double?>? max,
-      Wrapped<double?>? stepsize,
-      Wrapped<String?>? pattern,
-      Wrapped<bool?>? readOnly,
-      Wrapped<bool?>? multiple,
-      Wrapped<int?>? multipleLimit,
-      Wrapped<String?>? groupName,
-      Wrapped<bool?>? advanced,
-      Wrapped<bool?>? verify,
-      Wrapped<bool?>? limitToOptions,
-      Wrapped<String?>? unit,
-      Wrapped<String?>? unitLabel,
-      Wrapped<List<ParameterOptionDTO>?>? options,
-      Wrapped<List<FilterCriteriaDTO>?>? filterCriteria}) {
+  ConfigDescriptionParameterDTO copyWithWrapped({
+    Wrapped<String?>? context,
+    Wrapped<String?>? defaultValue,
+    Wrapped<String?>? description,
+    Wrapped<String?>? label,
+    Wrapped<String?>? name,
+    Wrapped<bool?>? required,
+    Wrapped<enums.ConfigDescriptionParameterDTOType?>? type,
+    Wrapped<double?>? min,
+    Wrapped<double?>? max,
+    Wrapped<double?>? stepsize,
+    Wrapped<String?>? pattern,
+    Wrapped<bool?>? readOnly,
+    Wrapped<bool?>? multiple,
+    Wrapped<int?>? multipleLimit,
+    Wrapped<String?>? groupName,
+    Wrapped<bool?>? advanced,
+    Wrapped<bool?>? verify,
+    Wrapped<bool?>? limitToOptions,
+    Wrapped<String?>? unit,
+    Wrapped<String?>? unitLabel,
+    Wrapped<List<ParameterOptionDTO>?>? options,
+    Wrapped<List<FilterCriteriaDTO>?>? filterCriteria,
+  }) {
     return ConfigDescriptionParameterDTO(
-        context: (context != null ? context.value : this.context),
-        defaultValue:
-            (defaultValue != null ? defaultValue.value : this.defaultValue),
-        description:
-            (description != null ? description.value : this.description),
-        label: (label != null ? label.value : this.label),
-        name: (name != null ? name.value : this.name),
-        required: (required != null ? required.value : this.required),
-        type: (type != null ? type.value : this.type),
-        min: (min != null ? min.value : this.min),
-        max: (max != null ? max.value : this.max),
-        stepsize: (stepsize != null ? stepsize.value : this.stepsize),
-        pattern: (pattern != null ? pattern.value : this.pattern),
-        readOnly: (readOnly != null ? readOnly.value : this.readOnly),
-        multiple: (multiple != null ? multiple.value : this.multiple),
-        multipleLimit:
-            (multipleLimit != null ? multipleLimit.value : this.multipleLimit),
-        groupName: (groupName != null ? groupName.value : this.groupName),
-        advanced: (advanced != null ? advanced.value : this.advanced),
-        verify: (verify != null ? verify.value : this.verify),
-        limitToOptions: (limitToOptions != null
-            ? limitToOptions.value
-            : this.limitToOptions),
-        unit: (unit != null ? unit.value : this.unit),
-        unitLabel: (unitLabel != null ? unitLabel.value : this.unitLabel),
-        options: (options != null ? options.value : this.options),
-        filterCriteria: (filterCriteria != null
-            ? filterCriteria.value
-            : this.filterCriteria));
+      context: (context != null ? context.value : this.context),
+      defaultValue:
+          (defaultValue != null ? defaultValue.value : this.defaultValue),
+      description: (description != null ? description.value : this.description),
+      label: (label != null ? label.value : this.label),
+      name: (name != null ? name.value : this.name),
+      required: (required != null ? required.value : this.required),
+      type: (type != null ? type.value : this.type),
+      min: (min != null ? min.value : this.min),
+      max: (max != null ? max.value : this.max),
+      stepsize: (stepsize != null ? stepsize.value : this.stepsize),
+      pattern: (pattern != null ? pattern.value : this.pattern),
+      readOnly: (readOnly != null ? readOnly.value : this.readOnly),
+      multiple: (multiple != null ? multiple.value : this.multiple),
+      multipleLimit:
+          (multipleLimit != null ? multipleLimit.value : this.multipleLimit),
+      groupName: (groupName != null ? groupName.value : this.groupName),
+      advanced: (advanced != null ? advanced.value : this.advanced),
+      verify: (verify != null ? verify.value : this.verify),
+      limitToOptions:
+          (limitToOptions != null ? limitToOptions.value : this.limitToOptions),
+      unit: (unit != null ? unit.value : this.unit),
+      unitLabel: (unitLabel != null ? unitLabel.value : this.unitLabel),
+      options: (options != null ? options.value : this.options),
+      filterCriteria:
+          (filterCriteria != null ? filterCriteria.value : this.filterCriteria),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class FilterCriteriaDTO {
-  const FilterCriteriaDTO({
-    this.$value,
-    this.name,
-  });
+  const FilterCriteriaDTO({this.$value, this.name});
 
   factory FilterCriteriaDTO.fromJson(Map<String, dynamic> json) =>
       _$FilterCriteriaDTOFromJson(json);
@@ -334,14 +363,19 @@ class FilterCriteriaDTO {
 extension $FilterCriteriaDTOExtension on FilterCriteriaDTO {
   FilterCriteriaDTO copyWith({String? $value, String? name}) {
     return FilterCriteriaDTO(
-        $value: $value ?? this.$value, name: name ?? this.name);
+      $value: $value ?? this.$value,
+      name: name ?? this.name,
+    );
   }
 
-  FilterCriteriaDTO copyWithWrapped(
-      {Wrapped<String?>? $value, Wrapped<String?>? name}) {
+  FilterCriteriaDTO copyWithWrapped({
+    Wrapped<String?>? $value,
+    Wrapped<String?>? name,
+  }) {
     return FilterCriteriaDTO(
-        $value: ($value != null ? $value.value : this.$value),
-        name: (name != null ? name.value : this.name));
+      $value: ($value != null ? $value.value : this.$value),
+      name: (name != null ? name.value : this.name),
+    );
   }
 }
 
@@ -377,8 +411,9 @@ class ModuleTypeDTO {
   @JsonKey(name: 'description')
   final String? description;
   @JsonKey(
-      name: 'configDescriptions',
-      defaultValue: <ConfigDescriptionParameterDTO>[])
+    name: 'configDescriptions',
+    defaultValue: <ConfigDescriptionParameterDTO>[],
+  )
   final List<ConfigDescriptionParameterDTO>? configDescriptions;
   static const fromJsonFactory = _$ModuleTypeDTOFromJson;
 
@@ -389,18 +424,24 @@ class ModuleTypeDTO {
             (identical(other.uid, uid) ||
                 const DeepCollectionEquality().equals(other.uid, uid)) &&
             (identical(other.visibility, visibility) ||
-                const DeepCollectionEquality()
-                    .equals(other.visibility, visibility)) &&
+                const DeepCollectionEquality().equals(
+                  other.visibility,
+                  visibility,
+                )) &&
             (identical(other.tags, tags) ||
                 const DeepCollectionEquality().equals(other.tags, tags)) &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.configDescriptions, configDescriptions) ||
-                const DeepCollectionEquality()
-                    .equals(other.configDescriptions, configDescriptions)));
+                const DeepCollectionEquality().equals(
+                  other.configDescriptions,
+                  configDescriptions,
+                )));
   }
 
   @override
@@ -418,48 +459,49 @@ class ModuleTypeDTO {
 }
 
 extension $ModuleTypeDTOExtension on ModuleTypeDTO {
-  ModuleTypeDTO copyWith(
-      {String? uid,
-      enums.ModuleTypeDTOVisibility? visibility,
-      List<String>? tags,
-      String? label,
-      String? description,
-      List<ConfigDescriptionParameterDTO>? configDescriptions}) {
+  ModuleTypeDTO copyWith({
+    String? uid,
+    enums.ModuleTypeDTOVisibility? visibility,
+    List<String>? tags,
+    String? label,
+    String? description,
+    List<ConfigDescriptionParameterDTO>? configDescriptions,
+  }) {
     return ModuleTypeDTO(
-        uid: uid ?? this.uid,
-        visibility: visibility ?? this.visibility,
-        tags: tags ?? this.tags,
-        label: label ?? this.label,
-        description: description ?? this.description,
-        configDescriptions: configDescriptions ?? this.configDescriptions);
+      uid: uid ?? this.uid,
+      visibility: visibility ?? this.visibility,
+      tags: tags ?? this.tags,
+      label: label ?? this.label,
+      description: description ?? this.description,
+      configDescriptions: configDescriptions ?? this.configDescriptions,
+    );
   }
 
-  ModuleTypeDTO copyWithWrapped(
-      {Wrapped<String?>? uid,
-      Wrapped<enums.ModuleTypeDTOVisibility?>? visibility,
-      Wrapped<List<String>?>? tags,
-      Wrapped<String?>? label,
-      Wrapped<String?>? description,
-      Wrapped<List<ConfigDescriptionParameterDTO>?>? configDescriptions}) {
+  ModuleTypeDTO copyWithWrapped({
+    Wrapped<String?>? uid,
+    Wrapped<enums.ModuleTypeDTOVisibility?>? visibility,
+    Wrapped<List<String>?>? tags,
+    Wrapped<String?>? label,
+    Wrapped<String?>? description,
+    Wrapped<List<ConfigDescriptionParameterDTO>?>? configDescriptions,
+  }) {
     return ModuleTypeDTO(
-        uid: (uid != null ? uid.value : this.uid),
-        visibility: (visibility != null ? visibility.value : this.visibility),
-        tags: (tags != null ? tags.value : this.tags),
-        label: (label != null ? label.value : this.label),
-        description:
-            (description != null ? description.value : this.description),
-        configDescriptions: (configDescriptions != null
-            ? configDescriptions.value
-            : this.configDescriptions));
+      uid: (uid != null ? uid.value : this.uid),
+      visibility: (visibility != null ? visibility.value : this.visibility),
+      tags: (tags != null ? tags.value : this.tags),
+      label: (label != null ? label.value : this.label),
+      description: (description != null ? description.value : this.description),
+      configDescriptions:
+          (configDescriptions != null
+              ? configDescriptions.value
+              : this.configDescriptions),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class ParameterOptionDTO {
-  const ParameterOptionDTO({
-    this.label,
-    this.$value,
-  });
+  const ParameterOptionDTO({this.label, this.$value});
 
   factory ParameterOptionDTO.fromJson(Map<String, dynamic> json) =>
       _$ParameterOptionDTOFromJson(json);
@@ -496,14 +538,19 @@ class ParameterOptionDTO {
 extension $ParameterOptionDTOExtension on ParameterOptionDTO {
   ParameterOptionDTO copyWith({String? label, String? $value}) {
     return ParameterOptionDTO(
-        label: label ?? this.label, $value: $value ?? this.$value);
+      label: label ?? this.label,
+      $value: $value ?? this.$value,
+    );
   }
 
-  ParameterOptionDTO copyWithWrapped(
-      {Wrapped<String?>? label, Wrapped<String?>? $value}) {
+  ParameterOptionDTO copyWithWrapped({
+    Wrapped<String?>? label,
+    Wrapped<String?>? $value,
+  }) {
     return ParameterOptionDTO(
-        label: (label != null ? label.value : this.label),
-        $value: ($value != null ? $value.value : this.$value));
+      label: (label != null ? label.value : this.label),
+      $value: ($value != null ? $value.value : this.$value),
+    );
   }
 }
 
@@ -547,11 +594,15 @@ class ActionDTO {
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.configuration, configuration) ||
-                const DeepCollectionEquality()
-                    .equals(other.configuration, configuration)) &&
+                const DeepCollectionEquality().equals(
+                  other.configuration,
+                  configuration,
+                )) &&
             (identical(other.type, type) ||
                 const DeepCollectionEquality().equals(other.type, type)) &&
             (identical(other.inputs, inputs) ||
@@ -573,38 +624,41 @@ class ActionDTO {
 }
 
 extension $ActionDTOExtension on ActionDTO {
-  ActionDTO copyWith(
-      {String? id,
-      String? label,
-      String? description,
-      Map<String, dynamic>? configuration,
-      String? type,
-      Map<String, dynamic>? inputs}) {
+  ActionDTO copyWith({
+    String? id,
+    String? label,
+    String? description,
+    Map<String, dynamic>? configuration,
+    String? type,
+    Map<String, dynamic>? inputs,
+  }) {
     return ActionDTO(
-        id: id ?? this.id,
-        label: label ?? this.label,
-        description: description ?? this.description,
-        configuration: configuration ?? this.configuration,
-        type: type ?? this.type,
-        inputs: inputs ?? this.inputs);
+      id: id ?? this.id,
+      label: label ?? this.label,
+      description: description ?? this.description,
+      configuration: configuration ?? this.configuration,
+      type: type ?? this.type,
+      inputs: inputs ?? this.inputs,
+    );
   }
 
-  ActionDTO copyWithWrapped(
-      {Wrapped<String?>? id,
-      Wrapped<String?>? label,
-      Wrapped<String?>? description,
-      Wrapped<Map<String, dynamic>?>? configuration,
-      Wrapped<String?>? type,
-      Wrapped<Map<String, dynamic>?>? inputs}) {
+  ActionDTO copyWithWrapped({
+    Wrapped<String?>? id,
+    Wrapped<String?>? label,
+    Wrapped<String?>? description,
+    Wrapped<Map<String, dynamic>?>? configuration,
+    Wrapped<String?>? type,
+    Wrapped<Map<String, dynamic>?>? inputs,
+  }) {
     return ActionDTO(
-        id: (id != null ? id.value : this.id),
-        label: (label != null ? label.value : this.label),
-        description:
-            (description != null ? description.value : this.description),
-        configuration:
-            (configuration != null ? configuration.value : this.configuration),
-        type: (type != null ? type.value : this.type),
-        inputs: (inputs != null ? inputs.value : this.inputs));
+      id: (id != null ? id.value : this.id),
+      label: (label != null ? label.value : this.label),
+      description: (description != null ? description.value : this.description),
+      configuration:
+          (configuration != null ? configuration.value : this.configuration),
+      type: (type != null ? type.value : this.type),
+      inputs: (inputs != null ? inputs.value : this.inputs),
+    );
   }
 }
 
@@ -648,11 +702,15 @@ class ConditionDTO {
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.configuration, configuration) ||
-                const DeepCollectionEquality()
-                    .equals(other.configuration, configuration)) &&
+                const DeepCollectionEquality().equals(
+                  other.configuration,
+                  configuration,
+                )) &&
             (identical(other.type, type) ||
                 const DeepCollectionEquality().equals(other.type, type)) &&
             (identical(other.inputs, inputs) ||
@@ -674,38 +732,41 @@ class ConditionDTO {
 }
 
 extension $ConditionDTOExtension on ConditionDTO {
-  ConditionDTO copyWith(
-      {String? id,
-      String? label,
-      String? description,
-      Map<String, dynamic>? configuration,
-      String? type,
-      Map<String, dynamic>? inputs}) {
+  ConditionDTO copyWith({
+    String? id,
+    String? label,
+    String? description,
+    Map<String, dynamic>? configuration,
+    String? type,
+    Map<String, dynamic>? inputs,
+  }) {
     return ConditionDTO(
-        id: id ?? this.id,
-        label: label ?? this.label,
-        description: description ?? this.description,
-        configuration: configuration ?? this.configuration,
-        type: type ?? this.type,
-        inputs: inputs ?? this.inputs);
+      id: id ?? this.id,
+      label: label ?? this.label,
+      description: description ?? this.description,
+      configuration: configuration ?? this.configuration,
+      type: type ?? this.type,
+      inputs: inputs ?? this.inputs,
+    );
   }
 
-  ConditionDTO copyWithWrapped(
-      {Wrapped<String?>? id,
-      Wrapped<String?>? label,
-      Wrapped<String?>? description,
-      Wrapped<Map<String, dynamic>?>? configuration,
-      Wrapped<String?>? type,
-      Wrapped<Map<String, dynamic>?>? inputs}) {
+  ConditionDTO copyWithWrapped({
+    Wrapped<String?>? id,
+    Wrapped<String?>? label,
+    Wrapped<String?>? description,
+    Wrapped<Map<String, dynamic>?>? configuration,
+    Wrapped<String?>? type,
+    Wrapped<Map<String, dynamic>?>? inputs,
+  }) {
     return ConditionDTO(
-        id: (id != null ? id.value : this.id),
-        label: (label != null ? label.value : this.label),
-        description:
-            (description != null ? description.value : this.description),
-        configuration:
-            (configuration != null ? configuration.value : this.configuration),
-        type: (type != null ? type.value : this.type),
-        inputs: (inputs != null ? inputs.value : this.inputs));
+      id: (id != null ? id.value : this.id),
+      label: (label != null ? label.value : this.label),
+      description: (description != null ? description.value : this.description),
+      configuration:
+          (configuration != null ? configuration.value : this.configuration),
+      type: (type != null ? type.value : this.type),
+      inputs: (inputs != null ? inputs.value : this.inputs),
+    );
   }
 }
 
@@ -740,8 +801,9 @@ class RuleDTO {
   @JsonKey(name: 'configuration')
   final Map<String, dynamic>? configuration;
   @JsonKey(
-      name: 'configDescriptions',
-      defaultValue: <ConfigDescriptionParameterDTO>[])
+    name: 'configDescriptions',
+    defaultValue: <ConfigDescriptionParameterDTO>[],
+  )
   final List<ConfigDescriptionParameterDTO>? configDescriptions;
   @JsonKey(name: 'templateUID')
   final String? templateUID;
@@ -766,23 +828,35 @@ class RuleDTO {
     return identical(this, other) ||
         (other is RuleDTO &&
             (identical(other.triggers, triggers) ||
-                const DeepCollectionEquality()
-                    .equals(other.triggers, triggers)) &&
+                const DeepCollectionEquality().equals(
+                  other.triggers,
+                  triggers,
+                )) &&
             (identical(other.conditions, conditions) ||
-                const DeepCollectionEquality()
-                    .equals(other.conditions, conditions)) &&
+                const DeepCollectionEquality().equals(
+                  other.conditions,
+                  conditions,
+                )) &&
             (identical(other.actions, actions) ||
-                const DeepCollectionEquality()
-                    .equals(other.actions, actions)) &&
+                const DeepCollectionEquality().equals(
+                  other.actions,
+                  actions,
+                )) &&
             (identical(other.configuration, configuration) ||
-                const DeepCollectionEquality()
-                    .equals(other.configuration, configuration)) &&
+                const DeepCollectionEquality().equals(
+                  other.configuration,
+                  configuration,
+                )) &&
             (identical(other.configDescriptions, configDescriptions) ||
-                const DeepCollectionEquality()
-                    .equals(other.configDescriptions, configDescriptions)) &&
+                const DeepCollectionEquality().equals(
+                  other.configDescriptions,
+                  configDescriptions,
+                )) &&
             (identical(other.templateUID, templateUID) ||
-                const DeepCollectionEquality()
-                    .equals(other.templateUID, templateUID)) &&
+                const DeepCollectionEquality().equals(
+                  other.templateUID,
+                  templateUID,
+                )) &&
             (identical(other.uid, uid) ||
                 const DeepCollectionEquality().equals(other.uid, uid)) &&
             (identical(other.name, name) ||
@@ -790,11 +864,15 @@ class RuleDTO {
             (identical(other.tags, tags) ||
                 const DeepCollectionEquality().equals(other.tags, tags)) &&
             (identical(other.visibility, visibility) ||
-                const DeepCollectionEquality()
-                    .equals(other.visibility, visibility)) &&
+                const DeepCollectionEquality().equals(
+                  other.visibility,
+                  visibility,
+                )) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)));
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )));
   }
 
   @override
@@ -817,61 +895,64 @@ class RuleDTO {
 }
 
 extension $RuleDTOExtension on RuleDTO {
-  RuleDTO copyWith(
-      {List<TriggerDTO>? triggers,
-      List<ConditionDTO>? conditions,
-      List<ActionDTO>? actions,
-      Map<String, dynamic>? configuration,
-      List<ConfigDescriptionParameterDTO>? configDescriptions,
-      String? templateUID,
-      String? uid,
-      String? name,
-      List<String>? tags,
-      enums.RuleDTOVisibility? visibility,
-      String? description}) {
+  RuleDTO copyWith({
+    List<TriggerDTO>? triggers,
+    List<ConditionDTO>? conditions,
+    List<ActionDTO>? actions,
+    Map<String, dynamic>? configuration,
+    List<ConfigDescriptionParameterDTO>? configDescriptions,
+    String? templateUID,
+    String? uid,
+    String? name,
+    List<String>? tags,
+    enums.RuleDTOVisibility? visibility,
+    String? description,
+  }) {
     return RuleDTO(
-        triggers: triggers ?? this.triggers,
-        conditions: conditions ?? this.conditions,
-        actions: actions ?? this.actions,
-        configuration: configuration ?? this.configuration,
-        configDescriptions: configDescriptions ?? this.configDescriptions,
-        templateUID: templateUID ?? this.templateUID,
-        uid: uid ?? this.uid,
-        name: name ?? this.name,
-        tags: tags ?? this.tags,
-        visibility: visibility ?? this.visibility,
-        description: description ?? this.description);
+      triggers: triggers ?? this.triggers,
+      conditions: conditions ?? this.conditions,
+      actions: actions ?? this.actions,
+      configuration: configuration ?? this.configuration,
+      configDescriptions: configDescriptions ?? this.configDescriptions,
+      templateUID: templateUID ?? this.templateUID,
+      uid: uid ?? this.uid,
+      name: name ?? this.name,
+      tags: tags ?? this.tags,
+      visibility: visibility ?? this.visibility,
+      description: description ?? this.description,
+    );
   }
 
-  RuleDTO copyWithWrapped(
-      {Wrapped<List<TriggerDTO>?>? triggers,
-      Wrapped<List<ConditionDTO>?>? conditions,
-      Wrapped<List<ActionDTO>?>? actions,
-      Wrapped<Map<String, dynamic>?>? configuration,
-      Wrapped<List<ConfigDescriptionParameterDTO>?>? configDescriptions,
-      Wrapped<String?>? templateUID,
-      Wrapped<String?>? uid,
-      Wrapped<String?>? name,
-      Wrapped<List<String>?>? tags,
-      Wrapped<enums.RuleDTOVisibility?>? visibility,
-      Wrapped<String?>? description}) {
+  RuleDTO copyWithWrapped({
+    Wrapped<List<TriggerDTO>?>? triggers,
+    Wrapped<List<ConditionDTO>?>? conditions,
+    Wrapped<List<ActionDTO>?>? actions,
+    Wrapped<Map<String, dynamic>?>? configuration,
+    Wrapped<List<ConfigDescriptionParameterDTO>?>? configDescriptions,
+    Wrapped<String?>? templateUID,
+    Wrapped<String?>? uid,
+    Wrapped<String?>? name,
+    Wrapped<List<String>?>? tags,
+    Wrapped<enums.RuleDTOVisibility?>? visibility,
+    Wrapped<String?>? description,
+  }) {
     return RuleDTO(
-        triggers: (triggers != null ? triggers.value : this.triggers),
-        conditions: (conditions != null ? conditions.value : this.conditions),
-        actions: (actions != null ? actions.value : this.actions),
-        configuration:
-            (configuration != null ? configuration.value : this.configuration),
-        configDescriptions: (configDescriptions != null
-            ? configDescriptions.value
-            : this.configDescriptions),
-        templateUID:
-            (templateUID != null ? templateUID.value : this.templateUID),
-        uid: (uid != null ? uid.value : this.uid),
-        name: (name != null ? name.value : this.name),
-        tags: (tags != null ? tags.value : this.tags),
-        visibility: (visibility != null ? visibility.value : this.visibility),
-        description:
-            (description != null ? description.value : this.description));
+      triggers: (triggers != null ? triggers.value : this.triggers),
+      conditions: (conditions != null ? conditions.value : this.conditions),
+      actions: (actions != null ? actions.value : this.actions),
+      configuration:
+          (configuration != null ? configuration.value : this.configuration),
+      configDescriptions:
+          (configDescriptions != null
+              ? configDescriptions.value
+              : this.configDescriptions),
+      templateUID: (templateUID != null ? templateUID.value : this.templateUID),
+      uid: (uid != null ? uid.value : this.uid),
+      name: (name != null ? name.value : this.name),
+      tags: (tags != null ? tags.value : this.tags),
+      visibility: (visibility != null ? visibility.value : this.visibility),
+      description: (description != null ? description.value : this.description),
+    );
   }
 }
 
@@ -912,11 +993,15 @@ class TriggerDTO {
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.configuration, configuration) ||
-                const DeepCollectionEquality()
-                    .equals(other.configuration, configuration)) &&
+                const DeepCollectionEquality().equals(
+                  other.configuration,
+                  configuration,
+                )) &&
             (identical(other.type, type) ||
                 const DeepCollectionEquality().equals(other.type, type)));
   }
@@ -935,34 +1020,37 @@ class TriggerDTO {
 }
 
 extension $TriggerDTOExtension on TriggerDTO {
-  TriggerDTO copyWith(
-      {String? id,
-      String? label,
-      String? description,
-      Map<String, dynamic>? configuration,
-      String? type}) {
+  TriggerDTO copyWith({
+    String? id,
+    String? label,
+    String? description,
+    Map<String, dynamic>? configuration,
+    String? type,
+  }) {
     return TriggerDTO(
-        id: id ?? this.id,
-        label: label ?? this.label,
-        description: description ?? this.description,
-        configuration: configuration ?? this.configuration,
-        type: type ?? this.type);
+      id: id ?? this.id,
+      label: label ?? this.label,
+      description: description ?? this.description,
+      configuration: configuration ?? this.configuration,
+      type: type ?? this.type,
+    );
   }
 
-  TriggerDTO copyWithWrapped(
-      {Wrapped<String?>? id,
-      Wrapped<String?>? label,
-      Wrapped<String?>? description,
-      Wrapped<Map<String, dynamic>?>? configuration,
-      Wrapped<String?>? type}) {
+  TriggerDTO copyWithWrapped({
+    Wrapped<String?>? id,
+    Wrapped<String?>? label,
+    Wrapped<String?>? description,
+    Wrapped<Map<String, dynamic>?>? configuration,
+    Wrapped<String?>? type,
+  }) {
     return TriggerDTO(
-        id: (id != null ? id.value : this.id),
-        label: (label != null ? label.value : this.label),
-        description:
-            (description != null ? description.value : this.description),
-        configuration:
-            (configuration != null ? configuration.value : this.configuration),
-        type: (type != null ? type.value : this.type));
+      id: (id != null ? id.value : this.id),
+      label: (label != null ? label.value : this.label),
+      description: (description != null ? description.value : this.description),
+      configuration:
+          (configuration != null ? configuration.value : this.configuration),
+      type: (type != null ? type.value : this.type),
+    );
   }
 }
 
@@ -999,8 +1087,9 @@ class EnrichedRuleDTO {
   @JsonKey(name: 'configuration')
   final Map<String, dynamic>? configuration;
   @JsonKey(
-      name: 'configDescriptions',
-      defaultValue: <ConfigDescriptionParameterDTO>[])
+    name: 'configDescriptions',
+    defaultValue: <ConfigDescriptionParameterDTO>[],
+  )
   final List<ConfigDescriptionParameterDTO>? configDescriptions;
   @JsonKey(name: 'templateUID')
   final String? templateUID;
@@ -1029,23 +1118,35 @@ class EnrichedRuleDTO {
     return identical(this, other) ||
         (other is EnrichedRuleDTO &&
             (identical(other.triggers, triggers) ||
-                const DeepCollectionEquality()
-                    .equals(other.triggers, triggers)) &&
+                const DeepCollectionEquality().equals(
+                  other.triggers,
+                  triggers,
+                )) &&
             (identical(other.conditions, conditions) ||
-                const DeepCollectionEquality()
-                    .equals(other.conditions, conditions)) &&
+                const DeepCollectionEquality().equals(
+                  other.conditions,
+                  conditions,
+                )) &&
             (identical(other.actions, actions) ||
-                const DeepCollectionEquality()
-                    .equals(other.actions, actions)) &&
+                const DeepCollectionEquality().equals(
+                  other.actions,
+                  actions,
+                )) &&
             (identical(other.configuration, configuration) ||
-                const DeepCollectionEquality()
-                    .equals(other.configuration, configuration)) &&
+                const DeepCollectionEquality().equals(
+                  other.configuration,
+                  configuration,
+                )) &&
             (identical(other.configDescriptions, configDescriptions) ||
-                const DeepCollectionEquality()
-                    .equals(other.configDescriptions, configDescriptions)) &&
+                const DeepCollectionEquality().equals(
+                  other.configDescriptions,
+                  configDescriptions,
+                )) &&
             (identical(other.templateUID, templateUID) ||
-                const DeepCollectionEquality()
-                    .equals(other.templateUID, templateUID)) &&
+                const DeepCollectionEquality().equals(
+                  other.templateUID,
+                  templateUID,
+                )) &&
             (identical(other.uid, uid) ||
                 const DeepCollectionEquality().equals(other.uid, uid)) &&
             (identical(other.name, name) ||
@@ -1053,16 +1154,22 @@ class EnrichedRuleDTO {
             (identical(other.tags, tags) ||
                 const DeepCollectionEquality().equals(other.tags, tags)) &&
             (identical(other.visibility, visibility) ||
-                const DeepCollectionEquality()
-                    .equals(other.visibility, visibility)) &&
+                const DeepCollectionEquality().equals(
+                  other.visibility,
+                  visibility,
+                )) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.status, status) ||
                 const DeepCollectionEquality().equals(other.status, status)) &&
             (identical(other.editable, editable) ||
-                const DeepCollectionEquality()
-                    .equals(other.editable, editable)));
+                const DeepCollectionEquality().equals(
+                  other.editable,
+                  editable,
+                )));
   }
 
   @override
@@ -1087,79 +1194,78 @@ class EnrichedRuleDTO {
 }
 
 extension $EnrichedRuleDTOExtension on EnrichedRuleDTO {
-  EnrichedRuleDTO copyWith(
-      {List<TriggerDTO>? triggers,
-      List<ConditionDTO>? conditions,
-      List<ActionDTO>? actions,
-      Map<String, dynamic>? configuration,
-      List<ConfigDescriptionParameterDTO>? configDescriptions,
-      String? templateUID,
-      String? uid,
-      String? name,
-      List<String>? tags,
-      enums.EnrichedRuleDTOVisibility? visibility,
-      String? description,
-      RuleStatusInfo? status,
-      bool? editable}) {
+  EnrichedRuleDTO copyWith({
+    List<TriggerDTO>? triggers,
+    List<ConditionDTO>? conditions,
+    List<ActionDTO>? actions,
+    Map<String, dynamic>? configuration,
+    List<ConfigDescriptionParameterDTO>? configDescriptions,
+    String? templateUID,
+    String? uid,
+    String? name,
+    List<String>? tags,
+    enums.EnrichedRuleDTOVisibility? visibility,
+    String? description,
+    RuleStatusInfo? status,
+    bool? editable,
+  }) {
     return EnrichedRuleDTO(
-        triggers: triggers ?? this.triggers,
-        conditions: conditions ?? this.conditions,
-        actions: actions ?? this.actions,
-        configuration: configuration ?? this.configuration,
-        configDescriptions: configDescriptions ?? this.configDescriptions,
-        templateUID: templateUID ?? this.templateUID,
-        uid: uid ?? this.uid,
-        name: name ?? this.name,
-        tags: tags ?? this.tags,
-        visibility: visibility ?? this.visibility,
-        description: description ?? this.description,
-        status: status ?? this.status,
-        editable: editable ?? this.editable);
+      triggers: triggers ?? this.triggers,
+      conditions: conditions ?? this.conditions,
+      actions: actions ?? this.actions,
+      configuration: configuration ?? this.configuration,
+      configDescriptions: configDescriptions ?? this.configDescriptions,
+      templateUID: templateUID ?? this.templateUID,
+      uid: uid ?? this.uid,
+      name: name ?? this.name,
+      tags: tags ?? this.tags,
+      visibility: visibility ?? this.visibility,
+      description: description ?? this.description,
+      status: status ?? this.status,
+      editable: editable ?? this.editable,
+    );
   }
 
-  EnrichedRuleDTO copyWithWrapped(
-      {Wrapped<List<TriggerDTO>?>? triggers,
-      Wrapped<List<ConditionDTO>?>? conditions,
-      Wrapped<List<ActionDTO>?>? actions,
-      Wrapped<Map<String, dynamic>?>? configuration,
-      Wrapped<List<ConfigDescriptionParameterDTO>?>? configDescriptions,
-      Wrapped<String?>? templateUID,
-      Wrapped<String?>? uid,
-      Wrapped<String?>? name,
-      Wrapped<List<String>?>? tags,
-      Wrapped<enums.EnrichedRuleDTOVisibility?>? visibility,
-      Wrapped<String?>? description,
-      Wrapped<RuleStatusInfo?>? status,
-      Wrapped<bool?>? editable}) {
+  EnrichedRuleDTO copyWithWrapped({
+    Wrapped<List<TriggerDTO>?>? triggers,
+    Wrapped<List<ConditionDTO>?>? conditions,
+    Wrapped<List<ActionDTO>?>? actions,
+    Wrapped<Map<String, dynamic>?>? configuration,
+    Wrapped<List<ConfigDescriptionParameterDTO>?>? configDescriptions,
+    Wrapped<String?>? templateUID,
+    Wrapped<String?>? uid,
+    Wrapped<String?>? name,
+    Wrapped<List<String>?>? tags,
+    Wrapped<enums.EnrichedRuleDTOVisibility?>? visibility,
+    Wrapped<String?>? description,
+    Wrapped<RuleStatusInfo?>? status,
+    Wrapped<bool?>? editable,
+  }) {
     return EnrichedRuleDTO(
-        triggers: (triggers != null ? triggers.value : this.triggers),
-        conditions: (conditions != null ? conditions.value : this.conditions),
-        actions: (actions != null ? actions.value : this.actions),
-        configuration:
-            (configuration != null ? configuration.value : this.configuration),
-        configDescriptions: (configDescriptions != null
-            ? configDescriptions.value
-            : this.configDescriptions),
-        templateUID:
-            (templateUID != null ? templateUID.value : this.templateUID),
-        uid: (uid != null ? uid.value : this.uid),
-        name: (name != null ? name.value : this.name),
-        tags: (tags != null ? tags.value : this.tags),
-        visibility: (visibility != null ? visibility.value : this.visibility),
-        description:
-            (description != null ? description.value : this.description),
-        status: (status != null ? status.value : this.status),
-        editable: (editable != null ? editable.value : this.editable));
+      triggers: (triggers != null ? triggers.value : this.triggers),
+      conditions: (conditions != null ? conditions.value : this.conditions),
+      actions: (actions != null ? actions.value : this.actions),
+      configuration:
+          (configuration != null ? configuration.value : this.configuration),
+      configDescriptions:
+          (configDescriptions != null
+              ? configDescriptions.value
+              : this.configDescriptions),
+      templateUID: (templateUID != null ? templateUID.value : this.templateUID),
+      uid: (uid != null ? uid.value : this.uid),
+      name: (name != null ? name.value : this.name),
+      tags: (tags != null ? tags.value : this.tags),
+      visibility: (visibility != null ? visibility.value : this.visibility),
+      description: (description != null ? description.value : this.description),
+      status: (status != null ? status.value : this.status),
+      editable: (editable != null ? editable.value : this.editable),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class RuleStatusInfo {
-  const RuleStatusInfo({
-    this.status,
-    this.statusDetail,
-    this.description,
-  });
+  const RuleStatusInfo({this.status, this.statusDetail, this.description});
 
   factory RuleStatusInfo.fromJson(Map<String, dynamic> json) =>
       _$RuleStatusInfoFromJson(json);
@@ -1190,11 +1296,15 @@ class RuleStatusInfo {
             (identical(other.status, status) ||
                 const DeepCollectionEquality().equals(other.status, status)) &&
             (identical(other.statusDetail, statusDetail) ||
-                const DeepCollectionEquality()
-                    .equals(other.statusDetail, statusDetail)) &&
+                const DeepCollectionEquality().equals(
+                  other.statusDetail,
+                  statusDetail,
+                )) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)));
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )));
   }
 
   @override
@@ -1209,26 +1319,29 @@ class RuleStatusInfo {
 }
 
 extension $RuleStatusInfoExtension on RuleStatusInfo {
-  RuleStatusInfo copyWith(
-      {enums.RuleStatusInfoStatus? status,
-      enums.RuleStatusInfoStatusDetail? statusDetail,
-      String? description}) {
+  RuleStatusInfo copyWith({
+    enums.RuleStatusInfoStatus? status,
+    enums.RuleStatusInfoStatusDetail? statusDetail,
+    String? description,
+  }) {
     return RuleStatusInfo(
-        status: status ?? this.status,
-        statusDetail: statusDetail ?? this.statusDetail,
-        description: description ?? this.description);
+      status: status ?? this.status,
+      statusDetail: statusDetail ?? this.statusDetail,
+      description: description ?? this.description,
+    );
   }
 
-  RuleStatusInfo copyWithWrapped(
-      {Wrapped<enums.RuleStatusInfoStatus?>? status,
-      Wrapped<enums.RuleStatusInfoStatusDetail?>? statusDetail,
-      Wrapped<String?>? description}) {
+  RuleStatusInfo copyWithWrapped({
+    Wrapped<enums.RuleStatusInfoStatus?>? status,
+    Wrapped<enums.RuleStatusInfoStatusDetail?>? statusDetail,
+    Wrapped<String?>? description,
+  }) {
     return RuleStatusInfo(
-        status: (status != null ? status.value : this.status),
-        statusDetail:
-            (statusDetail != null ? statusDetail.value : this.statusDetail),
-        description:
-            (description != null ? description.value : this.description));
+      status: (status != null ? status.value : this.status),
+      statusDetail:
+          (statusDetail != null ? statusDetail.value : this.statusDetail),
+      description: (description != null ? description.value : this.description),
+    );
   }
 }
 
@@ -1269,11 +1382,15 @@ class ModuleDTO {
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.configuration, configuration) ||
-                const DeepCollectionEquality()
-                    .equals(other.configuration, configuration)) &&
+                const DeepCollectionEquality().equals(
+                  other.configuration,
+                  configuration,
+                )) &&
             (identical(other.type, type) ||
                 const DeepCollectionEquality().equals(other.type, type)));
   }
@@ -1292,34 +1409,37 @@ class ModuleDTO {
 }
 
 extension $ModuleDTOExtension on ModuleDTO {
-  ModuleDTO copyWith(
-      {String? id,
-      String? label,
-      String? description,
-      Map<String, dynamic>? configuration,
-      String? type}) {
+  ModuleDTO copyWith({
+    String? id,
+    String? label,
+    String? description,
+    Map<String, dynamic>? configuration,
+    String? type,
+  }) {
     return ModuleDTO(
-        id: id ?? this.id,
-        label: label ?? this.label,
-        description: description ?? this.description,
-        configuration: configuration ?? this.configuration,
-        type: type ?? this.type);
+      id: id ?? this.id,
+      label: label ?? this.label,
+      description: description ?? this.description,
+      configuration: configuration ?? this.configuration,
+      type: type ?? this.type,
+    );
   }
 
-  ModuleDTO copyWithWrapped(
-      {Wrapped<String?>? id,
-      Wrapped<String?>? label,
-      Wrapped<String?>? description,
-      Wrapped<Map<String, dynamic>?>? configuration,
-      Wrapped<String?>? type}) {
+  ModuleDTO copyWithWrapped({
+    Wrapped<String?>? id,
+    Wrapped<String?>? label,
+    Wrapped<String?>? description,
+    Wrapped<Map<String, dynamic>?>? configuration,
+    Wrapped<String?>? type,
+  }) {
     return ModuleDTO(
-        id: (id != null ? id.value : this.id),
-        label: (label != null ? label.value : this.label),
-        description:
-            (description != null ? description.value : this.description),
-        configuration:
-            (configuration != null ? configuration.value : this.configuration),
-        type: (type != null ? type.value : this.type));
+      id: (id != null ? id.value : this.id),
+      label: (label != null ? label.value : this.label),
+      description: (description != null ? description.value : this.description),
+      configuration:
+          (configuration != null ? configuration.value : this.configuration),
+      type: (type != null ? type.value : this.type),
+    );
   }
 }
 
@@ -1360,18 +1480,24 @@ class Action {
             (identical(other.inputs, inputs) ||
                 const DeepCollectionEquality().equals(other.inputs, inputs)) &&
             (identical(other.typeUID, typeUID) ||
-                const DeepCollectionEquality()
-                    .equals(other.typeUID, typeUID)) &&
+                const DeepCollectionEquality().equals(
+                  other.typeUID,
+                  typeUID,
+                )) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.configuration, configuration) ||
-                const DeepCollectionEquality()
-                    .equals(other.configuration, configuration)));
+                const DeepCollectionEquality().equals(
+                  other.configuration,
+                  configuration,
+                )));
   }
 
   @override
@@ -1389,38 +1515,41 @@ class Action {
 }
 
 extension $ActionExtension on Action {
-  Action copyWith(
-      {Map<String, dynamic>? inputs,
-      String? typeUID,
-      String? description,
-      String? label,
-      String? id,
-      Configuration? configuration}) {
+  Action copyWith({
+    Map<String, dynamic>? inputs,
+    String? typeUID,
+    String? description,
+    String? label,
+    String? id,
+    Configuration? configuration,
+  }) {
     return Action(
-        inputs: inputs ?? this.inputs,
-        typeUID: typeUID ?? this.typeUID,
-        description: description ?? this.description,
-        label: label ?? this.label,
-        id: id ?? this.id,
-        configuration: configuration ?? this.configuration);
+      inputs: inputs ?? this.inputs,
+      typeUID: typeUID ?? this.typeUID,
+      description: description ?? this.description,
+      label: label ?? this.label,
+      id: id ?? this.id,
+      configuration: configuration ?? this.configuration,
+    );
   }
 
-  Action copyWithWrapped(
-      {Wrapped<Map<String, dynamic>?>? inputs,
-      Wrapped<String?>? typeUID,
-      Wrapped<String?>? description,
-      Wrapped<String?>? label,
-      Wrapped<String?>? id,
-      Wrapped<Configuration?>? configuration}) {
+  Action copyWithWrapped({
+    Wrapped<Map<String, dynamic>?>? inputs,
+    Wrapped<String?>? typeUID,
+    Wrapped<String?>? description,
+    Wrapped<String?>? label,
+    Wrapped<String?>? id,
+    Wrapped<Configuration?>? configuration,
+  }) {
     return Action(
-        inputs: (inputs != null ? inputs.value : this.inputs),
-        typeUID: (typeUID != null ? typeUID.value : this.typeUID),
-        description:
-            (description != null ? description.value : this.description),
-        label: (label != null ? label.value : this.label),
-        id: (id != null ? id.value : this.id),
-        configuration:
-            (configuration != null ? configuration.value : this.configuration));
+      inputs: (inputs != null ? inputs.value : this.inputs),
+      typeUID: (typeUID != null ? typeUID.value : this.typeUID),
+      description: (description != null ? description.value : this.description),
+      label: (label != null ? label.value : this.label),
+      id: (id != null ? id.value : this.id),
+      configuration:
+          (configuration != null ? configuration.value : this.configuration),
+    );
   }
 }
 
@@ -1462,18 +1591,24 @@ class Condition {
             (identical(other.inputs, inputs) ||
                 const DeepCollectionEquality().equals(other.inputs, inputs)) &&
             (identical(other.typeUID, typeUID) ||
-                const DeepCollectionEquality()
-                    .equals(other.typeUID, typeUID)) &&
+                const DeepCollectionEquality().equals(
+                  other.typeUID,
+                  typeUID,
+                )) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.configuration, configuration) ||
-                const DeepCollectionEquality()
-                    .equals(other.configuration, configuration)));
+                const DeepCollectionEquality().equals(
+                  other.configuration,
+                  configuration,
+                )));
   }
 
   @override
@@ -1491,38 +1626,41 @@ class Condition {
 }
 
 extension $ConditionExtension on Condition {
-  Condition copyWith(
-      {Map<String, dynamic>? inputs,
-      String? typeUID,
-      String? description,
-      String? label,
-      String? id,
-      Configuration? configuration}) {
+  Condition copyWith({
+    Map<String, dynamic>? inputs,
+    String? typeUID,
+    String? description,
+    String? label,
+    String? id,
+    Configuration? configuration,
+  }) {
     return Condition(
-        inputs: inputs ?? this.inputs,
-        typeUID: typeUID ?? this.typeUID,
-        description: description ?? this.description,
-        label: label ?? this.label,
-        id: id ?? this.id,
-        configuration: configuration ?? this.configuration);
+      inputs: inputs ?? this.inputs,
+      typeUID: typeUID ?? this.typeUID,
+      description: description ?? this.description,
+      label: label ?? this.label,
+      id: id ?? this.id,
+      configuration: configuration ?? this.configuration,
+    );
   }
 
-  Condition copyWithWrapped(
-      {Wrapped<Map<String, dynamic>?>? inputs,
-      Wrapped<String?>? typeUID,
-      Wrapped<String?>? description,
-      Wrapped<String?>? label,
-      Wrapped<String?>? id,
-      Wrapped<Configuration?>? configuration}) {
+  Condition copyWithWrapped({
+    Wrapped<Map<String, dynamic>?>? inputs,
+    Wrapped<String?>? typeUID,
+    Wrapped<String?>? description,
+    Wrapped<String?>? label,
+    Wrapped<String?>? id,
+    Wrapped<Configuration?>? configuration,
+  }) {
     return Condition(
-        inputs: (inputs != null ? inputs.value : this.inputs),
-        typeUID: (typeUID != null ? typeUID.value : this.typeUID),
-        description:
-            (description != null ? description.value : this.description),
-        label: (label != null ? label.value : this.label),
-        id: (id != null ? id.value : this.id),
-        configuration:
-            (configuration != null ? configuration.value : this.configuration));
+      inputs: (inputs != null ? inputs.value : this.inputs),
+      typeUID: (typeUID != null ? typeUID.value : this.typeUID),
+      description: (description != null ? description.value : this.description),
+      label: (label != null ? label.value : this.label),
+      id: (id != null ? id.value : this.id),
+      configuration:
+          (configuration != null ? configuration.value : this.configuration),
+    );
   }
 }
 
@@ -1618,63 +1756,99 @@ class ConfigDescriptionParameter {
             (identical(other.type, type) ||
                 const DeepCollectionEquality().equals(other.type, type)) &&
             (identical(other.groupName, groupName) ||
-                const DeepCollectionEquality()
-                    .equals(other.groupName, groupName)) &&
+                const DeepCollectionEquality().equals(
+                  other.groupName,
+                  groupName,
+                )) &&
             (identical(other.pattern, pattern) ||
-                const DeepCollectionEquality()
-                    .equals(other.pattern, pattern)) &&
+                const DeepCollectionEquality().equals(
+                  other.pattern,
+                  pattern,
+                )) &&
             (identical(other.required, required) ||
-                const DeepCollectionEquality()
-                    .equals(other.required, required)) &&
+                const DeepCollectionEquality().equals(
+                  other.required,
+                  required,
+                )) &&
             (identical(other.readOnly, readOnly) ||
-                const DeepCollectionEquality()
-                    .equals(other.readOnly, readOnly)) &&
+                const DeepCollectionEquality().equals(
+                  other.readOnly,
+                  readOnly,
+                )) &&
             (identical(other.multiple, multiple) ||
-                const DeepCollectionEquality()
-                    .equals(other.multiple, multiple)) &&
+                const DeepCollectionEquality().equals(
+                  other.multiple,
+                  multiple,
+                )) &&
             (identical(other.multipleLimit, multipleLimit) ||
-                const DeepCollectionEquality()
-                    .equals(other.multipleLimit, multipleLimit)) &&
+                const DeepCollectionEquality().equals(
+                  other.multipleLimit,
+                  multipleLimit,
+                )) &&
             (identical(other.unit, unit) ||
                 const DeepCollectionEquality().equals(other.unit, unit)) &&
             (identical(other.unitLabel, unitLabel) ||
-                const DeepCollectionEquality()
-                    .equals(other.unitLabel, unitLabel)) &&
+                const DeepCollectionEquality().equals(
+                  other.unitLabel,
+                  unitLabel,
+                )) &&
             (identical(other.context, context) ||
-                const DeepCollectionEquality()
-                    .equals(other.context, context)) &&
+                const DeepCollectionEquality().equals(
+                  other.context,
+                  context,
+                )) &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.options, options) ||
-                const DeepCollectionEquality()
-                    .equals(other.options, options)) &&
+                const DeepCollectionEquality().equals(
+                  other.options,
+                  options,
+                )) &&
             (identical(other.filterCriteria, filterCriteria) ||
-                const DeepCollectionEquality()
-                    .equals(other.filterCriteria, filterCriteria)) &&
+                const DeepCollectionEquality().equals(
+                  other.filterCriteria,
+                  filterCriteria,
+                )) &&
             (identical(other.limitToOptions, limitToOptions) ||
-                const DeepCollectionEquality()
-                    .equals(other.limitToOptions, limitToOptions)) &&
+                const DeepCollectionEquality().equals(
+                  other.limitToOptions,
+                  limitToOptions,
+                )) &&
             (identical(other.advanced, advanced) ||
-                const DeepCollectionEquality()
-                    .equals(other.advanced, advanced)) &&
+                const DeepCollectionEquality().equals(
+                  other.advanced,
+                  advanced,
+                )) &&
             (identical(other.stepSize, stepSize) ||
-                const DeepCollectionEquality()
-                    .equals(other.stepSize, stepSize)) &&
+                const DeepCollectionEquality().equals(
+                  other.stepSize,
+                  stepSize,
+                )) &&
             (identical(other.verifyable, verifyable) ||
-                const DeepCollectionEquality()
-                    .equals(other.verifyable, verifyable)) &&
+                const DeepCollectionEquality().equals(
+                  other.verifyable,
+                  verifyable,
+                )) &&
             (identical(other.minimum, minimum) ||
-                const DeepCollectionEquality()
-                    .equals(other.minimum, minimum)) &&
+                const DeepCollectionEquality().equals(
+                  other.minimum,
+                  minimum,
+                )) &&
             (identical(other.maximum, maximum) ||
-                const DeepCollectionEquality()
-                    .equals(other.maximum, maximum)) &&
+                const DeepCollectionEquality().equals(
+                  other.maximum,
+                  maximum,
+                )) &&
             (identical(other.$default, $default) ||
-                const DeepCollectionEquality()
-                    .equals(other.$default, $default)));
+                const DeepCollectionEquality().equals(
+                  other.$default,
+                  $default,
+                )));
   }
 
   @override
@@ -1708,114 +1882,113 @@ class ConfigDescriptionParameter {
 }
 
 extension $ConfigDescriptionParameterExtension on ConfigDescriptionParameter {
-  ConfigDescriptionParameter copyWith(
-      {String? name,
-      enums.ConfigDescriptionParameterType? type,
-      String? groupName,
-      String? pattern,
-      bool? required,
-      bool? readOnly,
-      bool? multiple,
-      int? multipleLimit,
-      String? unit,
-      String? unitLabel,
-      String? context,
-      String? label,
-      String? description,
-      List<ParameterOption>? options,
-      List<FilterCriteria>? filterCriteria,
-      bool? limitToOptions,
-      bool? advanced,
-      double? stepSize,
-      bool? verifyable,
-      double? minimum,
-      double? maximum,
-      String? $default}) {
+  ConfigDescriptionParameter copyWith({
+    String? name,
+    enums.ConfigDescriptionParameterType? type,
+    String? groupName,
+    String? pattern,
+    bool? required,
+    bool? readOnly,
+    bool? multiple,
+    int? multipleLimit,
+    String? unit,
+    String? unitLabel,
+    String? context,
+    String? label,
+    String? description,
+    List<ParameterOption>? options,
+    List<FilterCriteria>? filterCriteria,
+    bool? limitToOptions,
+    bool? advanced,
+    double? stepSize,
+    bool? verifyable,
+    double? minimum,
+    double? maximum,
+    String? $default,
+  }) {
     return ConfigDescriptionParameter(
-        name: name ?? this.name,
-        type: type ?? this.type,
-        groupName: groupName ?? this.groupName,
-        pattern: pattern ?? this.pattern,
-        required: required ?? this.required,
-        readOnly: readOnly ?? this.readOnly,
-        multiple: multiple ?? this.multiple,
-        multipleLimit: multipleLimit ?? this.multipleLimit,
-        unit: unit ?? this.unit,
-        unitLabel: unitLabel ?? this.unitLabel,
-        context: context ?? this.context,
-        label: label ?? this.label,
-        description: description ?? this.description,
-        options: options ?? this.options,
-        filterCriteria: filterCriteria ?? this.filterCriteria,
-        limitToOptions: limitToOptions ?? this.limitToOptions,
-        advanced: advanced ?? this.advanced,
-        stepSize: stepSize ?? this.stepSize,
-        verifyable: verifyable ?? this.verifyable,
-        minimum: minimum ?? this.minimum,
-        maximum: maximum ?? this.maximum,
-        $default: $default ?? this.$default);
+      name: name ?? this.name,
+      type: type ?? this.type,
+      groupName: groupName ?? this.groupName,
+      pattern: pattern ?? this.pattern,
+      required: required ?? this.required,
+      readOnly: readOnly ?? this.readOnly,
+      multiple: multiple ?? this.multiple,
+      multipleLimit: multipleLimit ?? this.multipleLimit,
+      unit: unit ?? this.unit,
+      unitLabel: unitLabel ?? this.unitLabel,
+      context: context ?? this.context,
+      label: label ?? this.label,
+      description: description ?? this.description,
+      options: options ?? this.options,
+      filterCriteria: filterCriteria ?? this.filterCriteria,
+      limitToOptions: limitToOptions ?? this.limitToOptions,
+      advanced: advanced ?? this.advanced,
+      stepSize: stepSize ?? this.stepSize,
+      verifyable: verifyable ?? this.verifyable,
+      minimum: minimum ?? this.minimum,
+      maximum: maximum ?? this.maximum,
+      $default: $default ?? this.$default,
+    );
   }
 
-  ConfigDescriptionParameter copyWithWrapped(
-      {Wrapped<String?>? name,
-      Wrapped<enums.ConfigDescriptionParameterType?>? type,
-      Wrapped<String?>? groupName,
-      Wrapped<String?>? pattern,
-      Wrapped<bool?>? required,
-      Wrapped<bool?>? readOnly,
-      Wrapped<bool?>? multiple,
-      Wrapped<int?>? multipleLimit,
-      Wrapped<String?>? unit,
-      Wrapped<String?>? unitLabel,
-      Wrapped<String?>? context,
-      Wrapped<String?>? label,
-      Wrapped<String?>? description,
-      Wrapped<List<ParameterOption>?>? options,
-      Wrapped<List<FilterCriteria>?>? filterCriteria,
-      Wrapped<bool?>? limitToOptions,
-      Wrapped<bool?>? advanced,
-      Wrapped<double?>? stepSize,
-      Wrapped<bool?>? verifyable,
-      Wrapped<double?>? minimum,
-      Wrapped<double?>? maximum,
-      Wrapped<String?>? $default}) {
+  ConfigDescriptionParameter copyWithWrapped({
+    Wrapped<String?>? name,
+    Wrapped<enums.ConfigDescriptionParameterType?>? type,
+    Wrapped<String?>? groupName,
+    Wrapped<String?>? pattern,
+    Wrapped<bool?>? required,
+    Wrapped<bool?>? readOnly,
+    Wrapped<bool?>? multiple,
+    Wrapped<int?>? multipleLimit,
+    Wrapped<String?>? unit,
+    Wrapped<String?>? unitLabel,
+    Wrapped<String?>? context,
+    Wrapped<String?>? label,
+    Wrapped<String?>? description,
+    Wrapped<List<ParameterOption>?>? options,
+    Wrapped<List<FilterCriteria>?>? filterCriteria,
+    Wrapped<bool?>? limitToOptions,
+    Wrapped<bool?>? advanced,
+    Wrapped<double?>? stepSize,
+    Wrapped<bool?>? verifyable,
+    Wrapped<double?>? minimum,
+    Wrapped<double?>? maximum,
+    Wrapped<String?>? $default,
+  }) {
     return ConfigDescriptionParameter(
-        name: (name != null ? name.value : this.name),
-        type: (type != null ? type.value : this.type),
-        groupName: (groupName != null ? groupName.value : this.groupName),
-        pattern: (pattern != null ? pattern.value : this.pattern),
-        required: (required != null ? required.value : this.required),
-        readOnly: (readOnly != null ? readOnly.value : this.readOnly),
-        multiple: (multiple != null ? multiple.value : this.multiple),
-        multipleLimit:
-            (multipleLimit != null ? multipleLimit.value : this.multipleLimit),
-        unit: (unit != null ? unit.value : this.unit),
-        unitLabel: (unitLabel != null ? unitLabel.value : this.unitLabel),
-        context: (context != null ? context.value : this.context),
-        label: (label != null ? label.value : this.label),
-        description:
-            (description != null ? description.value : this.description),
-        options: (options != null ? options.value : this.options),
-        filterCriteria: (filterCriteria != null
-            ? filterCriteria.value
-            : this.filterCriteria),
-        limitToOptions: (limitToOptions != null
-            ? limitToOptions.value
-            : this.limitToOptions),
-        advanced: (advanced != null ? advanced.value : this.advanced),
-        stepSize: (stepSize != null ? stepSize.value : this.stepSize),
-        verifyable: (verifyable != null ? verifyable.value : this.verifyable),
-        minimum: (minimum != null ? minimum.value : this.minimum),
-        maximum: (maximum != null ? maximum.value : this.maximum),
-        $default: ($default != null ? $default.value : this.$default));
+      name: (name != null ? name.value : this.name),
+      type: (type != null ? type.value : this.type),
+      groupName: (groupName != null ? groupName.value : this.groupName),
+      pattern: (pattern != null ? pattern.value : this.pattern),
+      required: (required != null ? required.value : this.required),
+      readOnly: (readOnly != null ? readOnly.value : this.readOnly),
+      multiple: (multiple != null ? multiple.value : this.multiple),
+      multipleLimit:
+          (multipleLimit != null ? multipleLimit.value : this.multipleLimit),
+      unit: (unit != null ? unit.value : this.unit),
+      unitLabel: (unitLabel != null ? unitLabel.value : this.unitLabel),
+      context: (context != null ? context.value : this.context),
+      label: (label != null ? label.value : this.label),
+      description: (description != null ? description.value : this.description),
+      options: (options != null ? options.value : this.options),
+      filterCriteria:
+          (filterCriteria != null ? filterCriteria.value : this.filterCriteria),
+      limitToOptions:
+          (limitToOptions != null ? limitToOptions.value : this.limitToOptions),
+      advanced: (advanced != null ? advanced.value : this.advanced),
+      stepSize: (stepSize != null ? stepSize.value : this.stepSize),
+      verifyable: (verifyable != null ? verifyable.value : this.verifyable),
+      minimum: (minimum != null ? minimum.value : this.minimum),
+      maximum: (maximum != null ? maximum.value : this.maximum),
+      $default: ($default != null ? $default.value : this.$default),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class Configuration {
-  const Configuration({
-    this.properties,
-  });
+  const Configuration({this.properties});
 
   factory Configuration.fromJson(Map<String, dynamic> json) =>
       _$ConfigurationFromJson(json);
@@ -1832,8 +2005,10 @@ class Configuration {
     return identical(this, other) ||
         (other is Configuration &&
             (identical(other.properties, properties) ||
-                const DeepCollectionEquality()
-                    .equals(other.properties, properties)));
+                const DeepCollectionEquality().equals(
+                  other.properties,
+                  properties,
+                )));
   }
 
   @override
@@ -1851,16 +2026,14 @@ extension $ConfigurationExtension on Configuration {
 
   Configuration copyWithWrapped({Wrapped<Map<String, dynamic>?>? properties}) {
     return Configuration(
-        properties: (properties != null ? properties.value : this.properties));
+      properties: (properties != null ? properties.value : this.properties),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class FilterCriteria {
-  const FilterCriteria({
-    this.$value,
-    this.name,
-  });
+  const FilterCriteria({this.$value, this.name});
 
   factory FilterCriteria.fromJson(Map<String, dynamic> json) =>
       _$FilterCriteriaFromJson(json);
@@ -1897,14 +2070,19 @@ class FilterCriteria {
 extension $FilterCriteriaExtension on FilterCriteria {
   FilterCriteria copyWith({String? $value, String? name}) {
     return FilterCriteria(
-        $value: $value ?? this.$value, name: name ?? this.name);
+      $value: $value ?? this.$value,
+      name: name ?? this.name,
+    );
   }
 
-  FilterCriteria copyWithWrapped(
-      {Wrapped<String?>? $value, Wrapped<String?>? name}) {
+  FilterCriteria copyWithWrapped({
+    Wrapped<String?>? $value,
+    Wrapped<String?>? name,
+  }) {
     return FilterCriteria(
-        $value: ($value != null ? $value.value : this.$value),
-        name: (name != null ? name.value : this.name));
+      $value: ($value != null ? $value.value : this.$value),
+      name: (name != null ? name.value : this.name),
+    );
   }
 }
 
@@ -1940,18 +2118,24 @@ class Module {
     return identical(this, other) ||
         (other is Module &&
             (identical(other.typeUID, typeUID) ||
-                const DeepCollectionEquality()
-                    .equals(other.typeUID, typeUID)) &&
+                const DeepCollectionEquality().equals(
+                  other.typeUID,
+                  typeUID,
+                )) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.configuration, configuration) ||
-                const DeepCollectionEquality()
-                    .equals(other.configuration, configuration)));
+                const DeepCollectionEquality().equals(
+                  other.configuration,
+                  configuration,
+                )));
   }
 
   @override
@@ -1968,43 +2152,43 @@ class Module {
 }
 
 extension $ModuleExtension on Module {
-  Module copyWith(
-      {String? typeUID,
-      String? description,
-      String? label,
-      String? id,
-      Configuration? configuration}) {
+  Module copyWith({
+    String? typeUID,
+    String? description,
+    String? label,
+    String? id,
+    Configuration? configuration,
+  }) {
     return Module(
-        typeUID: typeUID ?? this.typeUID,
-        description: description ?? this.description,
-        label: label ?? this.label,
-        id: id ?? this.id,
-        configuration: configuration ?? this.configuration);
+      typeUID: typeUID ?? this.typeUID,
+      description: description ?? this.description,
+      label: label ?? this.label,
+      id: id ?? this.id,
+      configuration: configuration ?? this.configuration,
+    );
   }
 
-  Module copyWithWrapped(
-      {Wrapped<String?>? typeUID,
-      Wrapped<String?>? description,
-      Wrapped<String?>? label,
-      Wrapped<String?>? id,
-      Wrapped<Configuration?>? configuration}) {
+  Module copyWithWrapped({
+    Wrapped<String?>? typeUID,
+    Wrapped<String?>? description,
+    Wrapped<String?>? label,
+    Wrapped<String?>? id,
+    Wrapped<Configuration?>? configuration,
+  }) {
     return Module(
-        typeUID: (typeUID != null ? typeUID.value : this.typeUID),
-        description:
-            (description != null ? description.value : this.description),
-        label: (label != null ? label.value : this.label),
-        id: (id != null ? id.value : this.id),
-        configuration:
-            (configuration != null ? configuration.value : this.configuration));
+      typeUID: (typeUID != null ? typeUID.value : this.typeUID),
+      description: (description != null ? description.value : this.description),
+      label: (label != null ? label.value : this.label),
+      id: (id != null ? id.value : this.id),
+      configuration:
+          (configuration != null ? configuration.value : this.configuration),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class ParameterOption {
-  const ParameterOption({
-    this.label,
-    this.$value,
-  });
+  const ParameterOption({this.label, this.$value});
 
   factory ParameterOption.fromJson(Map<String, dynamic> json) =>
       _$ParameterOptionFromJson(json);
@@ -2041,14 +2225,19 @@ class ParameterOption {
 extension $ParameterOptionExtension on ParameterOption {
   ParameterOption copyWith({String? label, String? $value}) {
     return ParameterOption(
-        label: label ?? this.label, $value: $value ?? this.$value);
+      label: label ?? this.label,
+      $value: $value ?? this.$value,
+    );
   }
 
-  ParameterOption copyWithWrapped(
-      {Wrapped<String?>? label, Wrapped<String?>? $value}) {
+  ParameterOption copyWithWrapped({
+    Wrapped<String?>? label,
+    Wrapped<String?>? $value,
+  }) {
     return ParameterOption(
-        label: (label != null ? label.value : this.label),
-        $value: ($value != null ? $value.value : this.$value));
+      label: (label != null ? label.value : this.label),
+      $value: ($value != null ? $value.value : this.$value),
+    );
   }
 }
 
@@ -2075,8 +2264,9 @@ class Rule {
   Map<String, dynamic> toJson() => _$RuleToJson(this);
 
   @JsonKey(
-      name: 'configurationDescriptions',
-      defaultValue: <ConfigDescriptionParameter>[])
+    name: 'configurationDescriptions',
+    defaultValue: <ConfigDescriptionParameter>[],
+  )
   final List<ConfigDescriptionParameter>? configurationDescriptions;
   @JsonKey(name: 'templateUID')
   final String? templateUID;
@@ -2110,41 +2300,60 @@ class Rule {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other is Rule &&
-            (identical(other.configurationDescriptions,
-                    configurationDescriptions) ||
+            (identical(
+                  other.configurationDescriptions,
+                  configurationDescriptions,
+                ) ||
                 const DeepCollectionEquality().equals(
-                    other.configurationDescriptions,
-                    configurationDescriptions)) &&
+                  other.configurationDescriptions,
+                  configurationDescriptions,
+                )) &&
             (identical(other.templateUID, templateUID) ||
-                const DeepCollectionEquality()
-                    .equals(other.templateUID, templateUID)) &&
+                const DeepCollectionEquality().equals(
+                  other.templateUID,
+                  templateUID,
+                )) &&
             (identical(other.triggers, triggers) ||
-                const DeepCollectionEquality()
-                    .equals(other.triggers, triggers)) &&
+                const DeepCollectionEquality().equals(
+                  other.triggers,
+                  triggers,
+                )) &&
             (identical(other.visibility, visibility) ||
-                const DeepCollectionEquality()
-                    .equals(other.visibility, visibility)) &&
+                const DeepCollectionEquality().equals(
+                  other.visibility,
+                  visibility,
+                )) &&
             (identical(other.tags, tags) ||
                 const DeepCollectionEquality().equals(other.tags, tags)) &&
             (identical(other.uid, uid) ||
                 const DeepCollectionEquality().equals(other.uid, uid)) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.actions, actions) ||
-                const DeepCollectionEquality()
-                    .equals(other.actions, actions)) &&
+                const DeepCollectionEquality().equals(
+                  other.actions,
+                  actions,
+                )) &&
             (identical(other.configuration, configuration) ||
-                const DeepCollectionEquality()
-                    .equals(other.configuration, configuration)) &&
+                const DeepCollectionEquality().equals(
+                  other.configuration,
+                  configuration,
+                )) &&
             (identical(other.modules, modules) ||
-                const DeepCollectionEquality()
-                    .equals(other.modules, modules)) &&
+                const DeepCollectionEquality().equals(
+                  other.modules,
+                  modules,
+                )) &&
             (identical(other.conditions, conditions) ||
-                const DeepCollectionEquality()
-                    .equals(other.conditions, conditions)));
+                const DeepCollectionEquality().equals(
+                  other.conditions,
+                  conditions,
+                )));
   }
 
   @override
@@ -2168,75 +2377,75 @@ class Rule {
 }
 
 extension $RuleExtension on Rule {
-  Rule copyWith(
-      {List<ConfigDescriptionParameter>? configurationDescriptions,
-      String? templateUID,
-      List<Trigger>? triggers,
-      enums.RuleVisibility? visibility,
-      List<String>? tags,
-      String? uid,
-      String? description,
-      String? name,
-      List<Action>? actions,
-      Configuration? configuration,
-      List<Module>? modules,
-      List<Condition>? conditions}) {
+  Rule copyWith({
+    List<ConfigDescriptionParameter>? configurationDescriptions,
+    String? templateUID,
+    List<Trigger>? triggers,
+    enums.RuleVisibility? visibility,
+    List<String>? tags,
+    String? uid,
+    String? description,
+    String? name,
+    List<Action>? actions,
+    Configuration? configuration,
+    List<Module>? modules,
+    List<Condition>? conditions,
+  }) {
     return Rule(
-        configurationDescriptions:
-            configurationDescriptions ?? this.configurationDescriptions,
-        templateUID: templateUID ?? this.templateUID,
-        triggers: triggers ?? this.triggers,
-        visibility: visibility ?? this.visibility,
-        tags: tags ?? this.tags,
-        uid: uid ?? this.uid,
-        description: description ?? this.description,
-        name: name ?? this.name,
-        actions: actions ?? this.actions,
-        configuration: configuration ?? this.configuration,
-        modules: modules ?? this.modules,
-        conditions: conditions ?? this.conditions);
+      configurationDescriptions:
+          configurationDescriptions ?? this.configurationDescriptions,
+      templateUID: templateUID ?? this.templateUID,
+      triggers: triggers ?? this.triggers,
+      visibility: visibility ?? this.visibility,
+      tags: tags ?? this.tags,
+      uid: uid ?? this.uid,
+      description: description ?? this.description,
+      name: name ?? this.name,
+      actions: actions ?? this.actions,
+      configuration: configuration ?? this.configuration,
+      modules: modules ?? this.modules,
+      conditions: conditions ?? this.conditions,
+    );
   }
 
-  Rule copyWithWrapped(
-      {Wrapped<List<ConfigDescriptionParameter>?>? configurationDescriptions,
-      Wrapped<String?>? templateUID,
-      Wrapped<List<Trigger>?>? triggers,
-      Wrapped<enums.RuleVisibility?>? visibility,
-      Wrapped<List<String>?>? tags,
-      Wrapped<String?>? uid,
-      Wrapped<String?>? description,
-      Wrapped<String?>? name,
-      Wrapped<List<Action>?>? actions,
-      Wrapped<Configuration?>? configuration,
-      Wrapped<List<Module>?>? modules,
-      Wrapped<List<Condition>?>? conditions}) {
+  Rule copyWithWrapped({
+    Wrapped<List<ConfigDescriptionParameter>?>? configurationDescriptions,
+    Wrapped<String?>? templateUID,
+    Wrapped<List<Trigger>?>? triggers,
+    Wrapped<enums.RuleVisibility?>? visibility,
+    Wrapped<List<String>?>? tags,
+    Wrapped<String?>? uid,
+    Wrapped<String?>? description,
+    Wrapped<String?>? name,
+    Wrapped<List<Action>?>? actions,
+    Wrapped<Configuration?>? configuration,
+    Wrapped<List<Module>?>? modules,
+    Wrapped<List<Condition>?>? conditions,
+  }) {
     return Rule(
-        configurationDescriptions: (configurationDescriptions != null
-            ? configurationDescriptions.value
-            : this.configurationDescriptions),
-        templateUID:
-            (templateUID != null ? templateUID.value : this.templateUID),
-        triggers: (triggers != null ? triggers.value : this.triggers),
-        visibility: (visibility != null ? visibility.value : this.visibility),
-        tags: (tags != null ? tags.value : this.tags),
-        uid: (uid != null ? uid.value : this.uid),
-        description:
-            (description != null ? description.value : this.description),
-        name: (name != null ? name.value : this.name),
-        actions: (actions != null ? actions.value : this.actions),
-        configuration:
-            (configuration != null ? configuration.value : this.configuration),
-        modules: (modules != null ? modules.value : this.modules),
-        conditions: (conditions != null ? conditions.value : this.conditions));
+      configurationDescriptions:
+          (configurationDescriptions != null
+              ? configurationDescriptions.value
+              : this.configurationDescriptions),
+      templateUID: (templateUID != null ? templateUID.value : this.templateUID),
+      triggers: (triggers != null ? triggers.value : this.triggers),
+      visibility: (visibility != null ? visibility.value : this.visibility),
+      tags: (tags != null ? tags.value : this.tags),
+      uid: (uid != null ? uid.value : this.uid),
+      description: (description != null ? description.value : this.description),
+      name: (name != null ? name.value : this.name),
+      actions: (actions != null ? actions.value : this.actions),
+      configuration:
+          (configuration != null ? configuration.value : this.configuration),
+      modules: (modules != null ? modules.value : this.modules),
+      conditions: (conditions != null ? conditions.value : this.conditions),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class RuleExecution {
-  const RuleExecution({
-    this.date,
-    this.rule,
-  });
+  const RuleExecution({this.date, this.rule});
 
   factory RuleExecution.fromJson(Map<String, dynamic> json) =>
       _$RuleExecutionFromJson(json);
@@ -2275,11 +2484,14 @@ extension $RuleExecutionExtension on RuleExecution {
     return RuleExecution(date: date ?? this.date, rule: rule ?? this.rule);
   }
 
-  RuleExecution copyWithWrapped(
-      {Wrapped<DateTime?>? date, Wrapped<Rule?>? rule}) {
+  RuleExecution copyWithWrapped({
+    Wrapped<DateTime?>? date,
+    Wrapped<Rule?>? rule,
+  }) {
     return RuleExecution(
-        date: (date != null ? date.value : this.date),
-        rule: (rule != null ? rule.value : this.rule));
+      date: (date != null ? date.value : this.date),
+      rule: (rule != null ? rule.value : this.rule),
+    );
   }
 }
 
@@ -2316,18 +2528,24 @@ class Trigger {
     return identical(this, other) ||
         (other is Trigger &&
             (identical(other.typeUID, typeUID) ||
-                const DeepCollectionEquality()
-                    .equals(other.typeUID, typeUID)) &&
+                const DeepCollectionEquality().equals(
+                  other.typeUID,
+                  typeUID,
+                )) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.configuration, configuration) ||
-                const DeepCollectionEquality()
-                    .equals(other.configuration, configuration)));
+                const DeepCollectionEquality().equals(
+                  other.configuration,
+                  configuration,
+                )));
   }
 
   @override
@@ -2344,34 +2562,37 @@ class Trigger {
 }
 
 extension $TriggerExtension on Trigger {
-  Trigger copyWith(
-      {String? typeUID,
-      String? description,
-      String? label,
-      String? id,
-      Configuration? configuration}) {
+  Trigger copyWith({
+    String? typeUID,
+    String? description,
+    String? label,
+    String? id,
+    Configuration? configuration,
+  }) {
     return Trigger(
-        typeUID: typeUID ?? this.typeUID,
-        description: description ?? this.description,
-        label: label ?? this.label,
-        id: id ?? this.id,
-        configuration: configuration ?? this.configuration);
+      typeUID: typeUID ?? this.typeUID,
+      description: description ?? this.description,
+      label: label ?? this.label,
+      id: id ?? this.id,
+      configuration: configuration ?? this.configuration,
+    );
   }
 
-  Trigger copyWithWrapped(
-      {Wrapped<String?>? typeUID,
-      Wrapped<String?>? description,
-      Wrapped<String?>? label,
-      Wrapped<String?>? id,
-      Wrapped<Configuration?>? configuration}) {
+  Trigger copyWithWrapped({
+    Wrapped<String?>? typeUID,
+    Wrapped<String?>? description,
+    Wrapped<String?>? label,
+    Wrapped<String?>? id,
+    Wrapped<Configuration?>? configuration,
+  }) {
     return Trigger(
-        typeUID: (typeUID != null ? typeUID.value : this.typeUID),
-        description:
-            (description != null ? description.value : this.description),
-        label: (label != null ? label.value : this.label),
-        id: (id != null ? id.value : this.id),
-        configuration:
-            (configuration != null ? configuration.value : this.configuration));
+      typeUID: (typeUID != null ? typeUID.value : this.typeUID),
+      description: (description != null ? description.value : this.description),
+      label: (label != null ? label.value : this.label),
+      id: (id != null ? id.value : this.id),
+      configuration:
+          (configuration != null ? configuration.value : this.configuration),
+    );
   }
 }
 
@@ -2412,15 +2633,19 @@ class Template {
     return identical(this, other) ||
         (other is Template &&
             (identical(other.visibility, visibility) ||
-                const DeepCollectionEquality()
-                    .equals(other.visibility, visibility)) &&
+                const DeepCollectionEquality().equals(
+                  other.visibility,
+                  visibility,
+                )) &&
             (identical(other.tags, tags) ||
                 const DeepCollectionEquality().equals(other.tags, tags)) &&
             (identical(other.uid, uid) ||
                 const DeepCollectionEquality().equals(other.uid, uid)) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)));
   }
@@ -2439,33 +2664,36 @@ class Template {
 }
 
 extension $TemplateExtension on Template {
-  Template copyWith(
-      {enums.TemplateVisibility? visibility,
-      List<String>? tags,
-      String? uid,
-      String? description,
-      String? label}) {
+  Template copyWith({
+    enums.TemplateVisibility? visibility,
+    List<String>? tags,
+    String? uid,
+    String? description,
+    String? label,
+  }) {
     return Template(
-        visibility: visibility ?? this.visibility,
-        tags: tags ?? this.tags,
-        uid: uid ?? this.uid,
-        description: description ?? this.description,
-        label: label ?? this.label);
+      visibility: visibility ?? this.visibility,
+      tags: tags ?? this.tags,
+      uid: uid ?? this.uid,
+      description: description ?? this.description,
+      label: label ?? this.label,
+    );
   }
 
-  Template copyWithWrapped(
-      {Wrapped<enums.TemplateVisibility?>? visibility,
-      Wrapped<List<String>?>? tags,
-      Wrapped<String?>? uid,
-      Wrapped<String?>? description,
-      Wrapped<String?>? label}) {
+  Template copyWithWrapped({
+    Wrapped<enums.TemplateVisibility?>? visibility,
+    Wrapped<List<String>?>? tags,
+    Wrapped<String?>? uid,
+    Wrapped<String?>? description,
+    Wrapped<String?>? label,
+  }) {
     return Template(
-        visibility: (visibility != null ? visibility.value : this.visibility),
-        tags: (tags != null ? tags.value : this.tags),
-        uid: (uid != null ? uid.value : this.uid),
-        description:
-            (description != null ? description.value : this.description),
-        label: (label != null ? label.value : this.label));
+      visibility: (visibility != null ? visibility.value : this.visibility),
+      tags: (tags != null ? tags.value : this.tags),
+      uid: (uid != null ? uid.value : this.uid),
+      description: (description != null ? description.value : this.description),
+      label: (label != null ? label.value : this.label),
+    );
   }
 }
 
@@ -2516,19 +2744,27 @@ class Input {
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.required, required) ||
-                const DeepCollectionEquality()
-                    .equals(other.required, required)) &&
+                const DeepCollectionEquality().equals(
+                  other.required,
+                  required,
+                )) &&
             (identical(other.tags, tags) ||
                 const DeepCollectionEquality().equals(other.tags, tags)) &&
             (identical(other.reference, reference) ||
-                const DeepCollectionEquality()
-                    .equals(other.reference, reference)) &&
+                const DeepCollectionEquality().equals(
+                  other.reference,
+                  reference,
+                )) &&
             (identical(other.defaultValue, defaultValue) ||
-                const DeepCollectionEquality()
-                    .equals(other.defaultValue, defaultValue)));
+                const DeepCollectionEquality().equals(
+                  other.defaultValue,
+                  defaultValue,
+                )));
   }
 
   @override
@@ -2548,46 +2784,49 @@ class Input {
 }
 
 extension $InputExtension on Input {
-  Input copyWith(
-      {String? name,
-      String? type,
-      String? label,
-      String? description,
-      bool? required,
-      List<String>? tags,
-      String? reference,
-      String? defaultValue}) {
+  Input copyWith({
+    String? name,
+    String? type,
+    String? label,
+    String? description,
+    bool? required,
+    List<String>? tags,
+    String? reference,
+    String? defaultValue,
+  }) {
     return Input(
-        name: name ?? this.name,
-        type: type ?? this.type,
-        label: label ?? this.label,
-        description: description ?? this.description,
-        required: required ?? this.required,
-        tags: tags ?? this.tags,
-        reference: reference ?? this.reference,
-        defaultValue: defaultValue ?? this.defaultValue);
+      name: name ?? this.name,
+      type: type ?? this.type,
+      label: label ?? this.label,
+      description: description ?? this.description,
+      required: required ?? this.required,
+      tags: tags ?? this.tags,
+      reference: reference ?? this.reference,
+      defaultValue: defaultValue ?? this.defaultValue,
+    );
   }
 
-  Input copyWithWrapped(
-      {Wrapped<String?>? name,
-      Wrapped<String?>? type,
-      Wrapped<String?>? label,
-      Wrapped<String?>? description,
-      Wrapped<bool?>? required,
-      Wrapped<List<String>?>? tags,
-      Wrapped<String?>? reference,
-      Wrapped<String?>? defaultValue}) {
+  Input copyWithWrapped({
+    Wrapped<String?>? name,
+    Wrapped<String?>? type,
+    Wrapped<String?>? label,
+    Wrapped<String?>? description,
+    Wrapped<bool?>? required,
+    Wrapped<List<String>?>? tags,
+    Wrapped<String?>? reference,
+    Wrapped<String?>? defaultValue,
+  }) {
     return Input(
-        name: (name != null ? name.value : this.name),
-        type: (type != null ? type.value : this.type),
-        label: (label != null ? label.value : this.label),
-        description:
-            (description != null ? description.value : this.description),
-        required: (required != null ? required.value : this.required),
-        tags: (tags != null ? tags.value : this.tags),
-        reference: (reference != null ? reference.value : this.reference),
-        defaultValue:
-            (defaultValue != null ? defaultValue.value : this.defaultValue));
+      name: (name != null ? name.value : this.name),
+      type: (type != null ? type.value : this.type),
+      label: (label != null ? label.value : this.label),
+      description: (description != null ? description.value : this.description),
+      required: (required != null ? required.value : this.required),
+      tags: (tags != null ? tags.value : this.tags),
+      reference: (reference != null ? reference.value : this.reference),
+      defaultValue:
+          (defaultValue != null ? defaultValue.value : this.defaultValue),
+    );
   }
 }
 
@@ -2637,14 +2876,20 @@ class Output {
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.reference, reference) ||
-                const DeepCollectionEquality()
-                    .equals(other.reference, reference)) &&
+                const DeepCollectionEquality().equals(
+                  other.reference,
+                  reference,
+                )) &&
             (identical(other.defaultValue, defaultValue) ||
-                const DeepCollectionEquality()
-                    .equals(other.defaultValue, defaultValue)));
+                const DeepCollectionEquality().equals(
+                  other.defaultValue,
+                  defaultValue,
+                )));
   }
 
   @override
@@ -2663,42 +2908,45 @@ class Output {
 }
 
 extension $OutputExtension on Output {
-  Output copyWith(
-      {String? name,
-      String? type,
-      List<String>? tags,
-      String? label,
-      String? description,
-      String? reference,
-      String? defaultValue}) {
+  Output copyWith({
+    String? name,
+    String? type,
+    List<String>? tags,
+    String? label,
+    String? description,
+    String? reference,
+    String? defaultValue,
+  }) {
     return Output(
-        name: name ?? this.name,
-        type: type ?? this.type,
-        tags: tags ?? this.tags,
-        label: label ?? this.label,
-        description: description ?? this.description,
-        reference: reference ?? this.reference,
-        defaultValue: defaultValue ?? this.defaultValue);
+      name: name ?? this.name,
+      type: type ?? this.type,
+      tags: tags ?? this.tags,
+      label: label ?? this.label,
+      description: description ?? this.description,
+      reference: reference ?? this.reference,
+      defaultValue: defaultValue ?? this.defaultValue,
+    );
   }
 
-  Output copyWithWrapped(
-      {Wrapped<String?>? name,
-      Wrapped<String?>? type,
-      Wrapped<List<String>?>? tags,
-      Wrapped<String?>? label,
-      Wrapped<String?>? description,
-      Wrapped<String?>? reference,
-      Wrapped<String?>? defaultValue}) {
+  Output copyWithWrapped({
+    Wrapped<String?>? name,
+    Wrapped<String?>? type,
+    Wrapped<List<String>?>? tags,
+    Wrapped<String?>? label,
+    Wrapped<String?>? description,
+    Wrapped<String?>? reference,
+    Wrapped<String?>? defaultValue,
+  }) {
     return Output(
-        name: (name != null ? name.value : this.name),
-        type: (type != null ? type.value : this.type),
-        tags: (tags != null ? tags.value : this.tags),
-        label: (label != null ? label.value : this.label),
-        description:
-            (description != null ? description.value : this.description),
-        reference: (reference != null ? reference.value : this.reference),
-        defaultValue:
-            (defaultValue != null ? defaultValue.value : this.defaultValue));
+      name: (name != null ? name.value : this.name),
+      type: (type != null ? type.value : this.type),
+      tags: (tags != null ? tags.value : this.tags),
+      label: (label != null ? label.value : this.label),
+      description: (description != null ? description.value : this.description),
+      reference: (reference != null ? reference.value : this.reference),
+      defaultValue:
+          (defaultValue != null ? defaultValue.value : this.defaultValue),
+    );
   }
 }
 
@@ -2735,13 +2983,17 @@ class ThingActionDTO {
     return identical(this, other) ||
         (other is ThingActionDTO &&
             (identical(other.actionUid, actionUid) ||
-                const DeepCollectionEquality()
-                    .equals(other.actionUid, actionUid)) &&
+                const DeepCollectionEquality().equals(
+                  other.actionUid,
+                  actionUid,
+                )) &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.inputs, inputs) ||
                 const DeepCollectionEquality().equals(other.inputs, inputs)) &&
             (identical(other.outputs, outputs) ||
@@ -2762,42 +3014,42 @@ class ThingActionDTO {
 }
 
 extension $ThingActionDTOExtension on ThingActionDTO {
-  ThingActionDTO copyWith(
-      {String? actionUid,
-      String? label,
-      String? description,
-      List<Input>? inputs,
-      List<Output>? outputs}) {
+  ThingActionDTO copyWith({
+    String? actionUid,
+    String? label,
+    String? description,
+    List<Input>? inputs,
+    List<Output>? outputs,
+  }) {
     return ThingActionDTO(
-        actionUid: actionUid ?? this.actionUid,
-        label: label ?? this.label,
-        description: description ?? this.description,
-        inputs: inputs ?? this.inputs,
-        outputs: outputs ?? this.outputs);
+      actionUid: actionUid ?? this.actionUid,
+      label: label ?? this.label,
+      description: description ?? this.description,
+      inputs: inputs ?? this.inputs,
+      outputs: outputs ?? this.outputs,
+    );
   }
 
-  ThingActionDTO copyWithWrapped(
-      {Wrapped<String?>? actionUid,
-      Wrapped<String?>? label,
-      Wrapped<String?>? description,
-      Wrapped<List<Input>?>? inputs,
-      Wrapped<List<Output>?>? outputs}) {
+  ThingActionDTO copyWithWrapped({
+    Wrapped<String?>? actionUid,
+    Wrapped<String?>? label,
+    Wrapped<String?>? description,
+    Wrapped<List<Input>?>? inputs,
+    Wrapped<List<Output>?>? outputs,
+  }) {
     return ThingActionDTO(
-        actionUid: (actionUid != null ? actionUid.value : this.actionUid),
-        label: (label != null ? label.value : this.label),
-        description:
-            (description != null ? description.value : this.description),
-        inputs: (inputs != null ? inputs.value : this.inputs),
-        outputs: (outputs != null ? outputs.value : this.outputs));
+      actionUid: (actionUid != null ? actionUid.value : this.actionUid),
+      label: (label != null ? label.value : this.label),
+      description: (description != null ? description.value : this.description),
+      inputs: (inputs != null ? inputs.value : this.inputs),
+      outputs: (outputs != null ? outputs.value : this.outputs),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class AudioSinkDTO {
-  const AudioSinkDTO({
-    this.id,
-    this.label,
-  });
+  const AudioSinkDTO({this.id, this.label});
 
   factory AudioSinkDTO.fromJson(Map<String, dynamic> json) =>
       _$AudioSinkDTOFromJson(json);
@@ -2836,20 +3088,20 @@ extension $AudioSinkDTOExtension on AudioSinkDTO {
     return AudioSinkDTO(id: id ?? this.id, label: label ?? this.label);
   }
 
-  AudioSinkDTO copyWithWrapped(
-      {Wrapped<String?>? id, Wrapped<String?>? label}) {
+  AudioSinkDTO copyWithWrapped({
+    Wrapped<String?>? id,
+    Wrapped<String?>? label,
+  }) {
     return AudioSinkDTO(
-        id: (id != null ? id.value : this.id),
-        label: (label != null ? label.value : this.label));
+      id: (id != null ? id.value : this.id),
+      label: (label != null ? label.value : this.label),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class AudioSourceDTO {
-  const AudioSourceDTO({
-    this.id,
-    this.label,
-  });
+  const AudioSourceDTO({this.id, this.label});
 
   factory AudioSourceDTO.fromJson(Map<String, dynamic> json) =>
       _$AudioSourceDTOFromJson(json);
@@ -2888,21 +3140,20 @@ extension $AudioSourceDTOExtension on AudioSourceDTO {
     return AudioSourceDTO(id: id ?? this.id, label: label ?? this.label);
   }
 
-  AudioSourceDTO copyWithWrapped(
-      {Wrapped<String?>? id, Wrapped<String?>? label}) {
+  AudioSourceDTO copyWithWrapped({
+    Wrapped<String?>? id,
+    Wrapped<String?>? label,
+  }) {
     return AudioSourceDTO(
-        id: (id != null ? id.value : this.id),
-        label: (label != null ? label.value : this.label));
+      id: (id != null ? id.value : this.id),
+      label: (label != null ? label.value : this.label),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class UserApiTokenDTO {
-  const UserApiTokenDTO({
-    this.name,
-    this.createdTime,
-    this.scope,
-  });
+  const UserApiTokenDTO({this.name, this.createdTime, this.scope});
 
   factory UserApiTokenDTO.fromJson(Map<String, dynamic> json) =>
       _$UserApiTokenDTOFromJson(json);
@@ -2925,8 +3176,10 @@ class UserApiTokenDTO {
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.createdTime, createdTime) ||
-                const DeepCollectionEquality()
-                    .equals(other.createdTime, createdTime)) &&
+                const DeepCollectionEquality().equals(
+                  other.createdTime,
+                  createdTime,
+                )) &&
             (identical(other.scope, scope) ||
                 const DeepCollectionEquality().equals(other.scope, scope)));
   }
@@ -2943,23 +3196,28 @@ class UserApiTokenDTO {
 }
 
 extension $UserApiTokenDTOExtension on UserApiTokenDTO {
-  UserApiTokenDTO copyWith(
-      {String? name, DateTime? createdTime, String? scope}) {
+  UserApiTokenDTO copyWith({
+    String? name,
+    DateTime? createdTime,
+    String? scope,
+  }) {
     return UserApiTokenDTO(
-        name: name ?? this.name,
-        createdTime: createdTime ?? this.createdTime,
-        scope: scope ?? this.scope);
+      name: name ?? this.name,
+      createdTime: createdTime ?? this.createdTime,
+      scope: scope ?? this.scope,
+    );
   }
 
-  UserApiTokenDTO copyWithWrapped(
-      {Wrapped<String?>? name,
-      Wrapped<DateTime?>? createdTime,
-      Wrapped<String?>? scope}) {
+  UserApiTokenDTO copyWithWrapped({
+    Wrapped<String?>? name,
+    Wrapped<DateTime?>? createdTime,
+    Wrapped<String?>? scope,
+  }) {
     return UserApiTokenDTO(
-        name: (name != null ? name.value : this.name),
-        createdTime:
-            (createdTime != null ? createdTime.value : this.createdTime),
-        scope: (scope != null ? scope.value : this.scope));
+      name: (name != null ? name.value : this.name),
+      createdTime: (createdTime != null ? createdTime.value : this.createdTime),
+      scope: (scope != null ? scope.value : this.scope),
+    );
   }
 }
 
@@ -2996,17 +3254,25 @@ class UserSessionDTO {
     return identical(this, other) ||
         (other is UserSessionDTO &&
             (identical(other.sessionId, sessionId) ||
-                const DeepCollectionEquality()
-                    .equals(other.sessionId, sessionId)) &&
+                const DeepCollectionEquality().equals(
+                  other.sessionId,
+                  sessionId,
+                )) &&
             (identical(other.createdTime, createdTime) ||
-                const DeepCollectionEquality()
-                    .equals(other.createdTime, createdTime)) &&
+                const DeepCollectionEquality().equals(
+                  other.createdTime,
+                  createdTime,
+                )) &&
             (identical(other.lastRefreshTime, lastRefreshTime) ||
-                const DeepCollectionEquality()
-                    .equals(other.lastRefreshTime, lastRefreshTime)) &&
+                const DeepCollectionEquality().equals(
+                  other.lastRefreshTime,
+                  lastRefreshTime,
+                )) &&
             (identical(other.clientId, clientId) ||
-                const DeepCollectionEquality()
-                    .equals(other.clientId, clientId)) &&
+                const DeepCollectionEquality().equals(
+                  other.clientId,
+                  clientId,
+                )) &&
             (identical(other.scope, scope) ||
                 const DeepCollectionEquality().equals(other.scope, scope)));
   }
@@ -3025,35 +3291,39 @@ class UserSessionDTO {
 }
 
 extension $UserSessionDTOExtension on UserSessionDTO {
-  UserSessionDTO copyWith(
-      {String? sessionId,
-      DateTime? createdTime,
-      DateTime? lastRefreshTime,
-      String? clientId,
-      String? scope}) {
+  UserSessionDTO copyWith({
+    String? sessionId,
+    DateTime? createdTime,
+    DateTime? lastRefreshTime,
+    String? clientId,
+    String? scope,
+  }) {
     return UserSessionDTO(
-        sessionId: sessionId ?? this.sessionId,
-        createdTime: createdTime ?? this.createdTime,
-        lastRefreshTime: lastRefreshTime ?? this.lastRefreshTime,
-        clientId: clientId ?? this.clientId,
-        scope: scope ?? this.scope);
+      sessionId: sessionId ?? this.sessionId,
+      createdTime: createdTime ?? this.createdTime,
+      lastRefreshTime: lastRefreshTime ?? this.lastRefreshTime,
+      clientId: clientId ?? this.clientId,
+      scope: scope ?? this.scope,
+    );
   }
 
-  UserSessionDTO copyWithWrapped(
-      {Wrapped<String?>? sessionId,
-      Wrapped<DateTime?>? createdTime,
-      Wrapped<DateTime?>? lastRefreshTime,
-      Wrapped<String?>? clientId,
-      Wrapped<String?>? scope}) {
+  UserSessionDTO copyWithWrapped({
+    Wrapped<String?>? sessionId,
+    Wrapped<DateTime?>? createdTime,
+    Wrapped<DateTime?>? lastRefreshTime,
+    Wrapped<String?>? clientId,
+    Wrapped<String?>? scope,
+  }) {
     return UserSessionDTO(
-        sessionId: (sessionId != null ? sessionId.value : this.sessionId),
-        createdTime:
-            (createdTime != null ? createdTime.value : this.createdTime),
-        lastRefreshTime: (lastRefreshTime != null
-            ? lastRefreshTime.value
-            : this.lastRefreshTime),
-        clientId: (clientId != null ? clientId.value : this.clientId),
-        scope: (scope != null ? scope.value : this.scope));
+      sessionId: (sessionId != null ? sessionId.value : this.sessionId),
+      createdTime: (createdTime != null ? createdTime.value : this.createdTime),
+      lastRefreshTime:
+          (lastRefreshTime != null
+              ? lastRefreshTime.value
+              : this.lastRefreshTime),
+      clientId: (clientId != null ? clientId.value : this.clientId),
+      scope: (scope != null ? scope.value : this.scope),
+    );
   }
 }
 
@@ -3093,17 +3363,25 @@ class TokenResponseDTO {
     return identical(this, other) ||
         (other is TokenResponseDTO &&
             (identical(other.accessToken, accessToken) ||
-                const DeepCollectionEquality()
-                    .equals(other.accessToken, accessToken)) &&
+                const DeepCollectionEquality().equals(
+                  other.accessToken,
+                  accessToken,
+                )) &&
             (identical(other.tokenType, tokenType) ||
-                const DeepCollectionEquality()
-                    .equals(other.tokenType, tokenType)) &&
+                const DeepCollectionEquality().equals(
+                  other.tokenType,
+                  tokenType,
+                )) &&
             (identical(other.expiresIn, expiresIn) ||
-                const DeepCollectionEquality()
-                    .equals(other.expiresIn, expiresIn)) &&
+                const DeepCollectionEquality().equals(
+                  other.expiresIn,
+                  expiresIn,
+                )) &&
             (identical(other.refreshToken, refreshToken) ||
-                const DeepCollectionEquality()
-                    .equals(other.refreshToken, refreshToken)) &&
+                const DeepCollectionEquality().equals(
+                  other.refreshToken,
+                  refreshToken,
+                )) &&
             (identical(other.scope, scope) ||
                 const DeepCollectionEquality().equals(other.scope, scope)) &&
             (identical(other.user, user) ||
@@ -3125,47 +3403,47 @@ class TokenResponseDTO {
 }
 
 extension $TokenResponseDTOExtension on TokenResponseDTO {
-  TokenResponseDTO copyWith(
-      {String? accessToken,
-      String? tokenType,
-      int? expiresIn,
-      String? refreshToken,
-      String? scope,
-      UserDTO? user}) {
+  TokenResponseDTO copyWith({
+    String? accessToken,
+    String? tokenType,
+    int? expiresIn,
+    String? refreshToken,
+    String? scope,
+    UserDTO? user,
+  }) {
     return TokenResponseDTO(
-        accessToken: accessToken ?? this.accessToken,
-        tokenType: tokenType ?? this.tokenType,
-        expiresIn: expiresIn ?? this.expiresIn,
-        refreshToken: refreshToken ?? this.refreshToken,
-        scope: scope ?? this.scope,
-        user: user ?? this.user);
+      accessToken: accessToken ?? this.accessToken,
+      tokenType: tokenType ?? this.tokenType,
+      expiresIn: expiresIn ?? this.expiresIn,
+      refreshToken: refreshToken ?? this.refreshToken,
+      scope: scope ?? this.scope,
+      user: user ?? this.user,
+    );
   }
 
-  TokenResponseDTO copyWithWrapped(
-      {Wrapped<String?>? accessToken,
-      Wrapped<String?>? tokenType,
-      Wrapped<int?>? expiresIn,
-      Wrapped<String?>? refreshToken,
-      Wrapped<String?>? scope,
-      Wrapped<UserDTO?>? user}) {
+  TokenResponseDTO copyWithWrapped({
+    Wrapped<String?>? accessToken,
+    Wrapped<String?>? tokenType,
+    Wrapped<int?>? expiresIn,
+    Wrapped<String?>? refreshToken,
+    Wrapped<String?>? scope,
+    Wrapped<UserDTO?>? user,
+  }) {
     return TokenResponseDTO(
-        accessToken:
-            (accessToken != null ? accessToken.value : this.accessToken),
-        tokenType: (tokenType != null ? tokenType.value : this.tokenType),
-        expiresIn: (expiresIn != null ? expiresIn.value : this.expiresIn),
-        refreshToken:
-            (refreshToken != null ? refreshToken.value : this.refreshToken),
-        scope: (scope != null ? scope.value : this.scope),
-        user: (user != null ? user.value : this.user));
+      accessToken: (accessToken != null ? accessToken.value : this.accessToken),
+      tokenType: (tokenType != null ? tokenType.value : this.tokenType),
+      expiresIn: (expiresIn != null ? expiresIn.value : this.expiresIn),
+      refreshToken:
+          (refreshToken != null ? refreshToken.value : this.refreshToken),
+      scope: (scope != null ? scope.value : this.scope),
+      user: (user != null ? user.value : this.user),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class UserDTO {
-  const UserDTO({
-    this.name,
-    this.roles,
-  });
+  const UserDTO({this.name, this.roles});
 
   factory UserDTO.fromJson(Map<String, dynamic> json) =>
       _$UserDTOFromJson(json);
@@ -3204,11 +3482,14 @@ extension $UserDTOExtension on UserDTO {
     return UserDTO(name: name ?? this.name, roles: roles ?? this.roles);
   }
 
-  UserDTO copyWithWrapped(
-      {Wrapped<String?>? name, Wrapped<List<String>?>? roles}) {
+  UserDTO copyWithWrapped({
+    Wrapped<String?>? name,
+    Wrapped<List<String>?>? roles,
+  }) {
     return UserDTO(
-        name: (name != null ? name.value : this.name),
-        roles: (roles != null ? roles.value : this.roles));
+      name: (name != null ? name.value : this.name),
+      roles: (roles != null ? roles.value : this.roles),
+    );
   }
 }
 
@@ -3304,62 +3585,96 @@ class Addon {
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.version, version) ||
-                const DeepCollectionEquality()
-                    .equals(other.version, version)) &&
+                const DeepCollectionEquality().equals(
+                  other.version,
+                  version,
+                )) &&
             (identical(other.maturity, maturity) ||
-                const DeepCollectionEquality()
-                    .equals(other.maturity, maturity)) &&
+                const DeepCollectionEquality().equals(
+                  other.maturity,
+                  maturity,
+                )) &&
             (identical(other.compatible, compatible) ||
-                const DeepCollectionEquality()
-                    .equals(other.compatible, compatible)) &&
+                const DeepCollectionEquality().equals(
+                  other.compatible,
+                  compatible,
+                )) &&
             (identical(other.contentType, contentType) ||
-                const DeepCollectionEquality()
-                    .equals(other.contentType, contentType)) &&
+                const DeepCollectionEquality().equals(
+                  other.contentType,
+                  contentType,
+                )) &&
             (identical(other.link, link) ||
                 const DeepCollectionEquality().equals(other.link, link)) &&
             (identical(other.author, author) ||
                 const DeepCollectionEquality().equals(other.author, author)) &&
             (identical(other.verifiedAuthor, verifiedAuthor) ||
-                const DeepCollectionEquality()
-                    .equals(other.verifiedAuthor, verifiedAuthor)) &&
+                const DeepCollectionEquality().equals(
+                  other.verifiedAuthor,
+                  verifiedAuthor,
+                )) &&
             (identical(other.installed, installed) ||
-                const DeepCollectionEquality()
-                    .equals(other.installed, installed)) &&
+                const DeepCollectionEquality().equals(
+                  other.installed,
+                  installed,
+                )) &&
             (identical(other.type, type) ||
                 const DeepCollectionEquality().equals(other.type, type)) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.detailedDescription, detailedDescription) ||
-                const DeepCollectionEquality()
-                    .equals(other.detailedDescription, detailedDescription)) &&
+                const DeepCollectionEquality().equals(
+                  other.detailedDescription,
+                  detailedDescription,
+                )) &&
             (identical(other.configDescriptionURI, configDescriptionURI) ||
                 const DeepCollectionEquality().equals(
-                    other.configDescriptionURI, configDescriptionURI)) &&
+                  other.configDescriptionURI,
+                  configDescriptionURI,
+                )) &&
             (identical(other.keywords, keywords) ||
-                const DeepCollectionEquality()
-                    .equals(other.keywords, keywords)) &&
+                const DeepCollectionEquality().equals(
+                  other.keywords,
+                  keywords,
+                )) &&
             (identical(other.countries, countries) ||
-                const DeepCollectionEquality()
-                    .equals(other.countries, countries)) &&
+                const DeepCollectionEquality().equals(
+                  other.countries,
+                  countries,
+                )) &&
             (identical(other.license, license) ||
-                const DeepCollectionEquality()
-                    .equals(other.license, license)) &&
+                const DeepCollectionEquality().equals(
+                  other.license,
+                  license,
+                )) &&
             (identical(other.connection, connection) ||
-                const DeepCollectionEquality()
-                    .equals(other.connection, connection)) &&
+                const DeepCollectionEquality().equals(
+                  other.connection,
+                  connection,
+                )) &&
             (identical(other.backgroundColor, backgroundColor) ||
-                const DeepCollectionEquality()
-                    .equals(other.backgroundColor, backgroundColor)) &&
+                const DeepCollectionEquality().equals(
+                  other.backgroundColor,
+                  backgroundColor,
+                )) &&
             (identical(other.imageLink, imageLink) ||
-                const DeepCollectionEquality()
-                    .equals(other.imageLink, imageLink)) &&
+                const DeepCollectionEquality().equals(
+                  other.imageLink,
+                  imageLink,
+                )) &&
             (identical(other.properties, properties) ||
-                const DeepCollectionEquality()
-                    .equals(other.properties, properties)) &&
+                const DeepCollectionEquality().equals(
+                  other.properties,
+                  properties,
+                )) &&
             (identical(other.loggerPackages, loggerPackages) ||
-                const DeepCollectionEquality()
-                    .equals(other.loggerPackages, loggerPackages)));
+                const DeepCollectionEquality().equals(
+                  other.loggerPackages,
+                  loggerPackages,
+                )));
   }
 
   @override
@@ -3394,125 +3709,125 @@ class Addon {
 }
 
 extension $AddonExtension on Addon {
-  Addon copyWith(
-      {String? uid,
-      String? id,
-      String? label,
-      String? version,
-      String? maturity,
-      bool? compatible,
-      String? contentType,
-      String? link,
-      String? author,
-      bool? verifiedAuthor,
-      bool? installed,
-      String? type,
-      String? description,
-      String? detailedDescription,
-      String? configDescriptionURI,
-      String? keywords,
-      List<String>? countries,
-      String? license,
-      String? connection,
-      String? backgroundColor,
-      String? imageLink,
-      Map<String, dynamic>? properties,
-      List<String>? loggerPackages}) {
+  Addon copyWith({
+    String? uid,
+    String? id,
+    String? label,
+    String? version,
+    String? maturity,
+    bool? compatible,
+    String? contentType,
+    String? link,
+    String? author,
+    bool? verifiedAuthor,
+    bool? installed,
+    String? type,
+    String? description,
+    String? detailedDescription,
+    String? configDescriptionURI,
+    String? keywords,
+    List<String>? countries,
+    String? license,
+    String? connection,
+    String? backgroundColor,
+    String? imageLink,
+    Map<String, dynamic>? properties,
+    List<String>? loggerPackages,
+  }) {
     return Addon(
-        uid: uid ?? this.uid,
-        id: id ?? this.id,
-        label: label ?? this.label,
-        version: version ?? this.version,
-        maturity: maturity ?? this.maturity,
-        compatible: compatible ?? this.compatible,
-        contentType: contentType ?? this.contentType,
-        link: link ?? this.link,
-        author: author ?? this.author,
-        verifiedAuthor: verifiedAuthor ?? this.verifiedAuthor,
-        installed: installed ?? this.installed,
-        type: type ?? this.type,
-        description: description ?? this.description,
-        detailedDescription: detailedDescription ?? this.detailedDescription,
-        configDescriptionURI: configDescriptionURI ?? this.configDescriptionURI,
-        keywords: keywords ?? this.keywords,
-        countries: countries ?? this.countries,
-        license: license ?? this.license,
-        connection: connection ?? this.connection,
-        backgroundColor: backgroundColor ?? this.backgroundColor,
-        imageLink: imageLink ?? this.imageLink,
-        properties: properties ?? this.properties,
-        loggerPackages: loggerPackages ?? this.loggerPackages);
+      uid: uid ?? this.uid,
+      id: id ?? this.id,
+      label: label ?? this.label,
+      version: version ?? this.version,
+      maturity: maturity ?? this.maturity,
+      compatible: compatible ?? this.compatible,
+      contentType: contentType ?? this.contentType,
+      link: link ?? this.link,
+      author: author ?? this.author,
+      verifiedAuthor: verifiedAuthor ?? this.verifiedAuthor,
+      installed: installed ?? this.installed,
+      type: type ?? this.type,
+      description: description ?? this.description,
+      detailedDescription: detailedDescription ?? this.detailedDescription,
+      configDescriptionURI: configDescriptionURI ?? this.configDescriptionURI,
+      keywords: keywords ?? this.keywords,
+      countries: countries ?? this.countries,
+      license: license ?? this.license,
+      connection: connection ?? this.connection,
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      imageLink: imageLink ?? this.imageLink,
+      properties: properties ?? this.properties,
+      loggerPackages: loggerPackages ?? this.loggerPackages,
+    );
   }
 
-  Addon copyWithWrapped(
-      {Wrapped<String?>? uid,
-      Wrapped<String?>? id,
-      Wrapped<String?>? label,
-      Wrapped<String?>? version,
-      Wrapped<String?>? maturity,
-      Wrapped<bool?>? compatible,
-      Wrapped<String?>? contentType,
-      Wrapped<String?>? link,
-      Wrapped<String?>? author,
-      Wrapped<bool?>? verifiedAuthor,
-      Wrapped<bool?>? installed,
-      Wrapped<String?>? type,
-      Wrapped<String?>? description,
-      Wrapped<String?>? detailedDescription,
-      Wrapped<String?>? configDescriptionURI,
-      Wrapped<String?>? keywords,
-      Wrapped<List<String>?>? countries,
-      Wrapped<String?>? license,
-      Wrapped<String?>? connection,
-      Wrapped<String?>? backgroundColor,
-      Wrapped<String?>? imageLink,
-      Wrapped<Map<String, dynamic>?>? properties,
-      Wrapped<List<String>?>? loggerPackages}) {
+  Addon copyWithWrapped({
+    Wrapped<String?>? uid,
+    Wrapped<String?>? id,
+    Wrapped<String?>? label,
+    Wrapped<String?>? version,
+    Wrapped<String?>? maturity,
+    Wrapped<bool?>? compatible,
+    Wrapped<String?>? contentType,
+    Wrapped<String?>? link,
+    Wrapped<String?>? author,
+    Wrapped<bool?>? verifiedAuthor,
+    Wrapped<bool?>? installed,
+    Wrapped<String?>? type,
+    Wrapped<String?>? description,
+    Wrapped<String?>? detailedDescription,
+    Wrapped<String?>? configDescriptionURI,
+    Wrapped<String?>? keywords,
+    Wrapped<List<String>?>? countries,
+    Wrapped<String?>? license,
+    Wrapped<String?>? connection,
+    Wrapped<String?>? backgroundColor,
+    Wrapped<String?>? imageLink,
+    Wrapped<Map<String, dynamic>?>? properties,
+    Wrapped<List<String>?>? loggerPackages,
+  }) {
     return Addon(
-        uid: (uid != null ? uid.value : this.uid),
-        id: (id != null ? id.value : this.id),
-        label: (label != null ? label.value : this.label),
-        version: (version != null ? version.value : this.version),
-        maturity: (maturity != null ? maturity.value : this.maturity),
-        compatible: (compatible != null ? compatible.value : this.compatible),
-        contentType:
-            (contentType != null ? contentType.value : this.contentType),
-        link: (link != null ? link.value : this.link),
-        author: (author != null ? author.value : this.author),
-        verifiedAuthor: (verifiedAuthor != null
-            ? verifiedAuthor.value
-            : this.verifiedAuthor),
-        installed: (installed != null ? installed.value : this.installed),
-        type: (type != null ? type.value : this.type),
-        description:
-            (description != null ? description.value : this.description),
-        detailedDescription: (detailedDescription != null
-            ? detailedDescription.value
-            : this.detailedDescription),
-        configDescriptionURI: (configDescriptionURI != null
-            ? configDescriptionURI.value
-            : this.configDescriptionURI),
-        keywords: (keywords != null ? keywords.value : this.keywords),
-        countries: (countries != null ? countries.value : this.countries),
-        license: (license != null ? license.value : this.license),
-        connection: (connection != null ? connection.value : this.connection),
-        backgroundColor: (backgroundColor != null
-            ? backgroundColor.value
-            : this.backgroundColor),
-        imageLink: (imageLink != null ? imageLink.value : this.imageLink),
-        properties: (properties != null ? properties.value : this.properties),
-        loggerPackages: (loggerPackages != null
-            ? loggerPackages.value
-            : this.loggerPackages));
+      uid: (uid != null ? uid.value : this.uid),
+      id: (id != null ? id.value : this.id),
+      label: (label != null ? label.value : this.label),
+      version: (version != null ? version.value : this.version),
+      maturity: (maturity != null ? maturity.value : this.maturity),
+      compatible: (compatible != null ? compatible.value : this.compatible),
+      contentType: (contentType != null ? contentType.value : this.contentType),
+      link: (link != null ? link.value : this.link),
+      author: (author != null ? author.value : this.author),
+      verifiedAuthor:
+          (verifiedAuthor != null ? verifiedAuthor.value : this.verifiedAuthor),
+      installed: (installed != null ? installed.value : this.installed),
+      type: (type != null ? type.value : this.type),
+      description: (description != null ? description.value : this.description),
+      detailedDescription:
+          (detailedDescription != null
+              ? detailedDescription.value
+              : this.detailedDescription),
+      configDescriptionURI:
+          (configDescriptionURI != null
+              ? configDescriptionURI.value
+              : this.configDescriptionURI),
+      keywords: (keywords != null ? keywords.value : this.keywords),
+      countries: (countries != null ? countries.value : this.countries),
+      license: (license != null ? license.value : this.license),
+      connection: (connection != null ? connection.value : this.connection),
+      backgroundColor:
+          (backgroundColor != null
+              ? backgroundColor.value
+              : this.backgroundColor),
+      imageLink: (imageLink != null ? imageLink.value : this.imageLink),
+      properties: (properties != null ? properties.value : this.properties),
+      loggerPackages:
+          (loggerPackages != null ? loggerPackages.value : this.loggerPackages),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class AddonType {
-  const AddonType({
-    this.id,
-    this.label,
-  });
+  const AddonType({this.id, this.label});
 
   factory AddonType.fromJson(Map<String, dynamic> json) =>
       _$AddonTypeFromJson(json);
@@ -3553,8 +3868,9 @@ extension $AddonTypeExtension on AddonType {
 
   AddonType copyWithWrapped({Wrapped<String?>? id, Wrapped<String?>? label}) {
     return AddonType(
-        id: (id != null ? id.value : this.id),
-        label: (label != null ? label.value : this.label));
+      id: (id != null ? id.value : this.id),
+      label: (label != null ? label.value : this.label),
+    );
   }
 }
 
@@ -3584,8 +3900,9 @@ class ChannelTypeDTO {
   @JsonKey(name: 'parameters', defaultValue: <ConfigDescriptionParameterDTO>[])
   final List<ConfigDescriptionParameterDTO>? parameters;
   @JsonKey(
-      name: 'parameterGroups',
-      defaultValue: <ConfigDescriptionParameterGroupDTO>[])
+    name: 'parameterGroups',
+    defaultValue: <ConfigDescriptionParameterGroupDTO>[],
+  )
   final List<ConfigDescriptionParameterGroupDTO>? parameterGroups;
   @JsonKey(name: 'description')
   final String? description;
@@ -3614,37 +3931,53 @@ class ChannelTypeDTO {
     return identical(this, other) ||
         (other is ChannelTypeDTO &&
             (identical(other.parameters, parameters) ||
-                const DeepCollectionEquality()
-                    .equals(other.parameters, parameters)) &&
+                const DeepCollectionEquality().equals(
+                  other.parameters,
+                  parameters,
+                )) &&
             (identical(other.parameterGroups, parameterGroups) ||
-                const DeepCollectionEquality()
-                    .equals(other.parameterGroups, parameterGroups)) &&
+                const DeepCollectionEquality().equals(
+                  other.parameterGroups,
+                  parameterGroups,
+                )) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.category, category) ||
-                const DeepCollectionEquality()
-                    .equals(other.category, category)) &&
+                const DeepCollectionEquality().equals(
+                  other.category,
+                  category,
+                )) &&
             (identical(other.itemType, itemType) ||
-                const DeepCollectionEquality()
-                    .equals(other.itemType, itemType)) &&
+                const DeepCollectionEquality().equals(
+                  other.itemType,
+                  itemType,
+                )) &&
             (identical(other.kind, kind) ||
                 const DeepCollectionEquality().equals(other.kind, kind)) &&
             (identical(other.stateDescription, stateDescription) ||
-                const DeepCollectionEquality()
-                    .equals(other.stateDescription, stateDescription)) &&
+                const DeepCollectionEquality().equals(
+                  other.stateDescription,
+                  stateDescription,
+                )) &&
             (identical(other.tags, tags) ||
                 const DeepCollectionEquality().equals(other.tags, tags)) &&
             (identical(other.uid, uid) ||
                 const DeepCollectionEquality().equals(other.uid, uid)) &&
             (identical(other.advanced, advanced) ||
-                const DeepCollectionEquality()
-                    .equals(other.advanced, advanced)) &&
+                const DeepCollectionEquality().equals(
+                  other.advanced,
+                  advanced,
+                )) &&
             (identical(other.commandDescription, commandDescription) ||
-                const DeepCollectionEquality()
-                    .equals(other.commandDescription, commandDescription)));
+                const DeepCollectionEquality().equals(
+                  other.commandDescription,
+                  commandDescription,
+                )));
   }
 
   @override
@@ -3668,170 +4001,73 @@ class ChannelTypeDTO {
 }
 
 extension $ChannelTypeDTOExtension on ChannelTypeDTO {
-  ChannelTypeDTO copyWith(
-      {List<ConfigDescriptionParameterDTO>? parameters,
-      List<ConfigDescriptionParameterGroupDTO>? parameterGroups,
-      String? description,
-      String? label,
-      String? category,
-      String? itemType,
-      String? kind,
-      StateDescription? stateDescription,
-      List<String>? tags,
-      String? uid,
-      bool? advanced,
-      CommandDescription? commandDescription}) {
+  ChannelTypeDTO copyWith({
+    List<ConfigDescriptionParameterDTO>? parameters,
+    List<ConfigDescriptionParameterGroupDTO>? parameterGroups,
+    String? description,
+    String? label,
+    String? category,
+    String? itemType,
+    String? kind,
+    StateDescription? stateDescription,
+    List<String>? tags,
+    String? uid,
+    bool? advanced,
+    CommandDescription? commandDescription,
+  }) {
     return ChannelTypeDTO(
-        parameters: parameters ?? this.parameters,
-        parameterGroups: parameterGroups ?? this.parameterGroups,
-        description: description ?? this.description,
-        label: label ?? this.label,
-        category: category ?? this.category,
-        itemType: itemType ?? this.itemType,
-        kind: kind ?? this.kind,
-        stateDescription: stateDescription ?? this.stateDescription,
-        tags: tags ?? this.tags,
-        uid: uid ?? this.uid,
-        advanced: advanced ?? this.advanced,
-        commandDescription: commandDescription ?? this.commandDescription);
+      parameters: parameters ?? this.parameters,
+      parameterGroups: parameterGroups ?? this.parameterGroups,
+      description: description ?? this.description,
+      label: label ?? this.label,
+      category: category ?? this.category,
+      itemType: itemType ?? this.itemType,
+      kind: kind ?? this.kind,
+      stateDescription: stateDescription ?? this.stateDescription,
+      tags: tags ?? this.tags,
+      uid: uid ?? this.uid,
+      advanced: advanced ?? this.advanced,
+      commandDescription: commandDescription ?? this.commandDescription,
+    );
   }
 
-  ChannelTypeDTO copyWithWrapped(
-      {Wrapped<List<ConfigDescriptionParameterDTO>?>? parameters,
-      Wrapped<List<ConfigDescriptionParameterGroupDTO>?>? parameterGroups,
-      Wrapped<String?>? description,
-      Wrapped<String?>? label,
-      Wrapped<String?>? category,
-      Wrapped<String?>? itemType,
-      Wrapped<String?>? kind,
-      Wrapped<StateDescription?>? stateDescription,
-      Wrapped<List<String>?>? tags,
-      Wrapped<String?>? uid,
-      Wrapped<bool?>? advanced,
-      Wrapped<CommandDescription?>? commandDescription}) {
+  ChannelTypeDTO copyWithWrapped({
+    Wrapped<List<ConfigDescriptionParameterDTO>?>? parameters,
+    Wrapped<List<ConfigDescriptionParameterGroupDTO>?>? parameterGroups,
+    Wrapped<String?>? description,
+    Wrapped<String?>? label,
+    Wrapped<String?>? category,
+    Wrapped<String?>? itemType,
+    Wrapped<String?>? kind,
+    Wrapped<StateDescription?>? stateDescription,
+    Wrapped<List<String>?>? tags,
+    Wrapped<String?>? uid,
+    Wrapped<bool?>? advanced,
+    Wrapped<CommandDescription?>? commandDescription,
+  }) {
     return ChannelTypeDTO(
-        parameters: (parameters != null ? parameters.value : this.parameters),
-        parameterGroups: (parameterGroups != null
-            ? parameterGroups.value
-            : this.parameterGroups),
-        description:
-            (description != null ? description.value : this.description),
-        label: (label != null ? label.value : this.label),
-        category: (category != null ? category.value : this.category),
-        itemType: (itemType != null ? itemType.value : this.itemType),
-        kind: (kind != null ? kind.value : this.kind),
-        stateDescription: (stateDescription != null
-            ? stateDescription.value
-            : this.stateDescription),
-        tags: (tags != null ? tags.value : this.tags),
-        uid: (uid != null ? uid.value : this.uid),
-        advanced: (advanced != null ? advanced.value : this.advanced),
-        commandDescription: (commandDescription != null
-            ? commandDescription.value
-            : this.commandDescription));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class CommandDescription {
-  const CommandDescription({
-    this.commandOptions,
-  });
-
-  factory CommandDescription.fromJson(Map<String, dynamic> json) =>
-      _$CommandDescriptionFromJson(json);
-
-  static const toJsonFactory = _$CommandDescriptionToJson;
-  Map<String, dynamic> toJson() => _$CommandDescriptionToJson(this);
-
-  @JsonKey(name: 'commandOptions', defaultValue: <CommandOption>[])
-  final List<CommandOption>? commandOptions;
-  static const fromJsonFactory = _$CommandDescriptionFromJson;
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other is CommandDescription &&
-            (identical(other.commandOptions, commandOptions) ||
-                const DeepCollectionEquality()
-                    .equals(other.commandOptions, commandOptions)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(commandOptions) ^
-      runtimeType.hashCode;
-}
-
-extension $CommandDescriptionExtension on CommandDescription {
-  CommandDescription copyWith({List<CommandOption>? commandOptions}) {
-    return CommandDescription(
-        commandOptions: commandOptions ?? this.commandOptions);
-  }
-
-  CommandDescription copyWithWrapped(
-      {Wrapped<List<CommandOption>?>? commandOptions}) {
-    return CommandDescription(
-        commandOptions: (commandOptions != null
-            ? commandOptions.value
-            : this.commandOptions));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class CommandOption {
-  const CommandOption({
-    this.command,
-    this.label,
-  });
-
-  factory CommandOption.fromJson(Map<String, dynamic> json) =>
-      _$CommandOptionFromJson(json);
-
-  static const toJsonFactory = _$CommandOptionToJson;
-  Map<String, dynamic> toJson() => _$CommandOptionToJson(this);
-
-  @JsonKey(name: 'command')
-  final String? command;
-  @JsonKey(name: 'label')
-  final String? label;
-  static const fromJsonFactory = _$CommandOptionFromJson;
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other is CommandOption &&
-            (identical(other.command, command) ||
-                const DeepCollectionEquality()
-                    .equals(other.command, command)) &&
-            (identical(other.label, label) ||
-                const DeepCollectionEquality().equals(other.label, label)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(command) ^
-      const DeepCollectionEquality().hash(label) ^
-      runtimeType.hashCode;
-}
-
-extension $CommandOptionExtension on CommandOption {
-  CommandOption copyWith({String? command, String? label}) {
-    return CommandOption(
-        command: command ?? this.command, label: label ?? this.label);
-  }
-
-  CommandOption copyWithWrapped(
-      {Wrapped<String?>? command, Wrapped<String?>? label}) {
-    return CommandOption(
-        command: (command != null ? command.value : this.command),
-        label: (label != null ? label.value : this.label));
+      parameters: (parameters != null ? parameters.value : this.parameters),
+      parameterGroups:
+          (parameterGroups != null
+              ? parameterGroups.value
+              : this.parameterGroups),
+      description: (description != null ? description.value : this.description),
+      label: (label != null ? label.value : this.label),
+      category: (category != null ? category.value : this.category),
+      itemType: (itemType != null ? itemType.value : this.itemType),
+      kind: (kind != null ? kind.value : this.kind),
+      stateDescription:
+          (stateDescription != null
+              ? stateDescription.value
+              : this.stateDescription),
+      tags: (tags != null ? tags.value : this.tags),
+      uid: (uid != null ? uid.value : this.uid),
+      advanced: (advanced != null ? advanced.value : this.advanced),
+      commandDescription:
+          (commandDescription != null
+              ? commandDescription.value
+              : this.commandDescription),
+    );
   }
 }
 
@@ -3846,8 +4082,8 @@ class ConfigDescriptionParameterGroupDTO {
   });
 
   factory ConfigDescriptionParameterGroupDTO.fromJson(
-          Map<String, dynamic> json) =>
-      _$ConfigDescriptionParameterGroupDTOFromJson(json);
+    Map<String, dynamic> json,
+  ) => _$ConfigDescriptionParameterGroupDTOFromJson(json);
 
   static const toJsonFactory = _$ConfigDescriptionParameterGroupDTOToJson;
   Map<String, dynamic> toJson() =>
@@ -3872,16 +4108,22 @@ class ConfigDescriptionParameterGroupDTO {
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.context, context) ||
-                const DeepCollectionEquality()
-                    .equals(other.context, context)) &&
+                const DeepCollectionEquality().equals(
+                  other.context,
+                  context,
+                )) &&
             (identical(other.advanced, advanced) ||
-                const DeepCollectionEquality()
-                    .equals(other.advanced, advanced)) &&
+                const DeepCollectionEquality().equals(
+                  other.advanced,
+                  advanced,
+                )) &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)));
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )));
   }
 
   @override
@@ -3899,197 +4141,42 @@ class ConfigDescriptionParameterGroupDTO {
 
 extension $ConfigDescriptionParameterGroupDTOExtension
     on ConfigDescriptionParameterGroupDTO {
-  ConfigDescriptionParameterGroupDTO copyWith(
-      {String? name,
-      String? context,
-      bool? advanced,
-      String? label,
-      String? description}) {
+  ConfigDescriptionParameterGroupDTO copyWith({
+    String? name,
+    String? context,
+    bool? advanced,
+    String? label,
+    String? description,
+  }) {
     return ConfigDescriptionParameterGroupDTO(
-        name: name ?? this.name,
-        context: context ?? this.context,
-        advanced: advanced ?? this.advanced,
-        label: label ?? this.label,
-        description: description ?? this.description);
+      name: name ?? this.name,
+      context: context ?? this.context,
+      advanced: advanced ?? this.advanced,
+      label: label ?? this.label,
+      description: description ?? this.description,
+    );
   }
 
-  ConfigDescriptionParameterGroupDTO copyWithWrapped(
-      {Wrapped<String?>? name,
-      Wrapped<String?>? context,
-      Wrapped<bool?>? advanced,
-      Wrapped<String?>? label,
-      Wrapped<String?>? description}) {
+  ConfigDescriptionParameterGroupDTO copyWithWrapped({
+    Wrapped<String?>? name,
+    Wrapped<String?>? context,
+    Wrapped<bool?>? advanced,
+    Wrapped<String?>? label,
+    Wrapped<String?>? description,
+  }) {
     return ConfigDescriptionParameterGroupDTO(
-        name: (name != null ? name.value : this.name),
-        context: (context != null ? context.value : this.context),
-        advanced: (advanced != null ? advanced.value : this.advanced),
-        label: (label != null ? label.value : this.label),
-        description:
-            (description != null ? description.value : this.description));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class StateDescription {
-  const StateDescription({
-    this.minimum,
-    this.maximum,
-    this.step,
-    this.pattern,
-    this.readOnly,
-    this.options,
-  });
-
-  factory StateDescription.fromJson(Map<String, dynamic> json) =>
-      _$StateDescriptionFromJson(json);
-
-  static const toJsonFactory = _$StateDescriptionToJson;
-  Map<String, dynamic> toJson() => _$StateDescriptionToJson(this);
-
-  @JsonKey(name: 'minimum')
-  final double? minimum;
-  @JsonKey(name: 'maximum')
-  final double? maximum;
-  @JsonKey(name: 'step')
-  final double? step;
-  @JsonKey(name: 'pattern')
-  final String? pattern;
-  @JsonKey(name: 'readOnly')
-  final bool? readOnly;
-  @JsonKey(name: 'options', defaultValue: <StateOption>[])
-  final List<StateOption>? options;
-  static const fromJsonFactory = _$StateDescriptionFromJson;
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other is StateDescription &&
-            (identical(other.minimum, minimum) ||
-                const DeepCollectionEquality()
-                    .equals(other.minimum, minimum)) &&
-            (identical(other.maximum, maximum) ||
-                const DeepCollectionEquality()
-                    .equals(other.maximum, maximum)) &&
-            (identical(other.step, step) ||
-                const DeepCollectionEquality().equals(other.step, step)) &&
-            (identical(other.pattern, pattern) ||
-                const DeepCollectionEquality()
-                    .equals(other.pattern, pattern)) &&
-            (identical(other.readOnly, readOnly) ||
-                const DeepCollectionEquality()
-                    .equals(other.readOnly, readOnly)) &&
-            (identical(other.options, options) ||
-                const DeepCollectionEquality().equals(other.options, options)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash(minimum) ^
-      const DeepCollectionEquality().hash(maximum) ^
-      const DeepCollectionEquality().hash(step) ^
-      const DeepCollectionEquality().hash(pattern) ^
-      const DeepCollectionEquality().hash(readOnly) ^
-      const DeepCollectionEquality().hash(options) ^
-      runtimeType.hashCode;
-}
-
-extension $StateDescriptionExtension on StateDescription {
-  StateDescription copyWith(
-      {double? minimum,
-      double? maximum,
-      double? step,
-      String? pattern,
-      bool? readOnly,
-      List<StateOption>? options}) {
-    return StateDescription(
-        minimum: minimum ?? this.minimum,
-        maximum: maximum ?? this.maximum,
-        step: step ?? this.step,
-        pattern: pattern ?? this.pattern,
-        readOnly: readOnly ?? this.readOnly,
-        options: options ?? this.options);
-  }
-
-  StateDescription copyWithWrapped(
-      {Wrapped<double?>? minimum,
-      Wrapped<double?>? maximum,
-      Wrapped<double?>? step,
-      Wrapped<String?>? pattern,
-      Wrapped<bool?>? readOnly,
-      Wrapped<List<StateOption>?>? options}) {
-    return StateDescription(
-        minimum: (minimum != null ? minimum.value : this.minimum),
-        maximum: (maximum != null ? maximum.value : this.maximum),
-        step: (step != null ? step.value : this.step),
-        pattern: (pattern != null ? pattern.value : this.pattern),
-        readOnly: (readOnly != null ? readOnly.value : this.readOnly),
-        options: (options != null ? options.value : this.options));
-  }
-}
-
-@JsonSerializable(explicitToJson: true)
-class StateOption {
-  const StateOption({
-    this.$value,
-    this.label,
-  });
-
-  factory StateOption.fromJson(Map<String, dynamic> json) =>
-      _$StateOptionFromJson(json);
-
-  static const toJsonFactory = _$StateOptionToJson;
-  Map<String, dynamic> toJson() => _$StateOptionToJson(this);
-
-  @JsonKey(name: 'value')
-  final String? $value;
-  @JsonKey(name: 'label')
-  final String? label;
-  static const fromJsonFactory = _$StateOptionFromJson;
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other is StateOption &&
-            (identical(other.$value, $value) ||
-                const DeepCollectionEquality().equals(other.$value, $value)) &&
-            (identical(other.label, label) ||
-                const DeepCollectionEquality().equals(other.label, label)));
-  }
-
-  @override
-  String toString() => jsonEncode(this);
-
-  @override
-  int get hashCode =>
-      const DeepCollectionEquality().hash($value) ^
-      const DeepCollectionEquality().hash(label) ^
-      runtimeType.hashCode;
-}
-
-extension $StateOptionExtension on StateOption {
-  StateOption copyWith({String? $value, String? label}) {
-    return StateOption(
-        $value: $value ?? this.$value, label: label ?? this.label);
-  }
-
-  StateOption copyWithWrapped(
-      {Wrapped<String?>? $value, Wrapped<String?>? label}) {
-    return StateOption(
-        $value: ($value != null ? $value.value : this.$value),
-        label: (label != null ? label.value : this.label));
+      name: (name != null ? name.value : this.name),
+      context: (context != null ? context.value : this.context),
+      advanced: (advanced != null ? advanced.value : this.advanced),
+      label: (label != null ? label.value : this.label),
+      description: (description != null ? description.value : this.description),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class ConfigDescriptionDTO {
-  const ConfigDescriptionDTO({
-    this.uri,
-    this.parameters,
-    this.parameterGroups,
-  });
+  const ConfigDescriptionDTO({this.uri, this.parameters, this.parameterGroups});
 
   factory ConfigDescriptionDTO.fromJson(Map<String, dynamic> json) =>
       _$ConfigDescriptionDTOFromJson(json);
@@ -4102,8 +4189,9 @@ class ConfigDescriptionDTO {
   @JsonKey(name: 'parameters', defaultValue: <ConfigDescriptionParameterDTO>[])
   final List<ConfigDescriptionParameterDTO>? parameters;
   @JsonKey(
-      name: 'parameterGroups',
-      defaultValue: <ConfigDescriptionParameterGroupDTO>[])
+    name: 'parameterGroups',
+    defaultValue: <ConfigDescriptionParameterGroupDTO>[],
+  )
   final List<ConfigDescriptionParameterGroupDTO>? parameterGroups;
   static const fromJsonFactory = _$ConfigDescriptionDTOFromJson;
 
@@ -4114,11 +4202,15 @@ class ConfigDescriptionDTO {
             (identical(other.uri, uri) ||
                 const DeepCollectionEquality().equals(other.uri, uri)) &&
             (identical(other.parameters, parameters) ||
-                const DeepCollectionEquality()
-                    .equals(other.parameters, parameters)) &&
+                const DeepCollectionEquality().equals(
+                  other.parameters,
+                  parameters,
+                )) &&
             (identical(other.parameterGroups, parameterGroups) ||
-                const DeepCollectionEquality()
-                    .equals(other.parameterGroups, parameterGroups)));
+                const DeepCollectionEquality().equals(
+                  other.parameterGroups,
+                  parameterGroups,
+                )));
   }
 
   @override
@@ -4133,26 +4225,31 @@ class ConfigDescriptionDTO {
 }
 
 extension $ConfigDescriptionDTOExtension on ConfigDescriptionDTO {
-  ConfigDescriptionDTO copyWith(
-      {String? uri,
-      List<ConfigDescriptionParameterDTO>? parameters,
-      List<ConfigDescriptionParameterGroupDTO>? parameterGroups}) {
+  ConfigDescriptionDTO copyWith({
+    String? uri,
+    List<ConfigDescriptionParameterDTO>? parameters,
+    List<ConfigDescriptionParameterGroupDTO>? parameterGroups,
+  }) {
     return ConfigDescriptionDTO(
-        uri: uri ?? this.uri,
-        parameters: parameters ?? this.parameters,
-        parameterGroups: parameterGroups ?? this.parameterGroups);
+      uri: uri ?? this.uri,
+      parameters: parameters ?? this.parameters,
+      parameterGroups: parameterGroups ?? this.parameterGroups,
+    );
   }
 
-  ConfigDescriptionDTO copyWithWrapped(
-      {Wrapped<String?>? uri,
-      Wrapped<List<ConfigDescriptionParameterDTO>?>? parameters,
-      Wrapped<List<ConfigDescriptionParameterGroupDTO>?>? parameterGroups}) {
+  ConfigDescriptionDTO copyWithWrapped({
+    Wrapped<String?>? uri,
+    Wrapped<List<ConfigDescriptionParameterDTO>?>? parameters,
+    Wrapped<List<ConfigDescriptionParameterGroupDTO>?>? parameterGroups,
+  }) {
     return ConfigDescriptionDTO(
-        uri: (uri != null ? uri.value : this.uri),
-        parameters: (parameters != null ? parameters.value : this.parameters),
-        parameterGroups: (parameterGroups != null
-            ? parameterGroups.value
-            : this.parameterGroups));
+      uri: (uri != null ? uri.value : this.uri),
+      parameters: (parameters != null ? parameters.value : this.parameters),
+      parameterGroups:
+          (parameterGroups != null
+              ? parameterGroups.value
+              : this.parameterGroups),
+    );
   }
 }
 
@@ -4199,24 +4296,34 @@ class DiscoveryResultDTO {
     return identical(this, other) ||
         (other is DiscoveryResultDTO &&
             (identical(other.bridgeUID, bridgeUID) ||
-                const DeepCollectionEquality()
-                    .equals(other.bridgeUID, bridgeUID)) &&
+                const DeepCollectionEquality().equals(
+                  other.bridgeUID,
+                  bridgeUID,
+                )) &&
             (identical(other.flag, flag) ||
                 const DeepCollectionEquality().equals(other.flag, flag)) &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.properties, properties) ||
-                const DeepCollectionEquality()
-                    .equals(other.properties, properties)) &&
+                const DeepCollectionEquality().equals(
+                  other.properties,
+                  properties,
+                )) &&
             (identical(other.representationProperty, representationProperty) ||
                 const DeepCollectionEquality().equals(
-                    other.representationProperty, representationProperty)) &&
+                  other.representationProperty,
+                  representationProperty,
+                )) &&
             (identical(other.thingUID, thingUID) ||
-                const DeepCollectionEquality()
-                    .equals(other.thingUID, thingUID)) &&
+                const DeepCollectionEquality().equals(
+                  other.thingUID,
+                  thingUID,
+                )) &&
             (identical(other.thingTypeUID, thingTypeUID) ||
-                const DeepCollectionEquality()
-                    .equals(other.thingTypeUID, thingTypeUID)));
+                const DeepCollectionEquality().equals(
+                  other.thingTypeUID,
+                  thingTypeUID,
+                )));
   }
 
   @override
@@ -4235,53 +4342,55 @@ class DiscoveryResultDTO {
 }
 
 extension $DiscoveryResultDTOExtension on DiscoveryResultDTO {
-  DiscoveryResultDTO copyWith(
-      {String? bridgeUID,
-      enums.DiscoveryResultDTOFlag? flag,
-      String? label,
-      Map<String, dynamic>? properties,
-      String? representationProperty,
-      String? thingUID,
-      String? thingTypeUID}) {
+  DiscoveryResultDTO copyWith({
+    String? bridgeUID,
+    enums.DiscoveryResultDTOFlag? flag,
+    String? label,
+    Map<String, dynamic>? properties,
+    String? representationProperty,
+    String? thingUID,
+    String? thingTypeUID,
+  }) {
     return DiscoveryResultDTO(
-        bridgeUID: bridgeUID ?? this.bridgeUID,
-        flag: flag ?? this.flag,
-        label: label ?? this.label,
-        properties: properties ?? this.properties,
-        representationProperty:
-            representationProperty ?? this.representationProperty,
-        thingUID: thingUID ?? this.thingUID,
-        thingTypeUID: thingTypeUID ?? this.thingTypeUID);
+      bridgeUID: bridgeUID ?? this.bridgeUID,
+      flag: flag ?? this.flag,
+      label: label ?? this.label,
+      properties: properties ?? this.properties,
+      representationProperty:
+          representationProperty ?? this.representationProperty,
+      thingUID: thingUID ?? this.thingUID,
+      thingTypeUID: thingTypeUID ?? this.thingTypeUID,
+    );
   }
 
-  DiscoveryResultDTO copyWithWrapped(
-      {Wrapped<String?>? bridgeUID,
-      Wrapped<enums.DiscoveryResultDTOFlag?>? flag,
-      Wrapped<String?>? label,
-      Wrapped<Map<String, dynamic>?>? properties,
-      Wrapped<String?>? representationProperty,
-      Wrapped<String?>? thingUID,
-      Wrapped<String?>? thingTypeUID}) {
+  DiscoveryResultDTO copyWithWrapped({
+    Wrapped<String?>? bridgeUID,
+    Wrapped<enums.DiscoveryResultDTOFlag?>? flag,
+    Wrapped<String?>? label,
+    Wrapped<Map<String, dynamic>?>? properties,
+    Wrapped<String?>? representationProperty,
+    Wrapped<String?>? thingUID,
+    Wrapped<String?>? thingTypeUID,
+  }) {
     return DiscoveryResultDTO(
-        bridgeUID: (bridgeUID != null ? bridgeUID.value : this.bridgeUID),
-        flag: (flag != null ? flag.value : this.flag),
-        label: (label != null ? label.value : this.label),
-        properties: (properties != null ? properties.value : this.properties),
-        representationProperty: (representationProperty != null
-            ? representationProperty.value
-            : this.representationProperty),
-        thingUID: (thingUID != null ? thingUID.value : this.thingUID),
-        thingTypeUID:
-            (thingTypeUID != null ? thingTypeUID.value : this.thingTypeUID));
+      bridgeUID: (bridgeUID != null ? bridgeUID.value : this.bridgeUID),
+      flag: (flag != null ? flag.value : this.flag),
+      label: (label != null ? label.value : this.label),
+      properties: (properties != null ? properties.value : this.properties),
+      representationProperty:
+          (representationProperty != null
+              ? representationProperty.value
+              : this.representationProperty),
+      thingUID: (thingUID != null ? thingUID.value : this.thingUID),
+      thingTypeUID:
+          (thingTypeUID != null ? thingTypeUID.value : this.thingTypeUID),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class MetadataDTO {
-  const MetadataDTO({
-    this.$value,
-    this.config,
-  });
+  const MetadataDTO({this.$value, this.config});
 
   factory MetadataDTO.fromJson(Map<String, dynamic> json) =>
       _$MetadataDTOFromJson(json);
@@ -4318,14 +4427,19 @@ class MetadataDTO {
 extension $MetadataDTOExtension on MetadataDTO {
   MetadataDTO copyWith({String? $value, Map<String, dynamic>? config}) {
     return MetadataDTO(
-        $value: $value ?? this.$value, config: config ?? this.config);
+      $value: $value ?? this.$value,
+      config: config ?? this.config,
+    );
   }
 
-  MetadataDTO copyWithWrapped(
-      {Wrapped<String?>? $value, Wrapped<Map<String, dynamic>?>? config}) {
+  MetadataDTO copyWithWrapped({
+    Wrapped<String?>? $value,
+    Wrapped<Map<String, dynamic>?>? config,
+  }) {
     return MetadataDTO(
-        $value: ($value != null ? $value.value : this.$value),
-        config: (config != null ? config.value : this.config));
+      $value: ($value != null ? $value.value : this.$value),
+      config: (config != null ? config.value : this.config),
+    );
   }
 }
 
@@ -4395,35 +4509,51 @@ class EnrichedItemDTO {
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.category, category) ||
-                const DeepCollectionEquality()
-                    .equals(other.category, category)) &&
+                const DeepCollectionEquality().equals(
+                  other.category,
+                  category,
+                )) &&
             (identical(other.tags, tags) ||
                 const DeepCollectionEquality().equals(other.tags, tags)) &&
             (identical(other.groupNames, groupNames) ||
-                const DeepCollectionEquality()
-                    .equals(other.groupNames, groupNames)) &&
+                const DeepCollectionEquality().equals(
+                  other.groupNames,
+                  groupNames,
+                )) &&
             (identical(other.link, link) ||
                 const DeepCollectionEquality().equals(other.link, link)) &&
             (identical(other.state, state) ||
                 const DeepCollectionEquality().equals(other.state, state)) &&
             (identical(other.transformedState, transformedState) ||
-                const DeepCollectionEquality()
-                    .equals(other.transformedState, transformedState)) &&
+                const DeepCollectionEquality().equals(
+                  other.transformedState,
+                  transformedState,
+                )) &&
             (identical(other.stateDescription, stateDescription) ||
-                const DeepCollectionEquality()
-                    .equals(other.stateDescription, stateDescription)) &&
+                const DeepCollectionEquality().equals(
+                  other.stateDescription,
+                  stateDescription,
+                )) &&
             (identical(other.unitSymbol, unitSymbol) ||
-                const DeepCollectionEquality()
-                    .equals(other.unitSymbol, unitSymbol)) &&
+                const DeepCollectionEquality().equals(
+                  other.unitSymbol,
+                  unitSymbol,
+                )) &&
             (identical(other.commandDescription, commandDescription) ||
-                const DeepCollectionEquality()
-                    .equals(other.commandDescription, commandDescription)) &&
+                const DeepCollectionEquality().equals(
+                  other.commandDescription,
+                  commandDescription,
+                )) &&
             (identical(other.metadata, metadata) ||
-                const DeepCollectionEquality()
-                    .equals(other.metadata, metadata)) &&
+                const DeepCollectionEquality().equals(
+                  other.metadata,
+                  metadata,
+                )) &&
             (identical(other.editable, editable) ||
-                const DeepCollectionEquality()
-                    .equals(other.editable, editable)));
+                const DeepCollectionEquality().equals(
+                  other.editable,
+                  editable,
+                )));
   }
 
   @override
@@ -4449,83 +4579,87 @@ class EnrichedItemDTO {
 }
 
 extension $EnrichedItemDTOExtension on EnrichedItemDTO {
-  EnrichedItemDTO copyWith(
-      {String? type,
-      String? name,
-      String? label,
-      String? category,
-      List<String>? tags,
-      List<String>? groupNames,
-      String? link,
-      String? state,
-      String? transformedState,
-      StateDescription? stateDescription,
-      String? unitSymbol,
-      CommandDescription? commandDescription,
-      Map<String, dynamic>? metadata,
-      bool? editable}) {
+  EnrichedItemDTO copyWith({
+    String? type,
+    String? name,
+    String? label,
+    String? category,
+    List<String>? tags,
+    List<String>? groupNames,
+    String? link,
+    String? state,
+    String? transformedState,
+    StateDescription? stateDescription,
+    String? unitSymbol,
+    CommandDescription? commandDescription,
+    Map<String, dynamic>? metadata,
+    bool? editable,
+  }) {
     return EnrichedItemDTO(
-        type: type ?? this.type,
-        name: name ?? this.name,
-        label: label ?? this.label,
-        category: category ?? this.category,
-        tags: tags ?? this.tags,
-        groupNames: groupNames ?? this.groupNames,
-        link: link ?? this.link,
-        state: state ?? this.state,
-        transformedState: transformedState ?? this.transformedState,
-        stateDescription: stateDescription ?? this.stateDescription,
-        unitSymbol: unitSymbol ?? this.unitSymbol,
-        commandDescription: commandDescription ?? this.commandDescription,
-        metadata: metadata ?? this.metadata,
-        editable: editable ?? this.editable);
+      type: type ?? this.type,
+      name: name ?? this.name,
+      label: label ?? this.label,
+      category: category ?? this.category,
+      tags: tags ?? this.tags,
+      groupNames: groupNames ?? this.groupNames,
+      link: link ?? this.link,
+      state: state ?? this.state,
+      transformedState: transformedState ?? this.transformedState,
+      stateDescription: stateDescription ?? this.stateDescription,
+      unitSymbol: unitSymbol ?? this.unitSymbol,
+      commandDescription: commandDescription ?? this.commandDescription,
+      metadata: metadata ?? this.metadata,
+      editable: editable ?? this.editable,
+    );
   }
 
-  EnrichedItemDTO copyWithWrapped(
-      {Wrapped<String?>? type,
-      Wrapped<String?>? name,
-      Wrapped<String?>? label,
-      Wrapped<String?>? category,
-      Wrapped<List<String>?>? tags,
-      Wrapped<List<String>?>? groupNames,
-      Wrapped<String?>? link,
-      Wrapped<String?>? state,
-      Wrapped<String?>? transformedState,
-      Wrapped<StateDescription?>? stateDescription,
-      Wrapped<String?>? unitSymbol,
-      Wrapped<CommandDescription?>? commandDescription,
-      Wrapped<Map<String, dynamic>?>? metadata,
-      Wrapped<bool?>? editable}) {
+  EnrichedItemDTO copyWithWrapped({
+    Wrapped<String?>? type,
+    Wrapped<String?>? name,
+    Wrapped<String?>? label,
+    Wrapped<String?>? category,
+    Wrapped<List<String>?>? tags,
+    Wrapped<List<String>?>? groupNames,
+    Wrapped<String?>? link,
+    Wrapped<String?>? state,
+    Wrapped<String?>? transformedState,
+    Wrapped<StateDescription?>? stateDescription,
+    Wrapped<String?>? unitSymbol,
+    Wrapped<CommandDescription?>? commandDescription,
+    Wrapped<Map<String, dynamic>?>? metadata,
+    Wrapped<bool?>? editable,
+  }) {
     return EnrichedItemDTO(
-        type: (type != null ? type.value : this.type),
-        name: (name != null ? name.value : this.name),
-        label: (label != null ? label.value : this.label),
-        category: (category != null ? category.value : this.category),
-        tags: (tags != null ? tags.value : this.tags),
-        groupNames: (groupNames != null ? groupNames.value : this.groupNames),
-        link: (link != null ? link.value : this.link),
-        state: (state != null ? state.value : this.state),
-        transformedState: (transformedState != null
-            ? transformedState.value
-            : this.transformedState),
-        stateDescription: (stateDescription != null
-            ? stateDescription.value
-            : this.stateDescription),
-        unitSymbol: (unitSymbol != null ? unitSymbol.value : this.unitSymbol),
-        commandDescription: (commandDescription != null
-            ? commandDescription.value
-            : this.commandDescription),
-        metadata: (metadata != null ? metadata.value : this.metadata),
-        editable: (editable != null ? editable.value : this.editable));
+      type: (type != null ? type.value : this.type),
+      name: (name != null ? name.value : this.name),
+      label: (label != null ? label.value : this.label),
+      category: (category != null ? category.value : this.category),
+      tags: (tags != null ? tags.value : this.tags),
+      groupNames: (groupNames != null ? groupNames.value : this.groupNames),
+      link: (link != null ? link.value : this.link),
+      state: (state != null ? state.value : this.state),
+      transformedState:
+          (transformedState != null
+              ? transformedState.value
+              : this.transformedState),
+      stateDescription:
+          (stateDescription != null
+              ? stateDescription.value
+              : this.stateDescription),
+      unitSymbol: (unitSymbol != null ? unitSymbol.value : this.unitSymbol),
+      commandDescription:
+          (commandDescription != null
+              ? commandDescription.value
+              : this.commandDescription),
+      metadata: (metadata != null ? metadata.value : this.metadata),
+      editable: (editable != null ? editable.value : this.editable),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class GroupFunctionDTO {
-  const GroupFunctionDTO({
-    this.name,
-    this.params,
-  });
+  const GroupFunctionDTO({this.name, this.params});
 
   factory GroupFunctionDTO.fromJson(Map<String, dynamic> json) =>
       _$GroupFunctionDTOFromJson(json);
@@ -4562,14 +4696,19 @@ class GroupFunctionDTO {
 extension $GroupFunctionDTOExtension on GroupFunctionDTO {
   GroupFunctionDTO copyWith({String? name, List<String>? params}) {
     return GroupFunctionDTO(
-        name: name ?? this.name, params: params ?? this.params);
+      name: name ?? this.name,
+      params: params ?? this.params,
+    );
   }
 
-  GroupFunctionDTO copyWithWrapped(
-      {Wrapped<String?>? name, Wrapped<List<String>?>? params}) {
+  GroupFunctionDTO copyWithWrapped({
+    Wrapped<String?>? name,
+    Wrapped<List<String>?>? params,
+  }) {
     return GroupFunctionDTO(
-        name: (name != null ? name.value : this.name),
-        params: (params != null ? params.value : this.params));
+      name: (name != null ? name.value : this.name),
+      params: (params != null ? params.value : this.params),
+    );
   }
 }
 
@@ -4621,19 +4760,27 @@ class GroupItemDTO {
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.category, category) ||
-                const DeepCollectionEquality()
-                    .equals(other.category, category)) &&
+                const DeepCollectionEquality().equals(
+                  other.category,
+                  category,
+                )) &&
             (identical(other.tags, tags) ||
                 const DeepCollectionEquality().equals(other.tags, tags)) &&
             (identical(other.groupNames, groupNames) ||
-                const DeepCollectionEquality()
-                    .equals(other.groupNames, groupNames)) &&
+                const DeepCollectionEquality().equals(
+                  other.groupNames,
+                  groupNames,
+                )) &&
             (identical(other.groupType, groupType) ||
-                const DeepCollectionEquality()
-                    .equals(other.groupType, groupType)) &&
+                const DeepCollectionEquality().equals(
+                  other.groupType,
+                  groupType,
+                )) &&
             (identical(other.function, function) ||
-                const DeepCollectionEquality()
-                    .equals(other.function, function)));
+                const DeepCollectionEquality().equals(
+                  other.function,
+                  function,
+                )));
   }
 
   @override
@@ -4653,44 +4800,48 @@ class GroupItemDTO {
 }
 
 extension $GroupItemDTOExtension on GroupItemDTO {
-  GroupItemDTO copyWith(
-      {String? type,
-      String? name,
-      String? label,
-      String? category,
-      List<String>? tags,
-      List<String>? groupNames,
-      String? groupType,
-      GroupFunctionDTO? function}) {
+  GroupItemDTO copyWith({
+    String? type,
+    String? name,
+    String? label,
+    String? category,
+    List<String>? tags,
+    List<String>? groupNames,
+    String? groupType,
+    GroupFunctionDTO? function,
+  }) {
     return GroupItemDTO(
-        type: type ?? this.type,
-        name: name ?? this.name,
-        label: label ?? this.label,
-        category: category ?? this.category,
-        tags: tags ?? this.tags,
-        groupNames: groupNames ?? this.groupNames,
-        groupType: groupType ?? this.groupType,
-        function: function ?? this.function);
+      type: type ?? this.type,
+      name: name ?? this.name,
+      label: label ?? this.label,
+      category: category ?? this.category,
+      tags: tags ?? this.tags,
+      groupNames: groupNames ?? this.groupNames,
+      groupType: groupType ?? this.groupType,
+      function: function ?? this.function,
+    );
   }
 
-  GroupItemDTO copyWithWrapped(
-      {Wrapped<String?>? type,
-      Wrapped<String?>? name,
-      Wrapped<String?>? label,
-      Wrapped<String?>? category,
-      Wrapped<List<String>?>? tags,
-      Wrapped<List<String>?>? groupNames,
-      Wrapped<String?>? groupType,
-      Wrapped<GroupFunctionDTO?>? function}) {
+  GroupItemDTO copyWithWrapped({
+    Wrapped<String?>? type,
+    Wrapped<String?>? name,
+    Wrapped<String?>? label,
+    Wrapped<String?>? category,
+    Wrapped<List<String>?>? tags,
+    Wrapped<List<String>?>? groupNames,
+    Wrapped<String?>? groupType,
+    Wrapped<GroupFunctionDTO?>? function,
+  }) {
     return GroupItemDTO(
-        type: (type != null ? type.value : this.type),
-        name: (name != null ? name.value : this.name),
-        label: (label != null ? label.value : this.label),
-        category: (category != null ? category.value : this.category),
-        tags: (tags != null ? tags.value : this.tags),
-        groupNames: (groupNames != null ? groupNames.value : this.groupNames),
-        groupType: (groupType != null ? groupType.value : this.groupType),
-        function: (function != null ? function.value : this.function));
+      type: (type != null ? type.value : this.type),
+      name: (name != null ? name.value : this.name),
+      label: (label != null ? label.value : this.label),
+      category: (category != null ? category.value : this.category),
+      tags: (tags != null ? tags.value : this.tags),
+      groupNames: (groupNames != null ? groupNames.value : this.groupNames),
+      groupType: (groupType != null ? groupType.value : this.groupType),
+      function: (function != null ? function.value : this.function),
+    );
   }
 }
 
@@ -4724,17 +4875,25 @@ class EnrichedItemChannelLinkDTO {
     return identical(this, other) ||
         (other is EnrichedItemChannelLinkDTO &&
             (identical(other.itemName, itemName) ||
-                const DeepCollectionEquality()
-                    .equals(other.itemName, itemName)) &&
+                const DeepCollectionEquality().equals(
+                  other.itemName,
+                  itemName,
+                )) &&
             (identical(other.channelUID, channelUID) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelUID, channelUID)) &&
+                const DeepCollectionEquality().equals(
+                  other.channelUID,
+                  channelUID,
+                )) &&
             (identical(other.configuration, configuration) ||
-                const DeepCollectionEquality()
-                    .equals(other.configuration, configuration)) &&
+                const DeepCollectionEquality().equals(
+                  other.configuration,
+                  configuration,
+                )) &&
             (identical(other.editable, editable) ||
-                const DeepCollectionEquality()
-                    .equals(other.editable, editable)));
+                const DeepCollectionEquality().equals(
+                  other.editable,
+                  editable,
+                )));
   }
 
   @override
@@ -4750,29 +4909,33 @@ class EnrichedItemChannelLinkDTO {
 }
 
 extension $EnrichedItemChannelLinkDTOExtension on EnrichedItemChannelLinkDTO {
-  EnrichedItemChannelLinkDTO copyWith(
-      {String? itemName,
-      String? channelUID,
-      Map<String, dynamic>? configuration,
-      bool? editable}) {
+  EnrichedItemChannelLinkDTO copyWith({
+    String? itemName,
+    String? channelUID,
+    Map<String, dynamic>? configuration,
+    bool? editable,
+  }) {
     return EnrichedItemChannelLinkDTO(
-        itemName: itemName ?? this.itemName,
-        channelUID: channelUID ?? this.channelUID,
-        configuration: configuration ?? this.configuration,
-        editable: editable ?? this.editable);
+      itemName: itemName ?? this.itemName,
+      channelUID: channelUID ?? this.channelUID,
+      configuration: configuration ?? this.configuration,
+      editable: editable ?? this.editable,
+    );
   }
 
-  EnrichedItemChannelLinkDTO copyWithWrapped(
-      {Wrapped<String?>? itemName,
-      Wrapped<String?>? channelUID,
-      Wrapped<Map<String, dynamic>?>? configuration,
-      Wrapped<bool?>? editable}) {
+  EnrichedItemChannelLinkDTO copyWithWrapped({
+    Wrapped<String?>? itemName,
+    Wrapped<String?>? channelUID,
+    Wrapped<Map<String, dynamic>?>? configuration,
+    Wrapped<bool?>? editable,
+  }) {
     return EnrichedItemChannelLinkDTO(
-        itemName: (itemName != null ? itemName.value : this.itemName),
-        channelUID: (channelUID != null ? channelUID.value : this.channelUID),
-        configuration:
-            (configuration != null ? configuration.value : this.configuration),
-        editable: (editable != null ? editable.value : this.editable));
+      itemName: (itemName != null ? itemName.value : this.itemName),
+      channelUID: (channelUID != null ? channelUID.value : this.channelUID),
+      configuration:
+          (configuration != null ? configuration.value : this.configuration),
+      editable: (editable != null ? editable.value : this.editable),
+    );
   }
 }
 
@@ -4803,14 +4966,20 @@ class ItemChannelLinkDTO {
     return identical(this, other) ||
         (other is ItemChannelLinkDTO &&
             (identical(other.itemName, itemName) ||
-                const DeepCollectionEquality()
-                    .equals(other.itemName, itemName)) &&
+                const DeepCollectionEquality().equals(
+                  other.itemName,
+                  itemName,
+                )) &&
             (identical(other.channelUID, channelUID) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelUID, channelUID)) &&
+                const DeepCollectionEquality().equals(
+                  other.channelUID,
+                  channelUID,
+                )) &&
             (identical(other.configuration, configuration) ||
-                const DeepCollectionEquality()
-                    .equals(other.configuration, configuration)));
+                const DeepCollectionEquality().equals(
+                  other.configuration,
+                  configuration,
+                )));
   }
 
   @override
@@ -4825,34 +4994,35 @@ class ItemChannelLinkDTO {
 }
 
 extension $ItemChannelLinkDTOExtension on ItemChannelLinkDTO {
-  ItemChannelLinkDTO copyWith(
-      {String? itemName,
-      String? channelUID,
-      Map<String, dynamic>? configuration}) {
+  ItemChannelLinkDTO copyWith({
+    String? itemName,
+    String? channelUID,
+    Map<String, dynamic>? configuration,
+  }) {
     return ItemChannelLinkDTO(
-        itemName: itemName ?? this.itemName,
-        channelUID: channelUID ?? this.channelUID,
-        configuration: configuration ?? this.configuration);
+      itemName: itemName ?? this.itemName,
+      channelUID: channelUID ?? this.channelUID,
+      configuration: configuration ?? this.configuration,
+    );
   }
 
-  ItemChannelLinkDTO copyWithWrapped(
-      {Wrapped<String?>? itemName,
-      Wrapped<String?>? channelUID,
-      Wrapped<Map<String, dynamic>?>? configuration}) {
+  ItemChannelLinkDTO copyWithWrapped({
+    Wrapped<String?>? itemName,
+    Wrapped<String?>? channelUID,
+    Wrapped<Map<String, dynamic>?>? configuration,
+  }) {
     return ItemChannelLinkDTO(
-        itemName: (itemName != null ? itemName.value : this.itemName),
-        channelUID: (channelUID != null ? channelUID.value : this.channelUID),
-        configuration:
-            (configuration != null ? configuration.value : this.configuration));
+      itemName: (itemName != null ? itemName.value : this.itemName),
+      channelUID: (channelUID != null ? channelUID.value : this.channelUID),
+      configuration:
+          (configuration != null ? configuration.value : this.configuration),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class HistoryDataBean {
-  const HistoryDataBean({
-    this.time,
-    this.state,
-  });
+  const HistoryDataBean({this.time, this.state});
 
   factory HistoryDataBean.fromJson(Map<String, dynamic> json) =>
       _$HistoryDataBeanFromJson(json);
@@ -4891,11 +5061,14 @@ extension $HistoryDataBeanExtension on HistoryDataBean {
     return HistoryDataBean(time: time ?? this.time, state: state ?? this.state);
   }
 
-  HistoryDataBean copyWithWrapped(
-      {Wrapped<int?>? time, Wrapped<String?>? state}) {
+  HistoryDataBean copyWithWrapped({
+    Wrapped<int?>? time,
+    Wrapped<String?>? state,
+  }) {
     return HistoryDataBean(
-        time: (time != null ? time.value : this.time),
-        state: (state != null ? state.value : this.state));
+      time: (time != null ? time.value : this.time),
+      state: (state != null ? state.value : this.state),
+    );
   }
 }
 
@@ -4931,11 +5104,15 @@ class ItemHistoryDTO {
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.totalrecords, totalrecords) ||
-                const DeepCollectionEquality()
-                    .equals(other.totalrecords, totalrecords)) &&
+                const DeepCollectionEquality().equals(
+                  other.totalrecords,
+                  totalrecords,
+                )) &&
             (identical(other.datapoints, datapoints) ||
-                const DeepCollectionEquality()
-                    .equals(other.datapoints, datapoints)) &&
+                const DeepCollectionEquality().equals(
+                  other.datapoints,
+                  datapoints,
+                )) &&
             (identical(other.data, data) ||
                 const DeepCollectionEquality().equals(other.data, data)));
   }
@@ -4953,38 +5130,39 @@ class ItemHistoryDTO {
 }
 
 extension $ItemHistoryDTOExtension on ItemHistoryDTO {
-  ItemHistoryDTO copyWith(
-      {String? name,
-      String? totalrecords,
-      String? datapoints,
-      List<HistoryDataBean>? data}) {
+  ItemHistoryDTO copyWith({
+    String? name,
+    String? totalrecords,
+    String? datapoints,
+    List<HistoryDataBean>? data,
+  }) {
     return ItemHistoryDTO(
-        name: name ?? this.name,
-        totalrecords: totalrecords ?? this.totalrecords,
-        datapoints: datapoints ?? this.datapoints,
-        data: data ?? this.data);
+      name: name ?? this.name,
+      totalrecords: totalrecords ?? this.totalrecords,
+      datapoints: datapoints ?? this.datapoints,
+      data: data ?? this.data,
+    );
   }
 
-  ItemHistoryDTO copyWithWrapped(
-      {Wrapped<String?>? name,
-      Wrapped<String?>? totalrecords,
-      Wrapped<String?>? datapoints,
-      Wrapped<List<HistoryDataBean>?>? data}) {
+  ItemHistoryDTO copyWithWrapped({
+    Wrapped<String?>? name,
+    Wrapped<String?>? totalrecords,
+    Wrapped<String?>? datapoints,
+    Wrapped<List<HistoryDataBean>?>? data,
+  }) {
     return ItemHistoryDTO(
-        name: (name != null ? name.value : this.name),
-        totalrecords:
-            (totalrecords != null ? totalrecords.value : this.totalrecords),
-        datapoints: (datapoints != null ? datapoints.value : this.datapoints),
-        data: (data != null ? data.value : this.data));
+      name: (name != null ? name.value : this.name),
+      totalrecords:
+          (totalrecords != null ? totalrecords.value : this.totalrecords),
+      datapoints: (datapoints != null ? datapoints.value : this.datapoints),
+      data: (data != null ? data.value : this.data),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class PersistenceCronStrategyDTO {
-  const PersistenceCronStrategyDTO({
-    this.name,
-    this.cronExpression,
-  });
+  const PersistenceCronStrategyDTO({this.name, this.cronExpression});
 
   factory PersistenceCronStrategyDTO.fromJson(Map<String, dynamic> json) =>
       _$PersistenceCronStrategyDTOFromJson(json);
@@ -5005,8 +5183,10 @@ class PersistenceCronStrategyDTO {
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.cronExpression, cronExpression) ||
-                const DeepCollectionEquality()
-                    .equals(other.cronExpression, cronExpression)));
+                const DeepCollectionEquality().equals(
+                  other.cronExpression,
+                  cronExpression,
+                )));
   }
 
   @override
@@ -5022,17 +5202,20 @@ class PersistenceCronStrategyDTO {
 extension $PersistenceCronStrategyDTOExtension on PersistenceCronStrategyDTO {
   PersistenceCronStrategyDTO copyWith({String? name, String? cronExpression}) {
     return PersistenceCronStrategyDTO(
-        name: name ?? this.name,
-        cronExpression: cronExpression ?? this.cronExpression);
+      name: name ?? this.name,
+      cronExpression: cronExpression ?? this.cronExpression,
+    );
   }
 
-  PersistenceCronStrategyDTO copyWithWrapped(
-      {Wrapped<String?>? name, Wrapped<String?>? cronExpression}) {
+  PersistenceCronStrategyDTO copyWithWrapped({
+    Wrapped<String?>? name,
+    Wrapped<String?>? cronExpression,
+  }) {
     return PersistenceCronStrategyDTO(
-        name: (name != null ? name.value : this.name),
-        cronExpression: (cronExpression != null
-            ? cronExpression.value
-            : this.cronExpression));
+      name: (name != null ? name.value : this.name),
+      cronExpression:
+          (cronExpression != null ? cronExpression.value : this.cronExpression),
+    );
   }
 }
 
@@ -5082,8 +5265,10 @@ class PersistenceFilterDTO {
             (identical(other.$value, $value) ||
                 const DeepCollectionEquality().equals(other.$value, $value)) &&
             (identical(other.relative, relative) ||
-                const DeepCollectionEquality()
-                    .equals(other.relative, relative)) &&
+                const DeepCollectionEquality().equals(
+                  other.relative,
+                  relative,
+                )) &&
             (identical(other.unit, unit) ||
                 const DeepCollectionEquality().equals(other.unit, unit)) &&
             (identical(other.lower, lower) ||
@@ -5093,8 +5278,10 @@ class PersistenceFilterDTO {
             (identical(other.values, values) ||
                 const DeepCollectionEquality().equals(other.values, values)) &&
             (identical(other.inverted, inverted) ||
-                const DeepCollectionEquality()
-                    .equals(other.inverted, inverted)));
+                const DeepCollectionEquality().equals(
+                  other.inverted,
+                  inverted,
+                )));
   }
 
   @override
@@ -5114,44 +5301,48 @@ class PersistenceFilterDTO {
 }
 
 extension $PersistenceFilterDTOExtension on PersistenceFilterDTO {
-  PersistenceFilterDTO copyWith(
-      {String? name,
-      double? $value,
-      bool? relative,
-      String? unit,
-      double? lower,
-      double? upper,
-      List<String>? values,
-      bool? inverted}) {
+  PersistenceFilterDTO copyWith({
+    String? name,
+    double? $value,
+    bool? relative,
+    String? unit,
+    double? lower,
+    double? upper,
+    List<String>? values,
+    bool? inverted,
+  }) {
     return PersistenceFilterDTO(
-        name: name ?? this.name,
-        $value: $value ?? this.$value,
-        relative: relative ?? this.relative,
-        unit: unit ?? this.unit,
-        lower: lower ?? this.lower,
-        upper: upper ?? this.upper,
-        values: values ?? this.values,
-        inverted: inverted ?? this.inverted);
+      name: name ?? this.name,
+      $value: $value ?? this.$value,
+      relative: relative ?? this.relative,
+      unit: unit ?? this.unit,
+      lower: lower ?? this.lower,
+      upper: upper ?? this.upper,
+      values: values ?? this.values,
+      inverted: inverted ?? this.inverted,
+    );
   }
 
-  PersistenceFilterDTO copyWithWrapped(
-      {Wrapped<String?>? name,
-      Wrapped<double?>? $value,
-      Wrapped<bool?>? relative,
-      Wrapped<String?>? unit,
-      Wrapped<double?>? lower,
-      Wrapped<double?>? upper,
-      Wrapped<List<String>?>? values,
-      Wrapped<bool?>? inverted}) {
+  PersistenceFilterDTO copyWithWrapped({
+    Wrapped<String?>? name,
+    Wrapped<double?>? $value,
+    Wrapped<bool?>? relative,
+    Wrapped<String?>? unit,
+    Wrapped<double?>? lower,
+    Wrapped<double?>? upper,
+    Wrapped<List<String>?>? values,
+    Wrapped<bool?>? inverted,
+  }) {
     return PersistenceFilterDTO(
-        name: (name != null ? name.value : this.name),
-        $value: ($value != null ? $value.value : this.$value),
-        relative: (relative != null ? relative.value : this.relative),
-        unit: (unit != null ? unit.value : this.unit),
-        lower: (lower != null ? lower.value : this.lower),
-        upper: (upper != null ? upper.value : this.upper),
-        values: (values != null ? values.value : this.values),
-        inverted: (inverted != null ? inverted.value : this.inverted));
+      name: (name != null ? name.value : this.name),
+      $value: ($value != null ? $value.value : this.$value),
+      relative: (relative != null ? relative.value : this.relative),
+      unit: (unit != null ? unit.value : this.unit),
+      lower: (lower != null ? lower.value : this.lower),
+      upper: (upper != null ? upper.value : this.upper),
+      values: (values != null ? values.value : this.values),
+      inverted: (inverted != null ? inverted.value : this.inverted),
+    );
   }
 }
 
@@ -5188,11 +5379,15 @@ class PersistenceItemConfigurationDTO {
             (identical(other.items, items) ||
                 const DeepCollectionEquality().equals(other.items, items)) &&
             (identical(other.strategies, strategies) ||
-                const DeepCollectionEquality()
-                    .equals(other.strategies, strategies)) &&
+                const DeepCollectionEquality().equals(
+                  other.strategies,
+                  strategies,
+                )) &&
             (identical(other.filters, filters) ||
-                const DeepCollectionEquality()
-                    .equals(other.filters, filters)) &&
+                const DeepCollectionEquality().equals(
+                  other.filters,
+                  filters,
+                )) &&
             (identical(other.alias, alias) ||
                 const DeepCollectionEquality().equals(other.alias, alias)));
   }
@@ -5211,28 +5406,32 @@ class PersistenceItemConfigurationDTO {
 
 extension $PersistenceItemConfigurationDTOExtension
     on PersistenceItemConfigurationDTO {
-  PersistenceItemConfigurationDTO copyWith(
-      {List<String>? items,
-      List<String>? strategies,
-      List<String>? filters,
-      String? alias}) {
+  PersistenceItemConfigurationDTO copyWith({
+    List<String>? items,
+    List<String>? strategies,
+    List<String>? filters,
+    String? alias,
+  }) {
     return PersistenceItemConfigurationDTO(
-        items: items ?? this.items,
-        strategies: strategies ?? this.strategies,
-        filters: filters ?? this.filters,
-        alias: alias ?? this.alias);
+      items: items ?? this.items,
+      strategies: strategies ?? this.strategies,
+      filters: filters ?? this.filters,
+      alias: alias ?? this.alias,
+    );
   }
 
-  PersistenceItemConfigurationDTO copyWithWrapped(
-      {Wrapped<List<String>?>? items,
-      Wrapped<List<String>?>? strategies,
-      Wrapped<List<String>?>? filters,
-      Wrapped<String?>? alias}) {
+  PersistenceItemConfigurationDTO copyWithWrapped({
+    Wrapped<List<String>?>? items,
+    Wrapped<List<String>?>? strategies,
+    Wrapped<List<String>?>? filters,
+    Wrapped<String?>? alias,
+  }) {
     return PersistenceItemConfigurationDTO(
-        items: (items != null ? items.value : this.items),
-        strategies: (strategies != null ? strategies.value : this.strategies),
-        filters: (filters != null ? filters.value : this.filters),
-        alias: (alias != null ? alias.value : this.alias));
+      items: (items != null ? items.value : this.items),
+      strategies: (strategies != null ? strategies.value : this.strategies),
+      filters: (filters != null ? filters.value : this.filters),
+      alias: (alias != null ? alias.value : this.alias),
+    );
   }
 }
 
@@ -5251,8 +5450,8 @@ class PersistenceServiceConfigurationDTO {
   });
 
   factory PersistenceServiceConfigurationDTO.fromJson(
-          Map<String, dynamic> json) =>
-      _$PersistenceServiceConfigurationDTOFromJson(json);
+    Map<String, dynamic> json,
+  ) => _$PersistenceServiceConfigurationDTOFromJson(json);
 
   static const toJsonFactory = _$PersistenceServiceConfigurationDTOToJson;
   Map<String, dynamic> toJson() =>
@@ -5283,32 +5482,50 @@ class PersistenceServiceConfigurationDTO {
     return identical(this, other) ||
         (other is PersistenceServiceConfigurationDTO &&
             (identical(other.serviceId, serviceId) ||
-                const DeepCollectionEquality()
-                    .equals(other.serviceId, serviceId)) &&
+                const DeepCollectionEquality().equals(
+                  other.serviceId,
+                  serviceId,
+                )) &&
             (identical(other.configs, configs) ||
-                const DeepCollectionEquality()
-                    .equals(other.configs, configs)) &&
+                const DeepCollectionEquality().equals(
+                  other.configs,
+                  configs,
+                )) &&
             (identical(other.defaults, defaults) ||
-                const DeepCollectionEquality()
-                    .equals(other.defaults, defaults)) &&
+                const DeepCollectionEquality().equals(
+                  other.defaults,
+                  defaults,
+                )) &&
             (identical(other.cronStrategies, cronStrategies) ||
-                const DeepCollectionEquality()
-                    .equals(other.cronStrategies, cronStrategies)) &&
+                const DeepCollectionEquality().equals(
+                  other.cronStrategies,
+                  cronStrategies,
+                )) &&
             (identical(other.thresholdFilters, thresholdFilters) ||
-                const DeepCollectionEquality()
-                    .equals(other.thresholdFilters, thresholdFilters)) &&
+                const DeepCollectionEquality().equals(
+                  other.thresholdFilters,
+                  thresholdFilters,
+                )) &&
             (identical(other.timeFilters, timeFilters) ||
-                const DeepCollectionEquality()
-                    .equals(other.timeFilters, timeFilters)) &&
+                const DeepCollectionEquality().equals(
+                  other.timeFilters,
+                  timeFilters,
+                )) &&
             (identical(other.equalsFilters, equalsFilters) ||
-                const DeepCollectionEquality()
-                    .equals(other.equalsFilters, equalsFilters)) &&
+                const DeepCollectionEquality().equals(
+                  other.equalsFilters,
+                  equalsFilters,
+                )) &&
             (identical(other.includeFilters, includeFilters) ||
-                const DeepCollectionEquality()
-                    .equals(other.includeFilters, includeFilters)) &&
+                const DeepCollectionEquality().equals(
+                  other.includeFilters,
+                  includeFilters,
+                )) &&
             (identical(other.editable, editable) ||
-                const DeepCollectionEquality()
-                    .equals(other.editable, editable)));
+                const DeepCollectionEquality().equals(
+                  other.editable,
+                  editable,
+                )));
   }
 
   @override
@@ -5330,56 +5547,58 @@ class PersistenceServiceConfigurationDTO {
 
 extension $PersistenceServiceConfigurationDTOExtension
     on PersistenceServiceConfigurationDTO {
-  PersistenceServiceConfigurationDTO copyWith(
-      {String? serviceId,
-      List<PersistenceItemConfigurationDTO>? configs,
-      List<String>? defaults,
-      List<PersistenceCronStrategyDTO>? cronStrategies,
-      List<PersistenceFilterDTO>? thresholdFilters,
-      List<PersistenceFilterDTO>? timeFilters,
-      List<PersistenceFilterDTO>? equalsFilters,
-      List<PersistenceFilterDTO>? includeFilters,
-      bool? editable}) {
+  PersistenceServiceConfigurationDTO copyWith({
+    String? serviceId,
+    List<PersistenceItemConfigurationDTO>? configs,
+    List<String>? defaults,
+    List<PersistenceCronStrategyDTO>? cronStrategies,
+    List<PersistenceFilterDTO>? thresholdFilters,
+    List<PersistenceFilterDTO>? timeFilters,
+    List<PersistenceFilterDTO>? equalsFilters,
+    List<PersistenceFilterDTO>? includeFilters,
+    bool? editable,
+  }) {
     return PersistenceServiceConfigurationDTO(
-        serviceId: serviceId ?? this.serviceId,
-        configs: configs ?? this.configs,
-        defaults: defaults ?? this.defaults,
-        cronStrategies: cronStrategies ?? this.cronStrategies,
-        thresholdFilters: thresholdFilters ?? this.thresholdFilters,
-        timeFilters: timeFilters ?? this.timeFilters,
-        equalsFilters: equalsFilters ?? this.equalsFilters,
-        includeFilters: includeFilters ?? this.includeFilters,
-        editable: editable ?? this.editable);
+      serviceId: serviceId ?? this.serviceId,
+      configs: configs ?? this.configs,
+      defaults: defaults ?? this.defaults,
+      cronStrategies: cronStrategies ?? this.cronStrategies,
+      thresholdFilters: thresholdFilters ?? this.thresholdFilters,
+      timeFilters: timeFilters ?? this.timeFilters,
+      equalsFilters: equalsFilters ?? this.equalsFilters,
+      includeFilters: includeFilters ?? this.includeFilters,
+      editable: editable ?? this.editable,
+    );
   }
 
-  PersistenceServiceConfigurationDTO copyWithWrapped(
-      {Wrapped<String?>? serviceId,
-      Wrapped<List<PersistenceItemConfigurationDTO>?>? configs,
-      Wrapped<List<String>?>? defaults,
-      Wrapped<List<PersistenceCronStrategyDTO>?>? cronStrategies,
-      Wrapped<List<PersistenceFilterDTO>?>? thresholdFilters,
-      Wrapped<List<PersistenceFilterDTO>?>? timeFilters,
-      Wrapped<List<PersistenceFilterDTO>?>? equalsFilters,
-      Wrapped<List<PersistenceFilterDTO>?>? includeFilters,
-      Wrapped<bool?>? editable}) {
+  PersistenceServiceConfigurationDTO copyWithWrapped({
+    Wrapped<String?>? serviceId,
+    Wrapped<List<PersistenceItemConfigurationDTO>?>? configs,
+    Wrapped<List<String>?>? defaults,
+    Wrapped<List<PersistenceCronStrategyDTO>?>? cronStrategies,
+    Wrapped<List<PersistenceFilterDTO>?>? thresholdFilters,
+    Wrapped<List<PersistenceFilterDTO>?>? timeFilters,
+    Wrapped<List<PersistenceFilterDTO>?>? equalsFilters,
+    Wrapped<List<PersistenceFilterDTO>?>? includeFilters,
+    Wrapped<bool?>? editable,
+  }) {
     return PersistenceServiceConfigurationDTO(
-        serviceId: (serviceId != null ? serviceId.value : this.serviceId),
-        configs: (configs != null ? configs.value : this.configs),
-        defaults: (defaults != null ? defaults.value : this.defaults),
-        cronStrategies: (cronStrategies != null
-            ? cronStrategies.value
-            : this.cronStrategies),
-        thresholdFilters: (thresholdFilters != null
-            ? thresholdFilters.value
-            : this.thresholdFilters),
-        timeFilters:
-            (timeFilters != null ? timeFilters.value : this.timeFilters),
-        equalsFilters:
-            (equalsFilters != null ? equalsFilters.value : this.equalsFilters),
-        includeFilters: (includeFilters != null
-            ? includeFilters.value
-            : this.includeFilters),
-        editable: (editable != null ? editable.value : this.editable));
+      serviceId: (serviceId != null ? serviceId.value : this.serviceId),
+      configs: (configs != null ? configs.value : this.configs),
+      defaults: (defaults != null ? defaults.value : this.defaults),
+      cronStrategies:
+          (cronStrategies != null ? cronStrategies.value : this.cronStrategies),
+      thresholdFilters:
+          (thresholdFilters != null
+              ? thresholdFilters.value
+              : this.thresholdFilters),
+      timeFilters: (timeFilters != null ? timeFilters.value : this.timeFilters),
+      equalsFilters:
+          (equalsFilters != null ? equalsFilters.value : this.equalsFilters),
+      includeFilters:
+          (includeFilters != null ? includeFilters.value : this.includeFilters),
+      editable: (editable != null ? editable.value : this.editable),
+    );
   }
 }
 
@@ -5413,8 +5632,10 @@ class PersistenceItemInfo {
     return identical(this, other) ||
         (other is PersistenceItemInfo &&
             (identical(other.earliest, earliest) ||
-                const DeepCollectionEquality()
-                    .equals(other.earliest, earliest)) &&
+                const DeepCollectionEquality().equals(
+                  other.earliest,
+                  earliest,
+                )) &&
             (identical(other.latest, latest) ||
                 const DeepCollectionEquality().equals(other.latest, latest)) &&
             (identical(other.count, count) ||
@@ -5436,35 +5657,38 @@ class PersistenceItemInfo {
 }
 
 extension $PersistenceItemInfoExtension on PersistenceItemInfo {
-  PersistenceItemInfo copyWith(
-      {DateTime? earliest, DateTime? latest, int? count, String? name}) {
+  PersistenceItemInfo copyWith({
+    DateTime? earliest,
+    DateTime? latest,
+    int? count,
+    String? name,
+  }) {
     return PersistenceItemInfo(
-        earliest: earliest ?? this.earliest,
-        latest: latest ?? this.latest,
-        count: count ?? this.count,
-        name: name ?? this.name);
+      earliest: earliest ?? this.earliest,
+      latest: latest ?? this.latest,
+      count: count ?? this.count,
+      name: name ?? this.name,
+    );
   }
 
-  PersistenceItemInfo copyWithWrapped(
-      {Wrapped<DateTime?>? earliest,
-      Wrapped<DateTime?>? latest,
-      Wrapped<int?>? count,
-      Wrapped<String?>? name}) {
+  PersistenceItemInfo copyWithWrapped({
+    Wrapped<DateTime?>? earliest,
+    Wrapped<DateTime?>? latest,
+    Wrapped<int?>? count,
+    Wrapped<String?>? name,
+  }) {
     return PersistenceItemInfo(
-        earliest: (earliest != null ? earliest.value : this.earliest),
-        latest: (latest != null ? latest.value : this.latest),
-        count: (count != null ? count.value : this.count),
-        name: (name != null ? name.value : this.name));
+      earliest: (earliest != null ? earliest.value : this.earliest),
+      latest: (latest != null ? latest.value : this.latest),
+      count: (count != null ? count.value : this.count),
+      name: (name != null ? name.value : this.name),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class PersistenceServiceDTO {
-  const PersistenceServiceDTO({
-    this.id,
-    this.label,
-    this.type,
-  });
+  const PersistenceServiceDTO({this.id, this.label, this.type});
 
   factory PersistenceServiceDTO.fromJson(Map<String, dynamic> json) =>
       _$PersistenceServiceDTOFromJson(json);
@@ -5506,15 +5730,22 @@ class PersistenceServiceDTO {
 extension $PersistenceServiceDTOExtension on PersistenceServiceDTO {
   PersistenceServiceDTO copyWith({String? id, String? label, String? type}) {
     return PersistenceServiceDTO(
-        id: id ?? this.id, label: label ?? this.label, type: type ?? this.type);
+      id: id ?? this.id,
+      label: label ?? this.label,
+      type: type ?? this.type,
+    );
   }
 
-  PersistenceServiceDTO copyWithWrapped(
-      {Wrapped<String?>? id, Wrapped<String?>? label, Wrapped<String?>? type}) {
+  PersistenceServiceDTO copyWithWrapped({
+    Wrapped<String?>? id,
+    Wrapped<String?>? label,
+    Wrapped<String?>? type,
+  }) {
     return PersistenceServiceDTO(
-        id: (id != null ? id.value : this.id),
-        label: (label != null ? label.value : this.label),
-        type: (type != null ? type.value : this.type));
+      id: (id != null ? id.value : this.id),
+      label: (label != null ? label.value : this.label),
+      type: (type != null ? type.value : this.type),
+    );
   }
 }
 
@@ -5554,8 +5785,10 @@ class ProfileTypeDTO {
             (identical(other.kind, kind) ||
                 const DeepCollectionEquality().equals(other.kind, kind)) &&
             (identical(other.supportedItemTypes, supportedItemTypes) ||
-                const DeepCollectionEquality()
-                    .equals(other.supportedItemTypes, supportedItemTypes)));
+                const DeepCollectionEquality().equals(
+                  other.supportedItemTypes,
+                  supportedItemTypes,
+                )));
   }
 
   @override
@@ -5571,30 +5804,35 @@ class ProfileTypeDTO {
 }
 
 extension $ProfileTypeDTOExtension on ProfileTypeDTO {
-  ProfileTypeDTO copyWith(
-      {String? uid,
-      String? label,
-      String? kind,
-      List<String>? supportedItemTypes}) {
+  ProfileTypeDTO copyWith({
+    String? uid,
+    String? label,
+    String? kind,
+    List<String>? supportedItemTypes,
+  }) {
     return ProfileTypeDTO(
-        uid: uid ?? this.uid,
-        label: label ?? this.label,
-        kind: kind ?? this.kind,
-        supportedItemTypes: supportedItemTypes ?? this.supportedItemTypes);
+      uid: uid ?? this.uid,
+      label: label ?? this.label,
+      kind: kind ?? this.kind,
+      supportedItemTypes: supportedItemTypes ?? this.supportedItemTypes,
+    );
   }
 
-  ProfileTypeDTO copyWithWrapped(
-      {Wrapped<String?>? uid,
-      Wrapped<String?>? label,
-      Wrapped<String?>? kind,
-      Wrapped<List<String>?>? supportedItemTypes}) {
+  ProfileTypeDTO copyWithWrapped({
+    Wrapped<String?>? uid,
+    Wrapped<String?>? label,
+    Wrapped<String?>? kind,
+    Wrapped<List<String>?>? supportedItemTypes,
+  }) {
     return ProfileTypeDTO(
-        uid: (uid != null ? uid.value : this.uid),
-        label: (label != null ? label.value : this.label),
-        kind: (kind != null ? kind.value : this.kind),
-        supportedItemTypes: (supportedItemTypes != null
-            ? supportedItemTypes.value
-            : this.supportedItemTypes));
+      uid: (uid != null ? uid.value : this.uid),
+      label: (label != null ? label.value : this.label),
+      kind: (kind != null ? kind.value : this.kind),
+      supportedItemTypes:
+          (supportedItemTypes != null
+              ? supportedItemTypes.value
+              : this.supportedItemTypes),
+    );
   }
 }
 
@@ -5635,14 +5873,20 @@ class ConfigurableServiceDTO {
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.category, category) ||
-                const DeepCollectionEquality()
-                    .equals(other.category, category)) &&
+                const DeepCollectionEquality().equals(
+                  other.category,
+                  category,
+                )) &&
             (identical(other.configDescriptionURI, configDescriptionURI) ||
                 const DeepCollectionEquality().equals(
-                    other.configDescriptionURI, configDescriptionURI)) &&
+                  other.configDescriptionURI,
+                  configDescriptionURI,
+                )) &&
             (identical(other.multiple, multiple) ||
-                const DeepCollectionEquality()
-                    .equals(other.multiple, multiple)));
+                const DeepCollectionEquality().equals(
+                  other.multiple,
+                  multiple,
+                )));
   }
 
   @override
@@ -5659,34 +5903,39 @@ class ConfigurableServiceDTO {
 }
 
 extension $ConfigurableServiceDTOExtension on ConfigurableServiceDTO {
-  ConfigurableServiceDTO copyWith(
-      {String? id,
-      String? label,
-      String? category,
-      String? configDescriptionURI,
-      bool? multiple}) {
+  ConfigurableServiceDTO copyWith({
+    String? id,
+    String? label,
+    String? category,
+    String? configDescriptionURI,
+    bool? multiple,
+  }) {
     return ConfigurableServiceDTO(
-        id: id ?? this.id,
-        label: label ?? this.label,
-        category: category ?? this.category,
-        configDescriptionURI: configDescriptionURI ?? this.configDescriptionURI,
-        multiple: multiple ?? this.multiple);
+      id: id ?? this.id,
+      label: label ?? this.label,
+      category: category ?? this.category,
+      configDescriptionURI: configDescriptionURI ?? this.configDescriptionURI,
+      multiple: multiple ?? this.multiple,
+    );
   }
 
-  ConfigurableServiceDTO copyWithWrapped(
-      {Wrapped<String?>? id,
-      Wrapped<String?>? label,
-      Wrapped<String?>? category,
-      Wrapped<String?>? configDescriptionURI,
-      Wrapped<bool?>? multiple}) {
+  ConfigurableServiceDTO copyWithWrapped({
+    Wrapped<String?>? id,
+    Wrapped<String?>? label,
+    Wrapped<String?>? category,
+    Wrapped<String?>? configDescriptionURI,
+    Wrapped<bool?>? multiple,
+  }) {
     return ConfigurableServiceDTO(
-        id: (id != null ? id.value : this.id),
-        label: (label != null ? label.value : this.label),
-        category: (category != null ? category.value : this.category),
-        configDescriptionURI: (configDescriptionURI != null
-            ? configDescriptionURI.value
-            : this.configDescriptionURI),
-        multiple: (multiple != null ? multiple.value : this.multiple));
+      id: (id != null ? id.value : this.id),
+      label: (label != null ? label.value : this.label),
+      category: (category != null ? category.value : this.category),
+      configDescriptionURI:
+          (configDescriptionURI != null
+              ? configDescriptionURI.value
+              : this.configDescriptionURI),
+      multiple: (multiple != null ? multiple.value : this.multiple),
+    );
   }
 }
 
@@ -5767,33 +6016,49 @@ class EnrichedChannelDTO {
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.channelTypeUID, channelTypeUID) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelTypeUID, channelTypeUID)) &&
+                const DeepCollectionEquality().equals(
+                  other.channelTypeUID,
+                  channelTypeUID,
+                )) &&
             (identical(other.itemType, itemType) ||
-                const DeepCollectionEquality()
-                    .equals(other.itemType, itemType)) &&
+                const DeepCollectionEquality().equals(
+                  other.itemType,
+                  itemType,
+                )) &&
             (identical(other.kind, kind) ||
                 const DeepCollectionEquality().equals(other.kind, kind)) &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.defaultTags, defaultTags) ||
-                const DeepCollectionEquality()
-                    .equals(other.defaultTags, defaultTags)) &&
+                const DeepCollectionEquality().equals(
+                  other.defaultTags,
+                  defaultTags,
+                )) &&
             (identical(other.properties, properties) ||
-                const DeepCollectionEquality()
-                    .equals(other.properties, properties)) &&
+                const DeepCollectionEquality().equals(
+                  other.properties,
+                  properties,
+                )) &&
             (identical(other.configuration, configuration) ||
-                const DeepCollectionEquality()
-                    .equals(other.configuration, configuration)) &&
+                const DeepCollectionEquality().equals(
+                  other.configuration,
+                  configuration,
+                )) &&
             (identical(other.autoUpdatePolicy, autoUpdatePolicy) ||
-                const DeepCollectionEquality()
-                    .equals(other.autoUpdatePolicy, autoUpdatePolicy)) &&
+                const DeepCollectionEquality().equals(
+                  other.autoUpdatePolicy,
+                  autoUpdatePolicy,
+                )) &&
             (identical(other.linkedItems, linkedItems) ||
-                const DeepCollectionEquality()
-                    .equals(other.linkedItems, linkedItems)));
+                const DeepCollectionEquality().equals(
+                  other.linkedItems,
+                  linkedItems,
+                )));
   }
 
   @override
@@ -5817,68 +6082,69 @@ class EnrichedChannelDTO {
 }
 
 extension $EnrichedChannelDTOExtension on EnrichedChannelDTO {
-  EnrichedChannelDTO copyWith(
-      {String? uid,
-      String? id,
-      String? channelTypeUID,
-      String? itemType,
-      String? kind,
-      String? label,
-      String? description,
-      List<String>? defaultTags,
-      Map<String, dynamic>? properties,
-      Map<String, dynamic>? configuration,
-      String? autoUpdatePolicy,
-      List<String>? linkedItems}) {
+  EnrichedChannelDTO copyWith({
+    String? uid,
+    String? id,
+    String? channelTypeUID,
+    String? itemType,
+    String? kind,
+    String? label,
+    String? description,
+    List<String>? defaultTags,
+    Map<String, dynamic>? properties,
+    Map<String, dynamic>? configuration,
+    String? autoUpdatePolicy,
+    List<String>? linkedItems,
+  }) {
     return EnrichedChannelDTO(
-        uid: uid ?? this.uid,
-        id: id ?? this.id,
-        channelTypeUID: channelTypeUID ?? this.channelTypeUID,
-        itemType: itemType ?? this.itemType,
-        kind: kind ?? this.kind,
-        label: label ?? this.label,
-        description: description ?? this.description,
-        defaultTags: defaultTags ?? this.defaultTags,
-        properties: properties ?? this.properties,
-        configuration: configuration ?? this.configuration,
-        autoUpdatePolicy: autoUpdatePolicy ?? this.autoUpdatePolicy,
-        linkedItems: linkedItems ?? this.linkedItems);
+      uid: uid ?? this.uid,
+      id: id ?? this.id,
+      channelTypeUID: channelTypeUID ?? this.channelTypeUID,
+      itemType: itemType ?? this.itemType,
+      kind: kind ?? this.kind,
+      label: label ?? this.label,
+      description: description ?? this.description,
+      defaultTags: defaultTags ?? this.defaultTags,
+      properties: properties ?? this.properties,
+      configuration: configuration ?? this.configuration,
+      autoUpdatePolicy: autoUpdatePolicy ?? this.autoUpdatePolicy,
+      linkedItems: linkedItems ?? this.linkedItems,
+    );
   }
 
-  EnrichedChannelDTO copyWithWrapped(
-      {Wrapped<String?>? uid,
-      Wrapped<String?>? id,
-      Wrapped<String?>? channelTypeUID,
-      Wrapped<String?>? itemType,
-      Wrapped<String?>? kind,
-      Wrapped<String?>? label,
-      Wrapped<String?>? description,
-      Wrapped<List<String>?>? defaultTags,
-      Wrapped<Map<String, dynamic>?>? properties,
-      Wrapped<Map<String, dynamic>?>? configuration,
-      Wrapped<String?>? autoUpdatePolicy,
-      Wrapped<List<String>?>? linkedItems}) {
+  EnrichedChannelDTO copyWithWrapped({
+    Wrapped<String?>? uid,
+    Wrapped<String?>? id,
+    Wrapped<String?>? channelTypeUID,
+    Wrapped<String?>? itemType,
+    Wrapped<String?>? kind,
+    Wrapped<String?>? label,
+    Wrapped<String?>? description,
+    Wrapped<List<String>?>? defaultTags,
+    Wrapped<Map<String, dynamic>?>? properties,
+    Wrapped<Map<String, dynamic>?>? configuration,
+    Wrapped<String?>? autoUpdatePolicy,
+    Wrapped<List<String>?>? linkedItems,
+  }) {
     return EnrichedChannelDTO(
-        uid: (uid != null ? uid.value : this.uid),
-        id: (id != null ? id.value : this.id),
-        channelTypeUID: (channelTypeUID != null
-            ? channelTypeUID.value
-            : this.channelTypeUID),
-        itemType: (itemType != null ? itemType.value : this.itemType),
-        kind: (kind != null ? kind.value : this.kind),
-        label: (label != null ? label.value : this.label),
-        description:
-            (description != null ? description.value : this.description),
-        defaultTags:
-            (defaultTags != null ? defaultTags.value : this.defaultTags),
-        properties: (properties != null ? properties.value : this.properties),
-        configuration:
-            (configuration != null ? configuration.value : this.configuration),
-        autoUpdatePolicy: (autoUpdatePolicy != null
-            ? autoUpdatePolicy.value
-            : this.autoUpdatePolicy),
-        linkedItems:
-            (linkedItems != null ? linkedItems.value : this.linkedItems));
+      uid: (uid != null ? uid.value : this.uid),
+      id: (id != null ? id.value : this.id),
+      channelTypeUID:
+          (channelTypeUID != null ? channelTypeUID.value : this.channelTypeUID),
+      itemType: (itemType != null ? itemType.value : this.itemType),
+      kind: (kind != null ? kind.value : this.kind),
+      label: (label != null ? label.value : this.label),
+      description: (description != null ? description.value : this.description),
+      defaultTags: (defaultTags != null ? defaultTags.value : this.defaultTags),
+      properties: (properties != null ? properties.value : this.properties),
+      configuration:
+          (configuration != null ? configuration.value : this.configuration),
+      autoUpdatePolicy:
+          (autoUpdatePolicy != null
+              ? autoUpdatePolicy.value
+              : this.autoUpdatePolicy),
+      linkedItems: (linkedItems != null ? linkedItems.value : this.linkedItems),
+    );
   }
 }
 
@@ -5935,34 +6201,52 @@ class EnrichedThingDTO {
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.bridgeUID, bridgeUID) ||
-                const DeepCollectionEquality()
-                    .equals(other.bridgeUID, bridgeUID)) &&
+                const DeepCollectionEquality().equals(
+                  other.bridgeUID,
+                  bridgeUID,
+                )) &&
             (identical(other.configuration, configuration) ||
-                const DeepCollectionEquality()
-                    .equals(other.configuration, configuration)) &&
+                const DeepCollectionEquality().equals(
+                  other.configuration,
+                  configuration,
+                )) &&
             (identical(other.properties, properties) ||
-                const DeepCollectionEquality()
-                    .equals(other.properties, properties)) &&
+                const DeepCollectionEquality().equals(
+                  other.properties,
+                  properties,
+                )) &&
             (identical(other.uid, uid) ||
                 const DeepCollectionEquality().equals(other.uid, uid)) &&
             (identical(other.thingTypeUID, thingTypeUID) ||
-                const DeepCollectionEquality()
-                    .equals(other.thingTypeUID, thingTypeUID)) &&
+                const DeepCollectionEquality().equals(
+                  other.thingTypeUID,
+                  thingTypeUID,
+                )) &&
             (identical(other.location, location) ||
-                const DeepCollectionEquality()
-                    .equals(other.location, location)) &&
+                const DeepCollectionEquality().equals(
+                  other.location,
+                  location,
+                )) &&
             (identical(other.channels, channels) ||
-                const DeepCollectionEquality()
-                    .equals(other.channels, channels)) &&
+                const DeepCollectionEquality().equals(
+                  other.channels,
+                  channels,
+                )) &&
             (identical(other.statusInfo, statusInfo) ||
-                const DeepCollectionEquality()
-                    .equals(other.statusInfo, statusInfo)) &&
+                const DeepCollectionEquality().equals(
+                  other.statusInfo,
+                  statusInfo,
+                )) &&
             (identical(other.firmwareStatus, firmwareStatus) ||
-                const DeepCollectionEquality()
-                    .equals(other.firmwareStatus, firmwareStatus)) &&
+                const DeepCollectionEquality().equals(
+                  other.firmwareStatus,
+                  firmwareStatus,
+                )) &&
             (identical(other.editable, editable) ||
-                const DeepCollectionEquality()
-                    .equals(other.editable, editable)));
+                const DeepCollectionEquality().equals(
+                  other.editable,
+                  editable,
+                )));
   }
 
   @override
@@ -5985,69 +6269,69 @@ class EnrichedThingDTO {
 }
 
 extension $EnrichedThingDTOExtension on EnrichedThingDTO {
-  EnrichedThingDTO copyWith(
-      {String? label,
-      String? bridgeUID,
-      Map<String, dynamic>? configuration,
-      Map<String, dynamic>? properties,
-      String? uid,
-      String? thingTypeUID,
-      String? location,
-      List<EnrichedChannelDTO>? channels,
-      ThingStatusInfo? statusInfo,
-      FirmwareStatusDTO? firmwareStatus,
-      bool? editable}) {
+  EnrichedThingDTO copyWith({
+    String? label,
+    String? bridgeUID,
+    Map<String, dynamic>? configuration,
+    Map<String, dynamic>? properties,
+    String? uid,
+    String? thingTypeUID,
+    String? location,
+    List<EnrichedChannelDTO>? channels,
+    ThingStatusInfo? statusInfo,
+    FirmwareStatusDTO? firmwareStatus,
+    bool? editable,
+  }) {
     return EnrichedThingDTO(
-        label: label ?? this.label,
-        bridgeUID: bridgeUID ?? this.bridgeUID,
-        configuration: configuration ?? this.configuration,
-        properties: properties ?? this.properties,
-        uid: uid ?? this.uid,
-        thingTypeUID: thingTypeUID ?? this.thingTypeUID,
-        location: location ?? this.location,
-        channels: channels ?? this.channels,
-        statusInfo: statusInfo ?? this.statusInfo,
-        firmwareStatus: firmwareStatus ?? this.firmwareStatus,
-        editable: editable ?? this.editable);
+      label: label ?? this.label,
+      bridgeUID: bridgeUID ?? this.bridgeUID,
+      configuration: configuration ?? this.configuration,
+      properties: properties ?? this.properties,
+      uid: uid ?? this.uid,
+      thingTypeUID: thingTypeUID ?? this.thingTypeUID,
+      location: location ?? this.location,
+      channels: channels ?? this.channels,
+      statusInfo: statusInfo ?? this.statusInfo,
+      firmwareStatus: firmwareStatus ?? this.firmwareStatus,
+      editable: editable ?? this.editable,
+    );
   }
 
-  EnrichedThingDTO copyWithWrapped(
-      {Wrapped<String?>? label,
-      Wrapped<String?>? bridgeUID,
-      Wrapped<Map<String, dynamic>?>? configuration,
-      Wrapped<Map<String, dynamic>?>? properties,
-      Wrapped<String?>? uid,
-      Wrapped<String?>? thingTypeUID,
-      Wrapped<String?>? location,
-      Wrapped<List<EnrichedChannelDTO>?>? channels,
-      Wrapped<ThingStatusInfo?>? statusInfo,
-      Wrapped<FirmwareStatusDTO?>? firmwareStatus,
-      Wrapped<bool?>? editable}) {
+  EnrichedThingDTO copyWithWrapped({
+    Wrapped<String?>? label,
+    Wrapped<String?>? bridgeUID,
+    Wrapped<Map<String, dynamic>?>? configuration,
+    Wrapped<Map<String, dynamic>?>? properties,
+    Wrapped<String?>? uid,
+    Wrapped<String?>? thingTypeUID,
+    Wrapped<String?>? location,
+    Wrapped<List<EnrichedChannelDTO>?>? channels,
+    Wrapped<ThingStatusInfo?>? statusInfo,
+    Wrapped<FirmwareStatusDTO?>? firmwareStatus,
+    Wrapped<bool?>? editable,
+  }) {
     return EnrichedThingDTO(
-        label: (label != null ? label.value : this.label),
-        bridgeUID: (bridgeUID != null ? bridgeUID.value : this.bridgeUID),
-        configuration:
-            (configuration != null ? configuration.value : this.configuration),
-        properties: (properties != null ? properties.value : this.properties),
-        uid: (uid != null ? uid.value : this.uid),
-        thingTypeUID:
-            (thingTypeUID != null ? thingTypeUID.value : this.thingTypeUID),
-        location: (location != null ? location.value : this.location),
-        channels: (channels != null ? channels.value : this.channels),
-        statusInfo: (statusInfo != null ? statusInfo.value : this.statusInfo),
-        firmwareStatus: (firmwareStatus != null
-            ? firmwareStatus.value
-            : this.firmwareStatus),
-        editable: (editable != null ? editable.value : this.editable));
+      label: (label != null ? label.value : this.label),
+      bridgeUID: (bridgeUID != null ? bridgeUID.value : this.bridgeUID),
+      configuration:
+          (configuration != null ? configuration.value : this.configuration),
+      properties: (properties != null ? properties.value : this.properties),
+      uid: (uid != null ? uid.value : this.uid),
+      thingTypeUID:
+          (thingTypeUID != null ? thingTypeUID.value : this.thingTypeUID),
+      location: (location != null ? location.value : this.location),
+      channels: (channels != null ? channels.value : this.channels),
+      statusInfo: (statusInfo != null ? statusInfo.value : this.statusInfo),
+      firmwareStatus:
+          (firmwareStatus != null ? firmwareStatus.value : this.firmwareStatus),
+      editable: (editable != null ? editable.value : this.editable),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class FirmwareStatusDTO {
-  const FirmwareStatusDTO({
-    this.status,
-    this.updatableVersion,
-  });
+  const FirmwareStatusDTO({this.status, this.updatableVersion});
 
   factory FirmwareStatusDTO.fromJson(Map<String, dynamic> json) =>
       _$FirmwareStatusDTOFromJson(json);
@@ -6068,8 +6352,10 @@ class FirmwareStatusDTO {
             (identical(other.status, status) ||
                 const DeepCollectionEquality().equals(other.status, status)) &&
             (identical(other.updatableVersion, updatableVersion) ||
-                const DeepCollectionEquality()
-                    .equals(other.updatableVersion, updatableVersion)));
+                const DeepCollectionEquality().equals(
+                  other.updatableVersion,
+                  updatableVersion,
+                )));
   }
 
   @override
@@ -6085,27 +6371,28 @@ class FirmwareStatusDTO {
 extension $FirmwareStatusDTOExtension on FirmwareStatusDTO {
   FirmwareStatusDTO copyWith({String? status, String? updatableVersion}) {
     return FirmwareStatusDTO(
-        status: status ?? this.status,
-        updatableVersion: updatableVersion ?? this.updatableVersion);
+      status: status ?? this.status,
+      updatableVersion: updatableVersion ?? this.updatableVersion,
+    );
   }
 
-  FirmwareStatusDTO copyWithWrapped(
-      {Wrapped<String?>? status, Wrapped<String?>? updatableVersion}) {
+  FirmwareStatusDTO copyWithWrapped({
+    Wrapped<String?>? status,
+    Wrapped<String?>? updatableVersion,
+  }) {
     return FirmwareStatusDTO(
-        status: (status != null ? status.value : this.status),
-        updatableVersion: (updatableVersion != null
-            ? updatableVersion.value
-            : this.updatableVersion));
+      status: (status != null ? status.value : this.status),
+      updatableVersion:
+          (updatableVersion != null
+              ? updatableVersion.value
+              : this.updatableVersion),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class ThingStatusInfo {
-  const ThingStatusInfo({
-    this.status,
-    this.statusDetail,
-    this.description,
-  });
+  const ThingStatusInfo({this.status, this.statusDetail, this.description});
 
   factory ThingStatusInfo.fromJson(Map<String, dynamic> json) =>
       _$ThingStatusInfoFromJson(json);
@@ -6136,11 +6423,15 @@ class ThingStatusInfo {
             (identical(other.status, status) ||
                 const DeepCollectionEquality().equals(other.status, status)) &&
             (identical(other.statusDetail, statusDetail) ||
-                const DeepCollectionEquality()
-                    .equals(other.statusDetail, statusDetail)) &&
+                const DeepCollectionEquality().equals(
+                  other.statusDetail,
+                  statusDetail,
+                )) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)));
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )));
   }
 
   @override
@@ -6155,26 +6446,29 @@ class ThingStatusInfo {
 }
 
 extension $ThingStatusInfoExtension on ThingStatusInfo {
-  ThingStatusInfo copyWith(
-      {enums.ThingStatusInfoStatus? status,
-      enums.ThingStatusInfoStatusDetail? statusDetail,
-      String? description}) {
+  ThingStatusInfo copyWith({
+    enums.ThingStatusInfoStatus? status,
+    enums.ThingStatusInfoStatusDetail? statusDetail,
+    String? description,
+  }) {
     return ThingStatusInfo(
-        status: status ?? this.status,
-        statusDetail: statusDetail ?? this.statusDetail,
-        description: description ?? this.description);
+      status: status ?? this.status,
+      statusDetail: statusDetail ?? this.statusDetail,
+      description: description ?? this.description,
+    );
   }
 
-  ThingStatusInfo copyWithWrapped(
-      {Wrapped<enums.ThingStatusInfoStatus?>? status,
-      Wrapped<enums.ThingStatusInfoStatusDetail?>? statusDetail,
-      Wrapped<String?>? description}) {
+  ThingStatusInfo copyWithWrapped({
+    Wrapped<enums.ThingStatusInfoStatus?>? status,
+    Wrapped<enums.ThingStatusInfoStatusDetail?>? statusDetail,
+    Wrapped<String?>? description,
+  }) {
     return ThingStatusInfo(
-        status: (status != null ? status.value : this.status),
-        statusDetail:
-            (statusDetail != null ? statusDetail.value : this.statusDetail),
-        description:
-            (description != null ? description.value : this.description));
+      status: (status != null ? status.value : this.status),
+      statusDetail:
+          (statusDetail != null ? statusDetail.value : this.statusDetail),
+      description: (description != null ? description.value : this.description),
+    );
   }
 }
 
@@ -6233,30 +6527,44 @@ class ChannelDTO {
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.channelTypeUID, channelTypeUID) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelTypeUID, channelTypeUID)) &&
+                const DeepCollectionEquality().equals(
+                  other.channelTypeUID,
+                  channelTypeUID,
+                )) &&
             (identical(other.itemType, itemType) ||
-                const DeepCollectionEquality()
-                    .equals(other.itemType, itemType)) &&
+                const DeepCollectionEquality().equals(
+                  other.itemType,
+                  itemType,
+                )) &&
             (identical(other.kind, kind) ||
                 const DeepCollectionEquality().equals(other.kind, kind)) &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.defaultTags, defaultTags) ||
-                const DeepCollectionEquality()
-                    .equals(other.defaultTags, defaultTags)) &&
+                const DeepCollectionEquality().equals(
+                  other.defaultTags,
+                  defaultTags,
+                )) &&
             (identical(other.properties, properties) ||
-                const DeepCollectionEquality()
-                    .equals(other.properties, properties)) &&
+                const DeepCollectionEquality().equals(
+                  other.properties,
+                  properties,
+                )) &&
             (identical(other.configuration, configuration) ||
-                const DeepCollectionEquality()
-                    .equals(other.configuration, configuration)) &&
+                const DeepCollectionEquality().equals(
+                  other.configuration,
+                  configuration,
+                )) &&
             (identical(other.autoUpdatePolicy, autoUpdatePolicy) ||
-                const DeepCollectionEquality()
-                    .equals(other.autoUpdatePolicy, autoUpdatePolicy)));
+                const DeepCollectionEquality().equals(
+                  other.autoUpdatePolicy,
+                  autoUpdatePolicy,
+                )));
   }
 
   @override
@@ -6279,63 +6587,65 @@ class ChannelDTO {
 }
 
 extension $ChannelDTOExtension on ChannelDTO {
-  ChannelDTO copyWith(
-      {String? uid,
-      String? id,
-      String? channelTypeUID,
-      String? itemType,
-      String? kind,
-      String? label,
-      String? description,
-      List<String>? defaultTags,
-      Map<String, dynamic>? properties,
-      Map<String, dynamic>? configuration,
-      String? autoUpdatePolicy}) {
+  ChannelDTO copyWith({
+    String? uid,
+    String? id,
+    String? channelTypeUID,
+    String? itemType,
+    String? kind,
+    String? label,
+    String? description,
+    List<String>? defaultTags,
+    Map<String, dynamic>? properties,
+    Map<String, dynamic>? configuration,
+    String? autoUpdatePolicy,
+  }) {
     return ChannelDTO(
-        uid: uid ?? this.uid,
-        id: id ?? this.id,
-        channelTypeUID: channelTypeUID ?? this.channelTypeUID,
-        itemType: itemType ?? this.itemType,
-        kind: kind ?? this.kind,
-        label: label ?? this.label,
-        description: description ?? this.description,
-        defaultTags: defaultTags ?? this.defaultTags,
-        properties: properties ?? this.properties,
-        configuration: configuration ?? this.configuration,
-        autoUpdatePolicy: autoUpdatePolicy ?? this.autoUpdatePolicy);
+      uid: uid ?? this.uid,
+      id: id ?? this.id,
+      channelTypeUID: channelTypeUID ?? this.channelTypeUID,
+      itemType: itemType ?? this.itemType,
+      kind: kind ?? this.kind,
+      label: label ?? this.label,
+      description: description ?? this.description,
+      defaultTags: defaultTags ?? this.defaultTags,
+      properties: properties ?? this.properties,
+      configuration: configuration ?? this.configuration,
+      autoUpdatePolicy: autoUpdatePolicy ?? this.autoUpdatePolicy,
+    );
   }
 
-  ChannelDTO copyWithWrapped(
-      {Wrapped<String?>? uid,
-      Wrapped<String?>? id,
-      Wrapped<String?>? channelTypeUID,
-      Wrapped<String?>? itemType,
-      Wrapped<String?>? kind,
-      Wrapped<String?>? label,
-      Wrapped<String?>? description,
-      Wrapped<List<String>?>? defaultTags,
-      Wrapped<Map<String, dynamic>?>? properties,
-      Wrapped<Map<String, dynamic>?>? configuration,
-      Wrapped<String?>? autoUpdatePolicy}) {
+  ChannelDTO copyWithWrapped({
+    Wrapped<String?>? uid,
+    Wrapped<String?>? id,
+    Wrapped<String?>? channelTypeUID,
+    Wrapped<String?>? itemType,
+    Wrapped<String?>? kind,
+    Wrapped<String?>? label,
+    Wrapped<String?>? description,
+    Wrapped<List<String>?>? defaultTags,
+    Wrapped<Map<String, dynamic>?>? properties,
+    Wrapped<Map<String, dynamic>?>? configuration,
+    Wrapped<String?>? autoUpdatePolicy,
+  }) {
     return ChannelDTO(
-        uid: (uid != null ? uid.value : this.uid),
-        id: (id != null ? id.value : this.id),
-        channelTypeUID: (channelTypeUID != null
-            ? channelTypeUID.value
-            : this.channelTypeUID),
-        itemType: (itemType != null ? itemType.value : this.itemType),
-        kind: (kind != null ? kind.value : this.kind),
-        label: (label != null ? label.value : this.label),
-        description:
-            (description != null ? description.value : this.description),
-        defaultTags:
-            (defaultTags != null ? defaultTags.value : this.defaultTags),
-        properties: (properties != null ? properties.value : this.properties),
-        configuration:
-            (configuration != null ? configuration.value : this.configuration),
-        autoUpdatePolicy: (autoUpdatePolicy != null
-            ? autoUpdatePolicy.value
-            : this.autoUpdatePolicy));
+      uid: (uid != null ? uid.value : this.uid),
+      id: (id != null ? id.value : this.id),
+      channelTypeUID:
+          (channelTypeUID != null ? channelTypeUID.value : this.channelTypeUID),
+      itemType: (itemType != null ? itemType.value : this.itemType),
+      kind: (kind != null ? kind.value : this.kind),
+      label: (label != null ? label.value : this.label),
+      description: (description != null ? description.value : this.description),
+      defaultTags: (defaultTags != null ? defaultTags.value : this.defaultTags),
+      properties: (properties != null ? properties.value : this.properties),
+      configuration:
+          (configuration != null ? configuration.value : this.configuration),
+      autoUpdatePolicy:
+          (autoUpdatePolicy != null
+              ? autoUpdatePolicy.value
+              : this.autoUpdatePolicy),
+    );
   }
 }
 
@@ -6383,25 +6693,37 @@ class ThingDTO {
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.bridgeUID, bridgeUID) ||
-                const DeepCollectionEquality()
-                    .equals(other.bridgeUID, bridgeUID)) &&
+                const DeepCollectionEquality().equals(
+                  other.bridgeUID,
+                  bridgeUID,
+                )) &&
             (identical(other.configuration, configuration) ||
-                const DeepCollectionEquality()
-                    .equals(other.configuration, configuration)) &&
+                const DeepCollectionEquality().equals(
+                  other.configuration,
+                  configuration,
+                )) &&
             (identical(other.properties, properties) ||
-                const DeepCollectionEquality()
-                    .equals(other.properties, properties)) &&
+                const DeepCollectionEquality().equals(
+                  other.properties,
+                  properties,
+                )) &&
             (identical(other.uid, uid) ||
                 const DeepCollectionEquality().equals(other.uid, uid)) &&
             (identical(other.thingTypeUID, thingTypeUID) ||
-                const DeepCollectionEquality()
-                    .equals(other.thingTypeUID, thingTypeUID)) &&
+                const DeepCollectionEquality().equals(
+                  other.thingTypeUID,
+                  thingTypeUID,
+                )) &&
             (identical(other.location, location) ||
-                const DeepCollectionEquality()
-                    .equals(other.location, location)) &&
+                const DeepCollectionEquality().equals(
+                  other.location,
+                  location,
+                )) &&
             (identical(other.channels, channels) ||
-                const DeepCollectionEquality()
-                    .equals(other.channels, channels)));
+                const DeepCollectionEquality().equals(
+                  other.channels,
+                  channels,
+                )));
   }
 
   @override
@@ -6421,46 +6743,50 @@ class ThingDTO {
 }
 
 extension $ThingDTOExtension on ThingDTO {
-  ThingDTO copyWith(
-      {String? label,
-      String? bridgeUID,
-      Map<String, dynamic>? configuration,
-      Map<String, dynamic>? properties,
-      String? uid,
-      String? thingTypeUID,
-      String? location,
-      List<ChannelDTO>? channels}) {
+  ThingDTO copyWith({
+    String? label,
+    String? bridgeUID,
+    Map<String, dynamic>? configuration,
+    Map<String, dynamic>? properties,
+    String? uid,
+    String? thingTypeUID,
+    String? location,
+    List<ChannelDTO>? channels,
+  }) {
     return ThingDTO(
-        label: label ?? this.label,
-        bridgeUID: bridgeUID ?? this.bridgeUID,
-        configuration: configuration ?? this.configuration,
-        properties: properties ?? this.properties,
-        uid: uid ?? this.uid,
-        thingTypeUID: thingTypeUID ?? this.thingTypeUID,
-        location: location ?? this.location,
-        channels: channels ?? this.channels);
+      label: label ?? this.label,
+      bridgeUID: bridgeUID ?? this.bridgeUID,
+      configuration: configuration ?? this.configuration,
+      properties: properties ?? this.properties,
+      uid: uid ?? this.uid,
+      thingTypeUID: thingTypeUID ?? this.thingTypeUID,
+      location: location ?? this.location,
+      channels: channels ?? this.channels,
+    );
   }
 
-  ThingDTO copyWithWrapped(
-      {Wrapped<String?>? label,
-      Wrapped<String?>? bridgeUID,
-      Wrapped<Map<String, dynamic>?>? configuration,
-      Wrapped<Map<String, dynamic>?>? properties,
-      Wrapped<String?>? uid,
-      Wrapped<String?>? thingTypeUID,
-      Wrapped<String?>? location,
-      Wrapped<List<ChannelDTO>?>? channels}) {
+  ThingDTO copyWithWrapped({
+    Wrapped<String?>? label,
+    Wrapped<String?>? bridgeUID,
+    Wrapped<Map<String, dynamic>?>? configuration,
+    Wrapped<Map<String, dynamic>?>? properties,
+    Wrapped<String?>? uid,
+    Wrapped<String?>? thingTypeUID,
+    Wrapped<String?>? location,
+    Wrapped<List<ChannelDTO>?>? channels,
+  }) {
     return ThingDTO(
-        label: (label != null ? label.value : this.label),
-        bridgeUID: (bridgeUID != null ? bridgeUID.value : this.bridgeUID),
-        configuration:
-            (configuration != null ? configuration.value : this.configuration),
-        properties: (properties != null ? properties.value : this.properties),
-        uid: (uid != null ? uid.value : this.uid),
-        thingTypeUID:
-            (thingTypeUID != null ? thingTypeUID.value : this.thingTypeUID),
-        location: (location != null ? location.value : this.location),
-        channels: (channels != null ? channels.value : this.channels));
+      label: (label != null ? label.value : this.label),
+      bridgeUID: (bridgeUID != null ? bridgeUID.value : this.bridgeUID),
+      configuration:
+          (configuration != null ? configuration.value : this.configuration),
+      properties: (properties != null ? properties.value : this.properties),
+      uid: (uid != null ? uid.value : this.uid),
+      thingTypeUID:
+          (thingTypeUID != null ? thingTypeUID.value : this.thingTypeUID),
+      location: (location != null ? location.value : this.location),
+      channels: (channels != null ? channels.value : this.channels),
+    );
   }
 }
 
@@ -6498,16 +6824,22 @@ class ConfigStatusMessage {
     return identical(this, other) ||
         (other is ConfigStatusMessage &&
             (identical(other.parameterName, parameterName) ||
-                const DeepCollectionEquality()
-                    .equals(other.parameterName, parameterName)) &&
+                const DeepCollectionEquality().equals(
+                  other.parameterName,
+                  parameterName,
+                )) &&
             (identical(other.type, type) ||
                 const DeepCollectionEquality().equals(other.type, type)) &&
             (identical(other.message, message) ||
-                const DeepCollectionEquality()
-                    .equals(other.message, message)) &&
+                const DeepCollectionEquality().equals(
+                  other.message,
+                  message,
+                )) &&
             (identical(other.statusCode, statusCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.statusCode, statusCode)));
+                const DeepCollectionEquality().equals(
+                  other.statusCode,
+                  statusCode,
+                )));
   }
 
   @override
@@ -6523,29 +6855,33 @@ class ConfigStatusMessage {
 }
 
 extension $ConfigStatusMessageExtension on ConfigStatusMessage {
-  ConfigStatusMessage copyWith(
-      {String? parameterName,
-      enums.ConfigStatusMessageType? type,
-      String? message,
-      int? statusCode}) {
+  ConfigStatusMessage copyWith({
+    String? parameterName,
+    enums.ConfigStatusMessageType? type,
+    String? message,
+    int? statusCode,
+  }) {
     return ConfigStatusMessage(
-        parameterName: parameterName ?? this.parameterName,
-        type: type ?? this.type,
-        message: message ?? this.message,
-        statusCode: statusCode ?? this.statusCode);
+      parameterName: parameterName ?? this.parameterName,
+      type: type ?? this.type,
+      message: message ?? this.message,
+      statusCode: statusCode ?? this.statusCode,
+    );
   }
 
-  ConfigStatusMessage copyWithWrapped(
-      {Wrapped<String?>? parameterName,
-      Wrapped<enums.ConfigStatusMessageType?>? type,
-      Wrapped<String?>? message,
-      Wrapped<int?>? statusCode}) {
+  ConfigStatusMessage copyWithWrapped({
+    Wrapped<String?>? parameterName,
+    Wrapped<enums.ConfigStatusMessageType?>? type,
+    Wrapped<String?>? message,
+    Wrapped<int?>? statusCode,
+  }) {
     return ConfigStatusMessage(
-        parameterName:
-            (parameterName != null ? parameterName.value : this.parameterName),
-        type: (type != null ? type.value : this.type),
-        message: (message != null ? message.value : this.message),
-        statusCode: (statusCode != null ? statusCode.value : this.statusCode));
+      parameterName:
+          (parameterName != null ? parameterName.value : this.parameterName),
+      type: (type != null ? type.value : this.type),
+      message: (message != null ? message.value : this.message),
+      statusCode: (statusCode != null ? statusCode.value : this.statusCode),
+    );
   }
 }
 
@@ -6591,27 +6927,39 @@ class FirmwareDTO {
     return identical(this, other) ||
         (other is FirmwareDTO &&
             (identical(other.thingTypeUID, thingTypeUID) ||
-                const DeepCollectionEquality()
-                    .equals(other.thingTypeUID, thingTypeUID)) &&
+                const DeepCollectionEquality().equals(
+                  other.thingTypeUID,
+                  thingTypeUID,
+                )) &&
             (identical(other.vendor, vendor) ||
                 const DeepCollectionEquality().equals(other.vendor, vendor)) &&
             (identical(other.model, model) ||
                 const DeepCollectionEquality().equals(other.model, model)) &&
             (identical(other.modelRestricted, modelRestricted) ||
-                const DeepCollectionEquality()
-                    .equals(other.modelRestricted, modelRestricted)) &&
+                const DeepCollectionEquality().equals(
+                  other.modelRestricted,
+                  modelRestricted,
+                )) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.version, version) ||
-                const DeepCollectionEquality()
-                    .equals(other.version, version)) &&
+                const DeepCollectionEquality().equals(
+                  other.version,
+                  version,
+                )) &&
             (identical(other.changelog, changelog) ||
-                const DeepCollectionEquality()
-                    .equals(other.changelog, changelog)) &&
+                const DeepCollectionEquality().equals(
+                  other.changelog,
+                  changelog,
+                )) &&
             (identical(other.prerequisiteVersion, prerequisiteVersion) ||
-                const DeepCollectionEquality()
-                    .equals(other.prerequisiteVersion, prerequisiteVersion)));
+                const DeepCollectionEquality().equals(
+                  other.prerequisiteVersion,
+                  prerequisiteVersion,
+                )));
   }
 
   @override
@@ -6631,50 +6979,55 @@ class FirmwareDTO {
 }
 
 extension $FirmwareDTOExtension on FirmwareDTO {
-  FirmwareDTO copyWith(
-      {String? thingTypeUID,
-      String? vendor,
-      String? model,
-      bool? modelRestricted,
-      String? description,
-      String? version,
-      String? changelog,
-      String? prerequisiteVersion}) {
+  FirmwareDTO copyWith({
+    String? thingTypeUID,
+    String? vendor,
+    String? model,
+    bool? modelRestricted,
+    String? description,
+    String? version,
+    String? changelog,
+    String? prerequisiteVersion,
+  }) {
     return FirmwareDTO(
-        thingTypeUID: thingTypeUID ?? this.thingTypeUID,
-        vendor: vendor ?? this.vendor,
-        model: model ?? this.model,
-        modelRestricted: modelRestricted ?? this.modelRestricted,
-        description: description ?? this.description,
-        version: version ?? this.version,
-        changelog: changelog ?? this.changelog,
-        prerequisiteVersion: prerequisiteVersion ?? this.prerequisiteVersion);
+      thingTypeUID: thingTypeUID ?? this.thingTypeUID,
+      vendor: vendor ?? this.vendor,
+      model: model ?? this.model,
+      modelRestricted: modelRestricted ?? this.modelRestricted,
+      description: description ?? this.description,
+      version: version ?? this.version,
+      changelog: changelog ?? this.changelog,
+      prerequisiteVersion: prerequisiteVersion ?? this.prerequisiteVersion,
+    );
   }
 
-  FirmwareDTO copyWithWrapped(
-      {Wrapped<String?>? thingTypeUID,
-      Wrapped<String?>? vendor,
-      Wrapped<String?>? model,
-      Wrapped<bool?>? modelRestricted,
-      Wrapped<String?>? description,
-      Wrapped<String?>? version,
-      Wrapped<String?>? changelog,
-      Wrapped<String?>? prerequisiteVersion}) {
+  FirmwareDTO copyWithWrapped({
+    Wrapped<String?>? thingTypeUID,
+    Wrapped<String?>? vendor,
+    Wrapped<String?>? model,
+    Wrapped<bool?>? modelRestricted,
+    Wrapped<String?>? description,
+    Wrapped<String?>? version,
+    Wrapped<String?>? changelog,
+    Wrapped<String?>? prerequisiteVersion,
+  }) {
     return FirmwareDTO(
-        thingTypeUID:
-            (thingTypeUID != null ? thingTypeUID.value : this.thingTypeUID),
-        vendor: (vendor != null ? vendor.value : this.vendor),
-        model: (model != null ? model.value : this.model),
-        modelRestricted: (modelRestricted != null
-            ? modelRestricted.value
-            : this.modelRestricted),
-        description:
-            (description != null ? description.value : this.description),
-        version: (version != null ? version.value : this.version),
-        changelog: (changelog != null ? changelog.value : this.changelog),
-        prerequisiteVersion: (prerequisiteVersion != null
-            ? prerequisiteVersion.value
-            : this.prerequisiteVersion));
+      thingTypeUID:
+          (thingTypeUID != null ? thingTypeUID.value : this.thingTypeUID),
+      vendor: (vendor != null ? vendor.value : this.vendor),
+      model: (model != null ? model.value : this.model),
+      modelRestricted:
+          (modelRestricted != null
+              ? modelRestricted.value
+              : this.modelRestricted),
+      description: (description != null ? description.value : this.description),
+      version: (version != null ? version.value : this.version),
+      changelog: (changelog != null ? changelog.value : this.changelog),
+      prerequisiteVersion:
+          (prerequisiteVersion != null
+              ? prerequisiteVersion.value
+              : this.prerequisiteVersion),
+    );
   }
 }
 
@@ -6721,17 +7074,25 @@ class StrippedThingTypeDTO {
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.category, category) ||
-                const DeepCollectionEquality()
-                    .equals(other.category, category)) &&
+                const DeepCollectionEquality().equals(
+                  other.category,
+                  category,
+                )) &&
             (identical(other.listed, listed) ||
                 const DeepCollectionEquality().equals(other.listed, listed)) &&
             (identical(
-                    other.supportedBridgeTypeUIDs, supportedBridgeTypeUIDs) ||
+                  other.supportedBridgeTypeUIDs,
+                  supportedBridgeTypeUIDs,
+                ) ||
                 const DeepCollectionEquality().equals(
-                    other.supportedBridgeTypeUIDs, supportedBridgeTypeUIDs)) &&
+                  other.supportedBridgeTypeUIDs,
+                  supportedBridgeTypeUIDs,
+                )) &&
             (identical(other.bridge, bridge) ||
                 const DeepCollectionEquality().equals(other.bridge, bridge)));
   }
@@ -6752,44 +7113,48 @@ class StrippedThingTypeDTO {
 }
 
 extension $StrippedThingTypeDTOExtension on StrippedThingTypeDTO {
-  StrippedThingTypeDTO copyWith(
-      {String? uid,
-      String? label,
-      String? description,
-      String? category,
-      bool? listed,
-      List<String>? supportedBridgeTypeUIDs,
-      bool? bridge}) {
+  StrippedThingTypeDTO copyWith({
+    String? uid,
+    String? label,
+    String? description,
+    String? category,
+    bool? listed,
+    List<String>? supportedBridgeTypeUIDs,
+    bool? bridge,
+  }) {
     return StrippedThingTypeDTO(
-        uid: uid ?? this.uid,
-        label: label ?? this.label,
-        description: description ?? this.description,
-        category: category ?? this.category,
-        listed: listed ?? this.listed,
-        supportedBridgeTypeUIDs:
-            supportedBridgeTypeUIDs ?? this.supportedBridgeTypeUIDs,
-        bridge: bridge ?? this.bridge);
+      uid: uid ?? this.uid,
+      label: label ?? this.label,
+      description: description ?? this.description,
+      category: category ?? this.category,
+      listed: listed ?? this.listed,
+      supportedBridgeTypeUIDs:
+          supportedBridgeTypeUIDs ?? this.supportedBridgeTypeUIDs,
+      bridge: bridge ?? this.bridge,
+    );
   }
 
-  StrippedThingTypeDTO copyWithWrapped(
-      {Wrapped<String?>? uid,
-      Wrapped<String?>? label,
-      Wrapped<String?>? description,
-      Wrapped<String?>? category,
-      Wrapped<bool?>? listed,
-      Wrapped<List<String>?>? supportedBridgeTypeUIDs,
-      Wrapped<bool?>? bridge}) {
+  StrippedThingTypeDTO copyWithWrapped({
+    Wrapped<String?>? uid,
+    Wrapped<String?>? label,
+    Wrapped<String?>? description,
+    Wrapped<String?>? category,
+    Wrapped<bool?>? listed,
+    Wrapped<List<String>?>? supportedBridgeTypeUIDs,
+    Wrapped<bool?>? bridge,
+  }) {
     return StrippedThingTypeDTO(
-        uid: (uid != null ? uid.value : this.uid),
-        label: (label != null ? label.value : this.label),
-        description:
-            (description != null ? description.value : this.description),
-        category: (category != null ? category.value : this.category),
-        listed: (listed != null ? listed.value : this.listed),
-        supportedBridgeTypeUIDs: (supportedBridgeTypeUIDs != null
-            ? supportedBridgeTypeUIDs.value
-            : this.supportedBridgeTypeUIDs),
-        bridge: (bridge != null ? bridge.value : this.bridge));
+      uid: (uid != null ? uid.value : this.uid),
+      label: (label != null ? label.value : this.label),
+      description: (description != null ? description.value : this.description),
+      category: (category != null ? category.value : this.category),
+      listed: (listed != null ? listed.value : this.listed),
+      supportedBridgeTypeUIDs:
+          (supportedBridgeTypeUIDs != null
+              ? supportedBridgeTypeUIDs.value
+              : this.supportedBridgeTypeUIDs),
+      bridge: (bridge != null ? bridge.value : this.bridge),
+    );
   }
 }
 
@@ -6838,8 +7203,10 @@ class ChannelDefinitionDTO {
     return identical(this, other) ||
         (other is ChannelDefinitionDTO &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.label, label) ||
@@ -6847,17 +7214,25 @@ class ChannelDefinitionDTO {
             (identical(other.tags, tags) ||
                 const DeepCollectionEquality().equals(other.tags, tags)) &&
             (identical(other.properties, properties) ||
-                const DeepCollectionEquality()
-                    .equals(other.properties, properties)) &&
+                const DeepCollectionEquality().equals(
+                  other.properties,
+                  properties,
+                )) &&
             (identical(other.category, category) ||
-                const DeepCollectionEquality()
-                    .equals(other.category, category)) &&
+                const DeepCollectionEquality().equals(
+                  other.category,
+                  category,
+                )) &&
             (identical(other.stateDescription, stateDescription) ||
-                const DeepCollectionEquality()
-                    .equals(other.stateDescription, stateDescription)) &&
+                const DeepCollectionEquality().equals(
+                  other.stateDescription,
+                  stateDescription,
+                )) &&
             (identical(other.advanced, advanced) ||
-                const DeepCollectionEquality()
-                    .equals(other.advanced, advanced)) &&
+                const DeepCollectionEquality().equals(
+                  other.advanced,
+                  advanced,
+                )) &&
             (identical(other.typeUID, typeUID) ||
                 const DeepCollectionEquality().equals(other.typeUID, typeUID)));
   }
@@ -6880,51 +7255,55 @@ class ChannelDefinitionDTO {
 }
 
 extension $ChannelDefinitionDTOExtension on ChannelDefinitionDTO {
-  ChannelDefinitionDTO copyWith(
-      {String? description,
-      String? id,
-      String? label,
-      List<String>? tags,
-      Map<String, dynamic>? properties,
-      String? category,
-      StateDescription? stateDescription,
-      bool? advanced,
-      String? typeUID}) {
+  ChannelDefinitionDTO copyWith({
+    String? description,
+    String? id,
+    String? label,
+    List<String>? tags,
+    Map<String, dynamic>? properties,
+    String? category,
+    StateDescription? stateDescription,
+    bool? advanced,
+    String? typeUID,
+  }) {
     return ChannelDefinitionDTO(
-        description: description ?? this.description,
-        id: id ?? this.id,
-        label: label ?? this.label,
-        tags: tags ?? this.tags,
-        properties: properties ?? this.properties,
-        category: category ?? this.category,
-        stateDescription: stateDescription ?? this.stateDescription,
-        advanced: advanced ?? this.advanced,
-        typeUID: typeUID ?? this.typeUID);
+      description: description ?? this.description,
+      id: id ?? this.id,
+      label: label ?? this.label,
+      tags: tags ?? this.tags,
+      properties: properties ?? this.properties,
+      category: category ?? this.category,
+      stateDescription: stateDescription ?? this.stateDescription,
+      advanced: advanced ?? this.advanced,
+      typeUID: typeUID ?? this.typeUID,
+    );
   }
 
-  ChannelDefinitionDTO copyWithWrapped(
-      {Wrapped<String?>? description,
-      Wrapped<String?>? id,
-      Wrapped<String?>? label,
-      Wrapped<List<String>?>? tags,
-      Wrapped<Map<String, dynamic>?>? properties,
-      Wrapped<String?>? category,
-      Wrapped<StateDescription?>? stateDescription,
-      Wrapped<bool?>? advanced,
-      Wrapped<String?>? typeUID}) {
+  ChannelDefinitionDTO copyWithWrapped({
+    Wrapped<String?>? description,
+    Wrapped<String?>? id,
+    Wrapped<String?>? label,
+    Wrapped<List<String>?>? tags,
+    Wrapped<Map<String, dynamic>?>? properties,
+    Wrapped<String?>? category,
+    Wrapped<StateDescription?>? stateDescription,
+    Wrapped<bool?>? advanced,
+    Wrapped<String?>? typeUID,
+  }) {
     return ChannelDefinitionDTO(
-        description:
-            (description != null ? description.value : this.description),
-        id: (id != null ? id.value : this.id),
-        label: (label != null ? label.value : this.label),
-        tags: (tags != null ? tags.value : this.tags),
-        properties: (properties != null ? properties.value : this.properties),
-        category: (category != null ? category.value : this.category),
-        stateDescription: (stateDescription != null
-            ? stateDescription.value
-            : this.stateDescription),
-        advanced: (advanced != null ? advanced.value : this.advanced),
-        typeUID: (typeUID != null ? typeUID.value : this.typeUID));
+      description: (description != null ? description.value : this.description),
+      id: (id != null ? id.value : this.id),
+      label: (label != null ? label.value : this.label),
+      tags: (tags != null ? tags.value : this.tags),
+      properties: (properties != null ? properties.value : this.properties),
+      category: (category != null ? category.value : this.category),
+      stateDescription:
+          (stateDescription != null
+              ? stateDescription.value
+              : this.stateDescription),
+      advanced: (advanced != null ? advanced.value : this.advanced),
+      typeUID: (typeUID != null ? typeUID.value : this.typeUID),
+    );
   }
 }
 
@@ -6960,13 +7339,17 @@ class ChannelGroupDefinitionDTO {
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.channels, channels) ||
-                const DeepCollectionEquality()
-                    .equals(other.channels, channels)));
+                const DeepCollectionEquality().equals(
+                  other.channels,
+                  channels,
+                )));
   }
 
   @override
@@ -6982,29 +7365,32 @@ class ChannelGroupDefinitionDTO {
 }
 
 extension $ChannelGroupDefinitionDTOExtension on ChannelGroupDefinitionDTO {
-  ChannelGroupDefinitionDTO copyWith(
-      {String? id,
-      String? description,
-      String? label,
-      List<ChannelDefinitionDTO>? channels}) {
+  ChannelGroupDefinitionDTO copyWith({
+    String? id,
+    String? description,
+    String? label,
+    List<ChannelDefinitionDTO>? channels,
+  }) {
     return ChannelGroupDefinitionDTO(
-        id: id ?? this.id,
-        description: description ?? this.description,
-        label: label ?? this.label,
-        channels: channels ?? this.channels);
+      id: id ?? this.id,
+      description: description ?? this.description,
+      label: label ?? this.label,
+      channels: channels ?? this.channels,
+    );
   }
 
-  ChannelGroupDefinitionDTO copyWithWrapped(
-      {Wrapped<String?>? id,
-      Wrapped<String?>? description,
-      Wrapped<String?>? label,
-      Wrapped<List<ChannelDefinitionDTO>?>? channels}) {
+  ChannelGroupDefinitionDTO copyWithWrapped({
+    Wrapped<String?>? id,
+    Wrapped<String?>? description,
+    Wrapped<String?>? label,
+    Wrapped<List<ChannelDefinitionDTO>?>? channels,
+  }) {
     return ChannelGroupDefinitionDTO(
-        id: (id != null ? id.value : this.id),
-        description:
-            (description != null ? description.value : this.description),
-        label: (label != null ? label.value : this.label),
-        channels: (channels != null ? channels.value : this.channels));
+      id: (id != null ? id.value : this.id),
+      description: (description != null ? description.value : this.description),
+      label: (label != null ? label.value : this.label),
+      channels: (channels != null ? channels.value : this.channels),
+    );
   }
 }
 
@@ -7051,11 +7437,14 @@ class ThingTypeDTO {
   @JsonKey(name: 'channelGroups', defaultValue: <ChannelGroupDefinitionDTO>[])
   final List<ChannelGroupDefinitionDTO>? channelGroups;
   @JsonKey(
-      name: 'configParameters', defaultValue: <ConfigDescriptionParameterDTO>[])
+    name: 'configParameters',
+    defaultValue: <ConfigDescriptionParameterDTO>[],
+  )
   final List<ConfigDescriptionParameterDTO>? configParameters;
   @JsonKey(
-      name: 'parameterGroups',
-      defaultValue: <ConfigDescriptionParameterGroupDTO>[])
+    name: 'parameterGroups',
+    defaultValue: <ConfigDescriptionParameterGroupDTO>[],
+  )
   final List<ConfigDescriptionParameterGroupDTO>? parameterGroups;
   @JsonKey(name: 'properties')
   final Map<String, dynamic>? properties;
@@ -7072,38 +7461,60 @@ class ThingTypeDTO {
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.category, category) ||
-                const DeepCollectionEquality()
-                    .equals(other.category, category)) &&
+                const DeepCollectionEquality().equals(
+                  other.category,
+                  category,
+                )) &&
             (identical(other.listed, listed) ||
                 const DeepCollectionEquality().equals(other.listed, listed)) &&
             (identical(
-                    other.supportedBridgeTypeUIDs, supportedBridgeTypeUIDs) ||
+                  other.supportedBridgeTypeUIDs,
+                  supportedBridgeTypeUIDs,
+                ) ||
                 const DeepCollectionEquality().equals(
-                    other.supportedBridgeTypeUIDs, supportedBridgeTypeUIDs)) &&
+                  other.supportedBridgeTypeUIDs,
+                  supportedBridgeTypeUIDs,
+                )) &&
             (identical(other.bridge, bridge) ||
                 const DeepCollectionEquality().equals(other.bridge, bridge)) &&
             (identical(other.channels, channels) ||
-                const DeepCollectionEquality()
-                    .equals(other.channels, channels)) &&
-            (identical(other.channelGroups, channelGroups) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelGroups, channelGroups)) &&
-            (identical(other.configParameters, configParameters) ||
-                const DeepCollectionEquality()
-                    .equals(other.configParameters, configParameters)) &&
-            (identical(other.parameterGroups, parameterGroups) ||
-                const DeepCollectionEquality()
-                    .equals(other.parameterGroups, parameterGroups)) &&
-            (identical(other.properties, properties) ||
-                const DeepCollectionEquality()
-                    .equals(other.properties, properties)) &&
-            (identical(
-                    other.extensibleChannelTypeIds, extensibleChannelTypeIds) ||
                 const DeepCollectionEquality().equals(
-                    other.extensibleChannelTypeIds, extensibleChannelTypeIds)));
+                  other.channels,
+                  channels,
+                )) &&
+            (identical(other.channelGroups, channelGroups) ||
+                const DeepCollectionEquality().equals(
+                  other.channelGroups,
+                  channelGroups,
+                )) &&
+            (identical(other.configParameters, configParameters) ||
+                const DeepCollectionEquality().equals(
+                  other.configParameters,
+                  configParameters,
+                )) &&
+            (identical(other.parameterGroups, parameterGroups) ||
+                const DeepCollectionEquality().equals(
+                  other.parameterGroups,
+                  parameterGroups,
+                )) &&
+            (identical(other.properties, properties) ||
+                const DeepCollectionEquality().equals(
+                  other.properties,
+                  properties,
+                )) &&
+            (identical(
+                  other.extensibleChannelTypeIds,
+                  extensibleChannelTypeIds,
+                ) ||
+                const DeepCollectionEquality().equals(
+                  other.extensibleChannelTypeIds,
+                  extensibleChannelTypeIds,
+                )));
   }
 
   @override
@@ -7128,85 +7539,89 @@ class ThingTypeDTO {
 }
 
 extension $ThingTypeDTOExtension on ThingTypeDTO {
-  ThingTypeDTO copyWith(
-      {String? uid,
-      String? label,
-      String? description,
-      String? category,
-      bool? listed,
-      List<String>? supportedBridgeTypeUIDs,
-      bool? bridge,
-      List<ChannelDefinitionDTO>? channels,
-      List<ChannelGroupDefinitionDTO>? channelGroups,
-      List<ConfigDescriptionParameterDTO>? configParameters,
-      List<ConfigDescriptionParameterGroupDTO>? parameterGroups,
-      Map<String, dynamic>? properties,
-      List<String>? extensibleChannelTypeIds}) {
+  ThingTypeDTO copyWith({
+    String? uid,
+    String? label,
+    String? description,
+    String? category,
+    bool? listed,
+    List<String>? supportedBridgeTypeUIDs,
+    bool? bridge,
+    List<ChannelDefinitionDTO>? channels,
+    List<ChannelGroupDefinitionDTO>? channelGroups,
+    List<ConfigDescriptionParameterDTO>? configParameters,
+    List<ConfigDescriptionParameterGroupDTO>? parameterGroups,
+    Map<String, dynamic>? properties,
+    List<String>? extensibleChannelTypeIds,
+  }) {
     return ThingTypeDTO(
-        uid: uid ?? this.uid,
-        label: label ?? this.label,
-        description: description ?? this.description,
-        category: category ?? this.category,
-        listed: listed ?? this.listed,
-        supportedBridgeTypeUIDs:
-            supportedBridgeTypeUIDs ?? this.supportedBridgeTypeUIDs,
-        bridge: bridge ?? this.bridge,
-        channels: channels ?? this.channels,
-        channelGroups: channelGroups ?? this.channelGroups,
-        configParameters: configParameters ?? this.configParameters,
-        parameterGroups: parameterGroups ?? this.parameterGroups,
-        properties: properties ?? this.properties,
-        extensibleChannelTypeIds:
-            extensibleChannelTypeIds ?? this.extensibleChannelTypeIds);
+      uid: uid ?? this.uid,
+      label: label ?? this.label,
+      description: description ?? this.description,
+      category: category ?? this.category,
+      listed: listed ?? this.listed,
+      supportedBridgeTypeUIDs:
+          supportedBridgeTypeUIDs ?? this.supportedBridgeTypeUIDs,
+      bridge: bridge ?? this.bridge,
+      channels: channels ?? this.channels,
+      channelGroups: channelGroups ?? this.channelGroups,
+      configParameters: configParameters ?? this.configParameters,
+      parameterGroups: parameterGroups ?? this.parameterGroups,
+      properties: properties ?? this.properties,
+      extensibleChannelTypeIds:
+          extensibleChannelTypeIds ?? this.extensibleChannelTypeIds,
+    );
   }
 
-  ThingTypeDTO copyWithWrapped(
-      {Wrapped<String?>? uid,
-      Wrapped<String?>? label,
-      Wrapped<String?>? description,
-      Wrapped<String?>? category,
-      Wrapped<bool?>? listed,
-      Wrapped<List<String>?>? supportedBridgeTypeUIDs,
-      Wrapped<bool?>? bridge,
-      Wrapped<List<ChannelDefinitionDTO>?>? channels,
-      Wrapped<List<ChannelGroupDefinitionDTO>?>? channelGroups,
-      Wrapped<List<ConfigDescriptionParameterDTO>?>? configParameters,
-      Wrapped<List<ConfigDescriptionParameterGroupDTO>?>? parameterGroups,
-      Wrapped<Map<String, dynamic>?>? properties,
-      Wrapped<List<String>?>? extensibleChannelTypeIds}) {
+  ThingTypeDTO copyWithWrapped({
+    Wrapped<String?>? uid,
+    Wrapped<String?>? label,
+    Wrapped<String?>? description,
+    Wrapped<String?>? category,
+    Wrapped<bool?>? listed,
+    Wrapped<List<String>?>? supportedBridgeTypeUIDs,
+    Wrapped<bool?>? bridge,
+    Wrapped<List<ChannelDefinitionDTO>?>? channels,
+    Wrapped<List<ChannelGroupDefinitionDTO>?>? channelGroups,
+    Wrapped<List<ConfigDescriptionParameterDTO>?>? configParameters,
+    Wrapped<List<ConfigDescriptionParameterGroupDTO>?>? parameterGroups,
+    Wrapped<Map<String, dynamic>?>? properties,
+    Wrapped<List<String>?>? extensibleChannelTypeIds,
+  }) {
     return ThingTypeDTO(
-        uid: (uid != null ? uid.value : this.uid),
-        label: (label != null ? label.value : this.label),
-        description:
-            (description != null ? description.value : this.description),
-        category: (category != null ? category.value : this.category),
-        listed: (listed != null ? listed.value : this.listed),
-        supportedBridgeTypeUIDs: (supportedBridgeTypeUIDs != null
-            ? supportedBridgeTypeUIDs.value
-            : this.supportedBridgeTypeUIDs),
-        bridge: (bridge != null ? bridge.value : this.bridge),
-        channels: (channels != null ? channels.value : this.channels),
-        channelGroups:
-            (channelGroups != null ? channelGroups.value : this.channelGroups),
-        configParameters: (configParameters != null
-            ? configParameters.value
-            : this.configParameters),
-        parameterGroups: (parameterGroups != null
-            ? parameterGroups.value
-            : this.parameterGroups),
-        properties: (properties != null ? properties.value : this.properties),
-        extensibleChannelTypeIds: (extensibleChannelTypeIds != null
-            ? extensibleChannelTypeIds.value
-            : this.extensibleChannelTypeIds));
+      uid: (uid != null ? uid.value : this.uid),
+      label: (label != null ? label.value : this.label),
+      description: (description != null ? description.value : this.description),
+      category: (category != null ? category.value : this.category),
+      listed: (listed != null ? listed.value : this.listed),
+      supportedBridgeTypeUIDs:
+          (supportedBridgeTypeUIDs != null
+              ? supportedBridgeTypeUIDs.value
+              : this.supportedBridgeTypeUIDs),
+      bridge: (bridge != null ? bridge.value : this.bridge),
+      channels: (channels != null ? channels.value : this.channels),
+      channelGroups:
+          (channelGroups != null ? channelGroups.value : this.channelGroups),
+      configParameters:
+          (configParameters != null
+              ? configParameters.value
+              : this.configParameters),
+      parameterGroups:
+          (parameterGroups != null
+              ? parameterGroups.value
+              : this.parameterGroups),
+      properties: (properties != null ? properties.value : this.properties),
+      extensibleChannelTypeIds:
+          (extensibleChannelTypeIds != null
+              ? extensibleChannelTypeIds.value
+              : this.extensibleChannelTypeIds),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class Links {
-  const Links({
-    this.type,
-    this.url,
-  });
+  const Links({this.type, this.url});
 
   factory Links.fromJson(Map<String, dynamic> json) => _$LinksFromJson(json);
 
@@ -7246,8 +7661,9 @@ extension $LinksExtension on Links {
 
   Links copyWithWrapped({Wrapped<String?>? type, Wrapped<String?>? url}) {
     return Links(
-        type: (type != null ? type.value : this.type),
-        url: (url != null ? url.value : this.url));
+      type: (type != null ? type.value : this.type),
+      url: (url != null ? url.value : this.url),
+    );
   }
 }
 
@@ -7284,16 +7700,22 @@ class RootBean {
     return identical(this, other) ||
         (other is RootBean &&
             (identical(other.version, version) ||
-                const DeepCollectionEquality()
-                    .equals(other.version, version)) &&
+                const DeepCollectionEquality().equals(
+                  other.version,
+                  version,
+                )) &&
             (identical(other.locale, locale) ||
                 const DeepCollectionEquality().equals(other.locale, locale)) &&
             (identical(other.measurementSystem, measurementSystem) ||
-                const DeepCollectionEquality()
-                    .equals(other.measurementSystem, measurementSystem)) &&
+                const DeepCollectionEquality().equals(
+                  other.measurementSystem,
+                  measurementSystem,
+                )) &&
             (identical(other.runtimeInfo, runtimeInfo) ||
-                const DeepCollectionEquality()
-                    .equals(other.runtimeInfo, runtimeInfo)) &&
+                const DeepCollectionEquality().equals(
+                  other.runtimeInfo,
+                  runtimeInfo,
+                )) &&
             (identical(other.links, links) ||
                 const DeepCollectionEquality().equals(other.links, links)));
   }
@@ -7312,44 +7734,45 @@ class RootBean {
 }
 
 extension $RootBeanExtension on RootBean {
-  RootBean copyWith(
-      {String? version,
-      String? locale,
-      String? measurementSystem,
-      RuntimeInfo? runtimeInfo,
-      List<Links>? links}) {
+  RootBean copyWith({
+    String? version,
+    String? locale,
+    String? measurementSystem,
+    RuntimeInfo? runtimeInfo,
+    List<Links>? links,
+  }) {
     return RootBean(
-        version: version ?? this.version,
-        locale: locale ?? this.locale,
-        measurementSystem: measurementSystem ?? this.measurementSystem,
-        runtimeInfo: runtimeInfo ?? this.runtimeInfo,
-        links: links ?? this.links);
+      version: version ?? this.version,
+      locale: locale ?? this.locale,
+      measurementSystem: measurementSystem ?? this.measurementSystem,
+      runtimeInfo: runtimeInfo ?? this.runtimeInfo,
+      links: links ?? this.links,
+    );
   }
 
-  RootBean copyWithWrapped(
-      {Wrapped<String?>? version,
-      Wrapped<String?>? locale,
-      Wrapped<String?>? measurementSystem,
-      Wrapped<RuntimeInfo?>? runtimeInfo,
-      Wrapped<List<Links>?>? links}) {
+  RootBean copyWithWrapped({
+    Wrapped<String?>? version,
+    Wrapped<String?>? locale,
+    Wrapped<String?>? measurementSystem,
+    Wrapped<RuntimeInfo?>? runtimeInfo,
+    Wrapped<List<Links>?>? links,
+  }) {
     return RootBean(
-        version: (version != null ? version.value : this.version),
-        locale: (locale != null ? locale.value : this.locale),
-        measurementSystem: (measurementSystem != null
-            ? measurementSystem.value
-            : this.measurementSystem),
-        runtimeInfo:
-            (runtimeInfo != null ? runtimeInfo.value : this.runtimeInfo),
-        links: (links != null ? links.value : this.links));
+      version: (version != null ? version.value : this.version),
+      locale: (locale != null ? locale.value : this.locale),
+      measurementSystem:
+          (measurementSystem != null
+              ? measurementSystem.value
+              : this.measurementSystem),
+      runtimeInfo: (runtimeInfo != null ? runtimeInfo.value : this.runtimeInfo),
+      links: (links != null ? links.value : this.links),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class RuntimeInfo {
-  const RuntimeInfo({
-    this.version,
-    this.buildString,
-  });
+  const RuntimeInfo({this.version, this.buildString});
 
   factory RuntimeInfo.fromJson(Map<String, dynamic> json) =>
       _$RuntimeInfoFromJson(json);
@@ -7368,11 +7791,15 @@ class RuntimeInfo {
     return identical(this, other) ||
         (other is RuntimeInfo &&
             (identical(other.version, version) ||
-                const DeepCollectionEquality()
-                    .equals(other.version, version)) &&
+                const DeepCollectionEquality().equals(
+                  other.version,
+                  version,
+                )) &&
             (identical(other.buildString, buildString) ||
-                const DeepCollectionEquality()
-                    .equals(other.buildString, buildString)));
+                const DeepCollectionEquality().equals(
+                  other.buildString,
+                  buildString,
+                )));
   }
 
   @override
@@ -7388,16 +7815,19 @@ class RuntimeInfo {
 extension $RuntimeInfoExtension on RuntimeInfo {
   RuntimeInfo copyWith({String? version, String? buildString}) {
     return RuntimeInfo(
-        version: version ?? this.version,
-        buildString: buildString ?? this.buildString);
+      version: version ?? this.version,
+      buildString: buildString ?? this.buildString,
+    );
   }
 
-  RuntimeInfo copyWithWrapped(
-      {Wrapped<String?>? version, Wrapped<String?>? buildString}) {
+  RuntimeInfo copyWithWrapped({
+    Wrapped<String?>? version,
+    Wrapped<String?>? buildString,
+  }) {
     return RuntimeInfo(
-        version: (version != null ? version.value : this.version),
-        buildString:
-            (buildString != null ? buildString.value : this.buildString));
+      version: (version != null ? version.value : this.version),
+      buildString: (buildString != null ? buildString.value : this.buildString),
+    );
   }
 }
 
@@ -7458,43 +7888,67 @@ class SystemInfo {
     return identical(this, other) ||
         (other is SystemInfo &&
             (identical(other.configFolder, configFolder) ||
-                const DeepCollectionEquality()
-                    .equals(other.configFolder, configFolder)) &&
+                const DeepCollectionEquality().equals(
+                  other.configFolder,
+                  configFolder,
+                )) &&
             (identical(other.userdataFolder, userdataFolder) ||
-                const DeepCollectionEquality()
-                    .equals(other.userdataFolder, userdataFolder)) &&
+                const DeepCollectionEquality().equals(
+                  other.userdataFolder,
+                  userdataFolder,
+                )) &&
             (identical(other.logFolder, logFolder) ||
-                const DeepCollectionEquality()
-                    .equals(other.logFolder, logFolder)) &&
+                const DeepCollectionEquality().equals(
+                  other.logFolder,
+                  logFolder,
+                )) &&
             (identical(other.javaVersion, javaVersion) ||
-                const DeepCollectionEquality()
-                    .equals(other.javaVersion, javaVersion)) &&
+                const DeepCollectionEquality().equals(
+                  other.javaVersion,
+                  javaVersion,
+                )) &&
             (identical(other.javaVendor, javaVendor) ||
-                const DeepCollectionEquality()
-                    .equals(other.javaVendor, javaVendor)) &&
+                const DeepCollectionEquality().equals(
+                  other.javaVendor,
+                  javaVendor,
+                )) &&
             (identical(other.javaVendorVersion, javaVendorVersion) ||
-                const DeepCollectionEquality()
-                    .equals(other.javaVendorVersion, javaVendorVersion)) &&
+                const DeepCollectionEquality().equals(
+                  other.javaVendorVersion,
+                  javaVendorVersion,
+                )) &&
             (identical(other.osName, osName) ||
                 const DeepCollectionEquality().equals(other.osName, osName)) &&
             (identical(other.osVersion, osVersion) ||
-                const DeepCollectionEquality()
-                    .equals(other.osVersion, osVersion)) &&
+                const DeepCollectionEquality().equals(
+                  other.osVersion,
+                  osVersion,
+                )) &&
             (identical(other.osArchitecture, osArchitecture) ||
-                const DeepCollectionEquality()
-                    .equals(other.osArchitecture, osArchitecture)) &&
+                const DeepCollectionEquality().equals(
+                  other.osArchitecture,
+                  osArchitecture,
+                )) &&
             (identical(other.availableProcessors, availableProcessors) ||
-                const DeepCollectionEquality()
-                    .equals(other.availableProcessors, availableProcessors)) &&
+                const DeepCollectionEquality().equals(
+                  other.availableProcessors,
+                  availableProcessors,
+                )) &&
             (identical(other.freeMemory, freeMemory) ||
-                const DeepCollectionEquality()
-                    .equals(other.freeMemory, freeMemory)) &&
+                const DeepCollectionEquality().equals(
+                  other.freeMemory,
+                  freeMemory,
+                )) &&
             (identical(other.totalMemory, totalMemory) ||
-                const DeepCollectionEquality()
-                    .equals(other.totalMemory, totalMemory)) &&
+                const DeepCollectionEquality().equals(
+                  other.totalMemory,
+                  totalMemory,
+                )) &&
             (identical(other.startLevel, startLevel) ||
-                const DeepCollectionEquality()
-                    .equals(other.startLevel, startLevel)));
+                const DeepCollectionEquality().equals(
+                  other.startLevel,
+                  startLevel,
+                )));
   }
 
   @override
@@ -7519,83 +7973,83 @@ class SystemInfo {
 }
 
 extension $SystemInfoExtension on SystemInfo {
-  SystemInfo copyWith(
-      {String? configFolder,
-      String? userdataFolder,
-      String? logFolder,
-      String? javaVersion,
-      String? javaVendor,
-      String? javaVendorVersion,
-      String? osName,
-      String? osVersion,
-      String? osArchitecture,
-      int? availableProcessors,
-      int? freeMemory,
-      int? totalMemory,
-      int? startLevel}) {
+  SystemInfo copyWith({
+    String? configFolder,
+    String? userdataFolder,
+    String? logFolder,
+    String? javaVersion,
+    String? javaVendor,
+    String? javaVendorVersion,
+    String? osName,
+    String? osVersion,
+    String? osArchitecture,
+    int? availableProcessors,
+    int? freeMemory,
+    int? totalMemory,
+    int? startLevel,
+  }) {
     return SystemInfo(
-        configFolder: configFolder ?? this.configFolder,
-        userdataFolder: userdataFolder ?? this.userdataFolder,
-        logFolder: logFolder ?? this.logFolder,
-        javaVersion: javaVersion ?? this.javaVersion,
-        javaVendor: javaVendor ?? this.javaVendor,
-        javaVendorVersion: javaVendorVersion ?? this.javaVendorVersion,
-        osName: osName ?? this.osName,
-        osVersion: osVersion ?? this.osVersion,
-        osArchitecture: osArchitecture ?? this.osArchitecture,
-        availableProcessors: availableProcessors ?? this.availableProcessors,
-        freeMemory: freeMemory ?? this.freeMemory,
-        totalMemory: totalMemory ?? this.totalMemory,
-        startLevel: startLevel ?? this.startLevel);
+      configFolder: configFolder ?? this.configFolder,
+      userdataFolder: userdataFolder ?? this.userdataFolder,
+      logFolder: logFolder ?? this.logFolder,
+      javaVersion: javaVersion ?? this.javaVersion,
+      javaVendor: javaVendor ?? this.javaVendor,
+      javaVendorVersion: javaVendorVersion ?? this.javaVendorVersion,
+      osName: osName ?? this.osName,
+      osVersion: osVersion ?? this.osVersion,
+      osArchitecture: osArchitecture ?? this.osArchitecture,
+      availableProcessors: availableProcessors ?? this.availableProcessors,
+      freeMemory: freeMemory ?? this.freeMemory,
+      totalMemory: totalMemory ?? this.totalMemory,
+      startLevel: startLevel ?? this.startLevel,
+    );
   }
 
-  SystemInfo copyWithWrapped(
-      {Wrapped<String?>? configFolder,
-      Wrapped<String?>? userdataFolder,
-      Wrapped<String?>? logFolder,
-      Wrapped<String?>? javaVersion,
-      Wrapped<String?>? javaVendor,
-      Wrapped<String?>? javaVendorVersion,
-      Wrapped<String?>? osName,
-      Wrapped<String?>? osVersion,
-      Wrapped<String?>? osArchitecture,
-      Wrapped<int?>? availableProcessors,
-      Wrapped<int?>? freeMemory,
-      Wrapped<int?>? totalMemory,
-      Wrapped<int?>? startLevel}) {
+  SystemInfo copyWithWrapped({
+    Wrapped<String?>? configFolder,
+    Wrapped<String?>? userdataFolder,
+    Wrapped<String?>? logFolder,
+    Wrapped<String?>? javaVersion,
+    Wrapped<String?>? javaVendor,
+    Wrapped<String?>? javaVendorVersion,
+    Wrapped<String?>? osName,
+    Wrapped<String?>? osVersion,
+    Wrapped<String?>? osArchitecture,
+    Wrapped<int?>? availableProcessors,
+    Wrapped<int?>? freeMemory,
+    Wrapped<int?>? totalMemory,
+    Wrapped<int?>? startLevel,
+  }) {
     return SystemInfo(
-        configFolder:
-            (configFolder != null ? configFolder.value : this.configFolder),
-        userdataFolder: (userdataFolder != null
-            ? userdataFolder.value
-            : this.userdataFolder),
-        logFolder: (logFolder != null ? logFolder.value : this.logFolder),
-        javaVersion:
-            (javaVersion != null ? javaVersion.value : this.javaVersion),
-        javaVendor: (javaVendor != null ? javaVendor.value : this.javaVendor),
-        javaVendorVersion: (javaVendorVersion != null
-            ? javaVendorVersion.value
-            : this.javaVendorVersion),
-        osName: (osName != null ? osName.value : this.osName),
-        osVersion: (osVersion != null ? osVersion.value : this.osVersion),
-        osArchitecture: (osArchitecture != null
-            ? osArchitecture.value
-            : this.osArchitecture),
-        availableProcessors: (availableProcessors != null
-            ? availableProcessors.value
-            : this.availableProcessors),
-        freeMemory: (freeMemory != null ? freeMemory.value : this.freeMemory),
-        totalMemory:
-            (totalMemory != null ? totalMemory.value : this.totalMemory),
-        startLevel: (startLevel != null ? startLevel.value : this.startLevel));
+      configFolder:
+          (configFolder != null ? configFolder.value : this.configFolder),
+      userdataFolder:
+          (userdataFolder != null ? userdataFolder.value : this.userdataFolder),
+      logFolder: (logFolder != null ? logFolder.value : this.logFolder),
+      javaVersion: (javaVersion != null ? javaVersion.value : this.javaVersion),
+      javaVendor: (javaVendor != null ? javaVendor.value : this.javaVendor),
+      javaVendorVersion:
+          (javaVendorVersion != null
+              ? javaVendorVersion.value
+              : this.javaVendorVersion),
+      osName: (osName != null ? osName.value : this.osName),
+      osVersion: (osVersion != null ? osVersion.value : this.osVersion),
+      osArchitecture:
+          (osArchitecture != null ? osArchitecture.value : this.osArchitecture),
+      availableProcessors:
+          (availableProcessors != null
+              ? availableProcessors.value
+              : this.availableProcessors),
+      freeMemory: (freeMemory != null ? freeMemory.value : this.freeMemory),
+      totalMemory: (totalMemory != null ? totalMemory.value : this.totalMemory),
+      startLevel: (startLevel != null ? startLevel.value : this.startLevel),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class SystemInfoBean {
-  const SystemInfoBean({
-    this.systemInfo,
-  });
+  const SystemInfoBean({this.systemInfo});
 
   factory SystemInfoBean.fromJson(Map<String, dynamic> json) =>
       _$SystemInfoBeanFromJson(json);
@@ -7612,8 +8066,10 @@ class SystemInfoBean {
     return identical(this, other) ||
         (other is SystemInfoBean &&
             (identical(other.systemInfo, systemInfo) ||
-                const DeepCollectionEquality()
-                    .equals(other.systemInfo, systemInfo)));
+                const DeepCollectionEquality().equals(
+                  other.systemInfo,
+                  systemInfo,
+                )));
   }
 
   @override
@@ -7631,16 +8087,14 @@ extension $SystemInfoBeanExtension on SystemInfoBean {
 
   SystemInfoBean copyWithWrapped({Wrapped<SystemInfo?>? systemInfo}) {
     return SystemInfoBean(
-        systemInfo: (systemInfo != null ? systemInfo.value : this.systemInfo));
+      systemInfo: (systemInfo != null ? systemInfo.value : this.systemInfo),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class DimensionInfo {
-  const DimensionInfo({
-    this.dimension,
-    this.systemUnit,
-  });
+  const DimensionInfo({this.dimension, this.systemUnit});
 
   factory DimensionInfo.fromJson(Map<String, dynamic> json) =>
       _$DimensionInfoFromJson(json);
@@ -7659,11 +8113,15 @@ class DimensionInfo {
     return identical(this, other) ||
         (other is DimensionInfo &&
             (identical(other.dimension, dimension) ||
-                const DeepCollectionEquality()
-                    .equals(other.dimension, dimension)) &&
+                const DeepCollectionEquality().equals(
+                  other.dimension,
+                  dimension,
+                )) &&
             (identical(other.systemUnit, systemUnit) ||
-                const DeepCollectionEquality()
-                    .equals(other.systemUnit, systemUnit)));
+                const DeepCollectionEquality().equals(
+                  other.systemUnit,
+                  systemUnit,
+                )));
   }
 
   @override
@@ -7679,23 +8137,25 @@ class DimensionInfo {
 extension $DimensionInfoExtension on DimensionInfo {
   DimensionInfo copyWith({String? dimension, String? systemUnit}) {
     return DimensionInfo(
-        dimension: dimension ?? this.dimension,
-        systemUnit: systemUnit ?? this.systemUnit);
+      dimension: dimension ?? this.dimension,
+      systemUnit: systemUnit ?? this.systemUnit,
+    );
   }
 
-  DimensionInfo copyWithWrapped(
-      {Wrapped<String?>? dimension, Wrapped<String?>? systemUnit}) {
+  DimensionInfo copyWithWrapped({
+    Wrapped<String?>? dimension,
+    Wrapped<String?>? systemUnit,
+  }) {
     return DimensionInfo(
-        dimension: (dimension != null ? dimension.value : this.dimension),
-        systemUnit: (systemUnit != null ? systemUnit.value : this.systemUnit));
+      dimension: (dimension != null ? dimension.value : this.dimension),
+      systemUnit: (systemUnit != null ? systemUnit.value : this.systemUnit),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class UoMInfo {
-  const UoMInfo({
-    this.dimensions,
-  });
+  const UoMInfo({this.dimensions});
 
   factory UoMInfo.fromJson(Map<String, dynamic> json) =>
       _$UoMInfoFromJson(json);
@@ -7712,8 +8172,10 @@ class UoMInfo {
     return identical(this, other) ||
         (other is UoMInfo &&
             (identical(other.dimensions, dimensions) ||
-                const DeepCollectionEquality()
-                    .equals(other.dimensions, dimensions)));
+                const DeepCollectionEquality().equals(
+                  other.dimensions,
+                  dimensions,
+                )));
   }
 
   @override
@@ -7731,15 +8193,14 @@ extension $UoMInfoExtension on UoMInfo {
 
   UoMInfo copyWithWrapped({Wrapped<List<DimensionInfo>?>? dimensions}) {
     return UoMInfo(
-        dimensions: (dimensions != null ? dimensions.value : this.dimensions));
+      dimensions: (dimensions != null ? dimensions.value : this.dimensions),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class UoMInfoBean {
-  const UoMInfoBean({
-    this.uomInfo,
-  });
+  const UoMInfoBean({this.uomInfo});
 
   factory UoMInfoBean.fromJson(Map<String, dynamic> json) =>
       _$UoMInfoBeanFromJson(json);
@@ -7774,16 +8235,14 @@ extension $UoMInfoBeanExtension on UoMInfoBean {
 
   UoMInfoBean copyWithWrapped({Wrapped<UoMInfo?>? uomInfo}) {
     return UoMInfoBean(
-        uomInfo: (uomInfo != null ? uomInfo.value : this.uomInfo));
+      uomInfo: (uomInfo != null ? uomInfo.value : this.uomInfo),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class MappingDTO {
-  const MappingDTO({
-    this.command,
-    this.label,
-  });
+  const MappingDTO({this.command, this.label});
 
   factory MappingDTO.fromJson(Map<String, dynamic> json) =>
       _$MappingDTOFromJson(json);
@@ -7802,8 +8261,10 @@ class MappingDTO {
     return identical(this, other) ||
         (other is MappingDTO &&
             (identical(other.command, command) ||
-                const DeepCollectionEquality()
-                    .equals(other.command, command)) &&
+                const DeepCollectionEquality().equals(
+                  other.command,
+                  command,
+                )) &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)));
   }
@@ -7821,14 +8282,19 @@ class MappingDTO {
 extension $MappingDTOExtension on MappingDTO {
   MappingDTO copyWith({String? command, String? label}) {
     return MappingDTO(
-        command: command ?? this.command, label: label ?? this.label);
+      command: command ?? this.command,
+      label: label ?? this.label,
+    );
   }
 
-  MappingDTO copyWithWrapped(
-      {Wrapped<String?>? command, Wrapped<String?>? label}) {
+  MappingDTO copyWithWrapped({
+    Wrapped<String?>? command,
+    Wrapped<String?>? label,
+  }) {
     return MappingDTO(
-        command: (command != null ? command.value : this.command),
-        label: (label != null ? label.value : this.label));
+      command: (command != null ? command.value : this.command),
+      label: (label != null ? label.value : this.label),
+    );
   }
 }
 
@@ -7886,8 +8352,10 @@ class PageDTO {
             (identical(other.leaf, leaf) ||
                 const DeepCollectionEquality().equals(other.leaf, leaf)) &&
             (identical(other.timeout, timeout) ||
-                const DeepCollectionEquality()
-                    .equals(other.timeout, timeout)) &&
+                const DeepCollectionEquality().equals(
+                  other.timeout,
+                  timeout,
+                )) &&
             (identical(other.widgets, widgets) ||
                 const DeepCollectionEquality().equals(other.widgets, widgets)));
   }
@@ -7909,44 +8377,48 @@ class PageDTO {
 }
 
 extension $PageDTOExtension on PageDTO {
-  PageDTO copyWith(
-      {String? id,
-      String? title,
-      String? icon,
-      String? link,
-      PageDTO? parent,
-      bool? leaf,
-      bool? timeout,
-      List<WidgetDTO>? widgets}) {
+  PageDTO copyWith({
+    String? id,
+    String? title,
+    String? icon,
+    String? link,
+    PageDTO? parent,
+    bool? leaf,
+    bool? timeout,
+    List<WidgetDTO>? widgets,
+  }) {
     return PageDTO(
-        id: id ?? this.id,
-        title: title ?? this.title,
-        icon: icon ?? this.icon,
-        link: link ?? this.link,
-        parent: parent ?? this.parent,
-        leaf: leaf ?? this.leaf,
-        timeout: timeout ?? this.timeout,
-        widgets: widgets ?? this.widgets);
+      id: id ?? this.id,
+      title: title ?? this.title,
+      icon: icon ?? this.icon,
+      link: link ?? this.link,
+      parent: parent ?? this.parent,
+      leaf: leaf ?? this.leaf,
+      timeout: timeout ?? this.timeout,
+      widgets: widgets ?? this.widgets,
+    );
   }
 
-  PageDTO copyWithWrapped(
-      {Wrapped<String?>? id,
-      Wrapped<String?>? title,
-      Wrapped<String?>? icon,
-      Wrapped<String?>? link,
-      Wrapped<PageDTO?>? parent,
-      Wrapped<bool?>? leaf,
-      Wrapped<bool?>? timeout,
-      Wrapped<List<WidgetDTO>?>? widgets}) {
+  PageDTO copyWithWrapped({
+    Wrapped<String?>? id,
+    Wrapped<String?>? title,
+    Wrapped<String?>? icon,
+    Wrapped<String?>? link,
+    Wrapped<PageDTO?>? parent,
+    Wrapped<bool?>? leaf,
+    Wrapped<bool?>? timeout,
+    Wrapped<List<WidgetDTO>?>? widgets,
+  }) {
     return PageDTO(
-        id: (id != null ? id.value : this.id),
-        title: (title != null ? title.value : this.title),
-        icon: (icon != null ? icon.value : this.icon),
-        link: (link != null ? link.value : this.link),
-        parent: (parent != null ? parent.value : this.parent),
-        leaf: (leaf != null ? leaf.value : this.leaf),
-        timeout: (timeout != null ? timeout.value : this.timeout),
-        widgets: (widgets != null ? widgets.value : this.widgets));
+      id: (id != null ? id.value : this.id),
+      title: (title != null ? title.value : this.title),
+      icon: (icon != null ? icon.value : this.icon),
+      link: (link != null ? link.value : this.link),
+      parent: (parent != null ? parent.value : this.parent),
+      leaf: (leaf != null ? leaf.value : this.leaf),
+      timeout: (timeout != null ? timeout.value : this.timeout),
+      widgets: (widgets != null ? widgets.value : this.widgets),
+    );
   }
 }
 
@@ -8058,78 +8530,119 @@ class WidgetDTO {
     return identical(this, other) ||
         (other is WidgetDTO &&
             (identical(other.widgetId, widgetId) ||
-                const DeepCollectionEquality()
-                    .equals(other.widgetId, widgetId)) &&
+                const DeepCollectionEquality().equals(
+                  other.widgetId,
+                  widgetId,
+                )) &&
             (identical(other.type, type) ||
                 const DeepCollectionEquality().equals(other.type, type)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.visibility, visibility) ||
-                const DeepCollectionEquality()
-                    .equals(other.visibility, visibility)) &&
+                const DeepCollectionEquality().equals(
+                  other.visibility,
+                  visibility,
+                )) &&
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.icon, icon) ||
                 const DeepCollectionEquality().equals(other.icon, icon)) &&
             (identical(other.labelcolor, labelcolor) ||
-                const DeepCollectionEquality()
-                    .equals(other.labelcolor, labelcolor)) &&
+                const DeepCollectionEquality().equals(
+                  other.labelcolor,
+                  labelcolor,
+                )) &&
             (identical(other.valuecolor, valuecolor) ||
-                const DeepCollectionEquality()
-                    .equals(other.valuecolor, valuecolor)) &&
+                const DeepCollectionEquality().equals(
+                  other.valuecolor,
+                  valuecolor,
+                )) &&
             (identical(other.iconcolor, iconcolor) ||
-                const DeepCollectionEquality()
-                    .equals(other.iconcolor, iconcolor)) &&
+                const DeepCollectionEquality().equals(
+                  other.iconcolor,
+                  iconcolor,
+                )) &&
             (identical(other.pattern, pattern) ||
-                const DeepCollectionEquality()
-                    .equals(other.pattern, pattern)) &&
+                const DeepCollectionEquality().equals(
+                  other.pattern,
+                  pattern,
+                )) &&
             (identical(other.unit, unit) ||
                 const DeepCollectionEquality().equals(other.unit, unit)) &&
             (identical(other.mappings, mappings) ||
-                const DeepCollectionEquality()
-                    .equals(other.mappings, mappings)) &&
+                const DeepCollectionEquality().equals(
+                  other.mappings,
+                  mappings,
+                )) &&
             (identical(other.switchSupport, switchSupport) ||
-                const DeepCollectionEquality()
-                    .equals(other.switchSupport, switchSupport)) &&
+                const DeepCollectionEquality().equals(
+                  other.switchSupport,
+                  switchSupport,
+                )) &&
             (identical(other.sendFrequency, sendFrequency) ||
-                const DeepCollectionEquality()
-                    .equals(other.sendFrequency, sendFrequency)) &&
+                const DeepCollectionEquality().equals(
+                  other.sendFrequency,
+                  sendFrequency,
+                )) &&
             (identical(other.refresh, refresh) ||
-                const DeepCollectionEquality()
-                    .equals(other.refresh, refresh)) &&
+                const DeepCollectionEquality().equals(
+                  other.refresh,
+                  refresh,
+                )) &&
             (identical(other.height, height) ||
                 const DeepCollectionEquality().equals(other.height, height)) &&
             (identical(other.minValue, minValue) ||
-                const DeepCollectionEquality()
-                    .equals(other.minValue, minValue)) &&
+                const DeepCollectionEquality().equals(
+                  other.minValue,
+                  minValue,
+                )) &&
             (identical(other.maxValue, maxValue) ||
-                const DeepCollectionEquality()
-                    .equals(other.maxValue, maxValue)) &&
+                const DeepCollectionEquality().equals(
+                  other.maxValue,
+                  maxValue,
+                )) &&
             (identical(other.step, step) ||
                 const DeepCollectionEquality().equals(other.step, step)) &&
             (identical(other.inputHint, inputHint) ||
-                const DeepCollectionEquality()
-                    .equals(other.inputHint, inputHint)) &&
+                const DeepCollectionEquality().equals(
+                  other.inputHint,
+                  inputHint,
+                )) &&
             (identical(other.url, url) ||
                 const DeepCollectionEquality().equals(other.url, url)) &&
             (identical(other.encoding, encoding) ||
-                const DeepCollectionEquality()
-                    .equals(other.encoding, encoding)) &&
+                const DeepCollectionEquality().equals(
+                  other.encoding,
+                  encoding,
+                )) &&
             (identical(other.service, service) ||
-                const DeepCollectionEquality()
-                    .equals(other.service, service)) &&
+                const DeepCollectionEquality().equals(
+                  other.service,
+                  service,
+                )) &&
             (identical(other.period, period) ||
                 const DeepCollectionEquality().equals(other.period, period)) &&
             (identical(other.yAxisDecimalPattern, yAxisDecimalPattern) ||
-                const DeepCollectionEquality()
-                    .equals(other.yAxisDecimalPattern, yAxisDecimalPattern)) &&
+                const DeepCollectionEquality().equals(
+                  other.yAxisDecimalPattern,
+                  yAxisDecimalPattern,
+                )) &&
             (identical(other.legend, legend) ||
                 const DeepCollectionEquality().equals(other.legend, legend)) &&
             (identical(other.forceAsItem, forceAsItem) ||
-                const DeepCollectionEquality().equals(other.forceAsItem, forceAsItem)) &&
-            (identical(other.state, state) || const DeepCollectionEquality().equals(other.state, state)) &&
-            (identical(other.item, item) || const DeepCollectionEquality().equals(other.item, item)) &&
-            (identical(other.linkedPage, linkedPage) || const DeepCollectionEquality().equals(other.linkedPage, linkedPage)));
+                const DeepCollectionEquality().equals(
+                  other.forceAsItem,
+                  forceAsItem,
+                )) &&
+            (identical(other.state, state) ||
+                const DeepCollectionEquality().equals(other.state, state)) &&
+            (identical(other.item, item) ||
+                const DeepCollectionEquality().equals(other.item, item)) &&
+            (identical(other.linkedPage, linkedPage) ||
+                const DeepCollectionEquality().equals(
+                  other.linkedPage,
+                  linkedPage,
+                )));
   }
 
   @override
@@ -8171,137 +8684,141 @@ class WidgetDTO {
 }
 
 extension $WidgetDTOExtension on WidgetDTO {
-  WidgetDTO copyWith(
-      {String? widgetId,
-      String? type,
-      String? name,
-      bool? visibility,
-      String? label,
-      String? icon,
-      String? labelcolor,
-      String? valuecolor,
-      String? iconcolor,
-      String? pattern,
-      String? unit,
-      List<MappingDTO>? mappings,
-      bool? switchSupport,
-      int? sendFrequency,
-      int? refresh,
-      int? height,
-      double? minValue,
-      double? maxValue,
-      double? step,
-      String? inputHint,
-      String? url,
-      String? encoding,
-      String? service,
-      String? period,
-      String? yAxisDecimalPattern,
-      bool? legend,
-      bool? forceAsItem,
-      String? state,
-      EnrichedItemDTO? item,
-      PageDTO? linkedPage}) {
+  WidgetDTO copyWith({
+    String? widgetId,
+    String? type,
+    String? name,
+    bool? visibility,
+    String? label,
+    String? icon,
+    String? labelcolor,
+    String? valuecolor,
+    String? iconcolor,
+    String? pattern,
+    String? unit,
+    List<MappingDTO>? mappings,
+    bool? switchSupport,
+    int? sendFrequency,
+    int? refresh,
+    int? height,
+    double? minValue,
+    double? maxValue,
+    double? step,
+    String? inputHint,
+    String? url,
+    String? encoding,
+    String? service,
+    String? period,
+    String? yAxisDecimalPattern,
+    bool? legend,
+    bool? forceAsItem,
+    String? state,
+    EnrichedItemDTO? item,
+    PageDTO? linkedPage,
+  }) {
     return WidgetDTO(
-        widgetId: widgetId ?? this.widgetId,
-        type: type ?? this.type,
-        name: name ?? this.name,
-        visibility: visibility ?? this.visibility,
-        label: label ?? this.label,
-        icon: icon ?? this.icon,
-        labelcolor: labelcolor ?? this.labelcolor,
-        valuecolor: valuecolor ?? this.valuecolor,
-        iconcolor: iconcolor ?? this.iconcolor,
-        pattern: pattern ?? this.pattern,
-        unit: unit ?? this.unit,
-        mappings: mappings ?? this.mappings,
-        switchSupport: switchSupport ?? this.switchSupport,
-        sendFrequency: sendFrequency ?? this.sendFrequency,
-        refresh: refresh ?? this.refresh,
-        height: height ?? this.height,
-        minValue: minValue ?? this.minValue,
-        maxValue: maxValue ?? this.maxValue,
-        step: step ?? this.step,
-        inputHint: inputHint ?? this.inputHint,
-        url: url ?? this.url,
-        encoding: encoding ?? this.encoding,
-        service: service ?? this.service,
-        period: period ?? this.period,
-        yAxisDecimalPattern: yAxisDecimalPattern ?? this.yAxisDecimalPattern,
-        legend: legend ?? this.legend,
-        forceAsItem: forceAsItem ?? this.forceAsItem,
-        state: state ?? this.state,
-        item: item ?? this.item,
-        linkedPage: linkedPage ?? this.linkedPage);
+      widgetId: widgetId ?? this.widgetId,
+      type: type ?? this.type,
+      name: name ?? this.name,
+      visibility: visibility ?? this.visibility,
+      label: label ?? this.label,
+      icon: icon ?? this.icon,
+      labelcolor: labelcolor ?? this.labelcolor,
+      valuecolor: valuecolor ?? this.valuecolor,
+      iconcolor: iconcolor ?? this.iconcolor,
+      pattern: pattern ?? this.pattern,
+      unit: unit ?? this.unit,
+      mappings: mappings ?? this.mappings,
+      switchSupport: switchSupport ?? this.switchSupport,
+      sendFrequency: sendFrequency ?? this.sendFrequency,
+      refresh: refresh ?? this.refresh,
+      height: height ?? this.height,
+      minValue: minValue ?? this.minValue,
+      maxValue: maxValue ?? this.maxValue,
+      step: step ?? this.step,
+      inputHint: inputHint ?? this.inputHint,
+      url: url ?? this.url,
+      encoding: encoding ?? this.encoding,
+      service: service ?? this.service,
+      period: period ?? this.period,
+      yAxisDecimalPattern: yAxisDecimalPattern ?? this.yAxisDecimalPattern,
+      legend: legend ?? this.legend,
+      forceAsItem: forceAsItem ?? this.forceAsItem,
+      state: state ?? this.state,
+      item: item ?? this.item,
+      linkedPage: linkedPage ?? this.linkedPage,
+    );
   }
 
-  WidgetDTO copyWithWrapped(
-      {Wrapped<String?>? widgetId,
-      Wrapped<String?>? type,
-      Wrapped<String?>? name,
-      Wrapped<bool?>? visibility,
-      Wrapped<String?>? label,
-      Wrapped<String?>? icon,
-      Wrapped<String?>? labelcolor,
-      Wrapped<String?>? valuecolor,
-      Wrapped<String?>? iconcolor,
-      Wrapped<String?>? pattern,
-      Wrapped<String?>? unit,
-      Wrapped<List<MappingDTO>?>? mappings,
-      Wrapped<bool?>? switchSupport,
-      Wrapped<int?>? sendFrequency,
-      Wrapped<int?>? refresh,
-      Wrapped<int?>? height,
-      Wrapped<double?>? minValue,
-      Wrapped<double?>? maxValue,
-      Wrapped<double?>? step,
-      Wrapped<String?>? inputHint,
-      Wrapped<String?>? url,
-      Wrapped<String?>? encoding,
-      Wrapped<String?>? service,
-      Wrapped<String?>? period,
-      Wrapped<String?>? yAxisDecimalPattern,
-      Wrapped<bool?>? legend,
-      Wrapped<bool?>? forceAsItem,
-      Wrapped<String?>? state,
-      Wrapped<EnrichedItemDTO?>? item,
-      Wrapped<PageDTO?>? linkedPage}) {
+  WidgetDTO copyWithWrapped({
+    Wrapped<String?>? widgetId,
+    Wrapped<String?>? type,
+    Wrapped<String?>? name,
+    Wrapped<bool?>? visibility,
+    Wrapped<String?>? label,
+    Wrapped<String?>? icon,
+    Wrapped<String?>? labelcolor,
+    Wrapped<String?>? valuecolor,
+    Wrapped<String?>? iconcolor,
+    Wrapped<String?>? pattern,
+    Wrapped<String?>? unit,
+    Wrapped<List<MappingDTO>?>? mappings,
+    Wrapped<bool?>? switchSupport,
+    Wrapped<int?>? sendFrequency,
+    Wrapped<int?>? refresh,
+    Wrapped<int?>? height,
+    Wrapped<double?>? minValue,
+    Wrapped<double?>? maxValue,
+    Wrapped<double?>? step,
+    Wrapped<String?>? inputHint,
+    Wrapped<String?>? url,
+    Wrapped<String?>? encoding,
+    Wrapped<String?>? service,
+    Wrapped<String?>? period,
+    Wrapped<String?>? yAxisDecimalPattern,
+    Wrapped<bool?>? legend,
+    Wrapped<bool?>? forceAsItem,
+    Wrapped<String?>? state,
+    Wrapped<EnrichedItemDTO?>? item,
+    Wrapped<PageDTO?>? linkedPage,
+  }) {
     return WidgetDTO(
-        widgetId: (widgetId != null ? widgetId.value : this.widgetId),
-        type: (type != null ? type.value : this.type),
-        name: (name != null ? name.value : this.name),
-        visibility: (visibility != null ? visibility.value : this.visibility),
-        label: (label != null ? label.value : this.label),
-        icon: (icon != null ? icon.value : this.icon),
-        labelcolor: (labelcolor != null ? labelcolor.value : this.labelcolor),
-        valuecolor: (valuecolor != null ? valuecolor.value : this.valuecolor),
-        iconcolor: (iconcolor != null ? iconcolor.value : this.iconcolor),
-        pattern: (pattern != null ? pattern.value : this.pattern),
-        unit: (unit != null ? unit.value : this.unit),
-        mappings: (mappings != null ? mappings.value : this.mappings),
-        switchSupport:
-            (switchSupport != null ? switchSupport.value : this.switchSupport),
-        sendFrequency:
-            (sendFrequency != null ? sendFrequency.value : this.sendFrequency),
-        refresh: (refresh != null ? refresh.value : this.refresh),
-        height: (height != null ? height.value : this.height),
-        minValue: (minValue != null ? minValue.value : this.minValue),
-        maxValue: (maxValue != null ? maxValue.value : this.maxValue),
-        step: (step != null ? step.value : this.step),
-        inputHint: (inputHint != null ? inputHint.value : this.inputHint),
-        url: (url != null ? url.value : this.url),
-        encoding: (encoding != null ? encoding.value : this.encoding),
-        service: (service != null ? service.value : this.service),
-        period: (period != null ? period.value : this.period),
-        yAxisDecimalPattern: (yAxisDecimalPattern != null
-            ? yAxisDecimalPattern.value
-            : this.yAxisDecimalPattern),
-        legend: (legend != null ? legend.value : this.legend),
-        forceAsItem:
-            (forceAsItem != null ? forceAsItem.value : this.forceAsItem),
-        state: (state != null ? state.value : this.state),
-        item: (item != null ? item.value : this.item),
-        linkedPage: (linkedPage != null ? linkedPage.value : this.linkedPage));
+      widgetId: (widgetId != null ? widgetId.value : this.widgetId),
+      type: (type != null ? type.value : this.type),
+      name: (name != null ? name.value : this.name),
+      visibility: (visibility != null ? visibility.value : this.visibility),
+      label: (label != null ? label.value : this.label),
+      icon: (icon != null ? icon.value : this.icon),
+      labelcolor: (labelcolor != null ? labelcolor.value : this.labelcolor),
+      valuecolor: (valuecolor != null ? valuecolor.value : this.valuecolor),
+      iconcolor: (iconcolor != null ? iconcolor.value : this.iconcolor),
+      pattern: (pattern != null ? pattern.value : this.pattern),
+      unit: (unit != null ? unit.value : this.unit),
+      mappings: (mappings != null ? mappings.value : this.mappings),
+      switchSupport:
+          (switchSupport != null ? switchSupport.value : this.switchSupport),
+      sendFrequency:
+          (sendFrequency != null ? sendFrequency.value : this.sendFrequency),
+      refresh: (refresh != null ? refresh.value : this.refresh),
+      height: (height != null ? height.value : this.height),
+      minValue: (minValue != null ? minValue.value : this.minValue),
+      maxValue: (maxValue != null ? maxValue.value : this.maxValue),
+      step: (step != null ? step.value : this.step),
+      inputHint: (inputHint != null ? inputHint.value : this.inputHint),
+      url: (url != null ? url.value : this.url),
+      encoding: (encoding != null ? encoding.value : this.encoding),
+      service: (service != null ? service.value : this.service),
+      period: (period != null ? period.value : this.period),
+      yAxisDecimalPattern:
+          (yAxisDecimalPattern != null
+              ? yAxisDecimalPattern.value
+              : this.yAxisDecimalPattern),
+      legend: (legend != null ? legend.value : this.legend),
+      forceAsItem: (forceAsItem != null ? forceAsItem.value : this.forceAsItem),
+      state: (state != null ? state.value : this.state),
+      item: (item != null ? item.value : this.item),
+      linkedPage: (linkedPage != null ? linkedPage.value : this.linkedPage),
+    );
   }
 }
 
@@ -8346,8 +8863,10 @@ class SitemapDTO {
             (identical(other.link, link) ||
                 const DeepCollectionEquality().equals(other.link, link)) &&
             (identical(other.homepage, homepage) ||
-                const DeepCollectionEquality()
-                    .equals(other.homepage, homepage)));
+                const DeepCollectionEquality().equals(
+                  other.homepage,
+                  homepage,
+                )));
   }
 
   @override
@@ -8364,43 +8883,42 @@ class SitemapDTO {
 }
 
 extension $SitemapDTOExtension on SitemapDTO {
-  SitemapDTO copyWith(
-      {String? name,
-      String? icon,
-      String? label,
-      String? link,
-      PageDTO? homepage}) {
+  SitemapDTO copyWith({
+    String? name,
+    String? icon,
+    String? label,
+    String? link,
+    PageDTO? homepage,
+  }) {
     return SitemapDTO(
-        name: name ?? this.name,
-        icon: icon ?? this.icon,
-        label: label ?? this.label,
-        link: link ?? this.link,
-        homepage: homepage ?? this.homepage);
+      name: name ?? this.name,
+      icon: icon ?? this.icon,
+      label: label ?? this.label,
+      link: link ?? this.link,
+      homepage: homepage ?? this.homepage,
+    );
   }
 
-  SitemapDTO copyWithWrapped(
-      {Wrapped<String?>? name,
-      Wrapped<String?>? icon,
-      Wrapped<String?>? label,
-      Wrapped<String?>? link,
-      Wrapped<PageDTO?>? homepage}) {
+  SitemapDTO copyWithWrapped({
+    Wrapped<String?>? name,
+    Wrapped<String?>? icon,
+    Wrapped<String?>? label,
+    Wrapped<String?>? link,
+    Wrapped<PageDTO?>? homepage,
+  }) {
     return SitemapDTO(
-        name: (name != null ? name.value : this.name),
-        icon: (icon != null ? icon.value : this.icon),
-        label: (label != null ? label.value : this.label),
-        link: (link != null ? link.value : this.link),
-        homepage: (homepage != null ? homepage.value : this.homepage));
+      name: (name != null ? name.value : this.name),
+      icon: (icon != null ? icon.value : this.icon),
+      label: (label != null ? label.value : this.label),
+      link: (link != null ? link.value : this.link),
+      homepage: (homepage != null ? homepage.value : this.homepage),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class Transformation {
-  const Transformation({
-    this.uid,
-    this.label,
-    this.type,
-    this.configuration,
-  });
+  const Transformation({this.uid, this.label, this.type, this.configuration});
 
   factory Transformation.fromJson(Map<String, dynamic> json) =>
       _$TransformationFromJson(json);
@@ -8429,8 +8947,10 @@ class Transformation {
             (identical(other.type, type) ||
                 const DeepCollectionEquality().equals(other.type, type)) &&
             (identical(other.configuration, configuration) ||
-                const DeepCollectionEquality()
-                    .equals(other.configuration, configuration)));
+                const DeepCollectionEquality().equals(
+                  other.configuration,
+                  configuration,
+                )));
   }
 
   @override
@@ -8446,29 +8966,33 @@ class Transformation {
 }
 
 extension $TransformationExtension on Transformation {
-  Transformation copyWith(
-      {String? uid,
-      String? label,
-      String? type,
-      Map<String, dynamic>? configuration}) {
+  Transformation copyWith({
+    String? uid,
+    String? label,
+    String? type,
+    Map<String, dynamic>? configuration,
+  }) {
     return Transformation(
-        uid: uid ?? this.uid,
-        label: label ?? this.label,
-        type: type ?? this.type,
-        configuration: configuration ?? this.configuration);
+      uid: uid ?? this.uid,
+      label: label ?? this.label,
+      type: type ?? this.type,
+      configuration: configuration ?? this.configuration,
+    );
   }
 
-  Transformation copyWithWrapped(
-      {Wrapped<String?>? uid,
-      Wrapped<String?>? label,
-      Wrapped<String?>? type,
-      Wrapped<Map<String, dynamic>?>? configuration}) {
+  Transformation copyWithWrapped({
+    Wrapped<String?>? uid,
+    Wrapped<String?>? label,
+    Wrapped<String?>? type,
+    Wrapped<Map<String, dynamic>?>? configuration,
+  }) {
     return Transformation(
-        uid: (uid != null ? uid.value : this.uid),
-        label: (label != null ? label.value : this.label),
-        type: (type != null ? type.value : this.type),
-        configuration:
-            (configuration != null ? configuration.value : this.configuration));
+      uid: (uid != null ? uid.value : this.uid),
+      label: (label != null ? label.value : this.label),
+      type: (type != null ? type.value : this.type),
+      configuration:
+          (configuration != null ? configuration.value : this.configuration),
+    );
   }
 }
 
@@ -8511,11 +9035,15 @@ class TransformationDTO {
             (identical(other.type, type) ||
                 const DeepCollectionEquality().equals(other.type, type)) &&
             (identical(other.configuration, configuration) ||
-                const DeepCollectionEquality()
-                    .equals(other.configuration, configuration)) &&
+                const DeepCollectionEquality().equals(
+                  other.configuration,
+                  configuration,
+                )) &&
             (identical(other.editable, editable) ||
-                const DeepCollectionEquality()
-                    .equals(other.editable, editable)));
+                const DeepCollectionEquality().equals(
+                  other.editable,
+                  editable,
+                )));
   }
 
   @override
@@ -8532,33 +9060,37 @@ class TransformationDTO {
 }
 
 extension $TransformationDTOExtension on TransformationDTO {
-  TransformationDTO copyWith(
-      {String? uid,
-      String? label,
-      String? type,
-      Map<String, dynamic>? configuration,
-      bool? editable}) {
+  TransformationDTO copyWith({
+    String? uid,
+    String? label,
+    String? type,
+    Map<String, dynamic>? configuration,
+    bool? editable,
+  }) {
     return TransformationDTO(
-        uid: uid ?? this.uid,
-        label: label ?? this.label,
-        type: type ?? this.type,
-        configuration: configuration ?? this.configuration,
-        editable: editable ?? this.editable);
+      uid: uid ?? this.uid,
+      label: label ?? this.label,
+      type: type ?? this.type,
+      configuration: configuration ?? this.configuration,
+      editable: editable ?? this.editable,
+    );
   }
 
-  TransformationDTO copyWithWrapped(
-      {Wrapped<String?>? uid,
-      Wrapped<String?>? label,
-      Wrapped<String?>? type,
-      Wrapped<Map<String, dynamic>?>? configuration,
-      Wrapped<bool?>? editable}) {
+  TransformationDTO copyWithWrapped({
+    Wrapped<String?>? uid,
+    Wrapped<String?>? label,
+    Wrapped<String?>? type,
+    Wrapped<Map<String, dynamic>?>? configuration,
+    Wrapped<bool?>? editable,
+  }) {
     return TransformationDTO(
-        uid: (uid != null ? uid.value : this.uid),
-        label: (label != null ? label.value : this.label),
-        type: (type != null ? type.value : this.type),
-        configuration:
-            (configuration != null ? configuration.value : this.configuration),
-        editable: (editable != null ? editable.value : this.editable));
+      uid: (uid != null ? uid.value : this.uid),
+      label: (label != null ? label.value : this.label),
+      type: (type != null ? type.value : this.type),
+      configuration:
+          (configuration != null ? configuration.value : this.configuration),
+      editable: (editable != null ? editable.value : this.editable),
+    );
   }
 }
 
@@ -8604,8 +9136,10 @@ class RootUIComponent {
     return identical(this, other) ||
         (other is RootUIComponent &&
             (identical(other.component, component) ||
-                const DeepCollectionEquality()
-                    .equals(other.component, component)) &&
+                const DeepCollectionEquality().equals(
+                  other.component,
+                  component,
+                )) &&
             (identical(other.config, config) ||
                 const DeepCollectionEquality().equals(other.config, config)) &&
             (identical(other.slots, slots) ||
@@ -8617,8 +9151,10 @@ class RootUIComponent {
             (identical(other.props, props) ||
                 const DeepCollectionEquality().equals(other.props, props)) &&
             (identical(other.timestamp, timestamp) ||
-                const DeepCollectionEquality()
-                    .equals(other.timestamp, timestamp)) &&
+                const DeepCollectionEquality().equals(
+                  other.timestamp,
+                  timestamp,
+                )) &&
             (identical(other.type, type) ||
                 const DeepCollectionEquality().equals(other.type, type)));
   }
@@ -8640,54 +9176,54 @@ class RootUIComponent {
 }
 
 extension $RootUIComponentExtension on RootUIComponent {
-  RootUIComponent copyWith(
-      {String? component,
-      Map<String, dynamic>? config,
-      Map<String, dynamic>? slots,
-      String? uid,
-      List<String>? tags,
-      ConfigDescriptionDTO? props,
-      DateTime? timestamp,
-      String? type}) {
+  RootUIComponent copyWith({
+    String? component,
+    Map<String, dynamic>? config,
+    Map<String, dynamic>? slots,
+    String? uid,
+    List<String>? tags,
+    ConfigDescriptionDTO? props,
+    DateTime? timestamp,
+    String? type,
+  }) {
     return RootUIComponent(
-        component: component ?? this.component,
-        config: config ?? this.config,
-        slots: slots ?? this.slots,
-        uid: uid ?? this.uid,
-        tags: tags ?? this.tags,
-        props: props ?? this.props,
-        timestamp: timestamp ?? this.timestamp,
-        type: type ?? this.type);
+      component: component ?? this.component,
+      config: config ?? this.config,
+      slots: slots ?? this.slots,
+      uid: uid ?? this.uid,
+      tags: tags ?? this.tags,
+      props: props ?? this.props,
+      timestamp: timestamp ?? this.timestamp,
+      type: type ?? this.type,
+    );
   }
 
-  RootUIComponent copyWithWrapped(
-      {Wrapped<String?>? component,
-      Wrapped<Map<String, dynamic>?>? config,
-      Wrapped<Map<String, dynamic>?>? slots,
-      Wrapped<String?>? uid,
-      Wrapped<List<String>?>? tags,
-      Wrapped<ConfigDescriptionDTO?>? props,
-      Wrapped<DateTime?>? timestamp,
-      Wrapped<String?>? type}) {
+  RootUIComponent copyWithWrapped({
+    Wrapped<String?>? component,
+    Wrapped<Map<String, dynamic>?>? config,
+    Wrapped<Map<String, dynamic>?>? slots,
+    Wrapped<String?>? uid,
+    Wrapped<List<String>?>? tags,
+    Wrapped<ConfigDescriptionDTO?>? props,
+    Wrapped<DateTime?>? timestamp,
+    Wrapped<String?>? type,
+  }) {
     return RootUIComponent(
-        component: (component != null ? component.value : this.component),
-        config: (config != null ? config.value : this.config),
-        slots: (slots != null ? slots.value : this.slots),
-        uid: (uid != null ? uid.value : this.uid),
-        tags: (tags != null ? tags.value : this.tags),
-        props: (props != null ? props.value : this.props),
-        timestamp: (timestamp != null ? timestamp.value : this.timestamp),
-        type: (type != null ? type.value : this.type));
+      component: (component != null ? component.value : this.component),
+      config: (config != null ? config.value : this.config),
+      slots: (slots != null ? slots.value : this.slots),
+      uid: (uid != null ? uid.value : this.uid),
+      tags: (tags != null ? tags.value : this.tags),
+      props: (props != null ? props.value : this.props),
+      timestamp: (timestamp != null ? timestamp.value : this.timestamp),
+      type: (type != null ? type.value : this.type),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class UIComponent {
-  const UIComponent({
-    this.component,
-    this.config,
-    this.type,
-  });
+  const UIComponent({this.component, this.config, this.type});
 
   factory UIComponent.fromJson(Map<String, dynamic> json) =>
       _$UIComponentFromJson(json);
@@ -8708,8 +9244,10 @@ class UIComponent {
     return identical(this, other) ||
         (other is UIComponent &&
             (identical(other.component, component) ||
-                const DeepCollectionEquality()
-                    .equals(other.component, component)) &&
+                const DeepCollectionEquality().equals(
+                  other.component,
+                  component,
+                )) &&
             (identical(other.config, config) ||
                 const DeepCollectionEquality().equals(other.config, config)) &&
             (identical(other.type, type) ||
@@ -8728,33 +9266,34 @@ class UIComponent {
 }
 
 extension $UIComponentExtension on UIComponent {
-  UIComponent copyWith(
-      {String? component, Map<String, dynamic>? config, String? type}) {
+  UIComponent copyWith({
+    String? component,
+    Map<String, dynamic>? config,
+    String? type,
+  }) {
     return UIComponent(
-        component: component ?? this.component,
-        config: config ?? this.config,
-        type: type ?? this.type);
+      component: component ?? this.component,
+      config: config ?? this.config,
+      type: type ?? this.type,
+    );
   }
 
-  UIComponent copyWithWrapped(
-      {Wrapped<String?>? component,
-      Wrapped<Map<String, dynamic>?>? config,
-      Wrapped<String?>? type}) {
+  UIComponent copyWithWrapped({
+    Wrapped<String?>? component,
+    Wrapped<Map<String, dynamic>?>? config,
+    Wrapped<String?>? type,
+  }) {
     return UIComponent(
-        component: (component != null ? component.value : this.component),
-        config: (config != null ? config.value : this.config),
-        type: (type != null ? type.value : this.type));
+      component: (component != null ? component.value : this.component),
+      config: (config != null ? config.value : this.config),
+      type: (type != null ? type.value : this.type),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class TileDTO {
-  const TileDTO({
-    this.name,
-    this.url,
-    this.overlay,
-    this.imageUrl,
-  });
+  const TileDTO({this.name, this.url, this.overlay, this.imageUrl});
 
   factory TileDTO.fromJson(Map<String, dynamic> json) =>
       _$TileDTOFromJson(json);
@@ -8781,11 +9320,15 @@ class TileDTO {
             (identical(other.url, url) ||
                 const DeepCollectionEquality().equals(other.url, url)) &&
             (identical(other.overlay, overlay) ||
-                const DeepCollectionEquality()
-                    .equals(other.overlay, overlay)) &&
+                const DeepCollectionEquality().equals(
+                  other.overlay,
+                  overlay,
+                )) &&
             (identical(other.imageUrl, imageUrl) ||
-                const DeepCollectionEquality()
-                    .equals(other.imageUrl, imageUrl)));
+                const DeepCollectionEquality().equals(
+                  other.imageUrl,
+                  imageUrl,
+                )));
   }
 
   @override
@@ -8801,35 +9344,38 @@ class TileDTO {
 }
 
 extension $TileDTOExtension on TileDTO {
-  TileDTO copyWith(
-      {String? name, String? url, String? overlay, String? imageUrl}) {
+  TileDTO copyWith({
+    String? name,
+    String? url,
+    String? overlay,
+    String? imageUrl,
+  }) {
     return TileDTO(
-        name: name ?? this.name,
-        url: url ?? this.url,
-        overlay: overlay ?? this.overlay,
-        imageUrl: imageUrl ?? this.imageUrl);
+      name: name ?? this.name,
+      url: url ?? this.url,
+      overlay: overlay ?? this.overlay,
+      imageUrl: imageUrl ?? this.imageUrl,
+    );
   }
 
-  TileDTO copyWithWrapped(
-      {Wrapped<String?>? name,
-      Wrapped<String?>? url,
-      Wrapped<String?>? overlay,
-      Wrapped<String?>? imageUrl}) {
+  TileDTO copyWithWrapped({
+    Wrapped<String?>? name,
+    Wrapped<String?>? url,
+    Wrapped<String?>? overlay,
+    Wrapped<String?>? imageUrl,
+  }) {
     return TileDTO(
-        name: (name != null ? name.value : this.name),
-        url: (url != null ? url.value : this.url),
-        overlay: (overlay != null ? overlay.value : this.overlay),
-        imageUrl: (imageUrl != null ? imageUrl.value : this.imageUrl));
+      name: (name != null ? name.value : this.name),
+      url: (url != null ? url.value : this.url),
+      overlay: (overlay != null ? overlay.value : this.overlay),
+      imageUrl: (imageUrl != null ? imageUrl.value : this.imageUrl),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class VoiceDTO {
-  const VoiceDTO({
-    this.id,
-    this.label,
-    this.locale,
-  });
+  const VoiceDTO({this.id, this.label, this.locale});
 
   factory VoiceDTO.fromJson(Map<String, dynamic> json) =>
       _$VoiceDTOFromJson(json);
@@ -8871,29 +9417,28 @@ class VoiceDTO {
 extension $VoiceDTOExtension on VoiceDTO {
   VoiceDTO copyWith({String? id, String? label, String? locale}) {
     return VoiceDTO(
-        id: id ?? this.id,
-        label: label ?? this.label,
-        locale: locale ?? this.locale);
+      id: id ?? this.id,
+      label: label ?? this.label,
+      locale: locale ?? this.locale,
+    );
   }
 
-  VoiceDTO copyWithWrapped(
-      {Wrapped<String?>? id,
-      Wrapped<String?>? label,
-      Wrapped<String?>? locale}) {
+  VoiceDTO copyWithWrapped({
+    Wrapped<String?>? id,
+    Wrapped<String?>? label,
+    Wrapped<String?>? locale,
+  }) {
     return VoiceDTO(
-        id: (id != null ? id.value : this.id),
-        label: (label != null ? label.value : this.label),
-        locale: (locale != null ? locale.value : this.locale));
+      id: (id != null ? id.value : this.id),
+      label: (label != null ? label.value : this.label),
+      locale: (locale != null ? locale.value : this.locale),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class HumanLanguageInterpreterDTO {
-  const HumanLanguageInterpreterDTO({
-    this.id,
-    this.label,
-    this.locales,
-  });
+  const HumanLanguageInterpreterDTO({this.id, this.label, this.locales});
 
   factory HumanLanguageInterpreterDTO.fromJson(Map<String, dynamic> json) =>
       _$HumanLanguageInterpreterDTOFromJson(json);
@@ -8933,31 +9478,34 @@ class HumanLanguageInterpreterDTO {
 }
 
 extension $HumanLanguageInterpreterDTOExtension on HumanLanguageInterpreterDTO {
-  HumanLanguageInterpreterDTO copyWith(
-      {String? id, String? label, List<String>? locales}) {
+  HumanLanguageInterpreterDTO copyWith({
+    String? id,
+    String? label,
+    List<String>? locales,
+  }) {
     return HumanLanguageInterpreterDTO(
-        id: id ?? this.id,
-        label: label ?? this.label,
-        locales: locales ?? this.locales);
+      id: id ?? this.id,
+      label: label ?? this.label,
+      locales: locales ?? this.locales,
+    );
   }
 
-  HumanLanguageInterpreterDTO copyWithWrapped(
-      {Wrapped<String?>? id,
-      Wrapped<String?>? label,
-      Wrapped<List<String>?>? locales}) {
+  HumanLanguageInterpreterDTO copyWithWrapped({
+    Wrapped<String?>? id,
+    Wrapped<String?>? label,
+    Wrapped<List<String>?>? locales,
+  }) {
     return HumanLanguageInterpreterDTO(
-        id: (id != null ? id.value : this.id),
-        label: (label != null ? label.value : this.label),
-        locales: (locales != null ? locales.value : this.locales));
+      id: (id != null ? id.value : this.id),
+      label: (label != null ? label.value : this.label),
+      locales: (locales != null ? locales.value : this.locales),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class LoggerInfo {
-  const LoggerInfo({
-    this.loggerName,
-    this.level,
-  });
+  const LoggerInfo({this.loggerName, this.level});
 
   factory LoggerInfo.fromJson(Map<String, dynamic> json) =>
       _$LoggerInfoFromJson(json);
@@ -8976,8 +9524,10 @@ class LoggerInfo {
     return identical(this, other) ||
         (other is LoggerInfo &&
             (identical(other.loggerName, loggerName) ||
-                const DeepCollectionEquality()
-                    .equals(other.loggerName, loggerName)) &&
+                const DeepCollectionEquality().equals(
+                  other.loggerName,
+                  loggerName,
+                )) &&
             (identical(other.level, level) ||
                 const DeepCollectionEquality().equals(other.level, level)));
   }
@@ -8995,22 +9545,25 @@ class LoggerInfo {
 extension $LoggerInfoExtension on LoggerInfo {
   LoggerInfo copyWith({String? loggerName, String? level}) {
     return LoggerInfo(
-        loggerName: loggerName ?? this.loggerName, level: level ?? this.level);
+      loggerName: loggerName ?? this.loggerName,
+      level: level ?? this.level,
+    );
   }
 
-  LoggerInfo copyWithWrapped(
-      {Wrapped<String?>? loggerName, Wrapped<String?>? level}) {
+  LoggerInfo copyWithWrapped({
+    Wrapped<String?>? loggerName,
+    Wrapped<String?>? level,
+  }) {
     return LoggerInfo(
-        loggerName: (loggerName != null ? loggerName.value : this.loggerName),
-        level: (level != null ? level.value : this.level));
+      loggerName: (loggerName != null ? loggerName.value : this.loggerName),
+      level: (level != null ? level.value : this.level),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class LoggerBean {
-  const LoggerBean({
-    this.loggers,
-  });
+  const LoggerBean({this.loggers});
 
   factory LoggerBean.fromJson(Map<String, dynamic> json) =>
       _$LoggerBeanFromJson(json);
@@ -9045,18 +9598,14 @@ extension $LoggerBeanExtension on LoggerBean {
 
   LoggerBean copyWithWrapped({Wrapped<List<LoggerInfo>?>? loggers}) {
     return LoggerBean(
-        loggers: (loggers != null ? loggers.value : this.loggers));
+      loggers: (loggers != null ? loggers.value : this.loggers),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class IconSet {
-  const IconSet({
-    this.id,
-    this.label,
-    this.description,
-    this.formats,
-  });
+  const IconSet({this.id, this.label, this.description, this.formats});
 
   factory IconSet.fromJson(Map<String, dynamic> json) =>
       _$IconSetFromJson(json);
@@ -9087,8 +9636,10 @@ class IconSet {
             (identical(other.label, label) ||
                 const DeepCollectionEquality().equals(other.label, label)) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.formats, formats) ||
                 const DeepCollectionEquality().equals(other.formats, formats)));
   }
@@ -9106,29 +9657,32 @@ class IconSet {
 }
 
 extension $IconSetExtension on IconSet {
-  IconSet copyWith(
-      {String? id,
-      String? label,
-      String? description,
-      List<enums.IconSetFormats>? formats}) {
+  IconSet copyWith({
+    String? id,
+    String? label,
+    String? description,
+    List<enums.IconSetFormats>? formats,
+  }) {
     return IconSet(
-        id: id ?? this.id,
-        label: label ?? this.label,
-        description: description ?? this.description,
-        formats: formats ?? this.formats);
+      id: id ?? this.id,
+      label: label ?? this.label,
+      description: description ?? this.description,
+      formats: formats ?? this.formats,
+    );
   }
 
-  IconSet copyWithWrapped(
-      {Wrapped<String?>? id,
-      Wrapped<String?>? label,
-      Wrapped<String?>? description,
-      Wrapped<List<enums.IconSetFormats>?>? formats}) {
+  IconSet copyWithWrapped({
+    Wrapped<String?>? id,
+    Wrapped<String?>? label,
+    Wrapped<String?>? description,
+    Wrapped<List<enums.IconSetFormats>?>? formats,
+  }) {
     return IconSet(
-        id: (id != null ? id.value : this.id),
-        label: (label != null ? label.value : this.label),
-        description:
-            (description != null ? description.value : this.description),
-        formats: (formats != null ? formats.value : this.formats));
+      id: (id != null ? id.value : this.id),
+      label: (label != null ? label.value : this.label),
+      description: (description != null ? description.value : this.description),
+      formats: (formats != null ? formats.value : this.formats),
+    );
   }
 }
 
@@ -9178,8 +9732,10 @@ class GalleryWidgetsListItem {
             (identical(other.title, title) ||
                 const DeepCollectionEquality().equals(other.title, title)) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.likes, likes) ||
                 const DeepCollectionEquality().equals(other.likes, likes)) &&
             (identical(other.views, views) ||
@@ -9187,11 +9743,15 @@ class GalleryWidgetsListItem {
             (identical(other.posts, posts) ||
                 const DeepCollectionEquality().equals(other.posts, posts)) &&
             (identical(other.imageUrl, imageUrl) ||
-                const DeepCollectionEquality()
-                    .equals(other.imageUrl, imageUrl)) &&
+                const DeepCollectionEquality().equals(
+                  other.imageUrl,
+                  imageUrl,
+                )) &&
             (identical(other.createdDate, createdDate) ||
-                const DeepCollectionEquality()
-                    .equals(other.createdDate, createdDate)));
+                const DeepCollectionEquality().equals(
+                  other.createdDate,
+                  createdDate,
+                )));
   }
 
   @override
@@ -9211,46 +9771,48 @@ class GalleryWidgetsListItem {
 }
 
 extension $GalleryWidgetsListItemExtension on GalleryWidgetsListItem {
-  GalleryWidgetsListItem copyWith(
-      {String? id,
-      String? title,
-      String? description,
-      int? likes,
-      int? views,
-      int? posts,
-      String? imageUrl,
-      DateTime? createdDate}) {
+  GalleryWidgetsListItem copyWith({
+    String? id,
+    String? title,
+    String? description,
+    int? likes,
+    int? views,
+    int? posts,
+    String? imageUrl,
+    DateTime? createdDate,
+  }) {
     return GalleryWidgetsListItem(
-        id: id ?? this.id,
-        title: title ?? this.title,
-        description: description ?? this.description,
-        likes: likes ?? this.likes,
-        views: views ?? this.views,
-        posts: posts ?? this.posts,
-        imageUrl: imageUrl ?? this.imageUrl,
-        createdDate: createdDate ?? this.createdDate);
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      likes: likes ?? this.likes,
+      views: views ?? this.views,
+      posts: posts ?? this.posts,
+      imageUrl: imageUrl ?? this.imageUrl,
+      createdDate: createdDate ?? this.createdDate,
+    );
   }
 
-  GalleryWidgetsListItem copyWithWrapped(
-      {Wrapped<String?>? id,
-      Wrapped<String?>? title,
-      Wrapped<String?>? description,
-      Wrapped<int?>? likes,
-      Wrapped<int?>? views,
-      Wrapped<int?>? posts,
-      Wrapped<String?>? imageUrl,
-      Wrapped<DateTime?>? createdDate}) {
+  GalleryWidgetsListItem copyWithWrapped({
+    Wrapped<String?>? id,
+    Wrapped<String?>? title,
+    Wrapped<String?>? description,
+    Wrapped<int?>? likes,
+    Wrapped<int?>? views,
+    Wrapped<int?>? posts,
+    Wrapped<String?>? imageUrl,
+    Wrapped<DateTime?>? createdDate,
+  }) {
     return GalleryWidgetsListItem(
-        id: (id != null ? id.value : this.id),
-        title: (title != null ? title.value : this.title),
-        description:
-            (description != null ? description.value : this.description),
-        likes: (likes != null ? likes.value : this.likes),
-        views: (views != null ? views.value : this.views),
-        posts: (posts != null ? posts.value : this.posts),
-        imageUrl: (imageUrl != null ? imageUrl.value : this.imageUrl),
-        createdDate:
-            (createdDate != null ? createdDate.value : this.createdDate));
+      id: (id != null ? id.value : this.id),
+      title: (title != null ? title.value : this.title),
+      description: (description != null ? description.value : this.description),
+      likes: (likes != null ? likes.value : this.likes),
+      views: (views != null ? views.value : this.views),
+      posts: (posts != null ? posts.value : this.posts),
+      imageUrl: (imageUrl != null ? imageUrl.value : this.imageUrl),
+      createdDate: (createdDate != null ? createdDate.value : this.createdDate),
+    );
   }
 }
 
@@ -9315,8 +9877,10 @@ class GalleryItem {
             (identical(other.title, title) ||
                 const DeepCollectionEquality().equals(other.title, title)) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                const DeepCollectionEquality().equals(
+                  other.description,
+                  description,
+                )) &&
             (identical(other.likes, likes) ||
                 const DeepCollectionEquality().equals(other.likes, likes)) &&
             (identical(other.views, views) ||
@@ -9324,22 +9888,32 @@ class GalleryItem {
             (identical(other.posts, posts) ||
                 const DeepCollectionEquality().equals(other.posts, posts)) &&
             (identical(other.imageUrl, imageUrl) ||
-                const DeepCollectionEquality()
-                    .equals(other.imageUrl, imageUrl)) &&
+                const DeepCollectionEquality().equals(
+                  other.imageUrl,
+                  imageUrl,
+                )) &&
             (identical(other.author, author) ||
                 const DeepCollectionEquality().equals(other.author, author)) &&
             (identical(other.authorName, authorName) ||
-                const DeepCollectionEquality()
-                    .equals(other.authorName, authorName)) &&
+                const DeepCollectionEquality().equals(
+                  other.authorName,
+                  authorName,
+                )) &&
             (identical(other.authorAvatarUrl, authorAvatarUrl) ||
-                const DeepCollectionEquality()
-                    .equals(other.authorAvatarUrl, authorAvatarUrl)) &&
+                const DeepCollectionEquality().equals(
+                  other.authorAvatarUrl,
+                  authorAvatarUrl,
+                )) &&
             (identical(other.createdDate, createdDate) ||
-                const DeepCollectionEquality()
-                    .equals(other.createdDate, createdDate)) &&
+                const DeepCollectionEquality().equals(
+                  other.createdDate,
+                  createdDate,
+                )) &&
             (identical(other.updatedDate, updatedDate) ||
-                const DeepCollectionEquality()
-                    .equals(other.updatedDate, updatedDate)) &&
+                const DeepCollectionEquality().equals(
+                  other.updatedDate,
+                  updatedDate,
+                )) &&
             (identical(other.readme, readme) ||
                 const DeepCollectionEquality().equals(other.readme, readme)));
   }
@@ -9366,78 +9940,77 @@ class GalleryItem {
 }
 
 extension $GalleryItemExtension on GalleryItem {
-  GalleryItem copyWith(
-      {String? id,
-      String? title,
-      String? description,
-      int? likes,
-      int? views,
-      int? posts,
-      String? imageUrl,
-      String? author,
-      String? authorName,
-      String? authorAvatarUrl,
-      DateTime? createdDate,
-      DateTime? updatedDate,
-      String? readme}) {
+  GalleryItem copyWith({
+    String? id,
+    String? title,
+    String? description,
+    int? likes,
+    int? views,
+    int? posts,
+    String? imageUrl,
+    String? author,
+    String? authorName,
+    String? authorAvatarUrl,
+    DateTime? createdDate,
+    DateTime? updatedDate,
+    String? readme,
+  }) {
     return GalleryItem(
-        id: id ?? this.id,
-        title: title ?? this.title,
-        description: description ?? this.description,
-        likes: likes ?? this.likes,
-        views: views ?? this.views,
-        posts: posts ?? this.posts,
-        imageUrl: imageUrl ?? this.imageUrl,
-        author: author ?? this.author,
-        authorName: authorName ?? this.authorName,
-        authorAvatarUrl: authorAvatarUrl ?? this.authorAvatarUrl,
-        createdDate: createdDate ?? this.createdDate,
-        updatedDate: updatedDate ?? this.updatedDate,
-        readme: readme ?? this.readme);
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      likes: likes ?? this.likes,
+      views: views ?? this.views,
+      posts: posts ?? this.posts,
+      imageUrl: imageUrl ?? this.imageUrl,
+      author: author ?? this.author,
+      authorName: authorName ?? this.authorName,
+      authorAvatarUrl: authorAvatarUrl ?? this.authorAvatarUrl,
+      createdDate: createdDate ?? this.createdDate,
+      updatedDate: updatedDate ?? this.updatedDate,
+      readme: readme ?? this.readme,
+    );
   }
 
-  GalleryItem copyWithWrapped(
-      {Wrapped<String?>? id,
-      Wrapped<String?>? title,
-      Wrapped<String?>? description,
-      Wrapped<int?>? likes,
-      Wrapped<int?>? views,
-      Wrapped<int?>? posts,
-      Wrapped<String?>? imageUrl,
-      Wrapped<String?>? author,
-      Wrapped<String?>? authorName,
-      Wrapped<String?>? authorAvatarUrl,
-      Wrapped<DateTime?>? createdDate,
-      Wrapped<DateTime?>? updatedDate,
-      Wrapped<String?>? readme}) {
+  GalleryItem copyWithWrapped({
+    Wrapped<String?>? id,
+    Wrapped<String?>? title,
+    Wrapped<String?>? description,
+    Wrapped<int?>? likes,
+    Wrapped<int?>? views,
+    Wrapped<int?>? posts,
+    Wrapped<String?>? imageUrl,
+    Wrapped<String?>? author,
+    Wrapped<String?>? authorName,
+    Wrapped<String?>? authorAvatarUrl,
+    Wrapped<DateTime?>? createdDate,
+    Wrapped<DateTime?>? updatedDate,
+    Wrapped<String?>? readme,
+  }) {
     return GalleryItem(
-        id: (id != null ? id.value : this.id),
-        title: (title != null ? title.value : this.title),
-        description:
-            (description != null ? description.value : this.description),
-        likes: (likes != null ? likes.value : this.likes),
-        views: (views != null ? views.value : this.views),
-        posts: (posts != null ? posts.value : this.posts),
-        imageUrl: (imageUrl != null ? imageUrl.value : this.imageUrl),
-        author: (author != null ? author.value : this.author),
-        authorName: (authorName != null ? authorName.value : this.authorName),
-        authorAvatarUrl: (authorAvatarUrl != null
-            ? authorAvatarUrl.value
-            : this.authorAvatarUrl),
-        createdDate:
-            (createdDate != null ? createdDate.value : this.createdDate),
-        updatedDate:
-            (updatedDate != null ? updatedDate.value : this.updatedDate),
-        readme: (readme != null ? readme.value : this.readme));
+      id: (id != null ? id.value : this.id),
+      title: (title != null ? title.value : this.title),
+      description: (description != null ? description.value : this.description),
+      likes: (likes != null ? likes.value : this.likes),
+      views: (views != null ? views.value : this.views),
+      posts: (posts != null ? posts.value : this.posts),
+      imageUrl: (imageUrl != null ? imageUrl.value : this.imageUrl),
+      author: (author != null ? author.value : this.author),
+      authorName: (authorName != null ? authorName.value : this.authorName),
+      authorAvatarUrl:
+          (authorAvatarUrl != null
+              ? authorAvatarUrl.value
+              : this.authorAvatarUrl),
+      createdDate: (createdDate != null ? createdDate.value : this.createdDate),
+      updatedDate: (updatedDate != null ? updatedDate.value : this.updatedDate),
+      readme: (readme != null ? readme.value : this.readme),
+    );
   }
 }
 
 @JsonSerializable(explicitToJson: true)
 class AuthLogoutPost$RequestBody {
-  const AuthLogoutPost$RequestBody({
-    this.refreshToken,
-    this.id,
-  });
+  const AuthLogoutPost$RequestBody({this.refreshToken, this.id});
 
   factory AuthLogoutPost$RequestBody.fromJson(Map<String, dynamic> json) =>
       _$AuthLogoutPost$RequestBodyFromJson(json);
@@ -9456,8 +10029,10 @@ class AuthLogoutPost$RequestBody {
     return identical(this, other) ||
         (other is AuthLogoutPost$RequestBody &&
             (identical(other.refreshToken, refreshToken) ||
-                const DeepCollectionEquality()
-                    .equals(other.refreshToken, refreshToken)) &&
+                const DeepCollectionEquality().equals(
+                  other.refreshToken,
+                  refreshToken,
+                )) &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)));
   }
@@ -9475,15 +10050,20 @@ class AuthLogoutPost$RequestBody {
 extension $AuthLogoutPost$RequestBodyExtension on AuthLogoutPost$RequestBody {
   AuthLogoutPost$RequestBody copyWith({String? refreshToken, String? id}) {
     return AuthLogoutPost$RequestBody(
-        refreshToken: refreshToken ?? this.refreshToken, id: id ?? this.id);
+      refreshToken: refreshToken ?? this.refreshToken,
+      id: id ?? this.id,
+    );
   }
 
-  AuthLogoutPost$RequestBody copyWithWrapped(
-      {Wrapped<String?>? refreshToken, Wrapped<String?>? id}) {
+  AuthLogoutPost$RequestBody copyWithWrapped({
+    Wrapped<String?>? refreshToken,
+    Wrapped<String?>? id,
+  }) {
     return AuthLogoutPost$RequestBody(
-        refreshToken:
-            (refreshToken != null ? refreshToken.value : this.refreshToken),
-        id: (id != null ? id.value : this.id));
+      refreshToken:
+          (refreshToken != null ? refreshToken.value : this.refreshToken),
+      id: (id != null ? id.value : this.id),
+    );
   }
 }
 
@@ -9523,22 +10103,32 @@ class AuthTokenPost$RequestBody {
     return identical(this, other) ||
         (other is AuthTokenPost$RequestBody &&
             (identical(other.grantType, grantType) ||
-                const DeepCollectionEquality()
-                    .equals(other.grantType, grantType)) &&
+                const DeepCollectionEquality().equals(
+                  other.grantType,
+                  grantType,
+                )) &&
             (identical(other.code, code) ||
                 const DeepCollectionEquality().equals(other.code, code)) &&
             (identical(other.redirectUri, redirectUri) ||
-                const DeepCollectionEquality()
-                    .equals(other.redirectUri, redirectUri)) &&
+                const DeepCollectionEquality().equals(
+                  other.redirectUri,
+                  redirectUri,
+                )) &&
             (identical(other.clientId, clientId) ||
-                const DeepCollectionEquality()
-                    .equals(other.clientId, clientId)) &&
+                const DeepCollectionEquality().equals(
+                  other.clientId,
+                  clientId,
+                )) &&
             (identical(other.refreshToken, refreshToken) ||
-                const DeepCollectionEquality()
-                    .equals(other.refreshToken, refreshToken)) &&
+                const DeepCollectionEquality().equals(
+                  other.refreshToken,
+                  refreshToken,
+                )) &&
             (identical(other.codeVerifier, codeVerifier) ||
-                const DeepCollectionEquality()
-                    .equals(other.codeVerifier, codeVerifier)));
+                const DeepCollectionEquality().equals(
+                  other.codeVerifier,
+                  codeVerifier,
+                )));
   }
 
   @override
@@ -9556,66 +10146,71 @@ class AuthTokenPost$RequestBody {
 }
 
 extension $AuthTokenPost$RequestBodyExtension on AuthTokenPost$RequestBody {
-  AuthTokenPost$RequestBody copyWith(
-      {String? grantType,
-      String? code,
-      String? redirectUri,
-      String? clientId,
-      String? refreshToken,
-      String? codeVerifier}) {
+  AuthTokenPost$RequestBody copyWith({
+    String? grantType,
+    String? code,
+    String? redirectUri,
+    String? clientId,
+    String? refreshToken,
+    String? codeVerifier,
+  }) {
     return AuthTokenPost$RequestBody(
-        grantType: grantType ?? this.grantType,
-        code: code ?? this.code,
-        redirectUri: redirectUri ?? this.redirectUri,
-        clientId: clientId ?? this.clientId,
-        refreshToken: refreshToken ?? this.refreshToken,
-        codeVerifier: codeVerifier ?? this.codeVerifier);
+      grantType: grantType ?? this.grantType,
+      code: code ?? this.code,
+      redirectUri: redirectUri ?? this.redirectUri,
+      clientId: clientId ?? this.clientId,
+      refreshToken: refreshToken ?? this.refreshToken,
+      codeVerifier: codeVerifier ?? this.codeVerifier,
+    );
   }
 
-  AuthTokenPost$RequestBody copyWithWrapped(
-      {Wrapped<String?>? grantType,
-      Wrapped<String?>? code,
-      Wrapped<String?>? redirectUri,
-      Wrapped<String?>? clientId,
-      Wrapped<String?>? refreshToken,
-      Wrapped<String?>? codeVerifier}) {
+  AuthTokenPost$RequestBody copyWithWrapped({
+    Wrapped<String?>? grantType,
+    Wrapped<String?>? code,
+    Wrapped<String?>? redirectUri,
+    Wrapped<String?>? clientId,
+    Wrapped<String?>? refreshToken,
+    Wrapped<String?>? codeVerifier,
+  }) {
     return AuthTokenPost$RequestBody(
-        grantType: (grantType != null ? grantType.value : this.grantType),
-        code: (code != null ? code.value : this.code),
-        redirectUri:
-            (redirectUri != null ? redirectUri.value : this.redirectUri),
-        clientId: (clientId != null ? clientId.value : this.clientId),
-        refreshToken:
-            (refreshToken != null ? refreshToken.value : this.refreshToken),
-        codeVerifier:
-            (codeVerifier != null ? codeVerifier.value : this.codeVerifier));
+      grantType: (grantType != null ? grantType.value : this.grantType),
+      code: (code != null ? code.value : this.code),
+      redirectUri: (redirectUri != null ? redirectUri.value : this.redirectUri),
+      clientId: (clientId != null ? clientId.value : this.clientId),
+      refreshToken:
+          (refreshToken != null ? refreshToken.value : this.refreshToken),
+      codeVerifier:
+          (codeVerifier != null ? codeVerifier.value : this.codeVerifier),
+    );
   }
 }
 
 String? configDescriptionParameterDTOTypeNullableToJson(
-    enums.ConfigDescriptionParameterDTOType?
-        configDescriptionParameterDTOType) {
+  enums.ConfigDescriptionParameterDTOType? configDescriptionParameterDTOType,
+) {
   return configDescriptionParameterDTOType?.value;
 }
 
 String? configDescriptionParameterDTOTypeToJson(
-    enums.ConfigDescriptionParameterDTOType configDescriptionParameterDTOType) {
+  enums.ConfigDescriptionParameterDTOType configDescriptionParameterDTOType,
+) {
   return configDescriptionParameterDTOType.value;
 }
 
 enums.ConfigDescriptionParameterDTOType
-    configDescriptionParameterDTOTypeFromJson(
+configDescriptionParameterDTOTypeFromJson(
   Object? configDescriptionParameterDTOType, [
   enums.ConfigDescriptionParameterDTOType? defaultValue,
 ]) {
   return enums.ConfigDescriptionParameterDTOType.values.firstWhereOrNull(
-          (e) => e.value == configDescriptionParameterDTOType) ??
+        (e) => e.value == configDescriptionParameterDTOType,
+      ) ??
       defaultValue ??
       enums.ConfigDescriptionParameterDTOType.swaggerGeneratedUnknown;
 }
 
 enums.ConfigDescriptionParameterDTOType?
-    configDescriptionParameterDTOTypeNullableFromJson(
+configDescriptionParameterDTOTypeNullableFromJson(
   Object? configDescriptionParameterDTOType, [
   enums.ConfigDescriptionParameterDTOType? defaultValue,
 ]) {
@@ -9623,20 +10218,23 @@ enums.ConfigDescriptionParameterDTOType?
     return null;
   }
   return enums.ConfigDescriptionParameterDTOType.values.firstWhereOrNull(
-          (e) => e.value == configDescriptionParameterDTOType) ??
+        (e) => e.value == configDescriptionParameterDTOType,
+      ) ??
       defaultValue;
 }
 
 String configDescriptionParameterDTOTypeExplodedListToJson(
-    List<enums.ConfigDescriptionParameterDTOType>?
-        configDescriptionParameterDTOType) {
+  List<enums.ConfigDescriptionParameterDTOType>?
+  configDescriptionParameterDTOType,
+) {
   return configDescriptionParameterDTOType?.map((e) => e.value!).join(',') ??
       '';
 }
 
 List<String> configDescriptionParameterDTOTypeListToJson(
-    List<enums.ConfigDescriptionParameterDTOType>?
-        configDescriptionParameterDTOType) {
+  List<enums.ConfigDescriptionParameterDTOType>?
+  configDescriptionParameterDTOType,
+) {
   if (configDescriptionParameterDTOType == null) {
     return [];
   }
@@ -9645,7 +10243,7 @@ List<String> configDescriptionParameterDTOTypeListToJson(
 }
 
 List<enums.ConfigDescriptionParameterDTOType>
-    configDescriptionParameterDTOTypeListFromJson(
+configDescriptionParameterDTOTypeListFromJson(
   List? configDescriptionParameterDTOType, [
   List<enums.ConfigDescriptionParameterDTOType>? defaultValue,
 ]) {
@@ -9659,7 +10257,7 @@ List<enums.ConfigDescriptionParameterDTOType>
 }
 
 List<enums.ConfigDescriptionParameterDTOType>?
-    configDescriptionParameterDTOTypeNullableListFromJson(
+configDescriptionParameterDTOTypeNullableListFromJson(
   List? configDescriptionParameterDTOType, [
   List<enums.ConfigDescriptionParameterDTOType>? defaultValue,
 ]) {
@@ -9673,12 +10271,14 @@ List<enums.ConfigDescriptionParameterDTOType>?
 }
 
 String? moduleTypeDTOVisibilityNullableToJson(
-    enums.ModuleTypeDTOVisibility? moduleTypeDTOVisibility) {
+  enums.ModuleTypeDTOVisibility? moduleTypeDTOVisibility,
+) {
   return moduleTypeDTOVisibility?.value;
 }
 
 String? moduleTypeDTOVisibilityToJson(
-    enums.ModuleTypeDTOVisibility moduleTypeDTOVisibility) {
+  enums.ModuleTypeDTOVisibility moduleTypeDTOVisibility,
+) {
   return moduleTypeDTOVisibility.value;
 }
 
@@ -9686,8 +10286,9 @@ enums.ModuleTypeDTOVisibility moduleTypeDTOVisibilityFromJson(
   Object? moduleTypeDTOVisibility, [
   enums.ModuleTypeDTOVisibility? defaultValue,
 ]) {
-  return enums.ModuleTypeDTOVisibility.values
-          .firstWhereOrNull((e) => e.value == moduleTypeDTOVisibility) ??
+  return enums.ModuleTypeDTOVisibility.values.firstWhereOrNull(
+        (e) => e.value == moduleTypeDTOVisibility,
+      ) ??
       defaultValue ??
       enums.ModuleTypeDTOVisibility.swaggerGeneratedUnknown;
 }
@@ -9699,18 +10300,21 @@ enums.ModuleTypeDTOVisibility? moduleTypeDTOVisibilityNullableFromJson(
   if (moduleTypeDTOVisibility == null) {
     return null;
   }
-  return enums.ModuleTypeDTOVisibility.values
-          .firstWhereOrNull((e) => e.value == moduleTypeDTOVisibility) ??
+  return enums.ModuleTypeDTOVisibility.values.firstWhereOrNull(
+        (e) => e.value == moduleTypeDTOVisibility,
+      ) ??
       defaultValue;
 }
 
 String moduleTypeDTOVisibilityExplodedListToJson(
-    List<enums.ModuleTypeDTOVisibility>? moduleTypeDTOVisibility) {
+  List<enums.ModuleTypeDTOVisibility>? moduleTypeDTOVisibility,
+) {
   return moduleTypeDTOVisibility?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> moduleTypeDTOVisibilityListToJson(
-    List<enums.ModuleTypeDTOVisibility>? moduleTypeDTOVisibility) {
+  List<enums.ModuleTypeDTOVisibility>? moduleTypeDTOVisibility,
+) {
   if (moduleTypeDTOVisibility == null) {
     return [];
   }
@@ -9732,7 +10336,7 @@ List<enums.ModuleTypeDTOVisibility> moduleTypeDTOVisibilityListFromJson(
 }
 
 List<enums.ModuleTypeDTOVisibility>?
-    moduleTypeDTOVisibilityNullableListFromJson(
+moduleTypeDTOVisibilityNullableListFromJson(
   List? moduleTypeDTOVisibility, [
   List<enums.ModuleTypeDTOVisibility>? defaultValue,
 ]) {
@@ -9746,7 +10350,8 @@ List<enums.ModuleTypeDTOVisibility>?
 }
 
 String? ruleDTOVisibilityNullableToJson(
-    enums.RuleDTOVisibility? ruleDTOVisibility) {
+  enums.RuleDTOVisibility? ruleDTOVisibility,
+) {
   return ruleDTOVisibility?.value;
 }
 
@@ -9758,8 +10363,9 @@ enums.RuleDTOVisibility ruleDTOVisibilityFromJson(
   Object? ruleDTOVisibility, [
   enums.RuleDTOVisibility? defaultValue,
 ]) {
-  return enums.RuleDTOVisibility.values
-          .firstWhereOrNull((e) => e.value == ruleDTOVisibility) ??
+  return enums.RuleDTOVisibility.values.firstWhereOrNull(
+        (e) => e.value == ruleDTOVisibility,
+      ) ??
       defaultValue ??
       enums.RuleDTOVisibility.swaggerGeneratedUnknown;
 }
@@ -9771,18 +10377,21 @@ enums.RuleDTOVisibility? ruleDTOVisibilityNullableFromJson(
   if (ruleDTOVisibility == null) {
     return null;
   }
-  return enums.RuleDTOVisibility.values
-          .firstWhereOrNull((e) => e.value == ruleDTOVisibility) ??
+  return enums.RuleDTOVisibility.values.firstWhereOrNull(
+        (e) => e.value == ruleDTOVisibility,
+      ) ??
       defaultValue;
 }
 
 String ruleDTOVisibilityExplodedListToJson(
-    List<enums.RuleDTOVisibility>? ruleDTOVisibility) {
+  List<enums.RuleDTOVisibility>? ruleDTOVisibility,
+) {
   return ruleDTOVisibility?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> ruleDTOVisibilityListToJson(
-    List<enums.RuleDTOVisibility>? ruleDTOVisibility) {
+  List<enums.RuleDTOVisibility>? ruleDTOVisibility,
+) {
   if (ruleDTOVisibility == null) {
     return [];
   }
@@ -9817,12 +10426,14 @@ List<enums.RuleDTOVisibility>? ruleDTOVisibilityNullableListFromJson(
 }
 
 String? enrichedRuleDTOVisibilityNullableToJson(
-    enums.EnrichedRuleDTOVisibility? enrichedRuleDTOVisibility) {
+  enums.EnrichedRuleDTOVisibility? enrichedRuleDTOVisibility,
+) {
   return enrichedRuleDTOVisibility?.value;
 }
 
 String? enrichedRuleDTOVisibilityToJson(
-    enums.EnrichedRuleDTOVisibility enrichedRuleDTOVisibility) {
+  enums.EnrichedRuleDTOVisibility enrichedRuleDTOVisibility,
+) {
   return enrichedRuleDTOVisibility.value;
 }
 
@@ -9830,8 +10441,9 @@ enums.EnrichedRuleDTOVisibility enrichedRuleDTOVisibilityFromJson(
   Object? enrichedRuleDTOVisibility, [
   enums.EnrichedRuleDTOVisibility? defaultValue,
 ]) {
-  return enums.EnrichedRuleDTOVisibility.values
-          .firstWhereOrNull((e) => e.value == enrichedRuleDTOVisibility) ??
+  return enums.EnrichedRuleDTOVisibility.values.firstWhereOrNull(
+        (e) => e.value == enrichedRuleDTOVisibility,
+      ) ??
       defaultValue ??
       enums.EnrichedRuleDTOVisibility.swaggerGeneratedUnknown;
 }
@@ -9843,18 +10455,21 @@ enums.EnrichedRuleDTOVisibility? enrichedRuleDTOVisibilityNullableFromJson(
   if (enrichedRuleDTOVisibility == null) {
     return null;
   }
-  return enums.EnrichedRuleDTOVisibility.values
-          .firstWhereOrNull((e) => e.value == enrichedRuleDTOVisibility) ??
+  return enums.EnrichedRuleDTOVisibility.values.firstWhereOrNull(
+        (e) => e.value == enrichedRuleDTOVisibility,
+      ) ??
       defaultValue;
 }
 
 String enrichedRuleDTOVisibilityExplodedListToJson(
-    List<enums.EnrichedRuleDTOVisibility>? enrichedRuleDTOVisibility) {
+  List<enums.EnrichedRuleDTOVisibility>? enrichedRuleDTOVisibility,
+) {
   return enrichedRuleDTOVisibility?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> enrichedRuleDTOVisibilityListToJson(
-    List<enums.EnrichedRuleDTOVisibility>? enrichedRuleDTOVisibility) {
+  List<enums.EnrichedRuleDTOVisibility>? enrichedRuleDTOVisibility,
+) {
   if (enrichedRuleDTOVisibility == null) {
     return [];
   }
@@ -9876,7 +10491,7 @@ List<enums.EnrichedRuleDTOVisibility> enrichedRuleDTOVisibilityListFromJson(
 }
 
 List<enums.EnrichedRuleDTOVisibility>?
-    enrichedRuleDTOVisibilityNullableListFromJson(
+enrichedRuleDTOVisibilityNullableListFromJson(
   List? enrichedRuleDTOVisibility, [
   List<enums.EnrichedRuleDTOVisibility>? defaultValue,
 ]) {
@@ -9890,12 +10505,14 @@ List<enums.EnrichedRuleDTOVisibility>?
 }
 
 String? ruleStatusInfoStatusNullableToJson(
-    enums.RuleStatusInfoStatus? ruleStatusInfoStatus) {
+  enums.RuleStatusInfoStatus? ruleStatusInfoStatus,
+) {
   return ruleStatusInfoStatus?.value;
 }
 
 String? ruleStatusInfoStatusToJson(
-    enums.RuleStatusInfoStatus ruleStatusInfoStatus) {
+  enums.RuleStatusInfoStatus ruleStatusInfoStatus,
+) {
   return ruleStatusInfoStatus.value;
 }
 
@@ -9903,8 +10520,9 @@ enums.RuleStatusInfoStatus ruleStatusInfoStatusFromJson(
   Object? ruleStatusInfoStatus, [
   enums.RuleStatusInfoStatus? defaultValue,
 ]) {
-  return enums.RuleStatusInfoStatus.values
-          .firstWhereOrNull((e) => e.value == ruleStatusInfoStatus) ??
+  return enums.RuleStatusInfoStatus.values.firstWhereOrNull(
+        (e) => e.value == ruleStatusInfoStatus,
+      ) ??
       defaultValue ??
       enums.RuleStatusInfoStatus.swaggerGeneratedUnknown;
 }
@@ -9916,18 +10534,21 @@ enums.RuleStatusInfoStatus? ruleStatusInfoStatusNullableFromJson(
   if (ruleStatusInfoStatus == null) {
     return null;
   }
-  return enums.RuleStatusInfoStatus.values
-          .firstWhereOrNull((e) => e.value == ruleStatusInfoStatus) ??
+  return enums.RuleStatusInfoStatus.values.firstWhereOrNull(
+        (e) => e.value == ruleStatusInfoStatus,
+      ) ??
       defaultValue;
 }
 
 String ruleStatusInfoStatusExplodedListToJson(
-    List<enums.RuleStatusInfoStatus>? ruleStatusInfoStatus) {
+  List<enums.RuleStatusInfoStatus>? ruleStatusInfoStatus,
+) {
   return ruleStatusInfoStatus?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> ruleStatusInfoStatusListToJson(
-    List<enums.RuleStatusInfoStatus>? ruleStatusInfoStatus) {
+  List<enums.RuleStatusInfoStatus>? ruleStatusInfoStatus,
+) {
   if (ruleStatusInfoStatus == null) {
     return [];
   }
@@ -9962,12 +10583,14 @@ List<enums.RuleStatusInfoStatus>? ruleStatusInfoStatusNullableListFromJson(
 }
 
 String? ruleStatusInfoStatusDetailNullableToJson(
-    enums.RuleStatusInfoStatusDetail? ruleStatusInfoStatusDetail) {
+  enums.RuleStatusInfoStatusDetail? ruleStatusInfoStatusDetail,
+) {
   return ruleStatusInfoStatusDetail?.value;
 }
 
 String? ruleStatusInfoStatusDetailToJson(
-    enums.RuleStatusInfoStatusDetail ruleStatusInfoStatusDetail) {
+  enums.RuleStatusInfoStatusDetail ruleStatusInfoStatusDetail,
+) {
   return ruleStatusInfoStatusDetail.value;
 }
 
@@ -9975,8 +10598,9 @@ enums.RuleStatusInfoStatusDetail ruleStatusInfoStatusDetailFromJson(
   Object? ruleStatusInfoStatusDetail, [
   enums.RuleStatusInfoStatusDetail? defaultValue,
 ]) {
-  return enums.RuleStatusInfoStatusDetail.values
-          .firstWhereOrNull((e) => e.value == ruleStatusInfoStatusDetail) ??
+  return enums.RuleStatusInfoStatusDetail.values.firstWhereOrNull(
+        (e) => e.value == ruleStatusInfoStatusDetail,
+      ) ??
       defaultValue ??
       enums.RuleStatusInfoStatusDetail.swaggerGeneratedUnknown;
 }
@@ -9988,18 +10612,21 @@ enums.RuleStatusInfoStatusDetail? ruleStatusInfoStatusDetailNullableFromJson(
   if (ruleStatusInfoStatusDetail == null) {
     return null;
   }
-  return enums.RuleStatusInfoStatusDetail.values
-          .firstWhereOrNull((e) => e.value == ruleStatusInfoStatusDetail) ??
+  return enums.RuleStatusInfoStatusDetail.values.firstWhereOrNull(
+        (e) => e.value == ruleStatusInfoStatusDetail,
+      ) ??
       defaultValue;
 }
 
 String ruleStatusInfoStatusDetailExplodedListToJson(
-    List<enums.RuleStatusInfoStatusDetail>? ruleStatusInfoStatusDetail) {
+  List<enums.RuleStatusInfoStatusDetail>? ruleStatusInfoStatusDetail,
+) {
   return ruleStatusInfoStatusDetail?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> ruleStatusInfoStatusDetailListToJson(
-    List<enums.RuleStatusInfoStatusDetail>? ruleStatusInfoStatusDetail) {
+  List<enums.RuleStatusInfoStatusDetail>? ruleStatusInfoStatusDetail,
+) {
   if (ruleStatusInfoStatusDetail == null) {
     return [];
   }
@@ -10021,7 +10648,7 @@ List<enums.RuleStatusInfoStatusDetail> ruleStatusInfoStatusDetailListFromJson(
 }
 
 List<enums.RuleStatusInfoStatusDetail>?
-    ruleStatusInfoStatusDetailNullableListFromJson(
+ruleStatusInfoStatusDetailNullableListFromJson(
   List? ruleStatusInfoStatusDetail, [
   List<enums.RuleStatusInfoStatusDetail>? defaultValue,
 ]) {
@@ -10035,12 +10662,14 @@ List<enums.RuleStatusInfoStatusDetail>?
 }
 
 String? configDescriptionParameterTypeNullableToJson(
-    enums.ConfigDescriptionParameterType? configDescriptionParameterType) {
+  enums.ConfigDescriptionParameterType? configDescriptionParameterType,
+) {
   return configDescriptionParameterType?.value;
 }
 
 String? configDescriptionParameterTypeToJson(
-    enums.ConfigDescriptionParameterType configDescriptionParameterType) {
+  enums.ConfigDescriptionParameterType configDescriptionParameterType,
+) {
   return configDescriptionParameterType.value;
 }
 
@@ -10048,34 +10677,36 @@ enums.ConfigDescriptionParameterType configDescriptionParameterTypeFromJson(
   Object? configDescriptionParameterType, [
   enums.ConfigDescriptionParameterType? defaultValue,
 ]) {
-  return enums.ConfigDescriptionParameterType.values
-          .firstWhereOrNull((e) => e.value == configDescriptionParameterType) ??
+  return enums.ConfigDescriptionParameterType.values.firstWhereOrNull(
+        (e) => e.value == configDescriptionParameterType,
+      ) ??
       defaultValue ??
       enums.ConfigDescriptionParameterType.swaggerGeneratedUnknown;
 }
 
 enums.ConfigDescriptionParameterType?
-    configDescriptionParameterTypeNullableFromJson(
+configDescriptionParameterTypeNullableFromJson(
   Object? configDescriptionParameterType, [
   enums.ConfigDescriptionParameterType? defaultValue,
 ]) {
   if (configDescriptionParameterType == null) {
     return null;
   }
-  return enums.ConfigDescriptionParameterType.values
-          .firstWhereOrNull((e) => e.value == configDescriptionParameterType) ??
+  return enums.ConfigDescriptionParameterType.values.firstWhereOrNull(
+        (e) => e.value == configDescriptionParameterType,
+      ) ??
       defaultValue;
 }
 
 String configDescriptionParameterTypeExplodedListToJson(
-    List<enums.ConfigDescriptionParameterType>?
-        configDescriptionParameterType) {
+  List<enums.ConfigDescriptionParameterType>? configDescriptionParameterType,
+) {
   return configDescriptionParameterType?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> configDescriptionParameterTypeListToJson(
-    List<enums.ConfigDescriptionParameterType>?
-        configDescriptionParameterType) {
+  List<enums.ConfigDescriptionParameterType>? configDescriptionParameterType,
+) {
   if (configDescriptionParameterType == null) {
     return [];
   }
@@ -10084,7 +10715,7 @@ List<String> configDescriptionParameterTypeListToJson(
 }
 
 List<enums.ConfigDescriptionParameterType>
-    configDescriptionParameterTypeListFromJson(
+configDescriptionParameterTypeListFromJson(
   List? configDescriptionParameterType, [
   List<enums.ConfigDescriptionParameterType>? defaultValue,
 ]) {
@@ -10098,7 +10729,7 @@ List<enums.ConfigDescriptionParameterType>
 }
 
 List<enums.ConfigDescriptionParameterType>?
-    configDescriptionParameterTypeNullableListFromJson(
+configDescriptionParameterTypeNullableListFromJson(
   List? configDescriptionParameterType, [
   List<enums.ConfigDescriptionParameterType>? defaultValue,
 ]) {
@@ -10123,8 +10754,9 @@ enums.RuleVisibility ruleVisibilityFromJson(
   Object? ruleVisibility, [
   enums.RuleVisibility? defaultValue,
 ]) {
-  return enums.RuleVisibility.values
-          .firstWhereOrNull((e) => e.value == ruleVisibility) ??
+  return enums.RuleVisibility.values.firstWhereOrNull(
+        (e) => e.value == ruleVisibility,
+      ) ??
       defaultValue ??
       enums.RuleVisibility.swaggerGeneratedUnknown;
 }
@@ -10136,18 +10768,21 @@ enums.RuleVisibility? ruleVisibilityNullableFromJson(
   if (ruleVisibility == null) {
     return null;
   }
-  return enums.RuleVisibility.values
-          .firstWhereOrNull((e) => e.value == ruleVisibility) ??
+  return enums.RuleVisibility.values.firstWhereOrNull(
+        (e) => e.value == ruleVisibility,
+      ) ??
       defaultValue;
 }
 
 String ruleVisibilityExplodedListToJson(
-    List<enums.RuleVisibility>? ruleVisibility) {
+  List<enums.RuleVisibility>? ruleVisibility,
+) {
   return ruleVisibility?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> ruleVisibilityListToJson(
-    List<enums.RuleVisibility>? ruleVisibility) {
+  List<enums.RuleVisibility>? ruleVisibility,
+) {
   if (ruleVisibility == null) {
     return [];
   }
@@ -10182,7 +10817,8 @@ List<enums.RuleVisibility>? ruleVisibilityNullableListFromJson(
 }
 
 String? templateVisibilityNullableToJson(
-    enums.TemplateVisibility? templateVisibility) {
+  enums.TemplateVisibility? templateVisibility,
+) {
   return templateVisibility?.value;
 }
 
@@ -10194,8 +10830,9 @@ enums.TemplateVisibility templateVisibilityFromJson(
   Object? templateVisibility, [
   enums.TemplateVisibility? defaultValue,
 ]) {
-  return enums.TemplateVisibility.values
-          .firstWhereOrNull((e) => e.value == templateVisibility) ??
+  return enums.TemplateVisibility.values.firstWhereOrNull(
+        (e) => e.value == templateVisibility,
+      ) ??
       defaultValue ??
       enums.TemplateVisibility.swaggerGeneratedUnknown;
 }
@@ -10207,18 +10844,21 @@ enums.TemplateVisibility? templateVisibilityNullableFromJson(
   if (templateVisibility == null) {
     return null;
   }
-  return enums.TemplateVisibility.values
-          .firstWhereOrNull((e) => e.value == templateVisibility) ??
+  return enums.TemplateVisibility.values.firstWhereOrNull(
+        (e) => e.value == templateVisibility,
+      ) ??
       defaultValue;
 }
 
 String templateVisibilityExplodedListToJson(
-    List<enums.TemplateVisibility>? templateVisibility) {
+  List<enums.TemplateVisibility>? templateVisibility,
+) {
   return templateVisibility?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> templateVisibilityListToJson(
-    List<enums.TemplateVisibility>? templateVisibility) {
+  List<enums.TemplateVisibility>? templateVisibility,
+) {
   if (templateVisibility == null) {
     return [];
   }
@@ -10253,12 +10893,14 @@ List<enums.TemplateVisibility>? templateVisibilityNullableListFromJson(
 }
 
 String? discoveryResultDTOFlagNullableToJson(
-    enums.DiscoveryResultDTOFlag? discoveryResultDTOFlag) {
+  enums.DiscoveryResultDTOFlag? discoveryResultDTOFlag,
+) {
   return discoveryResultDTOFlag?.value;
 }
 
 String? discoveryResultDTOFlagToJson(
-    enums.DiscoveryResultDTOFlag discoveryResultDTOFlag) {
+  enums.DiscoveryResultDTOFlag discoveryResultDTOFlag,
+) {
   return discoveryResultDTOFlag.value;
 }
 
@@ -10266,8 +10908,9 @@ enums.DiscoveryResultDTOFlag discoveryResultDTOFlagFromJson(
   Object? discoveryResultDTOFlag, [
   enums.DiscoveryResultDTOFlag? defaultValue,
 ]) {
-  return enums.DiscoveryResultDTOFlag.values
-          .firstWhereOrNull((e) => e.value == discoveryResultDTOFlag) ??
+  return enums.DiscoveryResultDTOFlag.values.firstWhereOrNull(
+        (e) => e.value == discoveryResultDTOFlag,
+      ) ??
       defaultValue ??
       enums.DiscoveryResultDTOFlag.swaggerGeneratedUnknown;
 }
@@ -10279,18 +10922,21 @@ enums.DiscoveryResultDTOFlag? discoveryResultDTOFlagNullableFromJson(
   if (discoveryResultDTOFlag == null) {
     return null;
   }
-  return enums.DiscoveryResultDTOFlag.values
-          .firstWhereOrNull((e) => e.value == discoveryResultDTOFlag) ??
+  return enums.DiscoveryResultDTOFlag.values.firstWhereOrNull(
+        (e) => e.value == discoveryResultDTOFlag,
+      ) ??
       defaultValue;
 }
 
 String discoveryResultDTOFlagExplodedListToJson(
-    List<enums.DiscoveryResultDTOFlag>? discoveryResultDTOFlag) {
+  List<enums.DiscoveryResultDTOFlag>? discoveryResultDTOFlag,
+) {
   return discoveryResultDTOFlag?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> discoveryResultDTOFlagListToJson(
-    List<enums.DiscoveryResultDTOFlag>? discoveryResultDTOFlag) {
+  List<enums.DiscoveryResultDTOFlag>? discoveryResultDTOFlag,
+) {
   if (discoveryResultDTOFlag == null) {
     return [];
   }
@@ -10325,12 +10971,14 @@ List<enums.DiscoveryResultDTOFlag>? discoveryResultDTOFlagNullableListFromJson(
 }
 
 String? thingStatusInfoStatusNullableToJson(
-    enums.ThingStatusInfoStatus? thingStatusInfoStatus) {
+  enums.ThingStatusInfoStatus? thingStatusInfoStatus,
+) {
   return thingStatusInfoStatus?.value;
 }
 
 String? thingStatusInfoStatusToJson(
-    enums.ThingStatusInfoStatus thingStatusInfoStatus) {
+  enums.ThingStatusInfoStatus thingStatusInfoStatus,
+) {
   return thingStatusInfoStatus.value;
 }
 
@@ -10338,8 +10986,9 @@ enums.ThingStatusInfoStatus thingStatusInfoStatusFromJson(
   Object? thingStatusInfoStatus, [
   enums.ThingStatusInfoStatus? defaultValue,
 ]) {
-  return enums.ThingStatusInfoStatus.values
-          .firstWhereOrNull((e) => e.value == thingStatusInfoStatus) ??
+  return enums.ThingStatusInfoStatus.values.firstWhereOrNull(
+        (e) => e.value == thingStatusInfoStatus,
+      ) ??
       defaultValue ??
       enums.ThingStatusInfoStatus.swaggerGeneratedUnknown;
 }
@@ -10351,18 +11000,21 @@ enums.ThingStatusInfoStatus? thingStatusInfoStatusNullableFromJson(
   if (thingStatusInfoStatus == null) {
     return null;
   }
-  return enums.ThingStatusInfoStatus.values
-          .firstWhereOrNull((e) => e.value == thingStatusInfoStatus) ??
+  return enums.ThingStatusInfoStatus.values.firstWhereOrNull(
+        (e) => e.value == thingStatusInfoStatus,
+      ) ??
       defaultValue;
 }
 
 String thingStatusInfoStatusExplodedListToJson(
-    List<enums.ThingStatusInfoStatus>? thingStatusInfoStatus) {
+  List<enums.ThingStatusInfoStatus>? thingStatusInfoStatus,
+) {
   return thingStatusInfoStatus?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> thingStatusInfoStatusListToJson(
-    List<enums.ThingStatusInfoStatus>? thingStatusInfoStatus) {
+  List<enums.ThingStatusInfoStatus>? thingStatusInfoStatus,
+) {
   if (thingStatusInfoStatus == null) {
     return [];
   }
@@ -10397,12 +11049,14 @@ List<enums.ThingStatusInfoStatus>? thingStatusInfoStatusNullableListFromJson(
 }
 
 String? thingStatusInfoStatusDetailNullableToJson(
-    enums.ThingStatusInfoStatusDetail? thingStatusInfoStatusDetail) {
+  enums.ThingStatusInfoStatusDetail? thingStatusInfoStatusDetail,
+) {
   return thingStatusInfoStatusDetail?.value;
 }
 
 String? thingStatusInfoStatusDetailToJson(
-    enums.ThingStatusInfoStatusDetail thingStatusInfoStatusDetail) {
+  enums.ThingStatusInfoStatusDetail thingStatusInfoStatusDetail,
+) {
   return thingStatusInfoStatusDetail.value;
 }
 
@@ -10410,8 +11064,9 @@ enums.ThingStatusInfoStatusDetail thingStatusInfoStatusDetailFromJson(
   Object? thingStatusInfoStatusDetail, [
   enums.ThingStatusInfoStatusDetail? defaultValue,
 ]) {
-  return enums.ThingStatusInfoStatusDetail.values
-          .firstWhereOrNull((e) => e.value == thingStatusInfoStatusDetail) ??
+  return enums.ThingStatusInfoStatusDetail.values.firstWhereOrNull(
+        (e) => e.value == thingStatusInfoStatusDetail,
+      ) ??
       defaultValue ??
       enums.ThingStatusInfoStatusDetail.swaggerGeneratedUnknown;
 }
@@ -10423,18 +11078,21 @@ enums.ThingStatusInfoStatusDetail? thingStatusInfoStatusDetailNullableFromJson(
   if (thingStatusInfoStatusDetail == null) {
     return null;
   }
-  return enums.ThingStatusInfoStatusDetail.values
-          .firstWhereOrNull((e) => e.value == thingStatusInfoStatusDetail) ??
+  return enums.ThingStatusInfoStatusDetail.values.firstWhereOrNull(
+        (e) => e.value == thingStatusInfoStatusDetail,
+      ) ??
       defaultValue;
 }
 
 String thingStatusInfoStatusDetailExplodedListToJson(
-    List<enums.ThingStatusInfoStatusDetail>? thingStatusInfoStatusDetail) {
+  List<enums.ThingStatusInfoStatusDetail>? thingStatusInfoStatusDetail,
+) {
   return thingStatusInfoStatusDetail?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> thingStatusInfoStatusDetailListToJson(
-    List<enums.ThingStatusInfoStatusDetail>? thingStatusInfoStatusDetail) {
+  List<enums.ThingStatusInfoStatusDetail>? thingStatusInfoStatusDetail,
+) {
   if (thingStatusInfoStatusDetail == null) {
     return [];
   }
@@ -10456,7 +11114,7 @@ List<enums.ThingStatusInfoStatusDetail> thingStatusInfoStatusDetailListFromJson(
 }
 
 List<enums.ThingStatusInfoStatusDetail>?
-    thingStatusInfoStatusDetailNullableListFromJson(
+thingStatusInfoStatusDetailNullableListFromJson(
   List? thingStatusInfoStatusDetail, [
   List<enums.ThingStatusInfoStatusDetail>? defaultValue,
 ]) {
@@ -10470,12 +11128,14 @@ List<enums.ThingStatusInfoStatusDetail>?
 }
 
 String? configStatusMessageTypeNullableToJson(
-    enums.ConfigStatusMessageType? configStatusMessageType) {
+  enums.ConfigStatusMessageType? configStatusMessageType,
+) {
   return configStatusMessageType?.value;
 }
 
 String? configStatusMessageTypeToJson(
-    enums.ConfigStatusMessageType configStatusMessageType) {
+  enums.ConfigStatusMessageType configStatusMessageType,
+) {
   return configStatusMessageType.value;
 }
 
@@ -10483,8 +11143,9 @@ enums.ConfigStatusMessageType configStatusMessageTypeFromJson(
   Object? configStatusMessageType, [
   enums.ConfigStatusMessageType? defaultValue,
 ]) {
-  return enums.ConfigStatusMessageType.values
-          .firstWhereOrNull((e) => e.value == configStatusMessageType) ??
+  return enums.ConfigStatusMessageType.values.firstWhereOrNull(
+        (e) => e.value == configStatusMessageType,
+      ) ??
       defaultValue ??
       enums.ConfigStatusMessageType.swaggerGeneratedUnknown;
 }
@@ -10496,18 +11157,21 @@ enums.ConfigStatusMessageType? configStatusMessageTypeNullableFromJson(
   if (configStatusMessageType == null) {
     return null;
   }
-  return enums.ConfigStatusMessageType.values
-          .firstWhereOrNull((e) => e.value == configStatusMessageType) ??
+  return enums.ConfigStatusMessageType.values.firstWhereOrNull(
+        (e) => e.value == configStatusMessageType,
+      ) ??
       defaultValue;
 }
 
 String configStatusMessageTypeExplodedListToJson(
-    List<enums.ConfigStatusMessageType>? configStatusMessageType) {
+  List<enums.ConfigStatusMessageType>? configStatusMessageType,
+) {
   return configStatusMessageType?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> configStatusMessageTypeListToJson(
-    List<enums.ConfigStatusMessageType>? configStatusMessageType) {
+  List<enums.ConfigStatusMessageType>? configStatusMessageType,
+) {
   if (configStatusMessageType == null) {
     return [];
   }
@@ -10529,7 +11193,7 @@ List<enums.ConfigStatusMessageType> configStatusMessageTypeListFromJson(
 }
 
 List<enums.ConfigStatusMessageType>?
-    configStatusMessageTypeNullableListFromJson(
+configStatusMessageTypeNullableListFromJson(
   List? configStatusMessageType, [
   List<enums.ConfigStatusMessageType>? defaultValue,
 ]) {
@@ -10554,8 +11218,9 @@ enums.IconSetFormats iconSetFormatsFromJson(
   Object? iconSetFormats, [
   enums.IconSetFormats? defaultValue,
 ]) {
-  return enums.IconSetFormats.values
-          .firstWhereOrNull((e) => e.value == iconSetFormats) ??
+  return enums.IconSetFormats.values.firstWhereOrNull(
+        (e) => e.value == iconSetFormats,
+      ) ??
       defaultValue ??
       enums.IconSetFormats.swaggerGeneratedUnknown;
 }
@@ -10567,18 +11232,21 @@ enums.IconSetFormats? iconSetFormatsNullableFromJson(
   if (iconSetFormats == null) {
     return null;
   }
-  return enums.IconSetFormats.values
-          .firstWhereOrNull((e) => e.value == iconSetFormats) ??
+  return enums.IconSetFormats.values.firstWhereOrNull(
+        (e) => e.value == iconSetFormats,
+      ) ??
       defaultValue;
 }
 
 String iconSetFormatsExplodedListToJson(
-    List<enums.IconSetFormats>? iconSetFormats) {
+  List<enums.IconSetFormats>? iconSetFormats,
+) {
   return iconSetFormats?.map((e) => e.value!).join(',') ?? '';
 }
 
 List<String> iconSetFormatsListToJson(
-    List<enums.IconSetFormats>? iconSetFormats) {
+  List<enums.IconSetFormats>? iconSetFormats,
+) {
   if (iconSetFormats == null) {
     return [];
   }

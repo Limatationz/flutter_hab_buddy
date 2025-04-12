@@ -1,18 +1,27 @@
 import 'package:collection/collection.dart';
 import 'package:drift/drift.dart';
+import 'package:hive_ce/hive.dart';
+import 'package:hive_ce_flutter/adapters.dart';
+import 'package:rxdart/rxdart.dart';
+import 'package:tuple/tuple.dart';
 
 import '../app_database.dart';
 import '../rooms/rooms_table.dart';
-import '../state/item_states_table.dart';
+import '../../hive/state/item_state.dart';
 import 'item_type.dart';
 import 'items_table.dart';
 import 'oh_item_type.dart';
 
 part 'items_store.g.dart';
 
-@DriftAccessor(tables: [ItemsTable, RoomsTable, ItemStatesTable])
+@DriftAccessor(tables: [ItemsTable, RoomsTable])
 class ItemsStore extends DatabaseAccessor<AppDatabase> with _$ItemsStoreMixin {
-  ItemsStore(super.database);
+  late final Box<ItemState> _statesBox;
+
+  ItemsStore(super.database) {
+    Hive.openBox<ItemState>('itemStatesBox')
+        .then((value) => _statesBox = value);
+  }
 
   MultiSelectable<Item> all() => (select(itemsTable)
     ..orderBy([
@@ -22,13 +31,13 @@ class ItemsStore extends DatabaseAccessor<AppDatabase> with _$ItemsStoreMixin {
   MultiSelectable<Item> inbox() => (select(itemsTable)
     ..where((tbl) => tbl.roomId.isNull())
     ..orderBy([
-          (tbl) => OrderingTerm(expression: tbl.score, mode: OrderingMode.desc)
+      (tbl) => OrderingTerm(expression: tbl.score, mode: OrderingMode.desc)
     ]));
 
   MultiSelectable<Item> nonInbox() => (select(itemsTable)
     ..where((tbl) => tbl.roomId.isNotNull())
     ..orderBy([
-          (tbl) => OrderingTerm(expression: tbl.score, mode: OrderingMode.desc)
+      (tbl) => OrderingTerm(expression: tbl.score, mode: OrderingMode.desc)
     ]));
 
   Stream<List<String>> watchAllOhNames() => select(itemsTable)
@@ -64,6 +73,7 @@ class ItemsStore extends DatabaseAccessor<AppDatabase> with _$ItemsStoreMixin {
             ..where((tbl) => tbl.roomId.isNotNull()))
           .watch()
           .map((rows) {
+            print("watchGroupedByRoomId triggered");
         final grouped = groupBy(rows, (e) => e.roomId!);
         // now we need to sort each group
         for (final entry in grouped.entries) {
@@ -90,42 +100,35 @@ class ItemsStore extends DatabaseAccessor<AppDatabase> with _$ItemsStoreMixin {
       (tbl) => OrderingTerm(expression: tbl.score, mode: OrderingMode.desc)
     ]);
 
-  Stream<ItemWithState?> watchByNameWithState(String name) =>
-      (select(itemsTable)
-            ..where((tbl) => tbl.ohName.equals(name))
-            ..orderBy([
-              (tbl) =>
-                  OrderingTerm(expression: tbl.score, mode: OrderingMode.desc)
-            ]))
-          .join([
-            leftOuterJoin(itemStatesTable,
-                itemStatesTable.ohName.equalsExp(itemsTable.ohName)),
-          ])
-          .watchSingleOrNull()
-          .map((row) {
-            final item = row?.readTable(itemsTable);
-            final state = row?.readTable(itemStatesTable);
+  Stream<ItemWithState?> watchByNameWithState(String name) => Rx.combineLatest2(
+          (select(itemsTable)
+                ..where((tbl) => tbl.ohName.equals(name))
+                ..orderBy([
+                  (tbl) => OrderingTerm(
+                      expression: tbl.score, mode: OrderingMode.desc)
+                ]))
+              .watchSingleOrNull(),
+          _statesBox.watch(key: name),
+          (item, state) => Tuple2(item, state)).map((tuple) {
+        final item = tuple.item1;
+        final state = tuple.item2.value as ItemState?;
 
-            if (item != null && state != null) {
-              return ItemWithState(item, state);
-            } else {
-              return null;
-            }
-          });
+        if (item != null && state != null) {
+          return ItemWithState(item, state);
+        } else {
+          return null;
+        }
+      });
 
   Future<ItemWithState?> getByNameWithState(String name) async {
-    final row = (await (select(itemsTable)
+    final item = (await (select(itemsTable)
           ..where((tbl) => tbl.ohName.equals(name))
           ..orderBy([
             (tbl) =>
                 OrderingTerm(expression: tbl.score, mode: OrderingMode.desc)
           ]))
-        .join([
-      leftOuterJoin(
-          itemStatesTable, itemStatesTable.ohName.equalsExp(itemsTable.ohName)),
-    ]).getSingleOrNull());
-    final item = row?.readTable(itemsTable);
-    final state = row?.readTable(itemStatesTable);
+        .getSingleOrNull());
+    final state = await _statesBox.get(name);
 
     if (item != null && state != null) {
       return ItemWithState(item, state);
@@ -134,11 +137,21 @@ class ItemsStore extends DatabaseAccessor<AppDatabase> with _$ItemsStoreMixin {
     }
   }
 
-  SingleOrNullSelectable<ItemState> stateByName(String name) =>
-      select(itemStatesTable)..where((tbl) => tbl.ohName.equals(name));
+  ItemState? getStateByName(String name) => _statesBox.get(name);
 
-  MultiSelectable<ItemState> statesByNameList(List<String> names) =>
-      select(itemStatesTable)..where((tbl) => tbl.ohName.isIn(names));
+  // Stream that emits the current state of the item and starts with the current state
+  Stream<ItemState?> watchStateByName(String name) =>
+      _statesBox.watch(key: name).map((e) => e.value as ItemState?).startWith(getStateByName(name));
+
+  List<ItemState?> statesByNameList(List<String> names) => _statesBox.keys
+      .where((e) => names.contains(e.key))
+      .map((e) => _statesBox.get(e))
+      .toList();
+
+  Stream<List<ItemState?>> watchStatesByNameList(List<String> names) =>
+      Rx.combineLatest(names.map((e) => _statesBox.watch(key: e)), (states) {
+        return states.map((e) => e.value as ItemState?).toList();
+      });
 
   Stream<Map<Room, List<Item>>> watchGroupedByRoom() => select(itemsTable)
       .join([
@@ -160,10 +173,10 @@ class ItemsStore extends DatabaseAccessor<AppDatabase> with _$ItemsStoreMixin {
         });
       });
 
-  Stream<int> watchInboxItemsCount() => (select(itemsTable)
-      ..where((tbl) => tbl.roomId.isNull()))
-      .watch()
-      .map((event) => event.length);
+  Stream<int> watchInboxItemsCount() =>
+      (select(itemsTable)..where((tbl) => tbl.roomId.isNull()))
+          .watch()
+          .map((event) => event.length);
 
   Future<void> insertOrUpdate(List<ItemsTableCompanion> data) =>
       batch((batch) => batch.insertAllOnConflictUpdate(
@@ -174,46 +187,38 @@ class ItemsStore extends DatabaseAccessor<AppDatabase> with _$ItemsStoreMixin {
   Future<void> insertOrUpdateSingle(ItemsTableCompanion data) =>
       insertOrUpdate([data]);
 
-  Future<void> insertOrUpdateStateSingle(ItemStatesTableCompanion data) =>
-      batch((batch) => batch.insertAllOnConflictUpdate(
-            itemStatesTable,
-            [data],
-          ));
+  Future<void> insertOrUpdateStateSingle(String ohName, ItemState data) =>
+      _statesBox.put(ohName, data);
 
-  Future<void> insertOrUpdateStates(List<ItemStatesTableCompanion> data) =>
-      batch((batch) => batch.insertAllOnConflictUpdate(
-            itemStatesTable,
-            data,
-          ));
+  Future<void> insertOrUpdateStates(List<(String, ItemState)> data) =>
+      Future.wait(data.map((e) => _statesBox.put(e.$1, e.$2)).toList());
 
   Future<void> updateByNameSingle(ItemsTableCompanion data) =>
       (update(itemsTable)..where((tbl) => tbl.ohName.equals(data.ohName.value)))
           .write(data);
 
-  Future<void> updateByName(List<ItemsTableCompanion> data) =>
-      batch((batch) {
+  Future<void> updateByName(List<ItemsTableCompanion> data) => batch((batch) {
         for (final item in data) {
           batch.update(itemsTable, item,
               where: (table) => table.ohName.equals(item.ohName.value));
         }
       });
 
-  Future<void> updateStateByNameSingle(ItemStatesTableCompanion data) =>
-      (update(itemStatesTable)
-            ..where((tbl) => tbl.ohName.equals(data.ohName.value)))
-          .write(data);
+  Future<void> updateStateByNameSingle(String name, ItemState data) =>
+      _statesBox.put(name, data);
 
-  Future<void> updateStateByName(List<ItemStatesTableCompanion> data) =>
-      batch((batch) {
-        for (final item in data) {
-          batch.update(itemStatesTable, item,
-              where: (table) => table.ohName.equals(item.ohName.value));
-        }
-      });
+  Future<void> updateStatesByName(List<(String, ItemState)> data) =>
+      Future.wait(data.map((e) => _statesBox.put(e.$1, e.$2)).toList());
 
-  Future<void> updateStateValueByName(String name, String state) =>
-      (update(itemStatesTable)..where((tbl) => tbl.ohName.equals(name)))
-          .write(ItemStatesTableCompanion(state: Value(state)));
+  Future<void> updateStateValueByName(String name, String state) async {
+    final storedState = _statesBox.get(name);
+    if (storedState != null) {
+      storedState.state = state;
+      return storedState.save();
+    } else {
+      return _statesBox.put(name, ItemState(ohName: name, state: state));
+    }
+  }
 
   Future<void> updateComplexJsonByName(
           Map<String, dynamic> data, String name) =>
@@ -238,7 +243,7 @@ class ItemsStore extends DatabaseAccessor<AppDatabase> with _$ItemsStoreMixin {
       [name]);
 
   Future<void> deleteData() =>
-      Future.wait([delete(itemsTable).go(), delete(itemStatesTable).go()]);
+      Future.wait([delete(itemsTable).go(), _statesBox.clear()]);
 
   Future<void> deleteDataByName(String name) =>
       (delete(itemsTable)..where((tbl) => tbl.ohName.equals(name))).go();
@@ -246,6 +251,5 @@ class ItemsStore extends DatabaseAccessor<AppDatabase> with _$ItemsStoreMixin {
   Future<void> deleteDataByNames(List<String> names) =>
       (delete(itemsTable)..where((tbl) => tbl.ohName.isIn(names))).go();
 
-  Future<void> deleteStateDataByName(String name) =>
-      (delete(itemStatesTable)..where((tbl) => tbl.ohName.equals(name))).go();
+  Future<void> deleteStateDataByName(String name) => _statesBox.delete(name);
 }

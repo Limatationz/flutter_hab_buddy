@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-import '../../../../core/database/state/state_utils.dart';
+import '../../../../core/hive/state/state_utils.dart';
 import '../general/item_state_injector.dart';
 
 class ImageItemDialog extends StatelessWidget {

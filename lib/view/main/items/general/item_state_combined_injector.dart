@@ -2,6 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../../../core/database/app_database.dart';
 import '../../../../core/database/items/items_table.dart';
+import '../../../../core/hive/state/item_state.dart';
 import '../../../../locator.dart';
 
 class ItemStateCombinedInjector extends StatelessWidget {

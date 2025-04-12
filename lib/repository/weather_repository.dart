@@ -9,6 +9,7 @@ import 'package:weather_pack/weather_pack.dart';
 
 import '../core/database/app_database.dart';
 import '../core/database/items/item_type.dart';
+import '../core/hive/state/item_state.dart';
 import '../locator.dart';
 import '../util/secrets.dart';
 import '../view/main/items/weather/weather_data.dart';
@@ -123,10 +124,9 @@ class WeatherRepository {
         "data": weatherJson ?? forecastJson,
         "city": request.location.city,
       };
-      itemRepository.insertOrUpdateState(ItemStatesTableCompanion(
-        ohName: Value(request.itemName),
-        state: Value(jsonEncode(state)),
-      ));
+      itemRepository.insertOrUpdateState(request.itemName,
+        ItemState(state: jsonEncode(state), ohName: request.itemName),
+      );
     }
   }
 

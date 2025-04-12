@@ -6,6 +6,7 @@ import 'package:geekyants_flutter_gauges/geekyants_flutter_gauges.dart';
 import '../../../../../core/database/app_database.dart';
 import '../../../../../locator.dart';
 import '../../../../../repository/item_repository.dart';
+import '../../../../core/hive/state/item_state.dart';
 import '../general/multiple_items_state_injector.dart';
 import 'thermostat_data.dart';
 
@@ -80,8 +81,7 @@ class _ThermostatGaugeState extends State<ThermostatGauge> {
   @override
   void initState() {
     _itemsStore
-        .stateByName(widget.heatingSetpointItemName)
-        .watchSingleOrNull()
+        .watchStateByName(widget.heatingSetpointItemName)
         .listen((event) {
       if (event != null && mounted) {
         setState(() {

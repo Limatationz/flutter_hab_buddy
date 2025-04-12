@@ -6,5 +6,4 @@ part of 'items_store.dart';
 mixin _$ItemsStoreMixin on DatabaseAccessor<AppDatabase> {
   $RoomsTableTable get roomsTable => attachedDatabase.roomsTable;
   $ItemsTableTable get itemsTable => attachedDatabase.itemsTable;
-  $ItemStatesTableTable get itemStatesTable => attachedDatabase.itemStatesTable;
 }

@@ -1,8 +1,11 @@
 import 'dart:math';
 
+import 'package:collection/collection.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart' show Colors;
 
+import '../../hive/state/item_state.dart';
+import '../../network/generated/openHAB.models.swagger.dart';
 import '../app_database.dart';
 import '../converter/icon_data_converter.dart';
 import '../converter/json_converter.dart';
@@ -95,5 +98,14 @@ extension ItemExtension on Item {
       default:
        return null;
     }
+  }
+
+  bool equalsDTO(EnrichedItemDTO other) {
+    final companion = toCompanion(true);
+    return companion.ohName.value == other.name &&
+        companion.ohLabel.value == other.label &&
+        companion.ohCategory.value == other.category &&
+        (companion.ohTags.value ?? []).equals(other.tags ?? []) &&
+        (companion.ohGroups.value ?? []).equals(other.groupNames ?? []);
   }
 }

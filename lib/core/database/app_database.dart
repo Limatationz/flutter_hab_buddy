@@ -7,11 +7,9 @@ import 'package:rx_shared_preferences/rx_shared_preferences.dart';
 import '../../locator.dart';
 import '../../util/shared_prefs_keys.dart';
 import '../network/generated/openHAB.swagger.dart';
-import 'converter/command_description_converter.dart';
 import 'converter/icon_data_converter.dart';
 import 'converter/json_converter.dart';
 import 'converter/rule_converters.dart';
-import 'converter/state_description_converter.dart';
 import 'converter/string_list_converter.dart';
 import 'items/item_type.dart';
 import 'items/items_store.dart';
@@ -22,14 +20,12 @@ import 'rooms/rooms_table.dart';
 import 'rules/rule_trigger.dart';
 import 'rules/rules_store.dart';
 import 'rules/rules_table.dart';
-import 'state/item_states_table.dart';
 
 part 'app_database.g.dart';
 
 @DriftDatabase(tables: [
   RoomsTable,
   ItemsTable,
-  ItemStatesTable,
   RulesTable,
 ], daos: [
   RoomsStore,

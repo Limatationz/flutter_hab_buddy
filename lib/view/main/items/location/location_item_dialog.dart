@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import '../../../../core/database/app_database.dart';
-import '../../../../core/database/state/item_states_table.dart';
+import '../../../../core/hive/state/item_state.dart';
 import '../../../../locator.dart';
 import '../../../../repository/item_repository.dart';
 import '../../../util/constants.dart';
@@ -36,8 +36,7 @@ class _LocationItemDialogState extends State<LocationItemDialog> {
     location = widget.initialValue;
 
     _itemsStore
-        .stateByName(widget.itemName)
-        .watchSingleOrNull()
+        .watchStateByName(widget.itemName)
         .distinct()
         .listen((state) {
       if (state != null) {

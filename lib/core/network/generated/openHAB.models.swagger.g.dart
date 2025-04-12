@@ -846,32 +846,6 @@ Map<String, dynamic> _$ChannelTypeDTOToJson(ChannelTypeDTO instance) =>
       'commandDescription': instance.commandDescription?.toJson(),
     };
 
-CommandDescription _$CommandDescriptionFromJson(Map<String, dynamic> json) =>
-    CommandDescription(
-      commandOptions: (json['commandOptions'] as List<dynamic>?)
-              ?.map((e) => CommandOption.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
-    );
-
-Map<String, dynamic> _$CommandDescriptionToJson(CommandDescription instance) =>
-    <String, dynamic>{
-      'commandOptions':
-          instance.commandOptions?.map((e) => e.toJson()).toList(),
-    };
-
-CommandOption _$CommandOptionFromJson(Map<String, dynamic> json) =>
-    CommandOption(
-      command: json['command'] as String?,
-      label: json['label'] as String?,
-    );
-
-Map<String, dynamic> _$CommandOptionToJson(CommandOption instance) =>
-    <String, dynamic>{
-      'command': instance.command,
-      'label': instance.label,
-    };
-
 ConfigDescriptionParameterGroupDTO _$ConfigDescriptionParameterGroupDTOFromJson(
         Map<String, dynamic> json) =>
     ConfigDescriptionParameterGroupDTO(
@@ -890,40 +864,6 @@ Map<String, dynamic> _$ConfigDescriptionParameterGroupDTOToJson(
       'advanced': instance.advanced,
       'label': instance.label,
       'description': instance.description,
-    };
-
-StateDescription _$StateDescriptionFromJson(Map<String, dynamic> json) =>
-    StateDescription(
-      minimum: (json['minimum'] as num?)?.toDouble(),
-      maximum: (json['maximum'] as num?)?.toDouble(),
-      step: (json['step'] as num?)?.toDouble(),
-      pattern: json['pattern'] as String?,
-      readOnly: json['readOnly'] as bool?,
-      options: (json['options'] as List<dynamic>?)
-              ?.map((e) => StateOption.fromJson(e as Map<String, dynamic>))
-              .toList() ??
-          [],
-    );
-
-Map<String, dynamic> _$StateDescriptionToJson(StateDescription instance) =>
-    <String, dynamic>{
-      'minimum': instance.minimum,
-      'maximum': instance.maximum,
-      'step': instance.step,
-      'pattern': instance.pattern,
-      'readOnly': instance.readOnly,
-      'options': instance.options?.map((e) => e.toJson()).toList(),
-    };
-
-StateOption _$StateOptionFromJson(Map<String, dynamic> json) => StateOption(
-      $value: json['value'] as String?,
-      label: json['label'] as String?,
-    );
-
-Map<String, dynamic> _$StateOptionToJson(StateOption instance) =>
-    <String, dynamic>{
-      'value': instance.$value,
-      'label': instance.label,
     };
 
 ConfigDescriptionDTO _$ConfigDescriptionDTOFromJson(

@@ -1,29 +1,35 @@
-import 'package:drift/drift.dart';
+import 'package:hive_ce/hive.dart';
 import 'package:sprintf/sprintf.dart';
 
-import '../app_database.dart';
-import '../converter/command_description_converter.dart';
-import '../converter/state_description_converter.dart';
-import '../items/items_table.dart';
+import '../../network/generated/openHAB.models.swagger.dart';
+import '../../network/overrides/command_description.dart';
+import '../../network/overrides/state_description.dart';
 
-@DataClassName("ItemState")
-class ItemStatesTable extends Table {
-  TextColumn get ohName => text().references(ItemsTable, #ohName)();
+class ItemState extends HiveObject {
+  final String ohName;
+  String state;
 
-  TextColumn get state => text()();
+  String? transformedState;
 
-  TextColumn get transformedState => text().nullable()();
+  StateDescription? stateDescription;
 
-  TextColumn get stateDescription =>
-      text().map(const StateDescriptionConverter()).nullable()();
+  CommandDescription? commandDescription;
 
-  TextColumn get commandDescription =>
-      text().map(const CommandDescriptionConverter()).nullable()();
+  String? ohUnitSymbol;
 
-  TextColumn get ohUnitSymbol => text().nullable()();
+  ItemState({
+    required this.ohName,
+    required this.state,
+    this.transformedState,
+    this.stateDescription,
+    this.commandDescription,
+    this.ohUnitSymbol,
+  });
 
   @override
-  Set<Column> get primaryKey => {ohName};
+  String toString() {
+    return "{State: $state, TransformedState: $transformedState, unit: $ohUnitSymbol}";
+  }
 }
 
 extension FormattedState on ItemState {
@@ -35,7 +41,7 @@ extension FormattedState on ItemState {
     } else if (stateDescription?.pattern != null) {
       try {
         final text = sprintf(stateDescription!.pattern!, [getTypeState(state)]);
-        if(ohUnitSymbol != null){
+        if (ohUnitSymbol != null) {
           return "$text $ohUnitSymbol";
         } else {
           return text;

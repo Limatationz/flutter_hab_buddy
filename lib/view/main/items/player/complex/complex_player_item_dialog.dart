@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import '../../../../../core/database/app_database.dart';
-import '../../../../../core/database/state/state_utils.dart';
+import '../../../../../core/hive/state/item_state.dart';
+import '../../../../../core/hive/state/state_utils.dart';
 import '../../../../../locator.dart';
 import '../../../../../repository/item_repository.dart';
 import '../../../../../util/icons/icons.dart';
@@ -160,8 +161,7 @@ class _VolumeSliderState extends State<VolumeSlider> {
   @override
   void initState() {
     _itemsStore
-        .stateByName(widget.itemName)
-        .watchSingleOrNull()
+        .watchStateByName(widget.itemName)
         .listen((event) {
       if (event != null && mounted) {
         setState(() {

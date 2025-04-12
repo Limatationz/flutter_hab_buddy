@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../core/database/app_database.dart';
-import '../../../../core/database/state/item_states_table.dart';
-import '../../../../core/network/converters/persistence.dart';
+import '../../../../core/hive/sensor_history_data_bean/sensor_history_data_bean.dart';
+import '../../../../core/hive/state/item_state.dart';
 import '../../../../generated/l10n.dart';
 import '../../../../locator.dart';
 import '../../../../repository/chart_repository.dart';

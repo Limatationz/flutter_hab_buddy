@@ -25,23 +25,19 @@ class ThermostatItemWidget extends MediumWidthItemWidget {
       item: item,
       colorScheme: colorScheme,
       heatingSetpointStream: _itemsStore
-          .stateByName(item!.ohName)
-          .watchSingleOrNull()
+          .watchStateByName(item!.ohName)
           .whereNotNull(),
       currentTemperatureStream: _itemsStore
-          .stateByName(config.currentTemperatureItemName)
-          .watchSingleOrNull()
+          .watchStateByName(config.currentTemperatureItemName)
           .whereNotNull(),
       currentHumidityStream: config.currentHumidityItemName != null
           ? _itemsStore
-              .stateByName(config.currentHumidityItemName!)
-              .watchSingleOrNull()
+              .watchStateByName(config.currentHumidityItemName!)
               .whereNotNull()
           : null,
       modeStream: config.modeItemName != null
           ? _itemsStore
-              .stateByName(config.modeItemName!)
-              .watchSingleOrNull()
+              .watchStateByName(config.modeItemName!)
               .whereNotNull()
           : null,
       disableTap: disableTap,

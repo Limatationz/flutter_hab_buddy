@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../../../../core/database/app_database.dart';
+import '../../../../core/hive/state/item_state.dart';
 import '../../../../locator.dart';
 
 class MultipleItemStatesInjector extends StatelessWidget {
@@ -17,11 +18,11 @@ class MultipleItemStatesInjector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<ItemState>?>(
-        stream: itemsStore.statesByNameList(itemNames).watch().distinct(
+    return StreamBuilder<List<ItemState?>?>(
+        stream: itemsStore.watchStatesByNameList(itemNames).distinct(
             (previous, next) =>
-                previous.map((e) => e.state).join() ==
-                next.map((e) => e.state).join()),
+                previous.map((e) => e?.state).join() ==
+                next.map((e) => e?.state).join()),
         builder: (context, snapshot) {
           if (snapshot.data == null) {
             return const SizedBox.shrink();
@@ -30,7 +31,9 @@ class MultipleItemStatesInjector extends StatelessWidget {
             final itemStates = snapshot.data!;
             final map = <String, ItemState>{};
             for (int i = 0; i < itemNames.length; i++) {
-              map[itemStates[i].ohName] = itemStates[i];
+              if (itemStates[i] != null) {
+                map[itemStates[i]!.ohName] = itemStates[i]!;
+              }
             }
             return builder(map);
           } catch (e) {

@@ -9,7 +9,7 @@ import '../../../../../core/database/app_database.dart';
 import '../../../../../core/database/items/items_table.dart';
 import '../../../../../locator.dart';
 import '../../../../../repository/item_repository.dart';
-import '../../../../core/database/state/item_states_table.dart';
+import '../../../../core/hive/state/item_state.dart';
 import '../../../util/general/dimmable_widget_container.dart';
 import '../general/item_widget.dart';
 import '../general/item_widget_factory.dart';

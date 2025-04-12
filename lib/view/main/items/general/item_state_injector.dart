@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../../../../core/database/app_database.dart';
+import '../../../../core/hive/state/item_state.dart';
 import '../../../../locator.dart';
 
 class ItemStateInjector extends StatelessWidget {
@@ -18,11 +19,12 @@ class ItemStateInjector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<ItemState?>(
-        stream: itemsStore.stateByName(itemName).watchSingleOrNull().distinct(),
+        stream: itemsStore.watchStateByName(itemName).distinct(),
         builder: (context, snapshot) {
           if (snapshot.data == null) {
             return const SizedBox.shrink();
           }
+          print("State of $itemName is ${snapshot.data}");
           return builder(snapshot.data!);
         });
   }

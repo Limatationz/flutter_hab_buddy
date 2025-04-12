@@ -25,27 +25,22 @@ class ComplexPlayerItemWidget extends MediumWidthItemWidget {
       item: item,
       colorScheme: colorScheme,
       playerStateStream: _itemsStore
-          .stateByName(item!.ohName)
-          .watchSingleOrNull()
+          .watchStateByName(item!.ohName)
           .whereNotNull(),
       currentDurationStateStream: _itemsStore
-          .stateByName(config.currentDurationItemName)
-          .watchSingleOrNull()
+          .watchStateByName(config.currentDurationItemName)
           .whereNotNull(),
       totalDurationStateStream: _itemsStore
-          .stateByName(config.totalDurationItemName)
-          .watchSingleOrNull()
+          .watchStateByName(config.totalDurationItemName)
           .whereNotNull(),
       imageStateStream: config.imageItemName != null
           ? _itemsStore
-              .stateByName(config.imageItemName!)
-              .watchSingleOrNull()
+              .watchStateByName(config.imageItemName!)
               .whereNotNull()
           : null,
       volumeDimmerStateStream: config.volumeDimmerItemName != null
           ? _itemsStore
-              .stateByName(config.volumeDimmerItemName!)
-              .watchSingleOrNull()
+              .watchStateByName(config.volumeDimmerItemName!)
               .whereNotNull()
           : null,
       disableTap: disableTap,

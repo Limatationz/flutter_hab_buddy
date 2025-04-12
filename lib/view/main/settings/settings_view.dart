@@ -1,4 +1,5 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:dart_date/dart_date.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide ConnectionState;
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
@@ -110,9 +111,7 @@ class SettingsView extends StatelessWidget {
                           stream: model.lastSSEUpdate,
                           builder: (context, snapshot) {
                             if (snapshot.data != null) {
-                              return Text(DateFormat.yMd()
-                                  .add_Hms()
-                                  .format(snapshot.data!));
+                              return Text(snapshot.data!.timeago(locale: S.of(context).localeName));
                             } else {
                               return Text(S.of(context).never);
                             }

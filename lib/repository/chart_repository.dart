@@ -1,6 +1,6 @@
 import 'package:hive_ce/hive.dart';
 
-import '../core/network/converters/persistence.dart';
+import '../core/hive/sensor_history_data_bean/sensor_history_data_bean.dart';
 import '../core/network/generated/openHAB.swagger.dart';
 import '../locator.dart';
 
@@ -9,7 +9,6 @@ class ChartRepository {
   late final Box<DateTime> _sensorDataLastUpdateBox;
 
   ChartRepository() {
-    Hive.registerAdapter(SensorHistoryDataBeanAdapter());
     Hive.openBox<List>('sensorBox').then((value) => _sensorDataBox = value);
     Hive.openBox<DateTime>('sensorDataLastUpdateBox')
         .then((value) => _sensorDataLastUpdateBox = value);

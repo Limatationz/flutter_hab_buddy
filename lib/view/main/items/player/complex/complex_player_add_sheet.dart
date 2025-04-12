@@ -8,7 +8,7 @@ import '../../../../../core/services/snackbar_service.dart';
 import '../../../../../core/database/app_database.dart';
 import '../../../../../core/database/items/item_type.dart';
 import '../../../../../core/database/items/oh_item_type.dart';
-import '../../../../../core/database/state/item_states_table.dart';
+import '../../../../../core/hive/state/item_state.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../../locator.dart';
 import '../../../../../repository/item_repository.dart';
@@ -51,27 +51,22 @@ class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
   void initState() {
     if (!isAdd) {
       playerStateStream = _itemsStore
-          .stateByName(widget.complexPlayerData!.playerItemName)
-          .watchSingleOrNull()
+          .watchStateByName(widget.complexPlayerData!.playerItemName)
           .whereNotNull();
       totalDurationStateStream = _itemsStore
-          .stateByName(widget.complexPlayerData!.totalDurationItemName)
-          .watchSingleOrNull()
+          .watchStateByName(widget.complexPlayerData!.totalDurationItemName)
           .whereNotNull();
       currentDurationStateStream = _itemsStore
-          .stateByName(widget.complexPlayerData!.currentDurationItemName)
-          .watchSingleOrNull()
+          .watchStateByName(widget.complexPlayerData!.currentDurationItemName)
           .whereNotNull();
       if (widget.complexPlayerData!.volumeDimmerItemName != null) {
         volumeDimmerStateStream = _itemsStore
-            .stateByName(widget.complexPlayerData!.volumeDimmerItemName!)
-            .watchSingleOrNull()
+            .watchStateByName(widget.complexPlayerData!.volumeDimmerItemName!)
             .whereNotNull();
       }
       if (widget.complexPlayerData!.imageItemName != null) {
         imageStateStream = _itemsStore
-            .stateByName(widget.complexPlayerData!.imageItemName!)
-            .watchSingleOrNull()
+            .watchStateByName(widget.complexPlayerData!.imageItemName!)
             .whereNotNull();
       }
     }
@@ -156,8 +151,7 @@ class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
                       onChanged: (value) {
                         if (value != null) {
                           playerStateStream = _itemsStore
-                              .stateByName(value)
-                              .watchSingleOrNull()
+                              .watchStateByName(value)
                               .whereNotNull();
                         } else {
                           playerStateStream = null;
@@ -188,8 +182,7 @@ class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
                       onChanged: (value) {
                         if (value != null) {
                           totalDurationStateStream = _itemsStore
-                              .stateByName(value)
-                              .watchSingleOrNull()
+                              .watchStateByName(value)
                               .whereNotNull();
                         } else {
                           totalDurationStateStream = null;
@@ -219,8 +212,7 @@ class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
                       onChanged: (value) {
                         if (value != null) {
                           currentDurationStateStream = _itemsStore
-                              .stateByName(value)
-                              .watchSingleOrNull()
+                              .watchStateByName(value)
                               .whereNotNull();
                         } else {
                           currentDurationStateStream = null;
@@ -249,8 +241,7 @@ class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
                       onChanged: (value) {
                         if (value != null) {
                           volumeDimmerStateStream = _itemsStore
-                              .stateByName(value)
-                              .watchSingleOrNull()
+                              .watchStateByName(value)
                               .whereNotNull();
                         } else {
                           volumeDimmerStateStream = null;
@@ -278,8 +269,7 @@ class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
                       onChanged: (value) {
                         if (value != null) {
                           imageStateStream = _itemsStore
-                              .stateByName(value)
-                              .watchSingleOrNull()
+                              .watchStateByName(value)
                               .whereNotNull();
                         } else {
                           imageStateStream = null;

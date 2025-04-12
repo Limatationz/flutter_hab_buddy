@@ -16,6 +16,7 @@ import '../core/database/app_database.dart';
 import '../core/database/items/item_type.dart';
 import '../core/database/items/items_table.dart';
 import '../core/database/items/oh_item_type.dart';
+import '../core/hive/state/item_state.dart';
 import '../core/network/converters/item.dart';
 import '../core/network/generated/client_index.dart';
 import '../core/services/snackbar_service.dart';
@@ -24,6 +25,7 @@ import 'chart_repository.dart';
 import 'login_repository.dart';
 
 class ItemRepository {
+  final _logger = Logger();
   final _loginRepository = locator<LoginRepository>();
   final _chartRepository = locator<ChartRepository>();
   final _itemsStore = locator<AppDatabase>().itemsStore;
@@ -41,14 +43,20 @@ class ItemRepository {
     final result = await locator<OpenHAB>().itemsGet();
     if (result.isSuccessful) {
       final List<ItemsTableCompanion> itemsToStore = [];
-      final List<ItemStatesTableCompanion> itemStatesToInsert = [];
+      final List<(String, ItemState)> itemStatesToInsert = [];
       final List<ItemsTableCompanion> itemsToUpdate = [];
-      final List<ItemStatesTableCompanion> itemStatesToUpdate = [];
+      final List<(String, ItemState)> itemStatesToUpdate = [];
       final List<Item> itemsToDelete = [];
 
       final storedItems = await _itemsStore.all().get();
 
       for (final item in result.body!) {
+        if (item.name == null){
+          _logger.e("Item name is null");
+          continue;
+        }
+
+        final itemName = item.name!;
         final storedItem = storedItems
             .firstWhereOrNull((element) => element.ohName == item.name);
         if (storedItem == null) {
@@ -58,21 +66,23 @@ class ItemRepository {
             itemsToStore.add(dbItem);
           }
 
-          final itemState = item.asItemStateUpdate();
+          final itemState = item.asItemState();
           if (itemState != null) {
-            itemStatesToInsert.add(itemState);
+            itemStatesToInsert.add((itemName, itemState));
           }
         } else {
           // Item is already stored -> update
           final update = item.asDatabaseModel();
-          if (update != null) {
+          if (update != null && !storedItem.equalsDTO(item)) {
             itemsToUpdate.add(update);
+          } else {
+            // item did not change
           }
 
           // state update
-          final stateUpdate = item.asItemStateUpdate();
+          final stateUpdate = item.asItemState();
           if (stateUpdate != null) {
-            itemStatesToUpdate.add(stateUpdate);
+            itemStatesToUpdate.add((itemName, stateUpdate));
           }
 
           // get new chart data if item is readonly
@@ -104,7 +114,7 @@ class ItemRepository {
 
       // Update item states
       if (itemStatesToUpdate.isNotEmpty) {
-        await _itemsStore.updateStateByName(itemStatesToUpdate);
+        await _itemsStore.updateStatesByName(itemStatesToUpdate);
       }
 
       // Delete all items that are not available anymore if they are not complex
@@ -324,6 +334,6 @@ class ItemRepository {
   Future<void> updateFavoriteByName(String name, bool favorite) =>
       _itemsStore.updateFavoriteByName(name, favorite);
 
-  Future<void> insertOrUpdateState(ItemStatesTableCompanion state) =>
-      _itemsStore.insertOrUpdateStateSingle(state);
+  Future<void> insertOrUpdateState(String name, ItemState state) =>
+      _itemsStore.insertOrUpdateStateSingle(name, state);
 }

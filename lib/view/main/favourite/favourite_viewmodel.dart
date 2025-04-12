@@ -131,51 +131,58 @@ class FavouriteViewModel extends BaseViewModel {
           List<FavouriteViewManualSortOrder> manualRoomsSortOrder,
           ColorScheme defaultColorScheme,
           Brightness brightness) {
-    final widgets = itemsByRoomId.map((key, value) {
-      final room = rooms.firstWhere((element) => element.id == key);
+    try {
+      final widgets = itemsByRoomId.map((key, value) {
+        final room = rooms.firstWhere((element) => element.id == key);
 
-      final realItems = value.where((element) => !element.isSensor).toList();
+        final realItems = value.where((element) => !element.isSensor).toList();
 
-      // sort sensors by room id
-      final itemsSortOrder = manualRoomsSortOrder
-          .firstWhere((element) => element.roomId == key)
-          .itemNames;
-      realItems.sort((a, b) =>
-          itemsSortOrder.indexOf(a.ohName) - itemsSortOrder.indexOf(b.ohName));
+        // sort sensors by room id
+        final itemsSortOrder = manualRoomsSortOrder
+            .firstWhere((element) => element.roomId == key)
+            .itemNames;
+        realItems.sort((a, b) =>
+        itemsSortOrder.indexOf(a.ohName) - itemsSortOrder.indexOf(b.ohName));
 
-      final sensorItems = value.where((element) => element.isSensor).toList();
+        final sensorItems = value.where((element) => element.isSensor).toList();
 
-      // sort items by name
-      final sensorsSortOrder = manualRoomsSortOrder
-          .firstWhere((element) => element.roomId == key)
-          .sensorNames;
-      sensorItems.sort((a, b) =>
-          sensorsSortOrder.indexOf(a.ohName) -
-          sensorsSortOrder.indexOf(b.ohName));
+        // sort items by name
+        final sensorsSortOrder = manualRoomsSortOrder
+            .firstWhere((element) => element.roomId == key)
+            .sensorNames;
+        sensorItems.sort((a, b) =>
+        sensorsSortOrder.indexOf(a.ohName) -
+            sensorsSortOrder.indexOf(b.ohName));
 
-      final colorScheme = room.color != null
-          ? ColorScheme.fromSeed(
-              seedColor: fromHex(room.color!), brightness: brightness)
-          : defaultColorScheme;
-      final itemWidgets = buildItemWidgets(realItems, colorScheme);
-      final sensorItemWidgets =
-          buildSensorItemWidgets(sensorItems, colorScheme);
-      return MapEntry(key, Tuple2(itemWidgets, sensorItemWidgets));
-    });
+        final colorScheme = room.color != null
+            ? ColorScheme.fromSeed(
+            seedColor: fromHex(room.color!), brightness: brightness)
+            : defaultColorScheme;
+        final itemWidgets = buildItemWidgets(realItems, colorScheme);
+        final sensorItemWidgets =
+        buildSensorItemWidgets(sensorItems, colorScheme);
+        return MapEntry(key, Tuple2(itemWidgets, sensorItemWidgets));
+      });
 
-    // sort rooms
-    final roomsSortOrder = manualRoomsSortOrder.map((e) => e.roomId).toList();
-    final sortedRooms =
-        Map<int, Tuple2<List<ItemWidget>, List<SensorItemWidget>>>.new();
-    for (final roomId in roomsSortOrder) {
-      if (widgets.containsKey(roomId)) {
-        sortedRooms[roomId] = widgets[roomId]!;
-      } else {
-        _log.w("Could not find room with id $roomId");
+      // sort rooms
+      final roomsSortOrder = manualRoomsSortOrder.map((e) => e.roomId).toList();
+      final sortedRooms =
+      Map<int, Tuple2<List<ItemWidget>, List<SensorItemWidget>>>.new();
+      for (final roomId in roomsSortOrder) {
+        if (widgets.containsKey(roomId)) {
+          sortedRooms[roomId] = widgets[roomId]!;
+        } else {
+          _log.w("Could not find room with id $roomId");
+        }
       }
-    }
 
-    return sortedRooms;
+      return sortedRooms;
+    } catch (e, s) {
+      _log.e("Error on buildItemWidgetsByRoomIdForManual", error: e, stackTrace: s);
+      // we switch back to auto mode
+      onSettingsViewTypeChanged(FavouriteViewType.auto);
+      return {};
+    }
   }
 
   void navigateToRoom(BuildContext context, Room room) {

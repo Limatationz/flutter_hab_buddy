@@ -22,4 +22,11 @@ targets:
           input_folder: "res/swaggers/"
           output_folder: 'lib/core/network/generated/'
           separate_models: true
-          # overriden_models: [Map]
+          overriden_models:
+            - file_name: "openHAB"
+              import_url: "../overrides/general.dart"
+              overriden_models:
+                - "StateDescription"
+                - "StateOption"
+                - "CommandDescription"
+                - "CommandOption"

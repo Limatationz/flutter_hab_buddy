@@ -12,6 +12,7 @@ import 'package:hive_ce_flutter/adapters.dart';
 import 'package:logging/logging.dart';
 import 'package:nominatim_flutter/nominatim_flutter.dart';
 
+import 'core/hive/hive_registrar.g.dart';
 import 'core/routing/router.dart';
 import 'generated/l10n.dart';
 import 'locator.dart';
@@ -27,6 +28,7 @@ void main() async {
 
   // Hive
   await Hive.initFlutter();
+  Hive.registerAdapters();
 
   // Map
   NominatimFlutter.instance.configureDioCache();

@@ -8,7 +8,8 @@ import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 
 import '../../../../../core/database/app_database.dart';
 import '../../../../../core/database/items/items_table.dart';
-import '../../../../../core/database/state/state_utils.dart';
+import '../../../../../core/hive/state/item_state.dart';
+import '../../../../../core/hive/state/state_utils.dart';
 import '../../../../../locator.dart';
 import '../../../../../repository/item_repository.dart';
 import '../../../../../util/icons/icons.dart';

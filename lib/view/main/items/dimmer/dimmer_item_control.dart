@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import '../../../../core/database/app_database.dart';
-import '../../../../core/database/state/item_states_table.dart';
+import '../../../../core/hive/state/item_state.dart';
 import '../../../../generated/l10n.dart';
 import '../../../util/constants.dart';
 import '../general/item_widget_factory.dart';

@@ -4,7 +4,7 @@ import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/database/items/items_table.dart';
-import '../../../../core/database/state/state_utils.dart';
+import '../../../../core/hive/state/state_utils.dart';
 import '../../../util/general/widget_container.dart';
 import '../general/item_state_injector.dart';
 import '../general/item_widget.dart';

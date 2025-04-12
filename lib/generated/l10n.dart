@@ -1819,6 +1819,11 @@ class S {
   String get viewRule {
     return Intl.message('View Rule', name: 'viewRule', desc: '', args: []);
   }
+
+  /// `en`
+  String get localeName {
+    return Intl.message('en', name: 'localeName', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

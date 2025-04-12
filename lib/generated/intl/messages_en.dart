@@ -273,6 +273,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "itemTypeWindowContact": MessageLookupByLibrary.simpleMessage(
       "Window Contact",
     ),
+    "localeName": MessageLookupByLibrary.simpleMessage("en"),
     "login": MessageLookupByLibrary.simpleMessage("Login"),
     "loginFailedMessage": MessageLookupByLibrary.simpleMessage(
       "Please try again",

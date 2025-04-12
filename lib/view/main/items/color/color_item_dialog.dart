@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import '../../../../core/database/app_database.dart';
-import '../../../../core/database/state/item_states_table.dart';
+import '../../../../core/hive/state/item_state.dart';
 import '../../../../generated/l10n.dart';
 import '../../../../locator.dart';
 import '../../../../repository/item_repository.dart';
@@ -39,8 +39,7 @@ class _ColorItemDialogState extends State<ColorItemDialog> {
     sliderValue = widget.initialValue.brightness.toDouble();
 
     _itemsStore
-        .stateByName(widget.itemName)
-        .watchSingleOrNull()
+        .watchStateByName(widget.itemName)
         .distinct()
         .listen((state) {
       if (state != null) {

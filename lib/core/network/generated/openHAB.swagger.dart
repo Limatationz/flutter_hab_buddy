@@ -6,6 +6,7 @@ import 'package:collection/collection.dart';
 import 'dart:convert';
 
 import 'openHAB.models.swagger.dart';
+import '../overrides/general.dart';
 import 'package:chopper/chopper.dart';
 
 import 'client_mapping.dart';
@@ -39,13 +40,14 @@ abstract class OpenHAB extends ChopperService {
     }
 
     final newClient = ChopperClient(
-        services: [_$OpenHAB()],
-        converter: converter ?? $JsonSerializableConverter(),
-        interceptors: interceptors ?? [],
-        client: httpClient,
-        authenticator: authenticator,
-        errorConverter: errorConverter,
-        baseUrl: baseUrl ?? Uri.parse('http://'));
+      services: [_$OpenHAB()],
+      converter: converter ?? $JsonSerializableConverter(),
+      interceptors: interceptors ?? [],
+      client: httpClient,
+      authenticator: authenticator,
+      errorConverter: errorConverter,
+      baseUrl: baseUrl ?? Uri.parse('http://'),
+    );
     return _$OpenHAB(newClient);
   }
 
@@ -59,10 +61,15 @@ abstract class OpenHAB extends ChopperService {
     String? type,
   }) {
     generatedMapping.putIfAbsent(
-        ModuleTypeDTO, () => ModuleTypeDTO.fromJsonFactory);
+      ModuleTypeDTO,
+      () => ModuleTypeDTO.fromJsonFactory,
+    );
 
     return _moduleTypesGet(
-        acceptLanguage: acceptLanguage?.toString(), tags: tags, type: type);
+      acceptLanguage: acceptLanguage?.toString(),
+      tags: tags,
+      type: type,
+    );
   }
 
   ///Get all available module types.
@@ -84,11 +91,14 @@ abstract class OpenHAB extends ChopperService {
     required String? moduleTypeUID,
   }) {
     generatedMapping.putIfAbsent(
-        ModuleTypeDTO, () => ModuleTypeDTO.fromJsonFactory);
+      ModuleTypeDTO,
+      () => ModuleTypeDTO.fromJsonFactory,
+    );
 
     return _moduleTypesModuleTypeUIDGet(
-        acceptLanguage: acceptLanguage?.toString(),
-        moduleTypeUID: moduleTypeUID);
+      acceptLanguage: acceptLanguage?.toString(),
+      moduleTypeUID: moduleTypeUID,
+    );
   }
 
   ///Gets a module type corresponding to the given UID.
@@ -112,13 +122,16 @@ abstract class OpenHAB extends ChopperService {
     bool? staticDataOnly,
   }) {
     generatedMapping.putIfAbsent(
-        EnrichedRuleDTO, () => EnrichedRuleDTO.fromJsonFactory);
+      EnrichedRuleDTO,
+      () => EnrichedRuleDTO.fromJsonFactory,
+    );
 
     return _rulesGet(
-        prefix: prefix,
-        tags: tags,
-        summary: summary,
-        staticDataOnly: staticDataOnly);
+      prefix: prefix,
+      tags: tags,
+      summary: summary,
+      staticDataOnly: staticDataOnly,
+    );
   }
 
   ///Get available rules, optionally filtered by tags and/or prefix.
@@ -140,10 +153,7 @@ abstract class OpenHAB extends ChopperService {
   }
 
   ///Creates a rule.
-  @Post(
-    path: '/rules',
-    optionalBody: true,
-  )
+  @Post(path: '/rules', optionalBody: true)
   Future<chopper.Response> _rulesPost({@Body() required RuleDTO? body});
 
   ///Sets the rule enabled status.
@@ -157,10 +167,7 @@ abstract class OpenHAB extends ChopperService {
 
   ///Sets the rule enabled status.
   ///@param ruleUID ruleUID
-  @Post(
-    path: '/rules/{ruleUID}/enable',
-    optionalBody: true,
-  )
+  @Post(path: '/rules/{ruleUID}/enable', optionalBody: true)
   Future<chopper.Response> _rulesRuleUIDEnablePost({
     @Path('ruleUID') required String? ruleUID,
     @Body() required String? body,
@@ -168,8 +175,9 @@ abstract class OpenHAB extends ChopperService {
 
   ///Gets the rule actions.
   ///@param ruleUID ruleUID
-  Future<chopper.Response<List<ActionDTO>>> rulesRuleUIDActionsGet(
-      {required String? ruleUID}) {
+  Future<chopper.Response<List<ActionDTO>>> rulesRuleUIDActionsGet({
+    required String? ruleUID,
+  }) {
     generatedMapping.putIfAbsent(ActionDTO, () => ActionDTO.fromJsonFactory);
 
     return _rulesRuleUIDActionsGet(ruleUID: ruleUID);
@@ -178,15 +186,19 @@ abstract class OpenHAB extends ChopperService {
   ///Gets the rule actions.
   ///@param ruleUID ruleUID
   @Get(path: '/rules/{ruleUID}/actions')
-  Future<chopper.Response<List<ActionDTO>>> _rulesRuleUIDActionsGet(
-      {@Path('ruleUID') required String? ruleUID});
+  Future<chopper.Response<List<ActionDTO>>> _rulesRuleUIDActionsGet({
+    @Path('ruleUID') required String? ruleUID,
+  });
 
   ///Gets the rule corresponding to the given UID.
   ///@param ruleUID ruleUID
-  Future<chopper.Response<EnrichedRuleDTO>> rulesRuleUIDGet(
-      {required String? ruleUID}) {
+  Future<chopper.Response<EnrichedRuleDTO>> rulesRuleUIDGet({
+    required String? ruleUID,
+  }) {
     generatedMapping.putIfAbsent(
-        EnrichedRuleDTO, () => EnrichedRuleDTO.fromJsonFactory);
+      EnrichedRuleDTO,
+      () => EnrichedRuleDTO.fromJsonFactory,
+    );
 
     return _rulesRuleUIDGet(ruleUID: ruleUID);
   }
@@ -194,8 +206,9 @@ abstract class OpenHAB extends ChopperService {
   ///Gets the rule corresponding to the given UID.
   ///@param ruleUID ruleUID
   @Get(path: '/rules/{ruleUID}')
-  Future<chopper.Response<EnrichedRuleDTO>> _rulesRuleUIDGet(
-      {@Path('ruleUID') required String? ruleUID});
+  Future<chopper.Response<EnrichedRuleDTO>> _rulesRuleUIDGet({
+    @Path('ruleUID') required String? ruleUID,
+  });
 
   ///Updates an existing rule corresponding to the given UID.
   ///@param ruleUID ruleUID
@@ -208,10 +221,7 @@ abstract class OpenHAB extends ChopperService {
 
   ///Updates an existing rule corresponding to the given UID.
   ///@param ruleUID ruleUID
-  @Put(
-    path: '/rules/{ruleUID}',
-    optionalBody: true,
-  )
+  @Put(path: '/rules/{ruleUID}', optionalBody: true)
   Future<chopper.Response> _rulesRuleUIDPut({
     @Path('ruleUID') required String? ruleUID,
     @Body() required RuleDTO? body,
@@ -226,15 +236,19 @@ abstract class OpenHAB extends ChopperService {
   ///Removes an existing rule corresponding to the given UID.
   ///@param ruleUID ruleUID
   @Delete(path: '/rules/{ruleUID}')
-  Future<chopper.Response> _rulesRuleUIDDelete(
-      {@Path('ruleUID') required String? ruleUID});
+  Future<chopper.Response> _rulesRuleUIDDelete({
+    @Path('ruleUID') required String? ruleUID,
+  });
 
   ///Gets the rule conditions.
   ///@param ruleUID ruleUID
-  Future<chopper.Response<List<ConditionDTO>>> rulesRuleUIDConditionsGet(
-      {required String? ruleUID}) {
+  Future<chopper.Response<List<ConditionDTO>>> rulesRuleUIDConditionsGet({
+    required String? ruleUID,
+  }) {
     generatedMapping.putIfAbsent(
-        ConditionDTO, () => ConditionDTO.fromJsonFactory);
+      ConditionDTO,
+      () => ConditionDTO.fromJsonFactory,
+    );
 
     return _rulesRuleUIDConditionsGet(ruleUID: ruleUID);
   }
@@ -242,21 +256,24 @@ abstract class OpenHAB extends ChopperService {
   ///Gets the rule conditions.
   ///@param ruleUID ruleUID
   @Get(path: '/rules/{ruleUID}/conditions')
-  Future<chopper.Response<List<ConditionDTO>>> _rulesRuleUIDConditionsGet(
-      {@Path('ruleUID') required String? ruleUID});
+  Future<chopper.Response<List<ConditionDTO>>> _rulesRuleUIDConditionsGet({
+    @Path('ruleUID') required String? ruleUID,
+  });
 
   ///Gets the rule configuration values.
   ///@param ruleUID ruleUID
-  Future<chopper.Response<String>> rulesRuleUIDConfigGet(
-      {required String? ruleUID}) {
+  Future<chopper.Response<String>> rulesRuleUIDConfigGet({
+    required String? ruleUID,
+  }) {
     return _rulesRuleUIDConfigGet(ruleUID: ruleUID);
   }
 
   ///Gets the rule configuration values.
   ///@param ruleUID ruleUID
   @Get(path: '/rules/{ruleUID}/config')
-  Future<chopper.Response<String>> _rulesRuleUIDConfigGet(
-      {@Path('ruleUID') required String? ruleUID});
+  Future<chopper.Response<String>> _rulesRuleUIDConfigGet({
+    @Path('ruleUID') required String? ruleUID,
+  });
 
   ///Sets the rule configuration values.
   ///@param ruleUID ruleUID
@@ -269,10 +286,7 @@ abstract class OpenHAB extends ChopperService {
 
   ///Sets the rule configuration values.
   ///@param ruleUID ruleUID
-  @Put(
-    path: '/rules/{ruleUID}/config',
-    optionalBody: true,
-  )
+  @Put(path: '/rules/{ruleUID}/config', optionalBody: true)
   Future<chopper.Response> _rulesRuleUIDConfigPut({
     @Path('ruleUID') required String? ruleUID,
     @Body() required Object? body,
@@ -290,7 +304,10 @@ abstract class OpenHAB extends ChopperService {
     generatedMapping.putIfAbsent(ModuleDTO, () => ModuleDTO.fromJsonFactory);
 
     return _rulesRuleUIDModuleCategoryIdGet(
-        ruleUID: ruleUID, moduleCategory: moduleCategory, id: id);
+      ruleUID: ruleUID,
+      moduleCategory: moduleCategory,
+      id: id,
+    );
   }
 
   ///Gets the rule's module corresponding to the given Category and ID.
@@ -314,7 +331,10 @@ abstract class OpenHAB extends ChopperService {
     required String? id,
   }) {
     return _rulesRuleUIDModuleCategoryIdConfigGet(
-        ruleUID: ruleUID, moduleCategory: moduleCategory, id: id);
+      ruleUID: ruleUID,
+      moduleCategory: moduleCategory,
+      id: id,
+    );
   }
 
   ///Gets the module's configuration.
@@ -340,7 +360,11 @@ abstract class OpenHAB extends ChopperService {
     required String? param,
   }) {
     return _rulesRuleUIDModuleCategoryIdConfigParamGet(
-        ruleUID: ruleUID, moduleCategory: moduleCategory, id: id, param: param);
+      ruleUID: ruleUID,
+      moduleCategory: moduleCategory,
+      id: id,
+      param: param,
+    );
   }
 
   ///Gets the module's configuration parameter.
@@ -369,11 +393,12 @@ abstract class OpenHAB extends ChopperService {
     required String? body,
   }) {
     return _rulesRuleUIDModuleCategoryIdConfigParamPut(
-        ruleUID: ruleUID,
-        moduleCategory: moduleCategory,
-        id: id,
-        param: param,
-        body: body);
+      ruleUID: ruleUID,
+      moduleCategory: moduleCategory,
+      id: id,
+      param: param,
+      body: body,
+    );
   }
 
   ///Sets the module's configuration parameter value.
@@ -395,8 +420,9 @@ abstract class OpenHAB extends ChopperService {
 
   ///Gets the rule triggers.
   ///@param ruleUID ruleUID
-  Future<chopper.Response<List<TriggerDTO>>> rulesRuleUIDTriggersGet(
-      {required String? ruleUID}) {
+  Future<chopper.Response<List<TriggerDTO>>> rulesRuleUIDTriggersGet({
+    required String? ruleUID,
+  }) {
     generatedMapping.putIfAbsent(TriggerDTO, () => TriggerDTO.fromJsonFactory);
 
     return _rulesRuleUIDTriggersGet(ruleUID: ruleUID);
@@ -405,8 +431,9 @@ abstract class OpenHAB extends ChopperService {
   ///Gets the rule triggers.
   ///@param ruleUID ruleUID
   @Get(path: '/rules/{ruleUID}/triggers')
-  Future<chopper.Response<List<TriggerDTO>>> _rulesRuleUIDTriggersGet(
-      {@Path('ruleUID') required String? ruleUID});
+  Future<chopper.Response<List<TriggerDTO>>> _rulesRuleUIDTriggersGet({
+    @Path('ruleUID') required String? ruleUID,
+  });
 
   ///Executes actions of the rule.
   ///@param ruleUID ruleUID
@@ -419,10 +446,7 @@ abstract class OpenHAB extends ChopperService {
 
   ///Executes actions of the rule.
   ///@param ruleUID ruleUID
-  @Post(
-    path: '/rules/{ruleUID}/runnow',
-    optionalBody: true,
-  )
+  @Post(path: '/rules/{ruleUID}/runnow', optionalBody: true)
   Future<chopper.Response> _rulesRuleUIDRunnowPost({
     @Path('ruleUID') required String? ruleUID,
     @Body() required Object? body,
@@ -436,7 +460,9 @@ abstract class OpenHAB extends ChopperService {
     String? until,
   }) {
     generatedMapping.putIfAbsent(
-        RuleExecution, () => RuleExecution.fromJsonFactory);
+      RuleExecution,
+      () => RuleExecution.fromJsonFactory,
+    );
 
     return _rulesScheduleSimulationsGet(from: from, until: until);
   }
@@ -452,8 +478,9 @@ abstract class OpenHAB extends ChopperService {
 
   ///Get all available templates.
   ///@param Accept-Language language
-  Future<chopper.Response<List<Template>>> templatesGet(
-      {String? acceptLanguage}) {
+  Future<chopper.Response<List<Template>>> templatesGet({
+    String? acceptLanguage,
+  }) {
     generatedMapping.putIfAbsent(Template, () => Template.fromJsonFactory);
 
     return _templatesGet(acceptLanguage: acceptLanguage?.toString());
@@ -462,8 +489,9 @@ abstract class OpenHAB extends ChopperService {
   ///Get all available templates.
   ///@param Accept-Language language
   @Get(path: '/templates')
-  Future<chopper.Response<List<Template>>> _templatesGet(
-      {@Header('Accept-Language') String? acceptLanguage});
+  Future<chopper.Response<List<Template>>> _templatesGet({
+    @Header('Accept-Language') String? acceptLanguage,
+  });
 
   ///Gets a template corresponding to the given UID.
   ///@param Accept-Language language
@@ -475,7 +503,9 @@ abstract class OpenHAB extends ChopperService {
     generatedMapping.putIfAbsent(Template, () => Template.fromJsonFactory);
 
     return _templatesTemplateUIDGet(
-        acceptLanguage: acceptLanguage?.toString(), templateUID: templateUID);
+      acceptLanguage: acceptLanguage?.toString(),
+      templateUID: templateUID,
+    );
   }
 
   ///Gets a template corresponding to the given UID.
@@ -498,20 +528,18 @@ abstract class OpenHAB extends ChopperService {
     required Object? body,
   }) {
     return _actionsThingUIDActionUidPost(
-        thingUID: thingUID,
-        actionUid: actionUid,
-        acceptLanguage: acceptLanguage?.toString(),
-        body: body);
+      thingUID: thingUID,
+      actionUid: actionUid,
+      acceptLanguage: acceptLanguage?.toString(),
+      body: body,
+    );
   }
 
   ///Executes a thing action.
   ///@param thingUID thingUID
   ///@param actionUid action type UID (including scope, separated by '.')
   ///@param Accept-Language language
-  @Post(
-    path: '/actions/{thingUID}/{actionUid}',
-    optionalBody: true,
-  )
+  @Post(path: '/actions/{thingUID}/{actionUid}', optionalBody: true)
   Future<chopper.Response<String>> _actionsThingUIDActionUidPost({
     @Path('thingUID') required String? thingUID,
     @Path('actionUid') required String? actionUid,
@@ -527,10 +555,14 @@ abstract class OpenHAB extends ChopperService {
     String? acceptLanguage,
   }) {
     generatedMapping.putIfAbsent(
-        ThingActionDTO, () => ThingActionDTO.fromJsonFactory);
+      ThingActionDTO,
+      () => ThingActionDTO.fromJsonFactory,
+    );
 
     return _actionsThingUIDGet(
-        thingUID: thingUID, acceptLanguage: acceptLanguage?.toString());
+      thingUID: thingUID,
+      acceptLanguage: acceptLanguage?.toString(),
+    );
   }
 
   ///Get all available actions for provided thing UID
@@ -553,10 +585,13 @@ abstract class OpenHAB extends ChopperService {
 
   ///Get the default sink if defined or the first available sink.
   ///@param Accept-Language language
-  Future<chopper.Response<AudioSinkDTO>> audioDefaultsinkGet(
-      {String? acceptLanguage}) {
+  Future<chopper.Response<AudioSinkDTO>> audioDefaultsinkGet({
+    String? acceptLanguage,
+  }) {
     generatedMapping.putIfAbsent(
-        AudioSinkDTO, () => AudioSinkDTO.fromJsonFactory);
+      AudioSinkDTO,
+      () => AudioSinkDTO.fromJsonFactory,
+    );
 
     return _audioDefaultsinkGet(acceptLanguage: acceptLanguage?.toString());
   }
@@ -564,15 +599,19 @@ abstract class OpenHAB extends ChopperService {
   ///Get the default sink if defined or the first available sink.
   ///@param Accept-Language language
   @Get(path: '/audio/defaultsink')
-  Future<chopper.Response<AudioSinkDTO>> _audioDefaultsinkGet(
-      {@Header('Accept-Language') String? acceptLanguage});
+  Future<chopper.Response<AudioSinkDTO>> _audioDefaultsinkGet({
+    @Header('Accept-Language') String? acceptLanguage,
+  });
 
   ///Get the default source if defined or the first available source.
   ///@param Accept-Language language
-  Future<chopper.Response<AudioSourceDTO>> audioDefaultsourceGet(
-      {String? acceptLanguage}) {
+  Future<chopper.Response<AudioSourceDTO>> audioDefaultsourceGet({
+    String? acceptLanguage,
+  }) {
     generatedMapping.putIfAbsent(
-        AudioSourceDTO, () => AudioSourceDTO.fromJsonFactory);
+      AudioSourceDTO,
+      () => AudioSourceDTO.fromJsonFactory,
+    );
 
     return _audioDefaultsourceGet(acceptLanguage: acceptLanguage?.toString());
   }
@@ -580,15 +619,19 @@ abstract class OpenHAB extends ChopperService {
   ///Get the default source if defined or the first available source.
   ///@param Accept-Language language
   @Get(path: '/audio/defaultsource')
-  Future<chopper.Response<AudioSourceDTO>> _audioDefaultsourceGet(
-      {@Header('Accept-Language') String? acceptLanguage});
+  Future<chopper.Response<AudioSourceDTO>> _audioDefaultsourceGet({
+    @Header('Accept-Language') String? acceptLanguage,
+  });
 
   ///Get the list of all sinks.
   ///@param Accept-Language language
-  Future<chopper.Response<List<AudioSinkDTO>>> audioSinksGet(
-      {String? acceptLanguage}) {
+  Future<chopper.Response<List<AudioSinkDTO>>> audioSinksGet({
+    String? acceptLanguage,
+  }) {
     generatedMapping.putIfAbsent(
-        AudioSinkDTO, () => AudioSinkDTO.fromJsonFactory);
+      AudioSinkDTO,
+      () => AudioSinkDTO.fromJsonFactory,
+    );
 
     return _audioSinksGet(acceptLanguage: acceptLanguage?.toString());
   }
@@ -596,15 +639,19 @@ abstract class OpenHAB extends ChopperService {
   ///Get the list of all sinks.
   ///@param Accept-Language language
   @Get(path: '/audio/sinks')
-  Future<chopper.Response<List<AudioSinkDTO>>> _audioSinksGet(
-      {@Header('Accept-Language') String? acceptLanguage});
+  Future<chopper.Response<List<AudioSinkDTO>>> _audioSinksGet({
+    @Header('Accept-Language') String? acceptLanguage,
+  });
 
   ///Get the list of all sources.
   ///@param Accept-Language language
-  Future<chopper.Response<List<AudioSourceDTO>>> audioSourcesGet(
-      {String? acceptLanguage}) {
+  Future<chopper.Response<List<AudioSourceDTO>>> audioSourcesGet({
+    String? acceptLanguage,
+  }) {
     generatedMapping.putIfAbsent(
-        AudioSourceDTO, () => AudioSourceDTO.fromJsonFactory);
+      AudioSourceDTO,
+      () => AudioSourceDTO.fromJsonFactory,
+    );
 
     return _audioSourcesGet(acceptLanguage: acceptLanguage?.toString());
   }
@@ -612,8 +659,9 @@ abstract class OpenHAB extends ChopperService {
   ///Get the list of all sources.
   ///@param Accept-Language language
   @Get(path: '/audio/sources')
-  Future<chopper.Response<List<AudioSourceDTO>>> _audioSourcesGet(
-      {@Header('Accept-Language') String? acceptLanguage});
+  Future<chopper.Response<List<AudioSourceDTO>>> _audioSourcesGet({
+    @Header('Accept-Language') String? acceptLanguage,
+  });
 
   ///Delete the session associated with a refresh token.
   Future<chopper.Response> authLogoutPost({required Map<String, String> body}) {
@@ -621,18 +669,18 @@ abstract class OpenHAB extends ChopperService {
   }
 
   ///Delete the session associated with a refresh token.
-  @Post(
-    path: '/auth/logout',
-    headers: {contentTypeKey: formEncodedHeaders},
-  )
+  @Post(path: '/auth/logout', headers: {contentTypeKey: formEncodedHeaders})
   @FactoryConverter(request: FormUrlEncodedConverter.requestFactory)
-  Future<chopper.Response> _authLogoutPost(
-      {@Body() required Map<String, String> body});
+  Future<chopper.Response> _authLogoutPost({
+    @Body() required Map<String, String> body,
+  });
 
   ///List the API tokens associated to the authenticated user.
   Future<chopper.Response<List<UserApiTokenDTO>>> authApitokensGet() {
     generatedMapping.putIfAbsent(
-        UserApiTokenDTO, () => UserApiTokenDTO.fromJsonFactory);
+      UserApiTokenDTO,
+      () => UserApiTokenDTO.fromJsonFactory,
+    );
 
     return _authApitokensGet();
   }
@@ -644,7 +692,9 @@ abstract class OpenHAB extends ChopperService {
   ///List the sessions associated to the authenticated user.
   Future<chopper.Response<List<UserSessionDTO>>> authSessionsGet() {
     generatedMapping.putIfAbsent(
-        UserSessionDTO, () => UserSessionDTO.fromJsonFactory);
+      UserSessionDTO,
+      () => UserSessionDTO.fromJsonFactory,
+    );
 
     return _authSessionsGet();
   }
@@ -660,17 +710,16 @@ abstract class OpenHAB extends ChopperService {
     required Map<String, String> body,
   }) {
     generatedMapping.putIfAbsent(
-        TokenResponseDTO, () => TokenResponseDTO.fromJsonFactory);
+      TokenResponseDTO,
+      () => TokenResponseDTO.fromJsonFactory,
+    );
 
     return _authTokenPost(useCookie: useCookie, body: body);
   }
 
   ///Get access and refresh tokens.
   ///@param useCookie
-  @Post(
-    path: '/auth/token',
-    headers: {contentTypeKey: formEncodedHeaders},
-  )
+  @Post(path: '/auth/token', headers: {contentTypeKey: formEncodedHeaders})
   @FactoryConverter(request: FormUrlEncodedConverter.requestFactory)
   Future<chopper.Response<TokenResponseDTO>> _authTokenPost({
     @Query('useCookie') bool? useCookie,
@@ -686,8 +735,9 @@ abstract class OpenHAB extends ChopperService {
   ///Revoke a specified API token associated to the authenticated user.
   ///@param name
   @Delete(path: '/auth/apitokens/{name}')
-  Future<chopper.Response> _authApitokensNameDelete(
-      {@Path('name') required String? name});
+  Future<chopper.Response> _authApitokensNameDelete({
+    @Path('name') required String? name,
+  });
 
   ///Get all add-ons.
   ///@param Accept-Language language
@@ -699,7 +749,9 @@ abstract class OpenHAB extends ChopperService {
     generatedMapping.putIfAbsent(Addon, () => Addon.fromJsonFactory);
 
     return _addonsGet(
-        acceptLanguage: acceptLanguage?.toString(), serviceId: serviceId);
+      acceptLanguage: acceptLanguage?.toString(),
+      serviceId: serviceId,
+    );
   }
 
   ///Get all add-ons.
@@ -723,9 +775,10 @@ abstract class OpenHAB extends ChopperService {
     generatedMapping.putIfAbsent(Addon, () => Addon.fromJsonFactory);
 
     return _addonsAddonIdGet(
-        acceptLanguage: acceptLanguage?.toString(),
-        addonId: addonId,
-        serviceId: serviceId);
+      acceptLanguage: acceptLanguage?.toString(),
+      addonId: addonId,
+      serviceId: serviceId,
+    );
   }
 
   ///Get add-on with given ID.
@@ -767,16 +820,16 @@ abstract class OpenHAB extends ChopperService {
     required Object? body,
   }) {
     return _addonsAddonIdConfigPut(
-        addonId: addonId, serviceId: serviceId, body: body);
+      addonId: addonId,
+      serviceId: serviceId,
+      body: body,
+    );
   }
 
   ///Updates an add-on configuration for given ID and returns the old configuration.
   ///@param addonId Add-on id
   ///@param serviceId service ID
-  @Put(
-    path: '/addons/{addonId}/config',
-    optionalBody: true,
-  )
+  @Put(path: '/addons/{addonId}/config', optionalBody: true)
   Future<chopper.Response<String>> _addonsAddonIdConfigPut({
     @Path('addonId') required String? addonId,
     @Query('serviceId') String? serviceId,
@@ -785,8 +838,9 @@ abstract class OpenHAB extends ChopperService {
 
   ///Get all add-on types.
   ///@param Accept-Language language
-  Future<chopper.Response<List<AddonType>>> addonsServicesGet(
-      {String? acceptLanguage}) {
+  Future<chopper.Response<List<AddonType>>> addonsServicesGet({
+    String? acceptLanguage,
+  }) {
     generatedMapping.putIfAbsent(AddonType, () => AddonType.fromJsonFactory);
 
     return _addonsServicesGet(acceptLanguage: acceptLanguage?.toString());
@@ -795,8 +849,9 @@ abstract class OpenHAB extends ChopperService {
   ///Get all add-on types.
   ///@param Accept-Language language
   @Get(path: '/addons/services')
-  Future<chopper.Response<List<AddonType>>> _addonsServicesGet(
-      {@Header('Accept-Language') String? acceptLanguage});
+  Future<chopper.Response<List<AddonType>>> _addonsServicesGet({
+    @Header('Accept-Language') String? acceptLanguage,
+  });
 
   ///Get add-on services.
   ///@param Accept-Language language
@@ -808,7 +863,9 @@ abstract class OpenHAB extends ChopperService {
     generatedMapping.putIfAbsent(AddonType, () => AddonType.fromJsonFactory);
 
     return _addonsTypesGet(
-        acceptLanguage: acceptLanguage?.toString(), serviceId: serviceId);
+      acceptLanguage: acceptLanguage?.toString(),
+      serviceId: serviceId,
+    );
   }
 
   ///Get add-on services.
@@ -833,10 +890,7 @@ abstract class OpenHAB extends ChopperService {
   ///Installs the add-on with the given ID.
   ///@param addonId addon ID
   ///@param serviceId service ID
-  @Post(
-    path: '/addons/{addonId}/install',
-    optionalBody: true,
-  )
+  @Post(path: '/addons/{addonId}/install', optionalBody: true)
   Future<chopper.Response> _addonsAddonIdInstallPost({
     @Path('addonId') required String? addonId,
     @Query('serviceId') String? serviceId,
@@ -850,12 +904,10 @@ abstract class OpenHAB extends ChopperService {
 
   ///Installs the add-on from the given URL.
   ///@param url addon install URL
-  @Post(
-    path: '/addons/url/{url}/install',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _addonsUrlUrlInstallPost(
-      {@Path('url') required String? url});
+  @Post(path: '/addons/url/{url}/install', optionalBody: true)
+  Future<chopper.Response> _addonsUrlUrlInstallPost({
+    @Path('url') required String? url,
+  });
 
   ///Uninstalls the add-on with the given ID.
   ///@param addonId addon ID
@@ -870,10 +922,7 @@ abstract class OpenHAB extends ChopperService {
   ///Uninstalls the add-on with the given ID.
   ///@param addonId addon ID
   ///@param serviceId service ID
-  @Post(
-    path: '/addons/{addonId}/uninstall',
-    optionalBody: true,
-  )
+  @Post(path: '/addons/{addonId}/uninstall', optionalBody: true)
   Future<chopper.Response> _addonsAddonIdUninstallPost({
     @Path('addonId') required String? addonId,
     @Query('serviceId') String? serviceId,
@@ -887,10 +936,14 @@ abstract class OpenHAB extends ChopperService {
     String? prefixes,
   }) {
     generatedMapping.putIfAbsent(
-        ChannelTypeDTO, () => ChannelTypeDTO.fromJsonFactory);
+      ChannelTypeDTO,
+      () => ChannelTypeDTO.fromJsonFactory,
+    );
 
     return _channelTypesGet(
-        acceptLanguage: acceptLanguage?.toString(), prefixes: prefixes);
+      acceptLanguage: acceptLanguage?.toString(),
+      prefixes: prefixes,
+    );
   }
 
   ///Gets all available channel types.
@@ -910,11 +963,14 @@ abstract class OpenHAB extends ChopperService {
     String? acceptLanguage,
   }) {
     generatedMapping.putIfAbsent(
-        ChannelTypeDTO, () => ChannelTypeDTO.fromJsonFactory);
+      ChannelTypeDTO,
+      () => ChannelTypeDTO.fromJsonFactory,
+    );
 
     return _channelTypesChannelTypeUIDGet(
-        channelTypeUID: channelTypeUID,
-        acceptLanguage: acceptLanguage?.toString());
+      channelTypeUID: channelTypeUID,
+      acceptLanguage: acceptLanguage?.toString(),
+    );
   }
 
   ///Gets channel type by UID.
@@ -929,18 +985,21 @@ abstract class OpenHAB extends ChopperService {
   ///Gets the item types the given trigger channel type UID can be linked to.
   ///@param channelTypeUID channelTypeUID
   Future<chopper.Response<List<String>>>
-      channelTypesChannelTypeUIDLinkableItemTypesGet(
-          {required String? channelTypeUID}) {
+  channelTypesChannelTypeUIDLinkableItemTypesGet({
+    required String? channelTypeUID,
+  }) {
     return _channelTypesChannelTypeUIDLinkableItemTypesGet(
-        channelTypeUID: channelTypeUID);
+      channelTypeUID: channelTypeUID,
+    );
   }
 
   ///Gets the item types the given trigger channel type UID can be linked to.
   ///@param channelTypeUID channelTypeUID
   @Get(path: '/channel-types/{channelTypeUID}/linkableItemTypes')
   Future<chopper.Response<List<String>>>
-      _channelTypesChannelTypeUIDLinkableItemTypesGet(
-          {@Path('channelTypeUID') required String? channelTypeUID});
+  _channelTypesChannelTypeUIDLinkableItemTypesGet({
+    @Path('channelTypeUID') required String? channelTypeUID,
+  });
 
   ///Gets all available config descriptions.
   ///@param Accept-Language language
@@ -950,10 +1009,14 @@ abstract class OpenHAB extends ChopperService {
     String? scheme,
   }) {
     generatedMapping.putIfAbsent(
-        ConfigDescriptionDTO, () => ConfigDescriptionDTO.fromJsonFactory);
+      ConfigDescriptionDTO,
+      () => ConfigDescriptionDTO.fromJsonFactory,
+    );
 
     return _configDescriptionsGet(
-        acceptLanguage: acceptLanguage?.toString(), scheme: scheme);
+      acceptLanguage: acceptLanguage?.toString(),
+      scheme: scheme,
+    );
   }
 
   ///Gets all available config descriptions.
@@ -973,10 +1036,14 @@ abstract class OpenHAB extends ChopperService {
     required String? uri,
   }) {
     generatedMapping.putIfAbsent(
-        ConfigDescriptionDTO, () => ConfigDescriptionDTO.fromJsonFactory);
+      ConfigDescriptionDTO,
+      () => ConfigDescriptionDTO.fromJsonFactory,
+    );
 
     return _configDescriptionsUriGet(
-        acceptLanguage: acceptLanguage?.toString(), uri: uri);
+      acceptLanguage: acceptLanguage?.toString(),
+      uri: uri,
+    );
   }
 
   ///Gets a config description by URI.
@@ -999,19 +1066,18 @@ abstract class OpenHAB extends ChopperService {
 
   ///Starts asynchronous discovery process for a binding and returns the timeout in seconds of the discovery operation.
   ///@param bindingId bindingId
-  Future<chopper.Response<int>> discoveryBindingsBindingIdScanPost(
-      {required String? bindingId}) {
+  Future<chopper.Response<int>> discoveryBindingsBindingIdScanPost({
+    required String? bindingId,
+  }) {
     return _discoveryBindingsBindingIdScanPost(bindingId: bindingId);
   }
 
   ///Starts asynchronous discovery process for a binding and returns the timeout in seconds of the discovery operation.
   ///@param bindingId bindingId
-  @Post(
-    path: '/discovery/bindings/{bindingId}/scan',
-    optionalBody: true,
-  )
-  Future<chopper.Response<int>> _discoveryBindingsBindingIdScanPost(
-      {@Path('bindingId') required String? bindingId});
+  @Post(path: '/discovery/bindings/{bindingId}/scan', optionalBody: true)
+  Future<chopper.Response<int>> _discoveryBindingsBindingIdScanPost({
+    @Path('bindingId') required String? bindingId,
+  });
 
   ///Approves the discovery result by adding the thing to the registry.
   ///@param Accept-Language language
@@ -1024,20 +1090,18 @@ abstract class OpenHAB extends ChopperService {
     required String? body,
   }) {
     return _inboxThingUIDApprovePost(
-        acceptLanguage: acceptLanguage?.toString(),
-        thingUID: thingUID,
-        newThingId: newThingId,
-        body: body);
+      acceptLanguage: acceptLanguage?.toString(),
+      thingUID: thingUID,
+      newThingId: newThingId,
+      body: body,
+    );
   }
 
   ///Approves the discovery result by adding the thing to the registry.
   ///@param Accept-Language language
   ///@param thingUID thingUID
   ///@param newThingId new thing ID
-  @Post(
-    path: '/inbox/{thingUID}/approve',
-    optionalBody: true,
-  )
+  @Post(path: '/inbox/{thingUID}/approve', optionalBody: true)
   Future<chopper.Response> _inboxThingUIDApprovePost({
     @Header('Accept-Language') String? acceptLanguage,
     @Path('thingUID') required String? thingUID,
@@ -1054,13 +1118,16 @@ abstract class OpenHAB extends ChopperService {
   ///Removes the discovery result from the inbox.
   ///@param thingUID thingUID
   @Delete(path: '/inbox/{thingUID}')
-  Future<chopper.Response> _inboxThingUIDDelete(
-      {@Path('thingUID') required String? thingUID});
+  Future<chopper.Response> _inboxThingUIDDelete({
+    @Path('thingUID') required String? thingUID,
+  });
 
   ///Get all discovered things.
   Future<chopper.Response<List<DiscoveryResultDTO>>> inboxGet() {
     generatedMapping.putIfAbsent(
-        DiscoveryResultDTO, () => DiscoveryResultDTO.fromJsonFactory);
+      DiscoveryResultDTO,
+      () => DiscoveryResultDTO.fromJsonFactory,
+    );
 
     return _inboxGet();
   }
@@ -1071,35 +1138,33 @@ abstract class OpenHAB extends ChopperService {
 
   ///Flags a discovery result as ignored for further processing.
   ///@param thingUID thingUID
-  Future<chopper.Response> inboxThingUIDIgnorePost(
-      {required String? thingUID}) {
+  Future<chopper.Response> inboxThingUIDIgnorePost({
+    required String? thingUID,
+  }) {
     return _inboxThingUIDIgnorePost(thingUID: thingUID);
   }
 
   ///Flags a discovery result as ignored for further processing.
   ///@param thingUID thingUID
-  @Post(
-    path: '/inbox/{thingUID}/ignore',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _inboxThingUIDIgnorePost(
-      {@Path('thingUID') required String? thingUID});
+  @Post(path: '/inbox/{thingUID}/ignore', optionalBody: true)
+  Future<chopper.Response> _inboxThingUIDIgnorePost({
+    @Path('thingUID') required String? thingUID,
+  });
 
   ///Removes ignore flag from a discovery result.
   ///@param thingUID thingUID
-  Future<chopper.Response> inboxThingUIDUnignorePost(
-      {required String? thingUID}) {
+  Future<chopper.Response> inboxThingUIDUnignorePost({
+    required String? thingUID,
+  }) {
     return _inboxThingUIDUnignorePost(thingUID: thingUID);
   }
 
   ///Removes ignore flag from a discovery result.
   ///@param thingUID thingUID
-  @Post(
-    path: '/inbox/{thingUID}/unignore',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _inboxThingUIDUnignorePost(
-      {@Path('thingUID') required String? thingUID});
+  @Post(path: '/inbox/{thingUID}/unignore', optionalBody: true)
+  Future<chopper.Response> _inboxThingUIDUnignorePost({
+    @Path('thingUID') required String? thingUID,
+  });
 
   ///Adds a new member to a group item.
   ///@param itemName item name
@@ -1109,16 +1174,15 @@ abstract class OpenHAB extends ChopperService {
     required String? memberItemName,
   }) {
     return _itemsItemNameMembersMemberItemNamePut(
-        itemName: itemName, memberItemName: memberItemName);
+      itemName: itemName,
+      memberItemName: memberItemName,
+    );
   }
 
   ///Adds a new member to a group item.
   ///@param itemName item name
   ///@param memberItemName member item name
-  @Put(
-    path: '/items/{itemName}/members/{memberItemName}',
-    optionalBody: true,
-  )
+  @Put(path: '/items/{itemName}/members/{memberItemName}', optionalBody: true)
   Future<chopper.Response> _itemsItemNameMembersMemberItemNamePut({
     @Path('itemName') required String? itemName,
     @Path('memberItemName') required String? memberItemName,
@@ -1132,7 +1196,9 @@ abstract class OpenHAB extends ChopperService {
     required String? memberItemName,
   }) {
     return _itemsItemNameMembersMemberItemNameDelete(
-        itemName: itemName, memberItemName: memberItemName);
+      itemName: itemName,
+      memberItemName: memberItemName,
+    );
   }
 
   ///Removes an existing member from a group item.
@@ -1153,16 +1219,16 @@ abstract class OpenHAB extends ChopperService {
     required MetadataDTO? body,
   }) {
     return _itemsItemnameMetadataNamespacePut(
-        itemname: itemname, namespace: namespace, body: body);
+      itemname: itemname,
+      namespace: namespace,
+      body: body,
+    );
   }
 
   ///Adds metadata to an item.
   ///@param itemname item name
   ///@param namespace namespace
-  @Put(
-    path: '/items/{itemname}/metadata/{namespace}',
-    optionalBody: true,
-  )
+  @Put(path: '/items/{itemname}/metadata/{namespace}', optionalBody: true)
   Future<chopper.Response> _itemsItemnameMetadataNamespacePut({
     @Path('itemname') required String? itemname,
     @Path('namespace') required String? namespace,
@@ -1177,7 +1243,9 @@ abstract class OpenHAB extends ChopperService {
     required String? namespace,
   }) {
     return _itemsItemnameMetadataNamespaceDelete(
-        itemname: itemname, namespace: namespace);
+      itemname: itemname,
+      namespace: namespace,
+    );
   }
 
   ///Removes metadata from an item.
@@ -1202,10 +1270,7 @@ abstract class OpenHAB extends ChopperService {
   ///Adds a tag to an item.
   ///@param itemname item name
   ///@param tag tag
-  @Put(
-    path: '/items/{itemname}/tags/{tag}',
-    optionalBody: true,
-  )
+  @Put(path: '/items/{itemname}/tags/{tag}', optionalBody: true)
   Future<chopper.Response> _itemsItemnameTagsTagPut({
     @Path('itemname') required String? itemname,
     @Path('tag') required String? tag,
@@ -1242,13 +1307,16 @@ abstract class OpenHAB extends ChopperService {
     required String? itemname,
   }) {
     generatedMapping.putIfAbsent(
-        EnrichedItemDTO, () => EnrichedItemDTO.fromJsonFactory);
+      EnrichedItemDTO,
+      () => EnrichedItemDTO.fromJsonFactory,
+    );
 
     return _itemsItemnameGet(
-        acceptLanguage: acceptLanguage?.toString(),
-        metadata: metadata,
-        recursive: recursive,
-        itemname: itemname);
+      acceptLanguage: acceptLanguage?.toString(),
+      metadata: metadata,
+      recursive: recursive,
+      itemname: itemname,
+    );
   }
 
   ///Gets a single item.
@@ -1273,21 +1341,21 @@ abstract class OpenHAB extends ChopperService {
     required GroupItemDTO? body,
   }) {
     generatedMapping.putIfAbsent(
-        EnrichedItemDTO, () => EnrichedItemDTO.fromJsonFactory);
+      EnrichedItemDTO,
+      () => EnrichedItemDTO.fromJsonFactory,
+    );
 
     return _itemsItemnamePut(
-        acceptLanguage: acceptLanguage?.toString(),
-        itemname: itemname,
-        body: body);
+      acceptLanguage: acceptLanguage?.toString(),
+      itemname: itemname,
+      body: body,
+    );
   }
 
   ///Adds a new item to the registry or updates the existing item.
   ///@param Accept-Language language
   ///@param itemname item name
-  @Put(
-    path: '/items/{itemname}',
-    optionalBody: true,
-  )
+  @Put(path: '/items/{itemname}', optionalBody: true)
   Future<chopper.Response<EnrichedItemDTO>> _itemsItemnamePut({
     @Header('Accept-Language') String? acceptLanguage,
     @Path('itemname') required String? itemname,
@@ -1305,10 +1373,7 @@ abstract class OpenHAB extends ChopperService {
 
   ///Sends a command to an item.
   ///@param itemname item name
-  @Post(
-    path: '/items/{itemname}',
-    optionalBody: true,
-  )
+  @Post(path: '/items/{itemname}', optionalBody: true)
   Future<chopper.Response> _itemsItemnamePost({
     @Path('itemname') required String? itemname,
     @Body() required String? body,
@@ -1323,8 +1388,9 @@ abstract class OpenHAB extends ChopperService {
   ///Removes an item from the registry.
   ///@param itemname item name
   @Delete(path: '/items/{itemname}')
-  Future<chopper.Response> _itemsItemnameDelete(
-      {@Path('itemname') required String? itemname});
+  Future<chopper.Response> _itemsItemnameDelete({
+    @Path('itemname') required String? itemname,
+  });
 
   ///Get all available items.
   ///@param Accept-Language language
@@ -1344,16 +1410,19 @@ abstract class OpenHAB extends ChopperService {
     bool? staticDataOnly,
   }) {
     generatedMapping.putIfAbsent(
-        EnrichedItemDTO, () => EnrichedItemDTO.fromJsonFactory);
+      EnrichedItemDTO,
+      () => EnrichedItemDTO.fromJsonFactory,
+    );
 
     return _itemsGet(
-        acceptLanguage: acceptLanguage?.toString(),
-        type: type,
-        tags: tags,
-        metadata: metadata,
-        recursive: recursive,
-        fields: fields,
-        staticDataOnly: staticDataOnly);
+      acceptLanguage: acceptLanguage?.toString(),
+      type: type,
+      tags: tags,
+      metadata: metadata,
+      recursive: recursive,
+      fields: fields,
+      staticDataOnly: staticDataOnly,
+    );
   }
 
   ///Get all available items.
@@ -1376,31 +1445,32 @@ abstract class OpenHAB extends ChopperService {
   });
 
   ///Adds a list of items to the registry or updates the existing items.
-  Future<chopper.Response<String>> itemsPut(
-      {required List<GroupItemDTO>? body}) {
+  Future<chopper.Response<String>> itemsPut({
+    required List<GroupItemDTO>? body,
+  }) {
     return _itemsPut(body: body);
   }
 
   ///Adds a list of items to the registry or updates the existing items.
-  @Put(
-    path: '/items',
-    optionalBody: true,
-  )
-  Future<chopper.Response<String>> _itemsPut(
-      {@Body() required List<GroupItemDTO>? body});
+  @Put(path: '/items', optionalBody: true)
+  Future<chopper.Response<String>> _itemsPut({
+    @Body() required List<GroupItemDTO>? body,
+  });
 
   ///Gets the state of an item.
   ///@param itemname item name
-  Future<chopper.Response<String>> itemsItemnameStateGet(
-      {required String? itemname}) {
+  Future<chopper.Response<String>> itemsItemnameStateGet({
+    required String? itemname,
+  }) {
     return _itemsItemnameStateGet(itemname: itemname);
   }
 
   ///Gets the state of an item.
   ///@param itemname item name
   @Get(path: '/items/{itemname}/state')
-  Future<chopper.Response<String>> _itemsItemnameStateGet(
-      {@Path('itemname') required String? itemname});
+  Future<chopper.Response<String>> _itemsItemnameStateGet({
+    @Path('itemname') required String? itemname,
+  });
 
   ///Updates the state of an item.
   ///@param Accept-Language language
@@ -1411,18 +1481,16 @@ abstract class OpenHAB extends ChopperService {
     required String? body,
   }) {
     return _itemsItemnameStatePut(
-        acceptLanguage: acceptLanguage?.toString(),
-        itemname: itemname,
-        body: body);
+      acceptLanguage: acceptLanguage?.toString(),
+      itemname: itemname,
+      body: body,
+    );
   }
 
   ///Updates the state of an item.
   ///@param Accept-Language language
   ///@param itemname item name
-  @Put(
-    path: '/items/{itemname}/state',
-    optionalBody: true,
-  )
+  @Put(path: '/items/{itemname}/state', optionalBody: true)
   Future<chopper.Response> _itemsItemnameStatePut({
     @Header('Accept-Language') String? acceptLanguage,
     @Path('itemname') required String? itemname,
@@ -1437,7 +1505,9 @@ abstract class OpenHAB extends ChopperService {
     String? acceptLanguage,
   }) {
     return _itemsItemnameMetadataNamespacesGet(
-        itemname: itemname, acceptLanguage: acceptLanguage?.toString());
+      itemname: itemname,
+      acceptLanguage: acceptLanguage?.toString(),
+    );
   }
 
   ///Gets the namespace of an item.
@@ -1459,9 +1529,10 @@ abstract class OpenHAB extends ChopperService {
     required String? semanticClass,
   }) {
     return _itemsItemNameSemanticSemanticClassGet(
-        acceptLanguage: acceptLanguage?.toString(),
-        itemName: itemName,
-        semanticClass: semanticClass);
+      acceptLanguage: acceptLanguage?.toString(),
+      itemName: itemName,
+      semanticClass: semanticClass,
+    );
   }
 
   ///Gets the item which defines the requested semantics of an item.
@@ -1481,10 +1552,7 @@ abstract class OpenHAB extends ChopperService {
   }
 
   ///Remove unused/orphaned metadata.
-  @Post(
-    path: '/items/metadata/purge',
-    optionalBody: true,
-  )
+  @Post(path: '/items/metadata/purge', optionalBody: true)
   Future<chopper.Response> _itemsMetadataPurgePost();
 
   ///Gets all available links.
@@ -1494,8 +1562,10 @@ abstract class OpenHAB extends ChopperService {
     String? channelUID,
     String? itemName,
   }) {
-    generatedMapping.putIfAbsent(EnrichedItemChannelLinkDTO,
-        () => EnrichedItemChannelLinkDTO.fromJsonFactory);
+    generatedMapping.putIfAbsent(
+      EnrichedItemChannelLinkDTO,
+      () => EnrichedItemChannelLinkDTO.fromJsonFactory,
+    );
 
     return _linksGet(channelUID: channelUID, itemName: itemName);
   }
@@ -1513,15 +1583,19 @@ abstract class OpenHAB extends ChopperService {
   ///@param itemName item name
   ///@param channelUID channel UID
   Future<chopper.Response<EnrichedItemChannelLinkDTO>>
-      linksItemNameChannelUIDGet({
+  linksItemNameChannelUIDGet({
     required String? itemName,
     required String? channelUID,
   }) {
-    generatedMapping.putIfAbsent(EnrichedItemChannelLinkDTO,
-        () => EnrichedItemChannelLinkDTO.fromJsonFactory);
+    generatedMapping.putIfAbsent(
+      EnrichedItemChannelLinkDTO,
+      () => EnrichedItemChannelLinkDTO.fromJsonFactory,
+    );
 
     return _linksItemNameChannelUIDGet(
-        itemName: itemName, channelUID: channelUID);
+      itemName: itemName,
+      channelUID: channelUID,
+    );
   }
 
   ///Retrieves an individual link.
@@ -1529,7 +1603,7 @@ abstract class OpenHAB extends ChopperService {
   ///@param channelUID channel UID
   @Get(path: '/links/{itemName}/{channelUID}')
   Future<chopper.Response<EnrichedItemChannelLinkDTO>>
-      _linksItemNameChannelUIDGet({
+  _linksItemNameChannelUIDGet({
     @Path('itemName') required String? itemName,
     @Path('channelUID') required String? channelUID,
   });
@@ -1543,16 +1617,16 @@ abstract class OpenHAB extends ChopperService {
     required ItemChannelLinkDTO? body,
   }) {
     return _linksItemNameChannelUIDPut(
-        itemName: itemName, channelUID: channelUID, body: body);
+      itemName: itemName,
+      channelUID: channelUID,
+      body: body,
+    );
   }
 
   ///Links an item to a channel.
   ///@param itemName itemName
   ///@param channelUID channelUID
-  @Put(
-    path: '/links/{itemName}/{channelUID}',
-    optionalBody: true,
-  )
+  @Put(path: '/links/{itemName}/{channelUID}', optionalBody: true)
   Future<chopper.Response> _linksItemNameChannelUIDPut({
     @Path('itemName') required String? itemName,
     @Path('channelUID') required String? channelUID,
@@ -1567,7 +1641,9 @@ abstract class OpenHAB extends ChopperService {
     required String? channelUID,
   }) {
     return _linksItemNameChannelUIDDelete(
-        itemName: itemName, channelUID: channelUID);
+      itemName: itemName,
+      channelUID: channelUID,
+    );
   }
 
   ///Unlinks an item from a channel.
@@ -1585,10 +1661,7 @@ abstract class OpenHAB extends ChopperService {
   }
 
   ///Remove unused/orphaned links.
-  @Post(
-    path: '/links/purge',
-    optionalBody: true,
-  )
+  @Post(path: '/links/purge', optionalBody: true)
   Future<chopper.Response> _linksPurgePost();
 
   ///Delete all links that refer to an item or thing.
@@ -1600,15 +1673,18 @@ abstract class OpenHAB extends ChopperService {
   ///Delete all links that refer to an item or thing.
   ///@param object item name or thing UID
   @Delete(path: '/links/{object}')
-  Future<chopper.Response> _linksObjectDelete(
-      {@Path('object') required String? object});
+  Future<chopper.Response> _linksObjectDelete({
+    @Path('object') required String? object,
+  });
 
   ///Gets a persistence service configuration.
   ///@param serviceId Id of the persistence service.
   Future<chopper.Response<PersistenceServiceConfigurationDTO>>
-      persistenceServiceIdGet({required String? serviceId}) {
-    generatedMapping.putIfAbsent(PersistenceServiceConfigurationDTO,
-        () => PersistenceServiceConfigurationDTO.fromJsonFactory);
+  persistenceServiceIdGet({required String? serviceId}) {
+    generatedMapping.putIfAbsent(
+      PersistenceServiceConfigurationDTO,
+      () => PersistenceServiceConfigurationDTO.fromJsonFactory,
+    );
 
     return _persistenceServiceIdGet(serviceId: serviceId);
   }
@@ -1617,45 +1693,46 @@ abstract class OpenHAB extends ChopperService {
   ///@param serviceId Id of the persistence service.
   @Get(path: '/persistence/{serviceId}')
   Future<chopper.Response<PersistenceServiceConfigurationDTO>>
-      _persistenceServiceIdGet({@Path('serviceId') required String? serviceId});
+  _persistenceServiceIdGet({@Path('serviceId') required String? serviceId});
 
   ///Sets a persistence service configuration.
   ///@param serviceId Id of the persistence service.
   Future<chopper.Response<PersistenceServiceConfigurationDTO>>
-      persistenceServiceIdPut({
+  persistenceServiceIdPut({
     required String? serviceId,
     required PersistenceServiceConfigurationDTO? body,
   }) {
-    generatedMapping.putIfAbsent(PersistenceServiceConfigurationDTO,
-        () => PersistenceServiceConfigurationDTO.fromJsonFactory);
+    generatedMapping.putIfAbsent(
+      PersistenceServiceConfigurationDTO,
+      () => PersistenceServiceConfigurationDTO.fromJsonFactory,
+    );
 
     return _persistenceServiceIdPut(serviceId: serviceId, body: body);
   }
 
   ///Sets a persistence service configuration.
   ///@param serviceId Id of the persistence service.
-  @Put(
-    path: '/persistence/{serviceId}',
-    optionalBody: true,
-  )
+  @Put(path: '/persistence/{serviceId}', optionalBody: true)
   Future<chopper.Response<PersistenceServiceConfigurationDTO>>
-      _persistenceServiceIdPut({
+  _persistenceServiceIdPut({
     @Path('serviceId') required String? serviceId,
     @Body() required PersistenceServiceConfigurationDTO? body,
   });
 
   ///Deletes a persistence service configuration.
   ///@param serviceId Id of the persistence service.
-  Future<chopper.Response> persistenceServiceIdDelete(
-      {required String? serviceId}) {
+  Future<chopper.Response> persistenceServiceIdDelete({
+    required String? serviceId,
+  }) {
     return _persistenceServiceIdDelete(serviceId: serviceId);
   }
 
   ///Deletes a persistence service configuration.
   ///@param serviceId Id of the persistence service.
   @Delete(path: '/persistence/{serviceId}')
-  Future<chopper.Response> _persistenceServiceIdDelete(
-      {@Path('serviceId') required String? serviceId});
+  Future<chopper.Response> _persistenceServiceIdDelete({
+    @Path('serviceId') required String? serviceId,
+  });
 
   ///Gets item persistence data from the persistence service.
   ///@param serviceId Id of the persistence service. If not provided the default service will be used
@@ -1675,16 +1752,19 @@ abstract class OpenHAB extends ChopperService {
     bool? boundary,
   }) {
     generatedMapping.putIfAbsent(
-        ItemHistoryDTO, () => ItemHistoryDTO.fromJsonFactory);
+      ItemHistoryDTO,
+      () => ItemHistoryDTO.fromJsonFactory,
+    );
 
     return _persistenceItemsItemnameGet(
-        serviceId: serviceId,
-        itemname: itemname,
-        starttime: starttime,
-        endtime: endtime,
-        page: page,
-        pagelength: pagelength,
-        boundary: boundary);
+      serviceId: serviceId,
+      itemname: itemname,
+      starttime: starttime,
+      endtime: endtime,
+      page: page,
+      pagelength: pagelength,
+      boundary: boundary,
+    );
   }
 
   ///Gets item persistence data from the persistence service.
@@ -1718,7 +1798,11 @@ abstract class OpenHAB extends ChopperService {
     required String? state,
   }) {
     return _persistenceItemsItemnamePut(
-        serviceId: serviceId, itemname: itemname, time: time, state: state);
+      serviceId: serviceId,
+      itemname: itemname,
+      time: time,
+      state: state,
+    );
   }
 
   ///Stores item persistence data into the persistence service.
@@ -1726,10 +1810,7 @@ abstract class OpenHAB extends ChopperService {
   ///@param itemname The item name.
   ///@param time Time of the data to be stored. Will default to current time. [yyyy-MM-dd'T'HH:mm:ss.SSSZ]
   ///@param state The state to store.
-  @Put(
-    path: '/persistence/items/{itemname}',
-    optionalBody: true,
-  )
+  @Put(path: '/persistence/items/{itemname}', optionalBody: true)
   Future<chopper.Response> _persistenceItemsItemnamePut({
     @Query('serviceId') String? serviceId,
     @Path('itemname') required String? itemname,
@@ -1749,10 +1830,11 @@ abstract class OpenHAB extends ChopperService {
     required String? endtime,
   }) {
     return _persistenceItemsItemnameDelete(
-        serviceId: serviceId,
-        itemname: itemname,
-        starttime: starttime,
-        endtime: endtime);
+      serviceId: serviceId,
+      itemname: itemname,
+      starttime: starttime,
+      endtime: endtime,
+    );
   }
 
   ///Deletes item persistence data from a specific persistence service in a given time range.
@@ -1770,10 +1852,13 @@ abstract class OpenHAB extends ChopperService {
 
   ///Gets a list of items available via a specific persistence service.
   ///@param serviceId Id of the persistence service. If not provided the default service will be used
-  Future<chopper.Response<List<PersistenceItemInfo>>> persistenceItemsGet(
-      {String? serviceId}) {
+  Future<chopper.Response<List<PersistenceItemInfo>>> persistenceItemsGet({
+    String? serviceId,
+  }) {
     generatedMapping.putIfAbsent(
-        PersistenceItemInfo, () => PersistenceItemInfo.fromJsonFactory);
+      PersistenceItemInfo,
+      () => PersistenceItemInfo.fromJsonFactory,
+    );
 
     return _persistenceItemsGet(serviceId: serviceId);
   }
@@ -1781,15 +1866,19 @@ abstract class OpenHAB extends ChopperService {
   ///Gets a list of items available via a specific persistence service.
   ///@param serviceId Id of the persistence service. If not provided the default service will be used
   @Get(path: '/persistence/items')
-  Future<chopper.Response<List<PersistenceItemInfo>>> _persistenceItemsGet(
-      {@Query('serviceId') String? serviceId});
+  Future<chopper.Response<List<PersistenceItemInfo>>> _persistenceItemsGet({
+    @Query('serviceId') String? serviceId,
+  });
 
   ///Gets a list of persistence services.
   ///@param Accept-Language language
-  Future<chopper.Response<List<PersistenceServiceDTO>>> persistenceGet(
-      {String? acceptLanguage}) {
+  Future<chopper.Response<List<PersistenceServiceDTO>>> persistenceGet({
+    String? acceptLanguage,
+  }) {
     generatedMapping.putIfAbsent(
-        PersistenceServiceDTO, () => PersistenceServiceDTO.fromJsonFactory);
+      PersistenceServiceDTO,
+      () => PersistenceServiceDTO.fromJsonFactory,
+    );
 
     return _persistenceGet(acceptLanguage: acceptLanguage?.toString());
   }
@@ -1797,8 +1886,9 @@ abstract class OpenHAB extends ChopperService {
   ///Gets a list of persistence services.
   ///@param Accept-Language language
   @Get(path: '/persistence')
-  Future<chopper.Response<List<PersistenceServiceDTO>>> _persistenceGet(
-      {@Header('Accept-Language') String? acceptLanguage});
+  Future<chopper.Response<List<PersistenceServiceDTO>>> _persistenceGet({
+    @Header('Accept-Language') String? acceptLanguage,
+  });
 
   ///Gets all available profile types.
   ///@param Accept-Language language
@@ -1810,12 +1900,15 @@ abstract class OpenHAB extends ChopperService {
     String? itemType,
   }) {
     generatedMapping.putIfAbsent(
-        ProfileTypeDTO, () => ProfileTypeDTO.fromJsonFactory);
+      ProfileTypeDTO,
+      () => ProfileTypeDTO.fromJsonFactory,
+    );
 
     return _profileTypesGet(
-        acceptLanguage: acceptLanguage?.toString(),
-        channelTypeUID: channelTypeUID,
-        itemType: itemType);
+      acceptLanguage: acceptLanguage?.toString(),
+      channelTypeUID: channelTypeUID,
+      itemType: itemType,
+    );
   }
 
   ///Gets all available profile types.
@@ -1831,16 +1924,18 @@ abstract class OpenHAB extends ChopperService {
 
   ///Get service configuration for given service ID.
   ///@param serviceId service ID
-  Future<chopper.Response<String>> servicesServiceIdConfigGet(
-      {required String? serviceId}) {
+  Future<chopper.Response<String>> servicesServiceIdConfigGet({
+    required String? serviceId,
+  }) {
     return _servicesServiceIdConfigGet(serviceId: serviceId);
   }
 
   ///Get service configuration for given service ID.
   ///@param serviceId service ID
   @Get(path: '/services/{serviceId}/config')
-  Future<chopper.Response<String>> _servicesServiceIdConfigGet(
-      {@Path('serviceId') required String? serviceId});
+  Future<chopper.Response<String>> _servicesServiceIdConfigGet({
+    @Path('serviceId') required String? serviceId,
+  });
 
   ///Updates a service configuration for given service ID and returns the old configuration.
   ///@param Accept-Language language
@@ -1851,18 +1946,16 @@ abstract class OpenHAB extends ChopperService {
     required Object? body,
   }) {
     return _servicesServiceIdConfigPut(
-        acceptLanguage: acceptLanguage?.toString(),
-        serviceId: serviceId,
-        body: body);
+      acceptLanguage: acceptLanguage?.toString(),
+      serviceId: serviceId,
+      body: body,
+    );
   }
 
   ///Updates a service configuration for given service ID and returns the old configuration.
   ///@param Accept-Language language
   ///@param serviceId service ID
-  @Put(
-    path: '/services/{serviceId}/config',
-    optionalBody: true,
-  )
+  @Put(path: '/services/{serviceId}/config', optionalBody: true)
   Future<chopper.Response<String>> _servicesServiceIdConfigPut({
     @Header('Accept-Language') String? acceptLanguage,
     @Path('serviceId') required String? serviceId,
@@ -1871,23 +1964,28 @@ abstract class OpenHAB extends ChopperService {
 
   ///Deletes a service configuration for given service ID and returns the old configuration.
   ///@param serviceId service ID
-  Future<chopper.Response<String>> servicesServiceIdConfigDelete(
-      {required String? serviceId}) {
+  Future<chopper.Response<String>> servicesServiceIdConfigDelete({
+    required String? serviceId,
+  }) {
     return _servicesServiceIdConfigDelete(serviceId: serviceId);
   }
 
   ///Deletes a service configuration for given service ID and returns the old configuration.
   ///@param serviceId service ID
   @Delete(path: '/services/{serviceId}/config')
-  Future<chopper.Response<String>> _servicesServiceIdConfigDelete(
-      {@Path('serviceId') required String? serviceId});
+  Future<chopper.Response<String>> _servicesServiceIdConfigDelete({
+    @Path('serviceId') required String? serviceId,
+  });
 
   ///Get all configurable services.
   ///@param Accept-Language language
-  Future<chopper.Response<List<ConfigurableServiceDTO>>> servicesGet(
-      {String? acceptLanguage}) {
+  Future<chopper.Response<List<ConfigurableServiceDTO>>> servicesGet({
+    String? acceptLanguage,
+  }) {
     generatedMapping.putIfAbsent(
-        ConfigurableServiceDTO, () => ConfigurableServiceDTO.fromJsonFactory);
+      ConfigurableServiceDTO,
+      () => ConfigurableServiceDTO.fromJsonFactory,
+    );
 
     return _servicesGet(acceptLanguage: acceptLanguage?.toString());
   }
@@ -1895,8 +1993,9 @@ abstract class OpenHAB extends ChopperService {
   ///Get all configurable services.
   ///@param Accept-Language language
   @Get(path: '/services')
-  Future<chopper.Response<List<ConfigurableServiceDTO>>> _servicesGet(
-      {@Header('Accept-Language') String? acceptLanguage});
+  Future<chopper.Response<List<ConfigurableServiceDTO>>> _servicesGet({
+    @Header('Accept-Language') String? acceptLanguage,
+  });
 
   ///Get configurable service for given service ID.
   ///@param Accept-Language language
@@ -1906,10 +2005,14 @@ abstract class OpenHAB extends ChopperService {
     required String? serviceId,
   }) {
     generatedMapping.putIfAbsent(
-        ConfigurableServiceDTO, () => ConfigurableServiceDTO.fromJsonFactory);
+      ConfigurableServiceDTO,
+      () => ConfigurableServiceDTO.fromJsonFactory,
+    );
 
     return _servicesServiceIdGet(
-        acceptLanguage: acceptLanguage?.toString(), serviceId: serviceId);
+      acceptLanguage: acceptLanguage?.toString(),
+      serviceId: serviceId,
+    );
   }
 
   ///Get configurable service for given service ID.
@@ -1925,15 +2028,19 @@ abstract class OpenHAB extends ChopperService {
   ///@param Accept-Language language
   ///@param serviceId service ID
   Future<chopper.Response<List<ConfigurableServiceDTO>>>
-      servicesServiceIdContextsGet({
+  servicesServiceIdContextsGet({
     String? acceptLanguage,
     required String? serviceId,
   }) {
     generatedMapping.putIfAbsent(
-        ConfigurableServiceDTO, () => ConfigurableServiceDTO.fromJsonFactory);
+      ConfigurableServiceDTO,
+      () => ConfigurableServiceDTO.fromJsonFactory,
+    );
 
     return _servicesServiceIdContextsGet(
-        acceptLanguage: acceptLanguage?.toString(), serviceId: serviceId);
+      acceptLanguage: acceptLanguage?.toString(),
+      serviceId: serviceId,
+    );
   }
 
   ///Get existing multiple context service configurations for the given factory PID.
@@ -1941,17 +2048,20 @@ abstract class OpenHAB extends ChopperService {
   ///@param serviceId service ID
   @Get(path: '/services/{serviceId}/contexts')
   Future<chopper.Response<List<ConfigurableServiceDTO>>>
-      _servicesServiceIdContextsGet({
+  _servicesServiceIdContextsGet({
     @Header('Accept-Language') String? acceptLanguage,
     @Path('serviceId') required String? serviceId,
   });
 
   ///Get all available semantic tags.
   ///@param Accept-Language language
-  Future<chopper.Response<List<EnrichedSemanticTagDTO>>> tagsGet(
-      {String? acceptLanguage}) {
+  Future<chopper.Response<List<EnrichedSemanticTagDTO>>> tagsGet({
+    String? acceptLanguage,
+  }) {
     generatedMapping.putIfAbsent(
-        EnrichedSemanticTagDTO, () => EnrichedSemanticTagDTO.fromJsonFactory);
+      EnrichedSemanticTagDTO,
+      () => EnrichedSemanticTagDTO.fromJsonFactory,
+    );
 
     return _tagsGet(acceptLanguage: acceptLanguage?.toString());
   }
@@ -1959,8 +2069,9 @@ abstract class OpenHAB extends ChopperService {
   ///Get all available semantic tags.
   ///@param Accept-Language language
   @Get(path: '/tags')
-  Future<chopper.Response<List<EnrichedSemanticTagDTO>>> _tagsGet(
-      {@Header('Accept-Language') String? acceptLanguage});
+  Future<chopper.Response<List<EnrichedSemanticTagDTO>>> _tagsGet({
+    @Header('Accept-Language') String? acceptLanguage,
+  });
 
   ///Creates a new semantic tag and adds it to the registry.
   ///@param Accept-Language language
@@ -1969,17 +2080,16 @@ abstract class OpenHAB extends ChopperService {
     required EnrichedSemanticTagDTO? body,
   }) {
     generatedMapping.putIfAbsent(
-        EnrichedSemanticTagDTO, () => EnrichedSemanticTagDTO.fromJsonFactory);
+      EnrichedSemanticTagDTO,
+      () => EnrichedSemanticTagDTO.fromJsonFactory,
+    );
 
     return _tagsPost(acceptLanguage: acceptLanguage?.toString(), body: body);
   }
 
   ///Creates a new semantic tag and adds it to the registry.
   ///@param Accept-Language language
-  @Post(
-    path: '/tags',
-    optionalBody: true,
-  )
+  @Post(path: '/tags', optionalBody: true)
   Future<chopper.Response<EnrichedSemanticTagDTO>> _tagsPost({
     @Header('Accept-Language') String? acceptLanguage,
     @Body() required EnrichedSemanticTagDTO? body,
@@ -1993,10 +2103,14 @@ abstract class OpenHAB extends ChopperService {
     required String? tagId,
   }) {
     generatedMapping.putIfAbsent(
-        EnrichedSemanticTagDTO, () => EnrichedSemanticTagDTO.fromJsonFactory);
+      EnrichedSemanticTagDTO,
+      () => EnrichedSemanticTagDTO.fromJsonFactory,
+    );
 
     return _tagsTagIdGet(
-        acceptLanguage: acceptLanguage?.toString(), tagId: tagId);
+      acceptLanguage: acceptLanguage?.toString(),
+      tagId: tagId,
+    );
   }
 
   ///Gets a semantic tag and its sub tags.
@@ -2017,19 +2131,21 @@ abstract class OpenHAB extends ChopperService {
     required EnrichedSemanticTagDTO? body,
   }) {
     generatedMapping.putIfAbsent(
-        EnrichedSemanticTagDTO, () => EnrichedSemanticTagDTO.fromJsonFactory);
+      EnrichedSemanticTagDTO,
+      () => EnrichedSemanticTagDTO.fromJsonFactory,
+    );
 
     return _tagsTagIdPut(
-        acceptLanguage: acceptLanguage?.toString(), tagId: tagId, body: body);
+      acceptLanguage: acceptLanguage?.toString(),
+      tagId: tagId,
+      body: body,
+    );
   }
 
   ///Updates a semantic tag.
   ///@param Accept-Language language
   ///@param tagId tag id
-  @Put(
-    path: '/tags/{tagId}',
-    optionalBody: true,
-  )
+  @Put(path: '/tags/{tagId}', optionalBody: true)
   Future<chopper.Response<EnrichedSemanticTagDTO>> _tagsTagIdPut({
     @Header('Accept-Language') String? acceptLanguage,
     @Path('tagId') required String? tagId,
@@ -2044,7 +2160,9 @@ abstract class OpenHAB extends ChopperService {
     required String? tagId,
   }) {
     return _tagsTagIdDelete(
-        acceptLanguage: acceptLanguage?.toString(), tagId: tagId);
+      acceptLanguage: acceptLanguage?.toString(),
+      tagId: tagId,
+    );
   }
 
   ///Removes a semantic tag and its sub tags from the registry.
@@ -2066,12 +2184,15 @@ abstract class OpenHAB extends ChopperService {
     bool? staticDataOnly,
   }) {
     generatedMapping.putIfAbsent(
-        EnrichedThingDTO, () => EnrichedThingDTO.fromJsonFactory);
+      EnrichedThingDTO,
+      () => EnrichedThingDTO.fromJsonFactory,
+    );
 
     return _thingsGet(
-        acceptLanguage: acceptLanguage?.toString(),
-        summary: summary,
-        staticDataOnly: staticDataOnly);
+      acceptLanguage: acceptLanguage?.toString(),
+      summary: summary,
+      staticDataOnly: staticDataOnly,
+    );
   }
 
   ///Get all available things.
@@ -2092,17 +2213,16 @@ abstract class OpenHAB extends ChopperService {
     required ThingDTO? body,
   }) {
     generatedMapping.putIfAbsent(
-        EnrichedThingDTO, () => EnrichedThingDTO.fromJsonFactory);
+      EnrichedThingDTO,
+      () => EnrichedThingDTO.fromJsonFactory,
+    );
 
     return _thingsPost(acceptLanguage: acceptLanguage?.toString(), body: body);
   }
 
   ///Creates a new thing and adds it to the registry.
   ///@param Accept-Language language
-  @Post(
-    path: '/things',
-    optionalBody: true,
-  )
+  @Post(path: '/things', optionalBody: true)
   Future<chopper.Response<EnrichedThingDTO>> _thingsPost({
     @Header('Accept-Language') String? acceptLanguage,
     @Body() required ThingDTO? body,
@@ -2116,10 +2236,14 @@ abstract class OpenHAB extends ChopperService {
     required String? thingUID,
   }) {
     generatedMapping.putIfAbsent(
-        EnrichedThingDTO, () => EnrichedThingDTO.fromJsonFactory);
+      EnrichedThingDTO,
+      () => EnrichedThingDTO.fromJsonFactory,
+    );
 
     return _thingsThingUIDGet(
-        acceptLanguage: acceptLanguage?.toString(), thingUID: thingUID);
+      acceptLanguage: acceptLanguage?.toString(),
+      thingUID: thingUID,
+    );
   }
 
   ///Gets thing by UID.
@@ -2140,21 +2264,21 @@ abstract class OpenHAB extends ChopperService {
     required ThingDTO? body,
   }) {
     generatedMapping.putIfAbsent(
-        EnrichedThingDTO, () => EnrichedThingDTO.fromJsonFactory);
+      EnrichedThingDTO,
+      () => EnrichedThingDTO.fromJsonFactory,
+    );
 
     return _thingsThingUIDPut(
-        acceptLanguage: acceptLanguage?.toString(),
-        thingUID: thingUID,
-        body: body);
+      acceptLanguage: acceptLanguage?.toString(),
+      thingUID: thingUID,
+      body: body,
+    );
   }
 
   ///Updates a thing.
   ///@param Accept-Language language
   ///@param thingUID thingUID
-  @Put(
-    path: '/things/{thingUID}',
-    optionalBody: true,
-  )
+  @Put(path: '/things/{thingUID}', optionalBody: true)
   Future<chopper.Response<EnrichedThingDTO>> _thingsThingUIDPut({
     @Header('Accept-Language') String? acceptLanguage,
     @Path('thingUID') required String? thingUID,
@@ -2171,9 +2295,10 @@ abstract class OpenHAB extends ChopperService {
     bool? force,
   }) {
     return _thingsThingUIDDelete(
-        acceptLanguage: acceptLanguage?.toString(),
-        thingUID: thingUID,
-        force: force);
+      acceptLanguage: acceptLanguage?.toString(),
+      thingUID: thingUID,
+      force: force,
+    );
   }
 
   ///Removes a thing from the registry. Set 'force' to __true__ if you want the thing to be removed immediately.
@@ -2191,15 +2316,19 @@ abstract class OpenHAB extends ChopperService {
   ///@param Accept-Language language
   ///@param thingUID thing
   Future<chopper.Response<List<ConfigStatusMessage>>>
-      thingsThingUIDConfigStatusGet({
+  thingsThingUIDConfigStatusGet({
     String? acceptLanguage,
     required String? thingUID,
   }) {
     generatedMapping.putIfAbsent(
-        ConfigStatusMessage, () => ConfigStatusMessage.fromJsonFactory);
+      ConfigStatusMessage,
+      () => ConfigStatusMessage.fromJsonFactory,
+    );
 
     return _thingsThingUIDConfigStatusGet(
-        acceptLanguage: acceptLanguage?.toString(), thingUID: thingUID);
+      acceptLanguage: acceptLanguage?.toString(),
+      thingUID: thingUID,
+    );
   }
 
   ///Gets thing config status.
@@ -2207,7 +2336,7 @@ abstract class OpenHAB extends ChopperService {
   ///@param thingUID thing
   @Get(path: '/things/{thingUID}/config/status')
   Future<chopper.Response<List<ConfigStatusMessage>>>
-      _thingsThingUIDConfigStatusGet({
+  _thingsThingUIDConfigStatusGet({
     @Header('Accept-Language') String? acceptLanguage,
     @Path('thingUID') required String? thingUID,
   });
@@ -2220,10 +2349,14 @@ abstract class OpenHAB extends ChopperService {
     required String? thingUID,
   }) {
     generatedMapping.putIfAbsent(
-        FirmwareStatusDTO, () => FirmwareStatusDTO.fromJsonFactory);
+      FirmwareStatusDTO,
+      () => FirmwareStatusDTO.fromJsonFactory,
+    );
 
     return _thingsThingUIDFirmwareStatusGet(
-        acceptLanguage: acceptLanguage?.toString(), thingUID: thingUID);
+      acceptLanguage: acceptLanguage?.toString(),
+      thingUID: thingUID,
+    );
   }
 
   ///Gets thing's firmware status.
@@ -2243,10 +2376,14 @@ abstract class OpenHAB extends ChopperService {
     String? acceptLanguage,
   }) {
     generatedMapping.putIfAbsent(
-        FirmwareDTO, () => FirmwareDTO.fromJsonFactory);
+      FirmwareDTO,
+      () => FirmwareDTO.fromJsonFactory,
+    );
 
     return _thingsThingUIDFirmwaresGet(
-        thingUID: thingUID, acceptLanguage: acceptLanguage?.toString());
+      thingUID: thingUID,
+      acceptLanguage: acceptLanguage?.toString(),
+    );
   }
 
   ///Get all available firmwares for provided thing UID
@@ -2266,10 +2403,14 @@ abstract class OpenHAB extends ChopperService {
     required String? thingUID,
   }) {
     generatedMapping.putIfAbsent(
-        ThingStatusInfo, () => ThingStatusInfo.fromJsonFactory);
+      ThingStatusInfo,
+      () => ThingStatusInfo.fromJsonFactory,
+    );
 
     return _thingsThingUIDStatusGet(
-        acceptLanguage: acceptLanguage?.toString(), thingUID: thingUID);
+      acceptLanguage: acceptLanguage?.toString(),
+      thingUID: thingUID,
+    );
   }
 
   ///Gets thing status.
@@ -2290,21 +2431,21 @@ abstract class OpenHAB extends ChopperService {
     required String? body,
   }) {
     generatedMapping.putIfAbsent(
-        EnrichedThingDTO, () => EnrichedThingDTO.fromJsonFactory);
+      EnrichedThingDTO,
+      () => EnrichedThingDTO.fromJsonFactory,
+    );
 
     return _thingsThingUIDEnablePut(
-        acceptLanguage: acceptLanguage?.toString(),
-        thingUID: thingUID,
-        body: body);
+      acceptLanguage: acceptLanguage?.toString(),
+      thingUID: thingUID,
+      body: body,
+    );
   }
 
   ///Sets the thing enabled status.
   ///@param Accept-Language language
   ///@param thingUID thing
-  @Put(
-    path: '/things/{thingUID}/enable',
-    optionalBody: true,
-  )
+  @Put(path: '/things/{thingUID}/enable', optionalBody: true)
   Future<chopper.Response<EnrichedThingDTO>> _thingsThingUIDEnablePut({
     @Header('Accept-Language') String? acceptLanguage,
     @Path('thingUID') required String? thingUID,
@@ -2320,21 +2461,21 @@ abstract class OpenHAB extends ChopperService {
     required Object? body,
   }) {
     generatedMapping.putIfAbsent(
-        EnrichedThingDTO, () => EnrichedThingDTO.fromJsonFactory);
+      EnrichedThingDTO,
+      () => EnrichedThingDTO.fromJsonFactory,
+    );
 
     return _thingsThingUIDConfigPut(
-        acceptLanguage: acceptLanguage?.toString(),
-        thingUID: thingUID,
-        body: body);
+      acceptLanguage: acceptLanguage?.toString(),
+      thingUID: thingUID,
+      body: body,
+    );
   }
 
   ///Updates thing's configuration.
   ///@param Accept-Language language
   ///@param thingUID thing
-  @Put(
-    path: '/things/{thingUID}/config',
-    optionalBody: true,
-  )
+  @Put(path: '/things/{thingUID}/config', optionalBody: true)
   Future<chopper.Response<EnrichedThingDTO>> _thingsThingUIDConfigPut({
     @Header('Accept-Language') String? acceptLanguage,
     @Path('thingUID') required String? thingUID,
@@ -2351,9 +2492,10 @@ abstract class OpenHAB extends ChopperService {
     required String? firmwareVersion,
   }) {
     return _thingsThingUIDFirmwareFirmwareVersionPut(
-        acceptLanguage: acceptLanguage?.toString(),
-        thingUID: thingUID,
-        firmwareVersion: firmwareVersion);
+      acceptLanguage: acceptLanguage?.toString(),
+      thingUID: thingUID,
+      firmwareVersion: firmwareVersion,
+    );
   }
 
   ///Update thing firmware.
@@ -2378,10 +2520,14 @@ abstract class OpenHAB extends ChopperService {
     String? bindingId,
   }) {
     generatedMapping.putIfAbsent(
-        StrippedThingTypeDTO, () => StrippedThingTypeDTO.fromJsonFactory);
+      StrippedThingTypeDTO,
+      () => StrippedThingTypeDTO.fromJsonFactory,
+    );
 
     return _thingTypesGet(
-        acceptLanguage: acceptLanguage?.toString(), bindingId: bindingId);
+      acceptLanguage: acceptLanguage?.toString(),
+      bindingId: bindingId,
+    );
   }
 
   ///Gets all available thing types without config description, channels and properties.
@@ -2401,10 +2547,14 @@ abstract class OpenHAB extends ChopperService {
     String? acceptLanguage,
   }) {
     generatedMapping.putIfAbsent(
-        ThingTypeDTO, () => ThingTypeDTO.fromJsonFactory);
+      ThingTypeDTO,
+      () => ThingTypeDTO.fromJsonFactory,
+    );
 
     return _thingTypesThingTypeUIDGet(
-        thingTypeUID: thingTypeUID, acceptLanguage: acceptLanguage?.toString());
+      thingTypeUID: thingTypeUID,
+      acceptLanguage: acceptLanguage?.toString(),
+    );
   }
 
   ///Gets thing type by UID.
@@ -2430,7 +2580,9 @@ abstract class OpenHAB extends ChopperService {
   ///Gets information about the system.
   Future<chopper.Response<SystemInfoBean>> systeminfoGet() {
     generatedMapping.putIfAbsent(
-        SystemInfoBean, () => SystemInfoBean.fromJsonFactory);
+      SystemInfoBean,
+      () => SystemInfoBean.fromJsonFactory,
+    );
 
     return _systeminfoGet();
   }
@@ -2442,7 +2594,9 @@ abstract class OpenHAB extends ChopperService {
   ///Get all supported dimensions and their system units.
   Future<chopper.Response<UoMInfoBean>> systeminfoUomGet() {
     generatedMapping.putIfAbsent(
-        UoMInfoBean, () => UoMInfoBean.fromJsonFactory);
+      UoMInfoBean,
+      () => UoMInfoBean.fromJsonFactory,
+    );
 
     return _systeminfoUomGet();
   }
@@ -2457,10 +2611,7 @@ abstract class OpenHAB extends ChopperService {
   }
 
   ///Creates a sitemap event subscription.
-  @Post(
-    path: '/sitemaps/events/subscribe',
-    optionalBody: true,
-  )
+  @Post(path: '/sitemaps/events/subscribe', optionalBody: true)
   Future<chopper.Response> _sitemapsEventsSubscribePost();
 
   ///Polls the data for a sitemap.
@@ -2479,11 +2630,12 @@ abstract class OpenHAB extends ChopperService {
     generatedMapping.putIfAbsent(PageDTO, () => PageDTO.fromJsonFactory);
 
     return _sitemapsSitemapnamePageidGet(
-        acceptLanguage: acceptLanguage?.toString(),
-        sitemapname: sitemapname,
-        pageid: pageid,
-        subscriptionid: subscriptionid,
-        includeHidden: includeHidden);
+      acceptLanguage: acceptLanguage?.toString(),
+      sitemapname: sitemapname,
+      pageid: pageid,
+      subscriptionid: subscriptionid,
+      includeHidden: includeHidden,
+    );
   }
 
   ///Polls the data for a sitemap.
@@ -2517,11 +2669,12 @@ abstract class OpenHAB extends ChopperService {
     generatedMapping.putIfAbsent(SitemapDTO, () => SitemapDTO.fromJsonFactory);
 
     return _sitemapsSitemapnameGet(
-        acceptLanguage: acceptLanguage?.toString(),
-        sitemapname: sitemapname,
-        type: type,
-        jsoncallback: jsoncallback,
-        includeHidden: includeHidden);
+      acceptLanguage: acceptLanguage?.toString(),
+      sitemapname: sitemapname,
+      type: type,
+      jsoncallback: jsoncallback,
+      includeHidden: includeHidden,
+    );
   }
 
   ///Get sitemap by name.
@@ -2549,7 +2702,10 @@ abstract class OpenHAB extends ChopperService {
     String? pageid,
   }) {
     return _sitemapsEventsSubscriptionidGet(
-        subscriptionid: subscriptionid, sitemap: sitemap, pageid: pageid);
+      subscriptionid: subscriptionid,
+      sitemap: sitemap,
+      pageid: pageid,
+    );
   }
 
   ///Get sitemap events.
@@ -2601,15 +2757,14 @@ abstract class OpenHAB extends ChopperService {
     required List<String>? body,
   }) {
     return _eventsStatesConnectionIdPost(
-        connectionId: connectionId, body: body);
+      connectionId: connectionId,
+      body: body,
+    );
   }
 
   ///Changes the list of items a SSE connection will receive state updates to.
   ///@param connectionId
-  @Post(
-    path: '/events/states/{connectionId}',
-    optionalBody: true,
-  )
+  @Post(path: '/events/states/{connectionId}', optionalBody: true)
   Future<chopper.Response> _eventsStatesConnectionIdPost({
     @Path('connectionId') required String? connectionId,
     @Body() required List<String>? body,
@@ -2617,10 +2772,13 @@ abstract class OpenHAB extends ChopperService {
 
   ///Get a single transformation
   ///@param uid Transformation UID
-  Future<chopper.Response<Transformation>> transformationsUidGet(
-      {required String? uid}) {
+  Future<chopper.Response<Transformation>> transformationsUidGet({
+    required String? uid,
+  }) {
     generatedMapping.putIfAbsent(
-        Transformation, () => Transformation.fromJsonFactory);
+      Transformation,
+      () => Transformation.fromJsonFactory,
+    );
 
     return _transformationsUidGet(uid: uid);
   }
@@ -2628,8 +2786,9 @@ abstract class OpenHAB extends ChopperService {
   ///Get a single transformation
   ///@param uid Transformation UID
   @Get(path: '/transformations/{uid}')
-  Future<chopper.Response<Transformation>> _transformationsUidGet(
-      {@Path('uid') required String? uid});
+  Future<chopper.Response<Transformation>> _transformationsUidGet({
+    @Path('uid') required String? uid,
+  });
 
   ///Put a single transformation
   ///@param uid Transformation UID
@@ -2642,10 +2801,7 @@ abstract class OpenHAB extends ChopperService {
 
   ///Put a single transformation
   ///@param uid Transformation UID
-  @Put(
-    path: '/transformations/{uid}',
-    optionalBody: true,
-  )
+  @Put(path: '/transformations/{uid}', optionalBody: true)
   Future<chopper.Response> _transformationsUidPut({
     @Path('uid') required String? uid,
     @Body() required TransformationDTO? body,
@@ -2660,8 +2816,9 @@ abstract class OpenHAB extends ChopperService {
   ///Get a single transformation
   ///@param uid Transformation UID
   @Delete(path: '/transformations/{uid}')
-  Future<chopper.Response> _transformationsUidDelete(
-      {@Path('uid') required String? uid});
+  Future<chopper.Response> _transformationsUidDelete({
+    @Path('uid') required String? uid,
+  });
 
   ///Get all transformation services
   Future<chopper.Response<List<String>>> transformationsServicesGet() {
@@ -2675,7 +2832,9 @@ abstract class OpenHAB extends ChopperService {
   ///Get a list of all transformations
   Future<chopper.Response<List<TransformationDTO>>> transformationsGet() {
     generatedMapping.putIfAbsent(
-        TransformationDTO, () => TransformationDTO.fromJsonFactory);
+      TransformationDTO,
+      () => TransformationDTO.fromJsonFactory,
+    );
 
     return _transformationsGet();
   }
@@ -2692,7 +2851,9 @@ abstract class OpenHAB extends ChopperService {
     bool? summary,
   }) {
     generatedMapping.putIfAbsent(
-        RootUIComponent, () => RootUIComponent.fromJsonFactory);
+      RootUIComponent,
+      () => RootUIComponent.fromJsonFactory,
+    );
 
     return _uiComponentsNamespaceGet(namespace: namespace, summary: summary);
   }
@@ -2713,17 +2874,16 @@ abstract class OpenHAB extends ChopperService {
     required RootUIComponent? body,
   }) {
     generatedMapping.putIfAbsent(
-        RootUIComponent, () => RootUIComponent.fromJsonFactory);
+      RootUIComponent,
+      () => RootUIComponent.fromJsonFactory,
+    );
 
     return _uiComponentsNamespacePost(namespace: namespace, body: body);
   }
 
   ///Add a UI component in the specified namespace.
   ///@param namespace
-  @Post(
-    path: '/ui/components/{namespace}',
-    optionalBody: true,
-  )
+  @Post(path: '/ui/components/{namespace}', optionalBody: true)
   Future<chopper.Response<RootUIComponent>> _uiComponentsNamespacePost({
     @Path('namespace') required String? namespace,
     @Body() required RootUIComponent? body,
@@ -2733,15 +2893,19 @@ abstract class OpenHAB extends ChopperService {
   ///@param namespace
   ///@param componentUID
   Future<chopper.Response<RootUIComponent>>
-      uiComponentsNamespaceComponentUIDGet({
+  uiComponentsNamespaceComponentUIDGet({
     required String? namespace,
     required String? componentUID,
   }) {
     generatedMapping.putIfAbsent(
-        RootUIComponent, () => RootUIComponent.fromJsonFactory);
+      RootUIComponent,
+      () => RootUIComponent.fromJsonFactory,
+    );
 
     return _uiComponentsNamespaceComponentUIDGet(
-        namespace: namespace, componentUID: componentUID);
+      namespace: namespace,
+      componentUID: componentUID,
+    );
   }
 
   ///Get a specific UI component in the specified namespace.
@@ -2749,7 +2913,7 @@ abstract class OpenHAB extends ChopperService {
   ///@param componentUID
   @Get(path: '/ui/components/{namespace}/{componentUID}')
   Future<chopper.Response<RootUIComponent>>
-      _uiComponentsNamespaceComponentUIDGet({
+  _uiComponentsNamespaceComponentUIDGet({
     @Path('namespace') required String? namespace,
     @Path('componentUID') required String? componentUID,
   });
@@ -2758,27 +2922,29 @@ abstract class OpenHAB extends ChopperService {
   ///@param namespace
   ///@param componentUID
   Future<chopper.Response<RootUIComponent>>
-      uiComponentsNamespaceComponentUIDPut({
+  uiComponentsNamespaceComponentUIDPut({
     required String? namespace,
     required String? componentUID,
     required RootUIComponent? body,
   }) {
     generatedMapping.putIfAbsent(
-        RootUIComponent, () => RootUIComponent.fromJsonFactory);
+      RootUIComponent,
+      () => RootUIComponent.fromJsonFactory,
+    );
 
     return _uiComponentsNamespaceComponentUIDPut(
-        namespace: namespace, componentUID: componentUID, body: body);
+      namespace: namespace,
+      componentUID: componentUID,
+      body: body,
+    );
   }
 
   ///Update a specific UI component in the specified namespace.
   ///@param namespace
   ///@param componentUID
-  @Put(
-    path: '/ui/components/{namespace}/{componentUID}',
-    optionalBody: true,
-  )
+  @Put(path: '/ui/components/{namespace}/{componentUID}', optionalBody: true)
   Future<chopper.Response<RootUIComponent>>
-      _uiComponentsNamespaceComponentUIDPut({
+  _uiComponentsNamespaceComponentUIDPut({
     @Path('namespace') required String? namespace,
     @Path('componentUID') required String? componentUID,
     @Body() required RootUIComponent? body,
@@ -2792,7 +2958,9 @@ abstract class OpenHAB extends ChopperService {
     required String? componentUID,
   }) {
     return _uiComponentsNamespaceComponentUIDDelete(
-        namespace: namespace, componentUID: componentUID);
+      namespace: namespace,
+      componentUID: componentUID,
+    );
   }
 
   ///Remove a specific UI component in the specified namespace.
@@ -2830,15 +2998,16 @@ abstract class OpenHAB extends ChopperService {
   ///@param Accept-Language language
   ///@param id interpreter id
   Future<chopper.Response<List<HumanLanguageInterpreterDTO>>>
-      voiceInterpretersIdGet({
-    String? acceptLanguage,
-    required String? id,
-  }) {
-    generatedMapping.putIfAbsent(HumanLanguageInterpreterDTO,
-        () => HumanLanguageInterpreterDTO.fromJsonFactory);
+  voiceInterpretersIdGet({String? acceptLanguage, required String? id}) {
+    generatedMapping.putIfAbsent(
+      HumanLanguageInterpreterDTO,
+      () => HumanLanguageInterpreterDTO.fromJsonFactory,
+    );
 
     return _voiceInterpretersIdGet(
-        acceptLanguage: acceptLanguage?.toString(), id: id);
+      acceptLanguage: acceptLanguage?.toString(),
+      id: id,
+    );
   }
 
   ///Gets a single interpreter.
@@ -2846,7 +3015,7 @@ abstract class OpenHAB extends ChopperService {
   ///@param id interpreter id
   @Get(path: '/voice/interpreters/{id}')
   Future<chopper.Response<List<HumanLanguageInterpreterDTO>>>
-      _voiceInterpretersIdGet({
+  _voiceInterpretersIdGet({
     @Header('Accept-Language') String? acceptLanguage,
     @Path('id') required String? id,
   });
@@ -2854,9 +3023,11 @@ abstract class OpenHAB extends ChopperService {
   ///Get the list of all interpreters.
   ///@param Accept-Language language
   Future<chopper.Response<List<HumanLanguageInterpreterDTO>>>
-      voiceInterpretersGet({String? acceptLanguage}) {
-    generatedMapping.putIfAbsent(HumanLanguageInterpreterDTO,
-        () => HumanLanguageInterpreterDTO.fromJsonFactory);
+  voiceInterpretersGet({String? acceptLanguage}) {
+    generatedMapping.putIfAbsent(
+      HumanLanguageInterpreterDTO,
+      () => HumanLanguageInterpreterDTO.fromJsonFactory,
+    );
 
     return _voiceInterpretersGet(acceptLanguage: acceptLanguage?.toString());
   }
@@ -2865,8 +3036,7 @@ abstract class OpenHAB extends ChopperService {
   ///@param Accept-Language language
   @Get(path: '/voice/interpreters')
   Future<chopper.Response<List<HumanLanguageInterpreterDTO>>>
-      _voiceInterpretersGet(
-          {@Header('Accept-Language') String? acceptLanguage});
+  _voiceInterpretersGet({@Header('Accept-Language') String? acceptLanguage});
 
   ///Sends a text to the default human language interpreter.
   ///@param Accept-Language language
@@ -2875,15 +3045,14 @@ abstract class OpenHAB extends ChopperService {
     required String? body,
   }) {
     return _voiceInterpretersPost(
-        acceptLanguage: acceptLanguage?.toString(), body: body);
+      acceptLanguage: acceptLanguage?.toString(),
+      body: body,
+    );
   }
 
   ///Sends a text to the default human language interpreter.
   ///@param Accept-Language language
-  @Post(
-    path: '/voice/interpreters',
-    optionalBody: true,
-  )
+  @Post(path: '/voice/interpreters', optionalBody: true)
   Future<chopper.Response> _voiceInterpretersPost({
     @Header('Accept-Language') String? acceptLanguage,
     @Body() required String? body,
@@ -2909,16 +3078,16 @@ abstract class OpenHAB extends ChopperService {
     required String? body,
   }) {
     return _voiceInterpretersIdsPost(
-        acceptLanguage: acceptLanguage?.toString(), ids: ids, body: body);
+      acceptLanguage: acceptLanguage?.toString(),
+      ids: ids,
+      body: body,
+    );
   }
 
   ///Sends a text to a given human language interpreter(s).
   ///@param Accept-Language language
   ///@param ids comma separated list of interpreter ids
-  @Post(
-    path: '/voice/interpreters/{ids}',
-    optionalBody: true,
-  )
+  @Post(path: '/voice/interpreters/{ids}', optionalBody: true)
   Future<chopper.Response> _voiceInterpretersIdsPost({
     @Header('Accept-Language') String? acceptLanguage,
     @Path('ids') required List<String>? ids,
@@ -2945,14 +3114,15 @@ abstract class OpenHAB extends ChopperService {
     String? listeningItem,
   }) {
     return _voiceListenandanswerPost(
-        acceptLanguage: acceptLanguage?.toString(),
-        sourceId: sourceId,
-        sttId: sttId,
-        ttsId: ttsId,
-        voiceId: voiceId,
-        hliIds: hliIds,
-        sinkId: sinkId,
-        listeningItem: listeningItem);
+      acceptLanguage: acceptLanguage?.toString(),
+      sourceId: sourceId,
+      sttId: sttId,
+      ttsId: ttsId,
+      voiceId: voiceId,
+      hliIds: hliIds,
+      sinkId: sinkId,
+      listeningItem: listeningItem,
+    );
   }
 
   ///Executes a simple dialog sequence without keyword spotting for a given audio source.
@@ -2964,10 +3134,7 @@ abstract class OpenHAB extends ChopperService {
   ///@param hliIds interpreter IDs
   ///@param sinkId audio sink ID
   ///@param listeningItem listening item
-  @Post(
-    path: '/voice/listenandanswer',
-    optionalBody: true,
-  )
+  @Post(path: '/voice/listenandanswer', optionalBody: true)
   Future<chopper.Response> _voiceListenandanswerPost({
     @Header('Accept-Language') String? acceptLanguage,
     @Query('sourceId') String? sourceId,
@@ -2990,17 +3157,18 @@ abstract class OpenHAB extends ChopperService {
     required String? body,
   }) {
     return _voiceSayPost(
-        voiceid: voiceid, sinkid: sinkid, volume: volume, body: body);
+      voiceid: voiceid,
+      sinkid: sinkid,
+      volume: volume,
+      body: body,
+    );
   }
 
   ///Speaks a given text with a given voice through the given audio sink.
   ///@param voiceid voice id
   ///@param sinkid audio sink id
   ///@param volume volume level
-  @Post(
-    path: '/voice/say',
-    optionalBody: true,
-  )
+  @Post(path: '/voice/say', optionalBody: true)
   Future<chopper.Response> _voiceSayPost({
     @Query('voiceid') String? voiceid,
     @Query('sinkid') String? sinkid,
@@ -3032,16 +3200,17 @@ abstract class OpenHAB extends ChopperService {
     String? listeningItem,
   }) {
     return _voiceDialogStartPost(
-        acceptLanguage: acceptLanguage?.toString(),
-        sourceId: sourceId,
-        ksId: ksId,
-        sttId: sttId,
-        ttsId: ttsId,
-        voiceId: voiceId,
-        hliIds: hliIds,
-        sinkId: sinkId,
-        keyword: keyword,
-        listeningItem: listeningItem);
+      acceptLanguage: acceptLanguage?.toString(),
+      sourceId: sourceId,
+      ksId: ksId,
+      sttId: sttId,
+      ttsId: ttsId,
+      voiceId: voiceId,
+      hliIds: hliIds,
+      sinkId: sinkId,
+      keyword: keyword,
+      listeningItem: listeningItem,
+    );
   }
 
   ///Start dialog processing for a given audio source.
@@ -3055,10 +3224,7 @@ abstract class OpenHAB extends ChopperService {
   ///@param sinkId audio sink ID
   ///@param keyword keyword
   ///@param listeningItem listening item
-  @Post(
-    path: '/voice/dialog/start',
-    optionalBody: true,
-  )
+  @Post(path: '/voice/dialog/start', optionalBody: true)
   Future<chopper.Response> _voiceDialogStartPost({
     @Header('Accept-Language') String? acceptLanguage,
     @Query('sourceId') String? sourceId,
@@ -3080,17 +3246,16 @@ abstract class OpenHAB extends ChopperService {
 
   ///Stop dialog processing for a given audio source.
   ///@param sourceId source ID
-  @Post(
-    path: '/voice/dialog/stop',
-    optionalBody: true,
-  )
-  Future<chopper.Response> _voiceDialogStopPost(
-      {@Query('sourceId') String? sourceId});
+  @Post(path: '/voice/dialog/stop', optionalBody: true)
+  Future<chopper.Response> _voiceDialogStopPost({
+    @Query('sourceId') String? sourceId,
+  });
 
   ///Get a single logger.
   ///@param loggerName logger name
-  Future<chopper.Response<LoggerInfo>> loggingLoggerNameGet(
-      {required String? loggerName}) {
+  Future<chopper.Response<LoggerInfo>> loggingLoggerNameGet({
+    required String? loggerName,
+  }) {
     generatedMapping.putIfAbsent(LoggerInfo, () => LoggerInfo.fromJsonFactory);
 
     return _loggingLoggerNameGet(loggerName: loggerName);
@@ -3099,8 +3264,9 @@ abstract class OpenHAB extends ChopperService {
   ///Get a single logger.
   ///@param loggerName logger name
   @Get(path: '/logging/{loggerName}')
-  Future<chopper.Response<LoggerInfo>> _loggingLoggerNameGet(
-      {@Path('loggerName') required String? loggerName});
+  Future<chopper.Response<LoggerInfo>> _loggingLoggerNameGet({
+    @Path('loggerName') required String? loggerName,
+  });
 
   ///Modify or add logger
   ///@param loggerName logger name
@@ -3113,10 +3279,7 @@ abstract class OpenHAB extends ChopperService {
 
   ///Modify or add logger
   ///@param loggerName logger name
-  @Put(
-    path: '/logging/{loggerName}',
-    optionalBody: true,
-  )
+  @Put(path: '/logging/{loggerName}', optionalBody: true)
   Future<chopper.Response> _loggingLoggerNamePut({
     @Path('loggerName') required String? loggerName,
     @Body() required LoggerInfo? body,
@@ -3124,16 +3287,18 @@ abstract class OpenHAB extends ChopperService {
 
   ///Remove a single logger.
   ///@param loggerName logger name
-  Future<chopper.Response> loggingLoggerNameDelete(
-      {required String? loggerName}) {
+  Future<chopper.Response> loggingLoggerNameDelete({
+    required String? loggerName,
+  }) {
     return _loggingLoggerNameDelete(loggerName: loggerName);
   }
 
   ///Remove a single logger.
   ///@param loggerName logger name
   @Delete(path: '/logging/{loggerName}')
-  Future<chopper.Response> _loggingLoggerNameDelete(
-      {@Path('loggerName') required String? loggerName});
+  Future<chopper.Response> _loggingLoggerNameDelete({
+    @Path('loggerName') required String? loggerName,
+  });
 
   ///Get all loggers
   Future<chopper.Response<LoggerBean>> loggingGet() {
@@ -3148,8 +3313,9 @@ abstract class OpenHAB extends ChopperService {
 
   ///Gets all icon sets.
   ///@param Accept-Language language
-  Future<chopper.Response<List<IconSet>>> iconsetsGet(
-      {String? acceptLanguage}) {
+  Future<chopper.Response<List<IconSet>>> iconsetsGet({
+    String? acceptLanguage,
+  }) {
     generatedMapping.putIfAbsent(IconSet, () => IconSet.fromJsonFactory);
 
     return _iconsetsGet(acceptLanguage: acceptLanguage?.toString());
@@ -3158,15 +3324,18 @@ abstract class OpenHAB extends ChopperService {
   ///Gets all icon sets.
   ///@param Accept-Language language
   @Get(path: '/iconsets')
-  Future<chopper.Response<List<IconSet>>> _iconsetsGet(
-      {@Header('Accept-Language') String? acceptLanguage});
+  Future<chopper.Response<List<IconSet>>> _iconsetsGet({
+    @Header('Accept-Language') String? acceptLanguage,
+  });
 
   ///Gets the list of widget gallery items.
   ///@param galleryName gallery name e.g. 'community'
   Future<chopper.Response<List<GalleryWidgetsListItem>>>
-      habpanelGalleryGalleryNameWidgetsGet({required String? galleryName}) {
+  habpanelGalleryGalleryNameWidgetsGet({required String? galleryName}) {
     generatedMapping.putIfAbsent(
-        GalleryWidgetsListItem, () => GalleryWidgetsListItem.fromJsonFactory);
+      GalleryWidgetsListItem,
+      () => GalleryWidgetsListItem.fromJsonFactory,
+    );
 
     return _habpanelGalleryGalleryNameWidgetsGet(galleryName: galleryName);
   }
@@ -3175,8 +3344,9 @@ abstract class OpenHAB extends ChopperService {
   ///@param galleryName gallery name e.g. 'community'
   @Get(path: '/habpanel/gallery/{galleryName}/widgets')
   Future<chopper.Response<List<GalleryWidgetsListItem>>>
-      _habpanelGalleryGalleryNameWidgetsGet(
-          {@Path('galleryName') required String? galleryName});
+  _habpanelGalleryGalleryNameWidgetsGet({
+    @Path('galleryName') required String? galleryName,
+  });
 
   ///Gets the details about a widget gallery item.
   ///@param galleryName gallery name e.g. 'community'
@@ -3186,10 +3356,14 @@ abstract class OpenHAB extends ChopperService {
     required String? id,
   }) {
     generatedMapping.putIfAbsent(
-        GalleryItem, () => GalleryItem.fromJsonFactory);
+      GalleryItem,
+      () => GalleryItem.fromJsonFactory,
+    );
 
     return _habpanelGalleryGalleryNameWidgetsIdGet(
-        galleryName: galleryName, id: id);
+      galleryName: galleryName,
+      id: id,
+    );
   }
 
   ///Gets the details about a widget gallery item.
@@ -3197,7 +3371,7 @@ abstract class OpenHAB extends ChopperService {
   ///@param id id within the gallery
   @Get(path: '/habpanel/gallery/{galleryName}/widgets/{id}')
   Future<chopper.Response<GalleryItem>>
-      _habpanelGalleryGalleryNameWidgetsIdGet({
+  _habpanelGalleryGalleryNameWidgetsIdGet({
     @Path('galleryName') required String? galleryName,
     @Path('id') required String? id,
   });
@@ -3250,7 +3424,8 @@ class $CustomJsonDecoder {
 class $JsonSerializableConverter extends chopper.JsonConverter {
   @override
   FutureOr<chopper.Response<ResultType>> convertResponse<ResultType, Item>(
-      chopper.Response response) async {
+    chopper.Response response,
+  ) async {
     if (response.bodyString.isEmpty) {
       // In rare cases, when let's say 204 (no content) is returned -
       // we cannot decode the missing json with the result type specified
@@ -3263,13 +3438,16 @@ class $JsonSerializableConverter extends chopper.JsonConverter {
 
     if (ResultType == DateTime) {
       return response.copyWith(
-          body: DateTime.parse((response.body as String).replaceAll('"', ''))
-              as ResultType);
+        body:
+            DateTime.parse((response.body as String).replaceAll('"', ''))
+                as ResultType,
+      );
     }
 
     final jsonRes = await super.convertResponse(response);
     return jsonRes.copyWith<ResultType>(
-        body: $jsonDecoder.decode<Item>(jsonRes.body) as ResultType);
+      body: $jsonDecoder.decode<Item>(jsonRes.body) as ResultType,
+    );
   }
 }
 
