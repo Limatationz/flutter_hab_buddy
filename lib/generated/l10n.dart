@@ -1824,6 +1824,11 @@ class S {
   String get localeName {
     return Intl.message('en', name: 'localeName', desc: '', args: []);
   }
+
+  /// `Licences`
+  String get licences {
+    return Intl.message('Licences', name: 'licences', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

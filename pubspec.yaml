@@ -114,6 +114,7 @@ dev_dependencies:
   drift_dev: ^2.26.0
   flutter_launcher_icons: ^0.14.3
   flutter_lints: ^5.0.0
+  flutter_oss_licenses: ^3.0.4
   hive_ce_generator: ^1.8.2
   json_serializable: ^6.9.4 # after upgrade of swagger_dart_code_generator
   pubspec_dependency_sorter: ^1.0.5

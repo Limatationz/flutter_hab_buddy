@@ -3,6 +3,7 @@ import 'package:dart_date/dart_date.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide ConnectionState;
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 
@@ -11,6 +12,7 @@ import '../../../repository/connectivity_manager.dart';
 import '../../../util/icons/icons.dart';
 import '../../util/general/bar_bottom_sheet.dart';
 import '../../util/general/list_picker_sheet_view.dart';
+import 'licences/licences_view.dart';
 import 'settings_viewmodel.dart';
 
 class SettingsView extends StatelessWidget {
@@ -111,7 +113,8 @@ class SettingsView extends StatelessWidget {
                           stream: model.lastSSEUpdate,
                           builder: (context, snapshot) {
                             if (snapshot.data != null) {
-                              return Text(snapshot.data!.timeago(locale: S.of(context).localeName));
+                              return Text(snapshot.data!
+                                  .timeago(locale: S.of(context).localeName));
                             } else {
                               return Text(S.of(context).never);
                             }
@@ -154,7 +157,8 @@ class SettingsView extends StatelessWidget {
                         onPressed: (context) {
                           showBarModalBottomSheet<int?>(
                             context: context,
-                            builder: (_) => ListPickerSheetView<AdaptiveThemeMode>(
+                            builder: (_) =>
+                                ListPickerSheetView<AdaptiveThemeMode>(
                               options: AdaptiveThemeMode.values,
                               optionToString: (mode) {
                                 switch (mode) {
@@ -183,6 +187,11 @@ class SettingsView extends StatelessWidget {
                         onToggle: model.setWakeLockAutoEnabled,
                         activeSwitchColor:
                             Theme.of(context).colorScheme.primary,
+                      ),
+                      SettingsTile.navigation(
+                        title: Text(S.of(context).licences),
+                        onPressed: (context) =>
+                            context.goNamed(LicencesView.routeName),
                       ),
                     ]),
                 if (kDebugMode)

@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../locator.dart';
+import '../../oss_licenses.dart';
 import '../../view/login/login_api_setup_view.dart';
 import '../../view/login/login_local_setup_view.dart';
 import '../../view/login/login_remote_setup_view.dart';
@@ -18,6 +20,8 @@ import '../../view/main/automation/edit/automation_edit_view_arguments.dart';
 import '../../view/main/favourite/favourite_view.dart';
 import '../../view/main/main_view.dart';
 import '../../view/main/rooms/rooms_view.dart';
+import '../../view/main/settings/licences/licences_view.dart';
+import '../../view/main/settings/licences/single_licence_view.dart';
 import '../../view/main/settings/settings_view.dart';
 import '../services/wakelock_service.dart';
 import 'error_view.dart';
@@ -78,11 +82,29 @@ GoRouter router(bool isLoggedIn) => GoRouter(
             StatefulShellBranch(
               routes: [
                 GoRoute(
-                  path: SettingsView.routePath,
-                  name: SettingsView.routeName,
-                  pageBuilder: (context, state) =>
-                      const NoTransitionPage(child: SettingsView()),
-                ),
+                    path: SettingsView.routePath,
+                    name: SettingsView.routeName,
+                    pageBuilder: (context, state) =>
+                        const NoTransitionPage(child: SettingsView()),
+                    routes: [
+                      GoRoute(
+                          path: LicencesView.routePath,
+                          name: LicencesView.routeName,
+                          pageBuilder: (context, state) =>
+                              const CupertinoPage(child: LicencesView()),
+                          routes: [
+                            GoRoute(
+                              path: SingleLicenceView.routePath,
+                              name: SingleLicenceView.routeName,
+                              pageBuilder: (context, state) {
+                                final packageName = state.pathParameters["name"] as String;
+                                final package = allDependencies.firstWhereOrNull((element) => element.name == packageName);
+                                return CupertinoPage(
+                                    child: SingleLicenceView(package: package, packageName: packageName,));
+                              },
+                            )
+                          ])
+                    ]),
               ],
             ),
           ]),

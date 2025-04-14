@@ -406,5 +406,6 @@
   "or": "Or",
   "and": "And",
   "viewRule": "View Rule",
-  "localeName": "en"
+  "localeName": "en",
+  "licences": "Licences"
 }
