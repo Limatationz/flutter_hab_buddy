@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../core/database/app_database.dart';
@@ -11,6 +12,8 @@ import '../items/general/item_widget_factory.dart';
 import '../items/sensors/sensor_item_widget.dart';
 
 class RoomsViewModel extends BaseViewModel {
+  final _logger = Logger();
+
   final _roomsStore = locator<AppDatabase>().roomsStore;
   final _itemsStore = locator<AppDatabase>().itemsStore;
   final _itemRepository = locator<ItemRepository>();
@@ -37,7 +40,7 @@ class RoomsViewModel extends BaseViewModel {
   bool get itemsReorderEnabled => _itemsReorderEnabled;
 
   RoomsViewModel(this.initialRoomId) {
-    print('RoomsViewModel: $initialRoomId');
+    _logger.i('RoomsViewModel: $initialRoomId');
     _roomsStore.all().get().then((rooms) {
       if (rooms.isEmpty) {
         return;
@@ -57,6 +60,8 @@ class RoomsViewModel extends BaseViewModel {
     if (animate) {
       pageController.animateToPage(index,
           duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+    } else {
+      pageController.jumpToPage(index);
     }
     _itemsReorderEnabled = false;
     currentPage = index;

@@ -8,7 +8,7 @@ import 'package:stacked/stacked.dart';
 import '../../../core/database/app_database.dart';
 import '../../../core/database/items/item_type.dart';
 import '../../../core/database/rooms/rooms_table.dart';
-import '../../../core/services/wakelock_service.dart';
+import '../../../core/services/wall_mount_service.dart';
 import '../../../locator.dart';
 import '../../../main.dart';
 import '../../../repository/automation_repository.dart';
@@ -24,7 +24,7 @@ class SettingsViewModel extends BaseViewModel {
   final _itemsRepository = locator<ItemRepository>();
   final _automationRepository = locator<AutomationRepository>();
   final _loginRepository = locator<LoginRepository>();
-  final wakelockService = locator<WakelockService>();
+  final wallMountService = locator<WallMountService>();
 
   Stream<ServerConnectionState> get connectionStatus =>
       _loginRepository.connectivityManager.connectionStateStream;
@@ -59,7 +59,7 @@ class SettingsViewModel extends BaseViewModel {
   }
 
   void setWakeLockAutoEnabled(bool enabled) {
-    wakelockService.setAutoEnabled(enabled);
+    wallMountService.setAutoEnabled(enabled);
     notifyListeners();
   }
 

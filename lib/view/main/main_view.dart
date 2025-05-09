@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../generated/l10n.dart';
 import '../../util/icons/icons.dart';
+import '../util/general/base_scaffold.dart';
 import '../util/platform.dart';
 import 'main_viewmodel.dart';
 
@@ -57,22 +58,24 @@ class _MainViewState extends State<MainView> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BaseScaffold(
       bottomNavigationBar: isDesktop()
           ? null
           : isAndroid()
               ? _buildAndroidNavigationBar()
               : _buildIOSNavigationBar(),
-      body: isDesktop()
-          ? Row(children: [
-              _buildDesktopSideBar(context),
-              const VerticalDivider(thickness: 1, width: 1),
-              // This is the main content.
-              Expanded(child: _buildContent())
-            ])
-          : SizedBox.expand(
-              child: _buildContent(),
-            ),
+      bodyBuilder: (context, isWallMountEnabled) =>
+          isDesktop() && !isWallMountEnabled
+              ? Row(children: [
+                  _buildDesktopSideBar(context),
+                  const VerticalDivider(thickness: 1, width: 1),
+                  // This is the main content.
+                  Expanded(child: _buildContent())
+                ])
+              : SizedBox.expand(
+                  child: _buildContent(),
+                ),
+        showFloatingButtonOnEnabled: false,
     );
   }
 

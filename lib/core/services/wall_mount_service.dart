@@ -1,11 +1,12 @@
+import 'package:flutter/services.dart';
 import 'package:rx_shared_preferences/rx_shared_preferences.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../../locator.dart';
 
-class WakelockService {
-  static const prefsKey = "wakelockAutoEnabled";
+class WallMountService {
+  static const prefsKey = "wallMountAutoEnabled";
   final RxSharedPreferences _prefs = locator<RxSharedPreferences>();
   final BehaviorSubject<bool> _enabledSubject = BehaviorSubject.seeded(false);
 
@@ -15,27 +16,39 @@ class WakelockService {
       _prefs.getBoolStream(prefsKey).map((e) => e ?? false);
 
   bool _autoEnabled = false;
-  bool get autoEnabled =>
-      _autoEnabled;
 
-  WakelockService() {
+  bool get autoEnabled => _autoEnabled;
+
+  WallMountService() {
     autoEnabledStream.listen((value) {
       _autoEnabled = value;
     });
   }
 
   Future enable() async {
+    // we enable the wakelock to keep the screen on
     await WakelockPlus.enable();
+
+    // we hide the status bar and navigation bar
+    await SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: []);
+
     _enabledSubject.add(true);
   }
 
   Future disable() async {
+    // we disable the wakelock
     await WakelockPlus.disable();
+
+    // we show the status bar and navigation bar
+    await SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+
     _enabledSubject.add(false);
   }
 
   Future<void> autoEnable() async {
-    final value = await autoEnabled;
+    final value = autoEnabled;
     if (value) {
       await enable();
     }

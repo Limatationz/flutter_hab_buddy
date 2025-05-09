@@ -1,5 +1,8 @@
 import 'package:drift/drift.dart';
+import 'package:flutter/material.dart' show ColorScheme, Theme, BuildContext;
 
+import '../../../util/color.dart';
+import '../app_database.dart';
 import '../converter/icon_data_converter.dart';
 
 @DataClassName("Room")
@@ -25,5 +28,15 @@ enum RoomItemsSortOption {
       case RoomItemsSortOption.manual:
         return "Manual";
     }
+  }
+}
+
+extension RoomsTableExtension on Room {
+  ColorScheme getColorScheme(BuildContext context) {
+    return color != null
+        ? ColorScheme.fromSeed(
+        seedColor: fromHex(color!),
+        brightness: Theme.of(context).brightness)
+        : Theme.of(context).colorScheme;
   }
 }

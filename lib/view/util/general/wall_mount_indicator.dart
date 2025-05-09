@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/services/wakelock_service.dart';
+import '../../../core/services/wall_mount_service.dart';
 import '../../../core/services/snackbar_service.dart';
 import '../../../generated/l10n.dart';
 import '../../../locator.dart';
 import '../../../util/icons/icons.dart';
 
 class WakelockIndicator extends StatelessWidget {
-  final wakelockService = locator<WakelockService>();
+  final wallMountService = locator<WallMountService>();
   final snackBarService = locator<SnackbarService>();
 
   WakelockIndicator({super.key});
@@ -15,34 +15,34 @@ class WakelockIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<bool>(
-        stream: wakelockService.enabledStream,
+        stream: wallMountService.enabledStream,
         builder: (context, snapshot) {
           final enabled = snapshot.data ?? false;
           if (enabled) {
             return Tooltip(
-                message: S.of(context).disableWakelockTooltip,
+                message: S.of(context).disableWallMoundModeTooltip,
                 child: IconButton(
-                    onPressed: disableWakelock,
+                    onPressed: disableWallMount,
                     icon: const Icon(LineIconsFilled.locked_window)));
           } else {
             return Tooltip(
-                message: S.of(context).enableWakelockTooltip,
+                message: S.of(context).enableWallMountModeTooltip,
                 child: IconButton(
-                    onPressed: enableWakelock,
+                    onPressed: enableWallMount,
                     icon: const Icon(LineIcons.locked_window)));
           }
         });
   }
 
-  Future<void> enableWakelock() async {
-    await locator<WakelockService>().enable();
+  Future<void> enableWallMount() async {
+    await locator<WallMountService>().enable();
     snackBarService.showSnackbar(
-        message: S.current.wakelockEnabledSnackbar, type: SnackbarType.info);
+        message: S.current.wallMountModeEnabledSnackbar, type: SnackbarType.info);
   }
 
-  Future<void> disableWakelock() async {
-    await locator<WakelockService>().disable();
+  Future<void> disableWallMount() async {
+    await locator<WallMountService>().disable();
     snackBarService.showSnackbar(
-        message: S.current.wakelockDisabledSnackbar, type: SnackbarType.info);
+        message: S.current.wallMountModeDisabledSnackbar, type: SnackbarType.info);
   }
 }

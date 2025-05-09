@@ -15,7 +15,8 @@ import '../../../util/color.dart';
 import '../../../util/icons/icons.dart';
 import '../../util/constants.dart';
 import '../../util/general/base_refresh_indicator.dart';
-import '../../util/general/wakelock_indicator.dart';
+import '../../util/general/base_scaffold.dart';
+import '../../util/general/wall_mount_indicator.dart';
 import '../../util/general/widget_container.dart';
 import '../inbox/inbox_action_button.dart';
 import '../items/general/item_widget.dart';
@@ -33,9 +34,11 @@ class FavouriteView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<FavouriteViewModel>.reactive(
         viewModelBuilder: () => FavouriteViewModel(),
-        builder: (context, model, _) => Scaffold(
-            body: NestedScrollView(
-                headerSliverBuilder: (context, innerBoxIsScrolled) => [
+        builder: (context, model, _) => BaseScaffold(
+            bodyBuilder: (context, isWallMountEnabled) => isWallMountEnabled
+                ? SafeArea(child: _buildBody(context, model))
+                : NestedScrollView(
+                    headerSliverBuilder: (context, innerBoxIsScrolled) => [
                       SliverAppBar.medium(
                         title: Text(S.current.navigationFavorites),
                         actions: [
@@ -61,140 +64,115 @@ class FavouriteView extends StatelessWidget {
                         ],
                       )
                     ],
-                body: StreamBuilder<bool>(
-                  stream: model.hasItemsStream,
-                  builder: (context, hasItems) {
-                    if (hasItems.data ?? false) {
-                      return StreamBuilder2<Map<int, List<Item>>, List<Room>>(
-                          streams: StreamTuple2(
-                              model.itemsByRoomIdStream, model.roomsStream),
-                          builder: (context, snapshot) {
-                            if (!snapshot.snapshot1.hasData ||
-                                !snapshot.snapshot2.hasData) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            } else {
-                              final groupedItems = snapshot.snapshot1.data!;
-                              final rooms = snapshot.snapshot2.data!;
-
-                              return BaseRefreshIndicator(
-                                  onRefresh: model.onRefresh,
-                                  child: LayoutBuilder(
-                                      builder: (context, constraints) {
-                                    final roomsCrossAxisCount =
-                                        getRoomListCount(constraints.maxWidth);
-
-                                    if (model.viewSettings.viewType ==
-                                        FavouriteViewType.auto) {
-                                      final itemWidgetsByRoomId =
-                                          model.buildItemWidgetsByRoomIdForAuto(
-                                              groupedItems,
-                                              rooms,
-                                              Theme.of(context).colorScheme,
-                                              Theme.of(context).brightness);
-
-                                      final layout = getGridLayout(
-                                          roomsCrossAxisCount,
-                                          itemWidgetsByRoomId);
-
-                                      return Padding(
-                                          padding: const EdgeInsets.all(
-                                              paddingContainer),
-                                          child: StaggeredGrid.count(
-                                            crossAxisCount: roomsCrossAxisCount,
-                                            crossAxisSpacing: paddingScaffold,
-                                            mainAxisSpacing: paddingScaffold,
-                                            children: List.generate(
-                                              layout.values
-                                                  .expand((list) => list)
-                                                  .length,
-                                              // Total number of rooms
-                                              (index) {
-                                                final flattenedRooms = layout
-                                                    .entries
-                                                    .expand(
-                                                        (entry) => entry.value)
-                                                    .toList();
-
-                                                final roomId =
-                                                    flattenedRooms[index];
-                                                final items =
-                                                    itemWidgetsByRoomId[
-                                                        roomId]!;
-                                                final sensors = items.item2;
-                                                final realItems = items.item1;
-
-                                                final room = rooms.firstWhere(
-                                                    (element) =>
-                                                        element.id == roomId);
-                                                final roomColorScheme = room
-                                                            .color !=
-                                                        null
-                                                    ? ColorScheme.fromSeed(
-                                                        seedColor: fromHex(
-                                                            room.color!),
-                                                        brightness:
-                                                            Theme.of(context)
-                                                                .brightness)
-                                                    : Theme.of(context)
-                                                        .colorScheme;
-
-                                                return StaggeredGridTile.fit(
-                                                  crossAxisCellCount: 1,
-                                                  child:
-                                                      WidgetContainer(
-                                                      backgroundColor:
-                                                          roomColorScheme
-                                                              .primary
-                                                              .withValues(
-                                                                  alpha: 0.3),
-                                                      onTap: () {
-                                                        model.navigateToRoom(
-                                                            context, room);
-                                                      },
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(room.name,
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .headlineMedium),
-                                                          const Gap(
-                                                              listSpacing),
-                                                          _buildItemsView(
-                                                              realItems,
-                                                              sensors,
-                                                              roomColorScheme),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                );
-                                              },
-                                            ),
-                                          ));
-                                    } else {
-                                      // manual layout
-                                      return _buildManualLayout(
-                                          context,
-                                          model,
-                                          groupedItems,
-                                          rooms,
-                                          roomsCrossAxisCount);
-                                    }
-                                  }));
-                            }
-                          });
-                    } else {
-                      return _buildEmptyState(context);
-                    }
-                  },
-                ))));
+                    body: _buildBody(context, model),
+                  )));
   }
 
+  Widget _buildBody(BuildContext context, FavouriteViewModel model) =>
+      StreamBuilder<bool>(
+        stream: model.hasItemsStream,
+        builder: (context, hasItems) {
+          if (hasItems.data ?? false) {
+            return StreamBuilder2<Map<int, List<Item>>, List<Room>>(
+                streams:
+                    StreamTuple2(model.itemsByRoomIdStream, model.roomsStream),
+                builder: (context, snapshot) {
+                  if (!snapshot.snapshot1.hasData ||
+                      !snapshot.snapshot2.hasData) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    final groupedItems = snapshot.snapshot1.data!;
+                    final rooms = snapshot.snapshot2.data!;
+
+                    return BaseRefreshIndicator(
+                        onRefresh: model.onRefresh,
+                        child: LayoutBuilder(builder: (context, constraints) {
+                          final roomsCrossAxisCount =
+                              getRoomListCount(constraints.maxWidth);
+
+                          if (model.viewSettings.viewType ==
+                              FavouriteViewType.auto) {
+                            final itemWidgetsByRoomId =
+                                model.buildItemWidgetsByRoomIdForAuto(
+                                    groupedItems,
+                                    rooms,
+                                    Theme.of(context).colorScheme,
+                                    Theme.of(context).brightness);
+
+                            final layout = getGridLayout(
+                                roomsCrossAxisCount, itemWidgetsByRoomId);
+
+                            return Padding(
+                                padding: const EdgeInsets.all(paddingContainer),
+                                child: StaggeredGrid.count(
+                                  crossAxisCount: roomsCrossAxisCount,
+                                  crossAxisSpacing: paddingScaffold,
+                                  mainAxisSpacing: paddingScaffold,
+                                  children: List.generate(
+                                    layout.values.expand((list) => list).length,
+                                    // Total number of rooms
+                                    (index) {
+                                      final flattenedRooms = layout.entries
+                                          .expand((entry) => entry.value)
+                                          .toList();
+
+                                      final roomId = flattenedRooms[index];
+                                      final items =
+                                          itemWidgetsByRoomId[roomId]!;
+                                      final sensors = items.item2;
+                                      final realItems = items.item1;
+
+                                      final room = rooms.firstWhere(
+                                          (element) => element.id == roomId);
+                                      final roomColorScheme = room.color != null
+                                          ? ColorScheme.fromSeed(
+                                              seedColor: fromHex(room.color!),
+                                              brightness:
+                                                  Theme.of(context).brightness)
+                                          : Theme.of(context).colorScheme;
+
+                                      return StaggeredGridTile.fit(
+                                        crossAxisCellCount: 1,
+                                        child: WidgetContainer(
+                                          backgroundColor: roomColorScheme
+                                              .primary
+                                              .withValues(alpha: 0.3),
+                                          onTap: () {
+                                            model.navigateToRoom(context, room);
+                                          },
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(room.name,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headlineMedium),
+                                              const Gap(listSpacing),
+                                              _buildItemsView(realItems,
+                                                  sensors, roomColorScheme),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ));
+                          } else {
+                            // manual layout
+                            return _buildManualLayout(context, model,
+                                groupedItems, rooms, roomsCrossAxisCount);
+                          }
+                        }));
+                  }
+                });
+          } else {
+            return _buildEmptyState(context);
+          }
+        },
+      );
 
   // Problem: When reordering the rooms, the sensors can not be reordered
   Widget _buildManualLayout(
@@ -215,64 +193,53 @@ class FavouriteView extends StatelessWidget {
       return Padding(
           padding: const EdgeInsets.all(paddingContainer),
           child: ReorderableStaggeredScrollView.grid(
-            key: ValueKey("rooms"+model.reorderEnabled.toString()),
+            key: ValueKey("rooms" + model.reorderEnabled.toString()),
             crossAxisCount: roomsCrossAxisCount,
             isLongPressDraggable: false,
             isDragNotification: true,
             enable: false,
             hitTestBehavior: HitTestBehavior.opaque,
-            onAccept: (item1, item2,
-                accepted, list) {
-              model.onReorderRooms(list
-                  .map(
-                      (e) => e.toString())
-                  .toList());
+            onAccept: (item1, item2, accepted, list) {
+              model.onReorderRooms(list.map((e) => e.toString()).toList());
             },
             children: itemWidgetsByRoomId.entries.mapIndexed(
-                  (index, e) {
+              (index, e) {
                 final roomId = e.key;
                 final items = itemWidgetsByRoomId[roomId]!;
                 final sensors = items.item2;
                 final realItems = items.item1;
 
-                final room = rooms.firstWhere((element) =>
-                element.id == roomId);
+                final room =
+                    rooms.firstWhere((element) => element.id == roomId);
                 final roomColorScheme = room.color != null
                     ? ColorScheme.fromSeed(
-                    seedColor: fromHex(room.color!),
-                    brightness: Theme
-                        .of(context)
-                        .brightness)
-                    : Theme
-                    .of(context)
-                    .colorScheme;
+                        seedColor: fromHex(room.color!),
+                        brightness: Theme.of(context).brightness)
+                    : Theme.of(context).colorScheme;
 
                 return ReorderableStaggeredScrollViewGridCountItem(
                   key: ValueKey(roomId),
                   crossAxisCellCount: 1,
                   mainAxisCellCount: 1,
                   widget: WidgetContainer(
-                      backgroundColor:
-                      roomColorScheme.primary.withValues(alpha: 0.3),
-                      disableTap: true,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(room.name,
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .headlineMedium),
-                          const Gap(listSpacing),
-                          _buildItemsReorderView(realItems, sensors, roomColorScheme, roomId,model),
-                        ],
-                      ),
+                    backgroundColor:
+                        roomColorScheme.primary.withValues(alpha: 0.3),
+                    disableTap: true,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(room.name,
+                            style: Theme.of(context).textTheme.headlineMedium),
+                        const Gap(listSpacing),
+                        _buildItemsReorderView(
+                            realItems, sensors, roomColorScheme, roomId, model),
+                      ],
                     ),
+                  ),
                 );
               },
             ).toList(),
           ));
-
     } else {
       return Padding(
           padding: const EdgeInsets.all(paddingContainer),
@@ -281,23 +248,19 @@ class FavouriteView extends StatelessWidget {
             crossAxisSpacing: paddingScaffold,
             mainAxisSpacing: paddingScaffold,
             children: itemWidgetsByRoomId.entries.mapIndexed(
-                  (index, e) {
+              (index, e) {
                 final roomId = e.key;
                 final items = itemWidgetsByRoomId[roomId]!;
                 final sensors = items.item2;
                 final realItems = items.item1;
 
-                final room = rooms.firstWhere((element) =>
-                element.id == roomId);
+                final room =
+                    rooms.firstWhere((element) => element.id == roomId);
                 final roomColorScheme = room.color != null
                     ? ColorScheme.fromSeed(
-                    seedColor: fromHex(room.color!),
-                    brightness: Theme
-                        .of(context)
-                        .brightness)
-                    : Theme
-                    .of(context)
-                    .colorScheme;
+                        seedColor: fromHex(room.color!),
+                        brightness: Theme.of(context).brightness)
+                    : Theme.of(context).colorScheme;
 
                 return StaggeredGridTile.fit(
                   crossAxisCellCount: 1,
@@ -306,7 +269,7 @@ class FavouriteView extends StatelessWidget {
                     key: ValueKey(roomId),
                     child: WidgetContainer(
                       backgroundColor:
-                      roomColorScheme.primary.withValues(alpha: 0.3),
+                          roomColorScheme.primary.withValues(alpha: 0.3),
                       onTap: () {
                         model.navigateToRoom(context, room);
                       },
@@ -314,10 +277,8 @@ class FavouriteView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(room.name,
-                              style: Theme
-                                  .of(context)
-                                  .textTheme
-                                  .headlineMedium),
+                              style:
+                                  Theme.of(context).textTheme.headlineMedium),
                           const Gap(listSpacing),
                           _buildItemsView(realItems, sensors, roomColorScheme),
                         ],
@@ -357,13 +318,19 @@ class FavouriteView extends StatelessWidget {
     ]);
   }
 
-  Widget _buildItemsReorderView(List<ItemWidget> items, List<SensorItemWidget> sensors,
-      ColorScheme colorScheme, int roomId, FavouriteViewModel model) {
+  Widget _buildItemsReorderView(
+      List<ItemWidget> items,
+      List<SensorItemWidget> sensors,
+      ColorScheme colorScheme,
+      int roomId,
+      FavouriteViewModel model) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       if (sensors.isNotEmpty)
         ReorderableWrap(
             onReorder: model.reorderSensors,
-            spacing: listSpacing, runSpacing: listSpacing, children: sensors),
+            spacing: listSpacing,
+            runSpacing: listSpacing,
+            children: sensors),
       if (sensors.isNotEmpty)
         Padding(
             padding: const EdgeInsets.symmetric(vertical: smallListSpacing),
@@ -371,17 +338,19 @@ class FavouriteView extends StatelessWidget {
               color: colorScheme.onSurface.withValues(alpha: 0.2),
             )),
       LayoutBuilder(
-          builder: (context, constraints) => ReorderableStaggeredScrollView.grid(
-            key: ValueKey("items-$roomId-"+model.reorderEnabled.toString()),
-            crossAxisCount: getItemListCount(constraints.maxWidth),
-            children: items
-                .map((e) => ReorderableStaggeredScrollViewGridCountItem(
-                key: ValueKey(e.item?.ohName ?? ""),
-                crossAxisCellCount: e.crossAxisCount,
-                mainAxisCellCount: e.mainAxisCount.toInt(),
-                widget: e))
-                .toList(),
-          ))
+          builder: (context, constraints) =>
+              ReorderableStaggeredScrollView.grid(
+                key: ValueKey(
+                    "items-$roomId-" + model.reorderEnabled.toString()),
+                crossAxisCount: getItemListCount(constraints.maxWidth),
+                children: items
+                    .map((e) => ReorderableStaggeredScrollViewGridCountItem(
+                        key: ValueKey(e.item?.ohName ?? ""),
+                        crossAxisCellCount: e.crossAxisCount,
+                        mainAxisCellCount: e.mainAxisCount.toInt(),
+                        widget: e))
+                    .toList(),
+              ))
     ]);
   }
 

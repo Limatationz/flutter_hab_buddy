@@ -22,7 +22,7 @@ import '../../view/main/rooms/rooms_view.dart';
 import '../../view/main/settings/licences/licences_view.dart';
 import '../../view/main/settings/licences/single_licence_view.dart';
 import '../../view/main/settings/settings_view.dart';
-import '../services/wakelock_service.dart';
+import '../services/wall_mount_service.dart';
 import 'error_view.dart';
 import 'navigation_service.dart';
 
@@ -175,7 +175,7 @@ GoRouter router(bool isLoggedIn) => GoRouter(
 
 FutureOr<bool> onExitMainView(BuildContext context, GoRouterState state) {
   // disable wakelock when leaving favourite view
-  locator<WakelockService>().autoDisable();
+  locator<WallMountService>().autoDisable();
   return true;
 }
 
@@ -183,7 +183,7 @@ FutureOr<String?> onEntryMainView(BuildContext context, GoRouterState state) {
   // enable wakelock when entering favourite view
   Future.delayed(const Duration(milliseconds: 10), () {
     // delay because onEntry is triggered before on exit when switching between tabs
-    locator<WakelockService>().autoEnable();
+    locator<WallMountService>().autoEnable();
   });
   return null;
 }

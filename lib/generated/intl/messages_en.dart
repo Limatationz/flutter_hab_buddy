@@ -208,15 +208,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "deletedRuleSuccess": MessageLookupByLibrary.simpleMessage(
       "Successfully deleted the rule",
     ),
-    "disableWakelockTooltip": MessageLookupByLibrary.simpleMessage(
-      "Disable Wakelock",
+    "disableWallMoundModeTooltip": MessageLookupByLibrary.simpleMessage(
+      "Disable Wall Mount Mode",
     ),
     "done": MessageLookupByLibrary.simpleMessage("Done"),
     "down": MessageLookupByLibrary.simpleMessage("Down"),
     "editItem": MessageLookupByLibrary.simpleMessage("Edit Item"),
     "editRule": MessageLookupByLibrary.simpleMessage("Edit Rule"),
-    "enableWakelockTooltip": MessageLookupByLibrary.simpleMessage(
-      "Enable Wakelock",
+    "enableWallMountModeTooltip": MessageLookupByLibrary.simpleMessage(
+      "Enable Wall Mount Mode",
     ),
     "errorButtonHome": MessageLookupByLibrary.simpleMessage("Go to Home"),
     "errorHeadline": MessageLookupByLibrary.simpleMessage("An error occurred"),
@@ -375,9 +375,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "Last Update",
     ),
     "settings_theme": MessageLookupByLibrary.simpleMessage("Theme"),
-    "settings_wakelock": MessageLookupByLibrary.simpleMessage("Wakelock"),
-    "settings_wakelock_description": MessageLookupByLibrary.simpleMessage(
-      "Automatically enable wakelock",
+    "settings_wall_mount_mode": MessageLookupByLibrary.simpleMessage(
+      "Wall Mount Mode",
+    ),
+    "settings_wall_mount_mode_description": MessageLookupByLibrary.simpleMessage(
+      "Automatically enable wall mount mode. App bars and navigation bars will be hidden and the screen is kept on.",
     ),
     "sliderCurrentHint": MessageLookupByLibrary.simpleMessage("current"),
     "sliderMaxHint": MessageLookupByLibrary.simpleMessage("max"),
@@ -425,11 +427,11 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "username": MessageLookupByLibrary.simpleMessage("Username"),
     "viewRule": MessageLookupByLibrary.simpleMessage("View Rule"),
-    "wakelockDisabledSnackbar": MessageLookupByLibrary.simpleMessage(
-      "Wakelock disabled",
+    "wallMountModeDisabledSnackbar": MessageLookupByLibrary.simpleMessage(
+      "Wall Mount Mode disabled",
     ),
-    "wakelockEnabledSnackbar": MessageLookupByLibrary.simpleMessage(
-      "Wakelock enabled",
+    "wallMountModeEnabledSnackbar": MessageLookupByLibrary.simpleMessage(
+      "Wall Mount Mode enabled",
     ),
     "weather": MessageLookupByLibrary.simpleMessage("Weather"),
     "weatherForecast": MessageLookupByLibrary.simpleMessage("Weather Forecast"),

@@ -17,7 +17,8 @@ import '../../util/constants.dart';
 import '../../util/general/bar_bottom_sheet.dart';
 import '../../util/general/base_elevated_button.dart';
 import '../../util/general/base_refresh_indicator.dart';
-import '../../util/general/wakelock_indicator.dart';
+import '../../util/general/base_scaffold.dart';
+import '../../util/general/wall_mount_indicator.dart';
 import '../inbox/inbox_action_button.dart';
 import '../inbox/inbox_view.dart';
 import '../items/add_complex/add_complex_item_selection_sheet.dart';
@@ -59,12 +60,10 @@ class RoomsView extends StatelessWidget {
                           final selectedRoomIndex = model.currentPage;
                           final selectedRoom = rooms[selectedRoomIndex.toInt()];
                           final selectedRoomColorScheme =
-                              selectedRoom.color != null
-                                  ? ColorScheme.fromSeed(
-                                      seedColor: fromHex(selectedRoom.color!),
-                                      brightness: Theme.of(context).brightness)
-                                  : Theme.of(context).colorScheme;
-                          return Scaffold(
+                              selectedRoom.getColorScheme(context);
+                          return BaseScaffold(
+                              colorScheme:
+                                  selectedRoomColorScheme,
                               appBar: AppBar(
                                 title: Text(S.current.navigationRooms),
                                 actions: [
@@ -113,7 +112,7 @@ class RoomsView extends StatelessWidget {
                                       selectedRoomColorScheme,
                                       rooms,
                                       (index) => model.onRoomChange(index,
-                                          animate: true)),
+                                          animate: false)),
                                   StreamBuilder(
                                       stream: model.itemsByRoomIdStream(
                                           Map.fromEntries(rooms.map((e) =>
@@ -199,6 +198,38 @@ class RoomsView extends StatelessWidget {
   }
 
   Widget _buildRoomSelection(
+      BuildContext context,
+      Room selectedRoom,
+      ColorScheme colorScheme,
+      List<Room> allRooms,
+      Function(int) onRoomChange) {
+    return Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: paddingScaffold),
+        decoration: BoxDecoration(
+            color: colorScheme.surface,
+            border: Border(
+                bottom: BorderSide(
+                    color: colorScheme.surfaceContainerHighest, width: 1))),
+        child: Wrap(
+          spacing: smallPadding,
+          runSpacing: smallPadding,
+          children: allRooms
+              .map((e) => Theme(
+                  data: ThemeData.from(colorScheme: colorScheme),
+                  child: ChoiceChip(
+                    label: Text(e.name),
+                    selected: e == selectedRoom,
+                    onSelected: (value) {
+                      onRoomChange(allRooms.indexOf(e));
+                    },
+                    showCheckmark: false,
+                  )))
+              .toList(),
+        ));
+  }
+
+  Widget _buildRoomSelectionOld(
       BuildContext context,
       Room selectedRoom,
       ColorScheme colorScheme,

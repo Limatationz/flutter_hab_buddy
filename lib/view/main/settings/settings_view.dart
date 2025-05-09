@@ -179,11 +179,11 @@ class SettingsView extends StatelessWidget {
                         },
                       ),
                       SettingsTile.switchTile(
-                        title: Text(S.of(context).settings_wakelock),
+                        title: Text(S.of(context).settings_wall_mount_mode),
                         description:
-                            Text(S.of(context).settings_wakelock_description),
+                            Text(S.of(context).settings_wall_mount_mode_description),
                         descriptionInlineIos: true,
-                        initialValue: model.wakelockService.autoEnabled,
+                        initialValue: model.wallMountService.autoEnabled,
                         onToggle: model.setWakeLockAutoEnabled,
                         activeSwitchColor:
                             Theme.of(context).colorScheme.primary,

@@ -78,10 +78,6 @@
   "clock": "Clock",
   "weather": "Weather",
   "weatherForecast": "Weather Forecast",
-  "wakelockEnabledSnackbar": "Wakelock enabled",
-  "wakelockDisabledSnackbar": "Wakelock disabled",
-  "disableWakelockTooltip": "Disable Wakelock",
-  "enableWakelockTooltip": "Enable Wakelock",
   "feelsLike": "Feels like {temp}",
   "@feelsLike": {
     "placeholders": {
@@ -108,8 +104,6 @@
   "settings_connection_update_description": "Date and time of the last recieved state change",
   "logout": "Logout",
   "settings_theme": "Theme",
-  "settings_wakelock": "Wakelock",
-  "settings_wakelock_description": "Automatically enable wakelock",
   "navigationAutomation": "Automation",
   "settingsAddRemoteAccess": "Add remote access",
   "settingsAddCloudAccess": "Add cloud access",
@@ -407,5 +401,11 @@
   "and": "And",
   "viewRule": "View Rule",
   "localeName": "en",
-  "licences": "Licences"
+  "licences": "Licences",
+  "settings_wall_mount_mode": "Wall Mount Mode",
+  "settings_wall_mount_mode_description": "Automatically enable wall mount mode. App bars and navigation bars will be hidden and the screen is kept on.",
+  "wallMountModeEnabledSnackbar": "Wall Mount Mode enabled",
+  "wallMountModeDisabledSnackbar": "Wall Mount Mode disabled",
+  "disableWallMoundModeTooltip": "Disable Wall Mount Mode",
+  "enableWallMountModeTooltip": "Enable Wall Mount Mode"
 }

@@ -655,46 +655,6 @@ class S {
     );
   }
 
-  /// `Wakelock enabled`
-  String get wakelockEnabledSnackbar {
-    return Intl.message(
-      'Wakelock enabled',
-      name: 'wakelockEnabledSnackbar',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Wakelock disabled`
-  String get wakelockDisabledSnackbar {
-    return Intl.message(
-      'Wakelock disabled',
-      name: 'wakelockDisabledSnackbar',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Disable Wakelock`
-  String get disableWakelockTooltip {
-    return Intl.message(
-      'Disable Wakelock',
-      name: 'disableWakelockTooltip',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Enable Wakelock`
-  String get enableWakelockTooltip {
-    return Intl.message(
-      'Enable Wakelock',
-      name: 'enableWakelockTooltip',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Feels like {temp}`
   String feelsLike(Object temp) {
     return Intl.message(
@@ -818,26 +778,6 @@ class S {
   /// `Theme`
   String get settings_theme {
     return Intl.message('Theme', name: 'settings_theme', desc: '', args: []);
-  }
-
-  /// `Wakelock`
-  String get settings_wakelock {
-    return Intl.message(
-      'Wakelock',
-      name: 'settings_wakelock',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Automatically enable wakelock`
-  String get settings_wakelock_description {
-    return Intl.message(
-      'Automatically enable wakelock',
-      name: 'settings_wakelock_description',
-      desc: '',
-      args: [],
-    );
   }
 
   /// `Automation`
@@ -1828,6 +1768,66 @@ class S {
   /// `Licences`
   String get licences {
     return Intl.message('Licences', name: 'licences', desc: '', args: []);
+  }
+
+  /// `Wall Mount Mode`
+  String get settings_wall_mount_mode {
+    return Intl.message(
+      'Wall Mount Mode',
+      name: 'settings_wall_mount_mode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Automatically enable wall mount mode. App bars and navigation bars will be hidden and the screen is kept on.`
+  String get settings_wall_mount_mode_description {
+    return Intl.message(
+      'Automatically enable wall mount mode. App bars and navigation bars will be hidden and the screen is kept on.',
+      name: 'settings_wall_mount_mode_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wall Mount Mode enabled`
+  String get wallMountModeEnabledSnackbar {
+    return Intl.message(
+      'Wall Mount Mode enabled',
+      name: 'wallMountModeEnabledSnackbar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wall Mount Mode disabled`
+  String get wallMountModeDisabledSnackbar {
+    return Intl.message(
+      'Wall Mount Mode disabled',
+      name: 'wallMountModeDisabledSnackbar',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Disable Wall Mount Mode`
+  String get disableWallMoundModeTooltip {
+    return Intl.message(
+      'Disable Wall Mount Mode',
+      name: 'disableWallMoundModeTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enable Wall Mount Mode`
+  String get enableWallMountModeTooltip {
+    return Intl.message(
+      'Enable Wall Mount Mode',
+      name: 'enableWallMountModeTooltip',
+      desc: '',
+      args: [],
+    );
   }
 }
 
