@@ -5,7 +5,6 @@ import 'package:gap/gap.dart';
 import '../../../../core/database/app_database.dart';
 import '../../../../core/database/items/item_type.dart';
 import '../../../../core/database/items/items_table.dart';
-import '../../../../core/database/items/oh_item_type.dart';
 import '../../../../generated/l10n.dart';
 import '../../../../locator.dart';
 import '../../../../util/icons/icons.dart';

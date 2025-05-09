@@ -1,7 +1,6 @@
 import 'package:hive_ce/hive.dart';
 import 'package:sprintf/sprintf.dart';
 
-import '../../network/generated/openHAB.models.swagger.dart';
 import '../../network/overrides/command_description.dart';
 import '../../network/overrides/state_description.dart';
 

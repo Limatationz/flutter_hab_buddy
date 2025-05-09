@@ -1,17 +1,13 @@
 import 'dart:io';
 
-import 'package:android_multicast_lock/android_multicast_lock.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:multicast_dns/multicast_dns.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import '../../core/database/login/login_data.dart';
-import '../../core/network/generated/client_index.dart';
 import '../../core/network/generated/openHAB.swagger.dart';
 import '../../core/services/snackbar_service.dart';
 import '../../locator.dart';
@@ -36,7 +32,6 @@ class _LoginLocalSetupViewState extends State<LoginLocalSetupView> {
   final _loginRepository = locator<LoginRepository>();
   final formKey = GlobalKey<FormBuilderState>();
   final MDnsClient client = MDnsClient();
-  final multicastLock = MulticastLock();
 
   // found openhab servers via MDNS
   List<ServerScanResult> scanResults = [];
@@ -52,11 +47,6 @@ class _LoginLocalSetupViewState extends State<LoginLocalSetupView> {
       scanResults = [];
       isScanning = true;
     });
-
-    // Acquire the multicast lock on Android
-    if (Platform.isAndroid) {
-      multicastLock.acquire();
-    }
 
     Set<(String, String)> servers = {};
 
@@ -90,9 +80,6 @@ class _LoginLocalSetupViewState extends State<LoginLocalSetupView> {
     } finally {
       // Stop the client
       client.stop();
-      if (Platform.isAndroid) {
-        multicastLock.release();
-      }
     }
 
     if (servers.isNotEmpty) {

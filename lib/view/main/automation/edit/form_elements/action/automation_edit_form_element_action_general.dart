@@ -3,7 +3,6 @@ import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:gap/gap.dart';
 import 'package:highlight/languages/javascript.dart';
 
-import '../../../../../../core/database/app_database.dart';
 import '../../../../../../core/database/items/items_table.dart';
 import '../../../../../../core/network/generated/openHAB.swagger.dart';
 import '../../../../../../generated/l10n.dart';

@@ -1,6 +1,5 @@
 import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 import '../../../../generated/l10n.dart';
 import '../../../../util/icons/icons.dart';

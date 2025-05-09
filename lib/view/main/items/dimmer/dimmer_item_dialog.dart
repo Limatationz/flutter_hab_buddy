@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 
-import '../../../../core/database/app_database.dart';
-import '../../../../core/hive/state/item_state.dart';
 import '../../../../locator.dart';
 import '../../../../repository/item_repository.dart';
 import '../general/item_state_combined_injector.dart';
-import '../general/item_state_injector.dart';
 import 'dimmer_item_control.dart';
 
 class DimmerItemDialog extends StatelessWidget {

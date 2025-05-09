@@ -1,10 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:chopper/chopper.dart';
 
-import '../../../locator.dart';
-import '../../../repository/login_repository.dart';
 import '../../database/login/login_data.dart';
 
 class ApiAuthInterceptor implements Interceptor {

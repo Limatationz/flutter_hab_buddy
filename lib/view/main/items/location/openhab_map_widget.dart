@@ -8,7 +8,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../util/icons/icons.dart';
-import '../../../util/constants.dart';
 import 'location_util.dart';
 
 // TODO: Maybe add a button where i can center back to the location?

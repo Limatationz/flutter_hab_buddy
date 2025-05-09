@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 
 import '../../../../locator.dart';
 import '../../../../repository/item_repository.dart';
-import '../../../../util/icons/icons.dart';
 import '../general/item_state_injector.dart';
 import 'rollershutter_item_control.dart';
 

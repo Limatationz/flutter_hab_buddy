@@ -12,7 +12,6 @@ import 'package:http/http.dart' as http;
 import 'dart:io';
 
 import '../core/database/login/login_data.dart';
-import '../core/network/generated/client_index.dart';
 import '../core/network/generated/openHAB.swagger.dart';
 import '../core/network/interceptors/api_auth_interceptor.dart';
 import '../core/network/interceptors/basic_auth_interceptor.dart';

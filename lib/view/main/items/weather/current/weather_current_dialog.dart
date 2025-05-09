@@ -7,8 +7,6 @@ import 'package:weather_icons/weather_icons.dart';
 import 'package:weather_pack/weather_pack.dart';
 
 import '../../../../../generated/l10n.dart';
-import '../../../../../locator.dart';
-import '../../../../../repository/item_repository.dart';
 import '../../../../../util/icons/icons.dart';
 import '../../../../util/weather_icons.dart';
 import '../../general/item_state_injector.dart';

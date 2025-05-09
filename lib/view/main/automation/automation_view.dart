@@ -4,13 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 import 'package:stacked/stacked.dart';
 
-import '../../../core/database/app_database.dart';
-import '../../../core/database/rules/rules_table.dart';
 import '../../../generated/l10n.dart';
 import '../../../util/icons/LineIconsV5_icons.dart';
-import '../../../util/icons/line_icons_icons.dart';
 import '../../util/constants.dart';
-import '../../util/general/alert_dialog_action.dart';
 import '../../util/general/base_elevated_button.dart';
 import 'automation_viewmodel.dart';
 import 'edit/automation_edit_view.dart';

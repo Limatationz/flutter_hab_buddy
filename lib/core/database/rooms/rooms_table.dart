@@ -1,9 +1,6 @@
 import 'package:drift/drift.dart';
-import 'package:flutter/material.dart' show IconData;
 
-import '../../../util/icons/icons.dart';
 import '../converter/icon_data_converter.dart';
-import '../converter/string_list_converter.dart';
 
 @DataClassName("Room")
 class RoomsTable extends Table {

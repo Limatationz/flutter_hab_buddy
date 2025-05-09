@@ -4,7 +4,6 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -17,7 +16,6 @@ import 'core/routing/router.dart';
 import 'generated/l10n.dart';
 import 'locator.dart';
 import 'repository/login_repository.dart';
-import 'view/util/platform.dart';
 import 'view/util/text_styles.g.dart';
 
 void main() async {

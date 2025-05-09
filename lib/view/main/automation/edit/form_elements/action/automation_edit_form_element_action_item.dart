@@ -3,12 +3,10 @@ import 'package:gap/gap.dart';
 
 import '../../../../../../core/database/items/items_table.dart';
 import '../../../../../../generated/l10n.dart';
-import '../../../../../../util/icons/LineIconsV5_icons.dart';
 import '../../../../../util/constants.dart';
 import '../../../../../util/general/bar_bottom_sheet.dart';
 import '../../../../../util/general/list_picker_sheet_view.dart';
 import '../../../../../util/general/widget_container.dart';
-import '../../../../items/dimmer/dimmer_item_control.dart';
 import '../../../../items/general/item_select_view.dart';
 import '../../../../items/general/item_widget_factory.dart';
 import 'automation_edit_form_element_action_general.dart';

@@ -7,7 +7,6 @@ import 'package:stacked/stacked.dart';
 import '../../../../core/database/app_database.dart';
 import '../../../../core/database/items/items_table.dart';
 import '../../../../core/database/rules/rule_trigger.dart';
-import '../../../../core/database/rules/rules_table.dart';
 import '../../../../generated/l10n.dart';
 import '../../../../util/icons/icons.dart';
 import '../../../util/constants.dart';

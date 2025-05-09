@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../core/database/app_database.dart';
-import '../../../core/routing/navigation_service.dart';
 import '../../../core/services/snackbar_service.dart';
 import '../../../generated/l10n.dart';
 import '../../../locator.dart';

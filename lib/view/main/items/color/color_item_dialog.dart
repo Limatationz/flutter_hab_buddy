@@ -8,7 +8,6 @@ import '../../../../core/hive/state/item_state.dart';
 import '../../../../generated/l10n.dart';
 import '../../../../locator.dart';
 import '../../../../repository/item_repository.dart';
-import '../../../../util/icons/icons.dart';
 import '../../../util/constants.dart';
 import '../general/item_state_injector.dart';
 import 'color_util.dart';

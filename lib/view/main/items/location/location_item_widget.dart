@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/database/items/items_table.dart';
-import '../../../../locator.dart';
-import '../../../../repository/item_repository.dart';
 import '../../../util/constants.dart';
 import '../../../util/general/widget_container.dart';
 import '../general/item_state_injector.dart';

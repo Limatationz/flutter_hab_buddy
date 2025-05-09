@@ -6,7 +6,6 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart'
     as modal_bottom_sheet;
 
 import '../../../../core/database/items/item_type.dart';
-import '../../../../generated/l10n.dart';
 import '../../../../util/icons/icons.dart';
 import '../../../util/constants.dart';
 import '../../../util/general/headline_padding_box.dart';

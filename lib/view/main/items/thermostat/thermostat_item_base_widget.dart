@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:multiple_stream_builder/multiple_stream_builder.dart';
 
-import '../../../../../core/database/app_database.dart';
 import '../../../../../core/database/items/items_table.dart';
 import '../../../../../locator.dart';
 import '../../../../../repository/item_repository.dart';

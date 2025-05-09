@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:go_router/go_router.dart';
 
 import '../../../generated/l10n.dart';
 import '../../../util/icons/icons.dart';
 import '../constants.dart';
 import '../general/base_elevated_button.dart';
 import '../general/better_divider.dart';
-import '../general/bottom_sheet_container.dart';
 
 class ListPickerSheetView<T> extends StatefulWidget {
   final List<T> options;

@@ -3,7 +3,6 @@ import 'package:gap/gap.dart';
 
 import '../../../../core/database/app_database.dart';
 import '../../../../locator.dart';
-import '../../../../util/icons/icons.dart';
 import '../../../util/constants.dart';
 
 showRoomsSortSheet(BuildContext context) {

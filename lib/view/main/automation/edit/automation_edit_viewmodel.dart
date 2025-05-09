@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-import 'package:flutter_code_editor/flutter_code_editor.dart';
 import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
 import 'package:uuid/uuid.dart';
@@ -9,7 +8,6 @@ import '../../../../core/database/items/items_table.dart';
 import '../../../../core/database/rules/rule_trigger.dart';
 import '../../../../core/database/rules/rules_table.dart';
 import '../../../../core/network/generated/openHAB.swagger.dart';
-import '../../../../generated/l10n.dart';
 import '../../../../locator.dart';
 import '../../../../repository/automation_repository.dart';
 import 'automation_edit_view.dart';

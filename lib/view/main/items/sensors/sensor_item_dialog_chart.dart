@@ -55,12 +55,12 @@ class SensorItemDialogChart extends StatelessWidget {
             maxY: maxY,
             gridData: FlGridData(getDrawingHorizontalLine: (value) {
               return FlLine(
-                color: colorScheme.onSurface.withOpacity(0.2),
+                color: colorScheme.onSurface.withValues(alpha: 0.2),
                 strokeWidth: 1,
               );
             }, getDrawingVerticalLine: (value) {
               return FlLine(
-                color: colorScheme.onSurface.withOpacity(0.2),
+                color: colorScheme.onSurface.withValues(alpha: 0.2),
                 strokeWidth: 1,
               );
             }),
@@ -68,7 +68,7 @@ class SensorItemDialogChart extends StatelessWidget {
                 show: true,
                 border: Border.all(
                   width: 2,
-                  color: colorScheme.onSurface.withOpacity(0.2),
+                  color: colorScheme.onSurface.withValues(alpha: 0.2),
                 )),
             titlesData: FlTitlesData(
                 bottomTitles: AxisTitles(
@@ -133,7 +133,7 @@ class SensorItemDialogChart extends StatelessWidget {
               },
                 touchTooltipData: LineTouchTooltipData(
                     getTooltipColor: (spot) => colorScheme.secondaryContainer,
-                    tooltipRoundedRadius: 8,
+                    tooltipBorderRadius: BorderRadius.circular(8),
                     tooltipPadding: const EdgeInsets.all(8),
                     getTooltipItems: (touchedSpots) => touchedSpots
                         .map((e) => LineTooltipItem(

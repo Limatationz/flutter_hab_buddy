@@ -6,7 +6,6 @@ import '../../../../core/services/snackbar_service.dart';
 import '../../../../generated/l10n.dart';
 import '../../../../locator.dart';
 import '../../../../repository/automation_repository.dart';
-import '../../../../repository/item_repository.dart';
 
 class AutomationsByItemViewModel extends BaseViewModel {
   final _automationRepository = locator<AutomationRepository>();
