@@ -62,43 +62,54 @@ class RoomsView extends StatelessWidget {
                           final selectedRoomColorScheme =
                               selectedRoom.getColorScheme(context);
                           return BaseScaffold(
-                              colorScheme:
-                                  selectedRoomColorScheme,
+                              colorScheme: selectedRoomColorScheme,
                               appBar: AppBar(
                                 title: Text(S.current.navigationRooms),
                                 actions: [
-                                  if (selectedRoom.itemsSortOption ==
-                                      RoomItemsSortOption.manual)
-                                    IconButton(
-                                      onPressed: model.toggleItemsReorder,
-                                      tooltip: 'Reorder items',
-                                      icon: Icon(
-                                        LineIconsV5.layout_9,
-                                        color: model.itemsReorderEnabled
-                                            ? ColorScheme.of(context).primary
-                                            : null,
-                                      ),
-                                    ),
-                                  IconButton(
-                                      onPressed: () {
-                                        showBarModalBottomSheet<int?>(
-                                            context: context,
-                                            builder: (context) => RoomAddSheet(
-                                                  roomId: selectedRoom.id,
-                                                ));
-                                      },
-                                      tooltip: 'Edit room',
-                                      icon: const Icon(LineIconsV5.pencil_1)),
-                                  IconButton(
-                                      onPressed: () {
-                                        showRoomsSortSheet(
-                                          context,
-                                        );
-                                      },
-                                      tooltip: 'Sort rooms',
-                                      icon: const Icon(
-                                          LineIconsV5.sort_high_to_low)),
-                                  WakelockIndicator(),
+                                  MenuAnchor(
+                                    menuChildren: <Widget>[
+                                      if (selectedRoom.itemsSortOption ==
+                                          RoomItemsSortOption.manual)
+                                        MenuItemButton(
+                                            onPressed: model.toggleItemsReorder,
+                                            leadingIcon: const Icon(
+                                              LineIconsV5.layout_9,
+                                            ),
+                                            child: const Text('Reorder Items')),
+                                      MenuItemButton(
+                                          onPressed: () =>
+                                              showBarModalBottomSheet<int?>(
+                                                  context: context,
+                                                  builder: (context) =>
+                                                      RoomAddSheet(
+                                                        roomId: selectedRoom.id,
+                                                      )),
+                                          leadingIcon:
+                                              const Icon(LineIconsV5.pencil_1),
+                                          child: const Text('Edit Room')),
+                                      MenuItemButton(
+                                          onPressed: () => showRoomsSortSheet(
+                                                context,
+                                              ),
+                                          leadingIcon: const Icon(
+                                              LineIconsV5.sort_high_to_low),
+                                          child: const Text('Sort Rooms')),
+                                    ],
+                                    builder: (_, MenuController controller,
+                                        Widget? child) {
+                                      return IconButton(
+                                        onPressed: () {
+                                          if (controller.isOpen) {
+                                            controller.close();
+                                          } else {
+                                            controller.open();
+                                          }
+                                        },
+                                        icon: const Icon(LineIconsV5.menu_kebab_1),
+                                      );
+                                    },
+                                  ),
+                                  WallMountModeIndicator(),
                                   InboxActionButton(
                                       countInbox: model.countInboxStream),
                                 ],

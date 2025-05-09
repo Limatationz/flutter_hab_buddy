@@ -6,11 +6,11 @@ import '../../../generated/l10n.dart';
 import '../../../locator.dart';
 import '../../../util/icons/icons.dart';
 
-class WakelockIndicator extends StatelessWidget {
+class WallMountModeIndicator extends StatelessWidget {
   final wallMountService = locator<WallMountService>();
   final snackBarService = locator<SnackbarService>();
 
-  WakelockIndicator({super.key});
+  WallMountModeIndicator({super.key});
 
   @override
   Widget build(BuildContext context) {

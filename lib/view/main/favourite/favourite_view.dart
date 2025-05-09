@@ -59,7 +59,7 @@ class FavouriteView extends StatelessWidget {
                                 showFavouriteSettingsDialog(context, model);
                               },
                               icon: const Icon(LineIconsV5.gear_eye)),
-                          WakelockIndicator(),
+                          WallMountModeIndicator(),
                           InboxActionButton(countInbox: model.countInboxStream),
                         ],
                       )
@@ -105,7 +105,7 @@ class FavouriteView extends StatelessWidget {
                                 roomsCrossAxisCount, itemWidgetsByRoomId);
 
                             return Padding(
-                                padding: const EdgeInsets.all(paddingContainer),
+                                padding: const EdgeInsets.symmetric(horizontal: paddingContainer),
                                 child: StaggeredGrid.count(
                                   crossAxisCount: roomsCrossAxisCount,
                                   crossAxisSpacing: paddingScaffold,
