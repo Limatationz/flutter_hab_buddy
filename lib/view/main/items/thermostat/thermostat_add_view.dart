@@ -22,18 +22,18 @@ import '../general/item_widget.dart';
 import 'thermostat_data.dart';
 import 'thermostat_item_base_widget.dart';
 
-class ThermostatAddSheet extends StatefulWidget {
+class ThermostatAddView extends StatefulWidget {
   final int roomId;
   final ThermostatData? thermostatData;
 
-  const ThermostatAddSheet(
+  const ThermostatAddView(
       {super.key, required this.roomId, this.thermostatData});
 
   @override
-  State<ThermostatAddSheet> createState() => _ThermostatAddSheetState();
+  State<ThermostatAddView> createState() => _ThermostatAddViewState();
 }
 
-class _ThermostatAddSheetState extends State<ThermostatAddSheet> {
+class _ThermostatAddViewState extends State<ThermostatAddView> {
   final _formKey = GlobalKey<FormBuilderState>();
   final _itemsStore = locator<AppDatabase>().itemsStore;
   final _itemsRepository = locator<ItemRepository>();
@@ -71,51 +71,57 @@ class _ThermostatAddSheetState extends State<ThermostatAddSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return FormBuilder(
-        key: _formKey,
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Expanded(
-                    child: Text(
-                        isAdd ? "Add Thermostat" : "Edit Thermostat",
-                        style: Theme.of(context)!.textTheme.headlineMedium)),
-                if (!isAdd) const Gap(listSpacing),
-                if (!isAdd)
-                  IconButton(
-                      onPressed: () async {
-                        final result = await showDeleteItemDialog(
-                            context: context,
-                            itemLabel:
-                                widget.thermostatData!.heatingSetpointItemName);
-                        if (result == true) {
-                          _itemsRepository.removeItems([
-                            widget.thermostatData!.heatingSetpointItemName,
-                            widget.thermostatData!.currentTemperatureItemName,
-                            if (widget
-                                    .thermostatData!.currentHumidityItemName !=
-                                null)
-                              widget.thermostatData!.currentHumidityItemName!,
-                            if (widget.thermostatData!.modeItemName != null)
-                              widget.thermostatData!.modeItemName!
-                          ]).then((value) {
-                            if (value) {
-                              Navigator.of(context).pop();
-                            }
-                          });
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(isAdd ? "Add Thermostat" : "Edit Thermostat"),
+          actions: [
+            if (!isAdd)
+              IconButton(
+                  onPressed: () async {
+                    final result = await showDeleteItemDialog(
+                        context: context,
+                        itemLabel:
+                            widget.thermostatData!.heatingSetpointItemName);
+                    if (result == true) {
+                      _itemsRepository.removeItems([
+                        widget.thermostatData!.heatingSetpointItemName,
+                        widget.thermostatData!.currentTemperatureItemName,
+                        if (widget
+                                .thermostatData!.currentHumidityItemName !=
+                            null)
+                          widget.thermostatData!.currentHumidityItemName!,
+                        if (widget.thermostatData!.modeItemName != null)
+                          widget.thermostatData!.modeItemName!
+                      ]).then((value) {
+                        if (value) {
+                          Navigator.of(context).pop();
                         }
-                      },
-                      visualDensity: VisualDensity.compact,
-                      iconSize: 28,
-                      icon: Icon(
-                        LineIconsFilled.trash_can,
-                        color: Theme.of(context).colorScheme.error,
-                      )),
-              ],
-            ),
-            const HeadlinePaddingBox(),
-            SizedBox(
+                      });
+                    }
+                  },
+                  visualDensity: VisualDensity.compact,
+                  iconSize: 28,
+                  icon: Icon(
+                    LineIconsFilled.trash_can,
+                    color: Theme.of(context).colorScheme.error,
+                  )),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+            child: const Icon(LineIconsV5.floppy_disk_1),
+            onPressed: () {
+              _save().then((value) {
+                if (value) {
+                  Navigator.of(context).pop(null);
+                }
+              });
+            }),
+        body: FormBuilder(
+        key: _formKey,
+        child: ListView(
+          padding: const EdgeInsets.all(paddingScaffold),
+          children: [
+            Center(child: SizedBox(
                 height: MediumWidthItemWidget.height,
                 width: MediumWidthItemWidget.width,
                 child: ThermostatItemBaseWidget(
@@ -125,7 +131,7 @@ class _ThermostatAddSheetState extends State<ThermostatAddSheet> {
                   currentTemperatureStream: currentTemperatureStateStream,
                   currentHumidityStream: currentHumidityStateStream,
                   modeStream: modeStateStream,
-                )),
+                ))),
             const Gap(24),
             FutureBuilder(
                 future: _itemsRepository.getItemNamesByOhType(OhItemType.number),
@@ -243,18 +249,8 @@ class _ThermostatAddSheetState extends State<ThermostatAddSheet> {
                     );
                   }
                 }),
-            const SizedBox(height: 16),
-            BaseElevatedButton(
-                text: S.current.save,
-                onPressed: () {
-                  _save().then((value) {
-                    if (value) {
-                      Navigator.of(context).pop(null);
-                    }
-                  });
-                })
           ],
-        ));
+        )));
   }
 
   Future<bool> _save() async {

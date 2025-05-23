@@ -169,7 +169,7 @@ class WeatherForecastWidget extends LargeWidthItemWidget {
       scrollable: true,
       hideItemName: true);
 
-  void onLongTap(BuildContext context) => ItemWidgetFactory.openEditSheet(
+  void onLongTap(BuildContext context) => ItemWidgetFactory.openEditView(
         context,
         item!,
       );

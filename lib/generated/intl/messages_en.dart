@@ -202,6 +202,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "deleteItemDialogText": MessageLookupByLibrary.simpleMessage(
       "Do you really want to delete item",
     ),
+    "deleteRoomDialogHeadline": MessageLookupByLibrary.simpleMessage(
+      "Delete room?",
+    ),
+    "deleteRoomDialogText": MessageLookupByLibrary.simpleMessage(
+      "Do you really want to delete room",
+    ),
     "deletedRuleFailure": MessageLookupByLibrary.simpleMessage(
       "Failed to delete the rule",
     ),
@@ -214,6 +220,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "done": MessageLookupByLibrary.simpleMessage("Done"),
     "down": MessageLookupByLibrary.simpleMessage("Down"),
     "editItem": MessageLookupByLibrary.simpleMessage("Edit Item"),
+    "editRoomHeadline": MessageLookupByLibrary.simpleMessage("Edit Room"),
     "editRule": MessageLookupByLibrary.simpleMessage("Edit Rule"),
     "enableWallMountModeTooltip": MessageLookupByLibrary.simpleMessage(
       "Enable Wall Mount Mode",

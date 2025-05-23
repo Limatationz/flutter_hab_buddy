@@ -10,6 +10,7 @@ import '../../../../util/color.dart';
 
 class RoomAddViewModel extends BaseViewModel {
   final _roomsStore = locator<AppDatabase>().roomsStore;
+  final _itemsStore = locator<AppDatabase>().itemsStore;
 
   final fbKey = GlobalKey<FormBuilderState>();
 
@@ -100,6 +101,21 @@ class RoomAddViewModel extends BaseViewModel {
       return id;
     }
     return null;
+  }
+
+  Future<bool> onDelete() async {
+    if (roomId != null) {
+      final items = await _itemsStore.byRoomId(roomId!).get();
+      for (final item in items) {
+        // remove the item from the room
+        await _itemsStore.insertOrUpdateSingle(item.toCompanion(false).copyWith(roomId: const Value.absent()));
+      }
+
+      // remove the room
+      await _roomsStore.deleteDataById(roomId!);
+      return true;
+    }
+    return false;
   }
 
   void setIcon(IconData? icon) {

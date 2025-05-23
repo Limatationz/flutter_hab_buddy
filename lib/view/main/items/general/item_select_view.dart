@@ -1,4 +1,4 @@
-import 'package:azlistview_plus/azlistview_plus.dart';
+import 'package:alphabet_list_view/alphabet_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -10,7 +10,10 @@ import '../../../../locator.dart';
 import '../../../../util/icons/icons.dart';
 import '../../../util/constants.dart';
 import '../../../util/general/bar_bottom_sheet.dart';
+import '../../../util/general/base_alphabet_list_view.dart';
 import '../../../util/general/base_elevated_button.dart';
+
+// TODO: add search
 
 typedef ItemSelectCallback = void Function(Item? item);
 typedef ItemWithStateSelectCallback = void Function(
@@ -84,7 +87,10 @@ class _ItemSelectViewState extends State<ItemSelectView> {
             (itemWithState) => setState(() => selectedItem = itemWithState),
           );
     }
-    _itemsStore.nonInbox().get().then((items) => setState(() => this.items = items));
+    _itemsStore
+        .nonInbox()
+        .get()
+        .then((items) => setState(() => this.items = items));
   }
 
   @override
@@ -99,10 +105,23 @@ class _ItemSelectViewState extends State<ItemSelectView> {
         S.of(context).addAnItemFirst,
       ));
     } else {
-      final entries =
-          items!.map((item) => ItemSelectEntry(item)).toList(growable: false);
-      SuspensionUtil.sortListBySuspensionTag(entries);
-      SuspensionUtil.setShowSuspensionStatus(entries);
+      final entries = getGroups(
+          items!,
+          (item) => ListTile(
+                contentPadding: const EdgeInsets.all(0),
+                title: Text(item.label),
+                subtitle: Text(item.ohName),
+                leading: Icon(item.icon),
+                trailing: selectedItem?.item.ohName == item.ohName
+                    ? const Icon(LineIconsV5.check)
+                    : null,
+                onTap: () {
+                  _itemsStore.getByNameWithState(item.ohName).then(
+                        (itemWithState) =>
+                            setState(() => selectedItem = itemWithState),
+                      );
+                },
+              ));
       return Column(children: [
         TextField(
           controller: textEditingController,
@@ -123,44 +142,8 @@ class _ItemSelectViewState extends State<ItemSelectView> {
         ),
         const Gap(mediumPadding),
         Expanded(
-            child: AzListView(
-          hapticFeedback: true,
-          data: entries,
-          itemCount: entries.length,
-          indexBarMargin: const EdgeInsets.only(right: 8),
-          indexBarOptions: IndexBarOptions(
-            downColor: Colors.green,
-            textStyle: TextTheme.of(context).bodyMedium!,
-            indexHintDecoration: BoxDecoration(
-              color: ColorScheme.of(context).secondaryContainer,
-              borderRadius: const BorderRadius.all(
-                  Radius.circular(borderRadiusContainer)),
-            ),
-            indexHintTextStyle: TextStyle(
-              fontSize: 24,
-              color: ColorScheme.of(context).onSecondaryContainer,
-            ),
-          ),
-          itemBuilder: (context, index) {
-            final item = entries[index];
-            return Padding(
-                padding: const EdgeInsets.only(right: 26),
-                child: ListTile(
-                  contentPadding: const EdgeInsets.all(0),
-                  title: Text(item.label),
-                  subtitle: Text(item.name),
-                  leading: Icon(item.icon),
-                  trailing: selectedItem?.item.ohName == item.item.ohName
-                      ? const Icon(LineIconsV5.check)
-                      : null,
-                  onTap: () {
-                    _itemsStore.getByNameWithState(item.name).then(
-                          (itemWithState) =>
-                              setState(() => selectedItem = itemWithState),
-                        );
-                  },
-                ));
-          },
+            child: BaseAlphabetListView(
+          items: entries,
         )),
         const Gap(largePadding),
         BaseElevatedButton(
@@ -178,19 +161,33 @@ class _ItemSelectViewState extends State<ItemSelectView> {
   }
 }
 
-class ItemSelectEntry extends ISuspensionBean {
-  final Item item;
+List<AlphabetListViewItemGroup> getGroups(
+    List<Item> items, Widget Function(Item item) buildItemWidget) {
+  final groups = <String, List<Widget>>{};
+  for (final item in items) {
+    final alphabet = (item.ohLabel.isEmpty ? item.ohName : item.ohLabel)
+        .substring(0, 1)
+        .toUpperCase();
+    if (!groups.keys.contains(alphabet)) {
+      groups[alphabet] = [
+        buildItemWidget(item),
+      ];
+    } else {
+      groups[alphabet]!.add(buildItemWidget(item));
+    }
+  }
 
-  String get name => item.ohName;
+  // to az groups
+  final azGroups = <AlphabetListViewItemGroup>[];
+  for (final group in groups.entries) {
+    azGroups.add(AlphabetListViewItemGroup(
+      tag: group.key,
+      children: group.value,
+    ));
+  }
 
-  String get label => item.label;
+  // sort az groups
+  azGroups.sort((a, b) => a.tag.compareTo(b.tag));
 
-  ItemType get type => item.type!;
-
-  IconData get icon => item.icon ?? type.icon;
-
-  ItemSelectEntry(this.item);
-
-  @override
-  String getSuspensionTag() => name[0];
+  return azGroups;
 }

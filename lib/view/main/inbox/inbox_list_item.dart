@@ -10,14 +10,13 @@ class InboxListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.only(right: 26),
-    child: ListTile(
+    return ListTile(
       contentPadding: const EdgeInsets.all(0),
+      visualDensity: VisualDensity.compact,
       title: Text(entry.ohLabel),
       subtitle: Text(entry.ohName),
       trailing: entry.type?.icon != null ? Icon(entry.type!.icon) : null,
       onTap: onTap,
-    ));
+    );
   }
 }

@@ -22,18 +22,18 @@ import '../../general/item_widget.dart';
 import 'complex_player_data.dart';
 import 'complex_player_item_base_widget.dart';
 
-class ComplexPlayerAddSheet extends StatefulWidget {
+class ComplexPlayerAddView extends StatefulWidget {
   final int roomId;
   final ComplexPlayerData? complexPlayerData;
 
-  const ComplexPlayerAddSheet(
+  const ComplexPlayerAddView(
       {super.key, required this.roomId, this.complexPlayerData});
 
   @override
-  State<ComplexPlayerAddSheet> createState() => _ComplexPlayerAddSheetState();
+  State<ComplexPlayerAddView> createState() => _ComplexPlayerAddViewState();
 }
 
-class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
+class _ComplexPlayerAddViewState extends State<ComplexPlayerAddView> {
   final _formKey = GlobalKey<FormBuilderState>();
   final _itemsStore = locator<AppDatabase>().itemsStore;
   final _itemsRepository = locator<ItemRepository>();
@@ -75,52 +75,58 @@ class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return FormBuilder(
-        key: _formKey,
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Expanded(
-                    child: Text(
-                        isAdd ? "Add complex Player" : "Edit complex Player",
-                        style: Theme.of(context)!.textTheme.headlineMedium)),
-                if (!isAdd) const Gap(listSpacing),
-                if (!isAdd)
-                  IconButton(
-                      onPressed: () async {
-                        final result = await showDeleteItemDialog(
-                            context: context,
-                            itemLabel:
-                                widget.complexPlayerData!.playerItemName);
-                        if (result == true) {
-                          _itemsRepository.removeItems([
-                            widget.complexPlayerData!.playerItemName,
-                            widget.complexPlayerData!.totalDurationItemName,
-                            widget.complexPlayerData!.currentDurationItemName,
-                            if (widget
-                                    .complexPlayerData!.volumeDimmerItemName !=
-                                null)
-                              widget.complexPlayerData!.volumeDimmerItemName!,
-                            if (widget.complexPlayerData!.imageItemName != null)
-                              widget.complexPlayerData!.imageItemName!
-                          ]).then((value) {
-                            if (value) {
-                              Navigator.of(context).pop();
-                            }
-                          });
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(isAdd ? "Add complex Player" : "Edit complex Player"),
+          actions: [
+            if (!isAdd)
+              IconButton(
+                  onPressed: () async {
+                    final result = await showDeleteItemDialog(
+                        context: context,
+                        itemLabel:
+                        widget.complexPlayerData!.playerItemName);
+                    if (result == true) {
+                      _itemsRepository.removeItems([
+                        widget.complexPlayerData!.playerItemName,
+                        widget.complexPlayerData!.totalDurationItemName,
+                        widget.complexPlayerData!.currentDurationItemName,
+                        if (widget
+                            .complexPlayerData!.volumeDimmerItemName !=
+                            null)
+                          widget.complexPlayerData!.volumeDimmerItemName!,
+                        if (widget.complexPlayerData!.imageItemName != null)
+                          widget.complexPlayerData!.imageItemName!
+                      ]).then((value) {
+                        if (value) {
+                          Navigator.of(context).pop();
                         }
-                      },
-                      visualDensity: VisualDensity.compact,
-                      iconSize: 28,
-                      icon: Icon(
-                        LineIconsFilled.trash_can,
-                        color: Theme.of(context).colorScheme.error,
-                      )),
-              ],
-            ),
-            const HeadlinePaddingBox(),
-            SizedBox(
+                      });
+                    }
+                  },
+                  visualDensity: VisualDensity.compact,
+                  iconSize: 28,
+                  icon: Icon(
+                    LineIconsFilled.trash_can,
+                    color: Theme.of(context).colorScheme.error,
+                  )),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+            child: const Icon(LineIconsV5.floppy_disk_1),
+            onPressed: () {
+              _save().then((value) {
+                if (value) {
+                  Navigator.of(context).pop(true);
+                }
+              });
+            }),
+        body: FormBuilder(
+        key: _formKey,
+        child: ListView(
+          padding: const EdgeInsets.all(paddingScaffold),
+          children: [
+        Center(child: SizedBox(
                 height: MediumWidthItemWidget.height,
                 width: MediumWidthItemWidget.width,
                 child: ComplexPlayerItemBaseWidget(
@@ -131,7 +137,7 @@ class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
                   currentDurationStateStream: currentDurationStateStream,
                   totalDurationStateStream: totalDurationStateStream,
                   volumeDimmerStateStream: volumeDimmerStateStream,
-                )),
+                ))),
             const Gap(24),
             FutureBuilder(
                 future:
@@ -279,18 +285,8 @@ class _ComplexPlayerAddSheetState extends State<ComplexPlayerAddSheet> {
                     );
                   }
                 }),
-            const SizedBox(height: 16),
-            BaseElevatedButton(
-                text: S.current.save,
-                onPressed: () {
-                  _save().then((value) {
-                    if (value) {
-                      Navigator.of(context).pop(true);
-                    }
-                  });
-                })
           ],
-        ));
+        )));
   }
 
   Future<bool> _save() async {

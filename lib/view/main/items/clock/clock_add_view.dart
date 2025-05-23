@@ -23,31 +23,30 @@ import '../general/item_widget.dart';
 import 'clock_data.dart';
 import 'clock_item_base_widget.dart';
 
-class ClockAddSheet extends StatefulWidget {
+class ClockAddView extends StatefulWidget {
   final int roomId;
   final Item? item;
 
-  const ClockAddSheet({super.key, required this.roomId, this.item});
+  const ClockAddView({super.key, required this.roomId, this.item});
 
   @override
-  State<ClockAddSheet> createState() => _ClockAddSheetState();
+  State<ClockAddView> createState() => _ClockAddViewState();
 }
 
-class _ClockAddSheetState extends State<ClockAddSheet> {
+class _ClockAddViewState extends State<ClockAddView> {
   final _formKey = GlobalKey<FormBuilderState>();
   final _itemsStore = locator<AppDatabase>().itemsStore;
   final _itemsRepository = locator<ItemRepository>();
   final _snackBarService = locator<SnackbarService>();
 
   final BehaviorSubject<String> _clockFormatStream =
-  BehaviorSubject.seeded("HH:mm:ss");
+      BehaviorSubject.seeded("HH:mm:ss");
 
   bool get isAdd => widget.item == null;
 
   bool isFavorite = false;
 
-  List<String> get formats =>
-      [
+  List<String> get formats => [
         "HH:mm:ss",
         "HH:mm",
         "dd.MM.yyyy HH:mm:ss",
@@ -79,9 +78,7 @@ class _ClockAddSheetState extends State<ClockAddSheet> {
     if (!isAdd) {
       isFavorite = widget.item!.isFavorite;
       _clockFormatStream.add(widget.item!.complexJson != null
-          ? ClockData
-          .fromJson(widget.item!.complexJson!)
-          .format
+          ? ClockData.fromJson(widget.item!.complexJson!).format
           : "HH:mm:ss");
     }
   }
@@ -92,101 +89,88 @@ class _ClockAddSheetState extends State<ClockAddSheet> {
     final config = widget.item?.complexJson != null
         ? ClockData.fromJson(widget.item!.complexJson!)
         : null;
-    return FormBuilder(
-        key: _formKey,
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Expanded(
-                    child: Text(isAdd ? "Add clock" : "Edit clock",
-                        style: Theme
-                            .of(context)!
-                            .textTheme
-                            .headlineMedium)),
-                if (!isAdd)
-                  IconButton(
-                      onPressed: () {
-                        _itemsRepository
-                            .updateFavoriteByName(
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(isAdd ? "Add clock" : "Edit clock"),
+          actions: [
+            if (!isAdd)
+              IconButton(
+                  onPressed: () {
+                    _itemsRepository
+                        .updateFavoriteByName(
                             widget.item!.ohName, !widget.item!.isFavorite)
-                            .then((value) =>
-                            setState(() {
+                        .then((value) => setState(() {
                               isFavorite = !isFavorite;
                             }));
-                      },
-                      visualDensity: VisualDensity.compact,
-                      icon: Icon(isFavorite
-                          ? LineIconsFilled.heart
-                          : LineIcons.heart)),
-                if (!isAdd) const Gap(listSpacing),
-                if (!isAdd)
-                  IconButton(
-                      onPressed: () async {
-                        final result = await showDeleteItemDialog(
-                            context: context, itemLabel: "Clock");
-                        if (result == true) {
-                          _itemsRepository
-                              .removeItem(
-                            widget.item!.ohName,
-                          )
-                              .then((value) {
-                            if (value) {
-                              Navigator.of(context).pop();
-                            }
-                          });
+                  },
+                  visualDensity: VisualDensity.compact,
+                  icon: Icon(
+                      isFavorite ? LineIconsFilled.heart : LineIcons.heart)),
+            if (!isAdd) const Gap(listSpacing),
+            if (!isAdd)
+              IconButton(
+                  onPressed: () async {
+                    final result = await showDeleteItemDialog(
+                        context: context, itemLabel: "Clock");
+                    if (result == true) {
+                      _itemsRepository
+                          .removeItem(
+                        widget.item!.ohName,
+                      )
+                          .then((value) {
+                        if (value) {
+                          Navigator.of(context).pop();
                         }
-                      },
-                      visualDensity: VisualDensity.compact,
-                      iconSize: 28,
-                      icon: Icon(
-                        LineIconsFilled.trash_can,
-                        color: Theme
-                            .of(context)
-                            .colorScheme
-                            .error,
-                      )),
-              ],
-            ),
-            const HeadlinePaddingBox(),
-            SizedBox(
-                height: MediumWidthItemWidget.height,
-                width: MediumWidthItemWidget.width,
-                child: ClockItemBaseWidget(
-                  item: null,
-                  colorScheme: Theme
-                      .of(context)
-                      .colorScheme,
-                  clockFormatStream: _clockFormatStream,
-                )),
-            const Gap(24),
-            FormBuilderDropdown(
-                name: "format",
-                items: formats
-                    .map((e) =>
-                    DropdownMenuItem(
-                        value: e,
-                        child: Text("${DateFormat(e).format(time)} ($e)")))
-                    .toList(),
-                decoration:
-                InputDecoration(labelText: S
-                    .of(context)
-                    .timeFormat),
-                initialValue: config?.format ?? "HH:mm:ss",
-                validator: FormBuilderValidators.required(),
-                onChanged: (value) => _clockFormatStream.add(value as String)),
-            const Gap(16),
-            BaseElevatedButton(
-                text: S.current.save,
-                onPressed: () {
-                  _save().then((value) {
-                    if (value) {
-                      Navigator.of(context).pop(widget.item);
+                      });
                     }
-                  });
-                })
+                  },
+                  visualDensity: VisualDensity.compact,
+                  iconSize: 28,
+                  icon: Icon(
+                    LineIconsFilled.trash_can,
+                    color: Theme.of(context).colorScheme.error,
+                  )),
           ],
-        ));
+        ),
+        floatingActionButton: FloatingActionButton(
+            child: const Icon(LineIconsV5.floppy_disk_1),
+            onPressed: () {
+              _save().then((value) {
+                if (value) {
+                  Navigator.of(context).pop(widget.item);
+                }
+              });
+            }),
+        body: FormBuilder(
+            key: _formKey,
+            child: ListView(
+              padding: const EdgeInsets.all(paddingScaffold),
+              children: [
+                Center(
+                    child: SizedBox(
+                        height: MediumWidthItemWidget.height,
+                        width: MediumWidthItemWidget.width,
+                        child: ClockItemBaseWidget(
+                          item: null,
+                          colorScheme: Theme.of(context).colorScheme,
+                          clockFormatStream: _clockFormatStream,
+                        ))),
+                const Gap(24),
+                FormBuilderDropdown(
+                    name: "format",
+                    items: formats
+                        .map((e) => DropdownMenuItem(
+                            value: e,
+                            child: Text("${DateFormat(e).format(time)} ($e)")))
+                        .toList(),
+                    decoration:
+                        InputDecoration(labelText: S.of(context).timeFormat),
+                    initialValue: config?.format ?? "HH:mm:ss",
+                    validator: FormBuilderValidators.required(),
+                    onChanged: (value) =>
+                        _clockFormatStream.add(value as String)),
+              ],
+            )));
   }
 
   Future<bool> _save() async {

@@ -182,7 +182,7 @@ class WeatherCurrentWidget extends MediumWidthItemWidget {
       colorScheme,
       hideItemName: true);
 
-  void onLongTap(BuildContext context) => ItemWidgetFactory.openEditSheet(
+  void onLongTap(BuildContext context) => ItemWidgetFactory.openEditView(
         context,
         item!,
       );

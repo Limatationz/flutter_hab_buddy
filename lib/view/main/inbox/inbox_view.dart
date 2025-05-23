@@ -1,4 +1,6 @@
-import 'package:azlistview_plus/azlistview_plus.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:alphabet_list_view/alphabet_list_view.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:stacked/stacked.dart';
@@ -8,8 +10,9 @@ import '../../../generated/l10n.dart';
 import '../../../util/icons/icons.dart';
 import '../../util/constants.dart';
 import '../../util/general/bar_bottom_sheet.dart';
+import '../../util/general/base_alphabet_list_view.dart';
 import '../../util/general/headline_padding_box.dart';
-import 'add/inbox_entry_add_sheet.dart';
+import 'add/inbox_entry_add_view.dart';
 import 'inbox_list_item.dart';
 import 'inbox_viewmodel.dart';
 
@@ -69,41 +72,21 @@ class InboxView extends StatelessWidget {
                 )),
             const Gap(mediumPadding),
             Expanded(
-              child: StreamBuilder<List<InboxItemEntry>>(
+              child: StreamBuilder<List<Item>>(
                 stream: model.filteredInbox,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     final list = snapshot.data ?? [];
-                    SuspensionUtil.sortListBySuspensionTag(list);
-                    SuspensionUtil.setShowSuspensionStatus(list);
-                    return AzListView(
-                      data: list,
-                      padding: const EdgeInsets.fromLTRB(
-                          paddingScaffold, 0, paddingScaffold, paddingScaffold),
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (context, index) {
-                        final entry = snapshot.data![index].entry;
-                        return InboxListItem(
-                          entry: entry,
-                          onTap: () => _onEntryTap(
-                              context, entry, model.resetSearch, roomId),
-                        );
-                      },
-                      hapticFeedback: true,
-                      indexBarMargin: const EdgeInsets.only(right: 8),
-                      indexBarOptions: IndexBarOptions(
-                        downColor: Colors.green,
-                        textStyle: TextTheme.of(context).bodyMedium!,
-                        indexHintDecoration: BoxDecoration(
-                          color: ColorScheme.of(context).secondaryContainer,
-                          borderRadius: const BorderRadius.all(
-                              Radius.circular(borderRadiusContainer)),
-                        ),
-                        indexHintTextStyle: TextStyle(
-                          fontSize: 24,
-                          color: ColorScheme.of(context).onSecondaryContainer,
-                        ),
-                      ),
+                    final azGroups = getGroups(
+                        list,
+                        (item) => InboxListItem(
+                              entry: item,
+                              onTap: () => _onEntryTap(
+                                  context, item, model.resetSearch, roomId),
+                            ));
+                    return BaseAlphabetListView(
+                      items: azGroups,
+                      scrollController: model.scrollController,
                     );
                   } else {
                     return const Center(child: CircularProgressIndicator());
@@ -117,14 +100,46 @@ class InboxView extends StatelessWidget {
     );
   }
 
-  void _onEntryTap(BuildContext context, Item entry,
-      VoidCallback resetSearch, int? roomId) async {
-    final result = await showBarModalBottomSheet<bool>(
-        context: context,
-        builder: (context) => InboxEntryAddSheet(
-              entry: entry,
-              roomId: roomId,
-            ));
+  List<AlphabetListViewItemGroup> getGroups(
+      List<Item> items, Widget Function(Item item) buildItemWidget) {
+    final groups = <String, List<Widget>>{};
+    for (final item in items) {
+      final alphabet = (item.ohLabel.isEmpty ? item.ohName : item.ohLabel)
+          .substring(0, 1)
+          .toUpperCase();
+      if (!groups.keys.contains(alphabet)) {
+        groups[alphabet] = [
+          buildItemWidget(item),
+        ];
+      } else {
+        groups[alphabet]!.add(buildItemWidget(item));
+      }
+    }
+
+    // to az groups
+    final azGroups = <AlphabetListViewItemGroup>[];
+    for (final group in groups.entries) {
+      azGroups.add(AlphabetListViewItemGroup(
+        tag: group.key,
+        children: group.value,
+      ));
+    }
+
+    // sort az groups
+    azGroups.sort((a, b) => a.tag.compareTo(b.tag));
+
+    return azGroups;
+  }
+
+  void _onEntryTap(BuildContext context, Item entry, VoidCallback resetSearch,
+      int? roomId) async {
+    final result = await Navigator.push<bool>(
+        context,
+        CupertinoPageRoute(
+            builder: (context) => InboxEntryAddView(
+                  entry: entry,
+                  roomId: roomId,
+                )));
     if (result ?? false) {
       resetSearch();
     }

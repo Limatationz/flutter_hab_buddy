@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../generated/l10n.dart';
+import '../../view/main/favourite/favourite_view.dart';
 import '../../view/util/general/base_elevated_button.dart';
 
 class ErrorView extends StatelessWidget {
@@ -27,7 +28,7 @@ class ErrorView extends StatelessWidget {
                 BaseElevatedButton(
                     text: S.of(context).errorButtonHome,
                     onPressed: () {
-                      context.go('/');
+                      context.go(FavouriteView.routePath);
                     }),
               ],
             )));

@@ -51,7 +51,7 @@ class AddComplexItemSelectionSheet extends StatelessWidget {
                             mainAxisCellCount: e.item2.mainAxisCount,
                             child: InkWell(
                                 onTap: () =>
-                                    ItemWidgetFactory.openComplexAddSheet(
+                                    ItemWidgetFactory.openComplexAddView(
                                             context, e.item1, roomId)
                                         .then((value) {
                                       if (value) {

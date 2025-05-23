@@ -65,6 +65,8 @@
   "cancel": "Cancel",
   "deleteItemDialogHeadline": "Delete item?",
   "deleteItemDialogText": "Do you really want to delete item",
+  "deleteRoomDialogHeadline": "Delete room?",
+  "deleteRoomDialogText": "Do you really want to delete room",
   "itemTypeComplexPlayer": "Advanced Player",
   "navigationSettings": "Settings",
   "complex_player_add_item_error": "Player Item not found",
@@ -407,5 +409,6 @@
   "wallMountModeEnabledSnackbar": "Wall Mount Mode enabled",
   "wallMountModeDisabledSnackbar": "Wall Mount Mode disabled",
   "disableWallMoundModeTooltip": "Disable Wall Mount Mode",
-  "enableWallMountModeTooltip": "Enable Wall Mount Mode"
+  "enableWallMountModeTooltip": "Enable Wall Mount Mode",
+  "editRoomHeadline": "Edit Room"
 }

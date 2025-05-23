@@ -17,7 +17,9 @@ import '../../view/main/automation/by_item/automations_by_item_view.dart';
 import '../../view/main/automation/edit/automation_edit_view.dart';
 import '../../view/main/automation/edit/automation_edit_view_arguments.dart';
 import '../../view/main/favourite/favourite_view.dart';
+import '../../view/main/items/edit/item_edit_view.dart';
 import '../../view/main/main_view.dart';
+import '../../view/main/rooms/add/room_add_view.dart';
 import '../../view/main/rooms/rooms_view.dart';
 import '../../view/main/settings/licences/licences_view.dart';
 import '../../view/main/settings/licences/single_licence_view.dart';
@@ -63,6 +65,25 @@ GoRouter router(bool isLoggedIn) => GoRouter(
                   },
                   onExit: onExitMainView,
                   redirect: onEntryMainView,
+                  routes: [
+                    GoRoute(
+                        path: RoomAddView.routePathEdit,
+                        name: RoomAddView.routeNameEdit,
+                        pageBuilder: (context, state) {
+                          final roomId =
+                              int.tryParse(state.pathParameters['id'] ?? '');
+                          return CupertinoPage(
+                              child: RoomAddView(
+                            roomId: roomId,
+                          ));
+                        }),
+                    GoRoute(
+                        path: RoomAddView.routeNameAdd,
+                        name: RoomAddView.routeNameAdd,
+                        pageBuilder: (context, state) {
+                          return const CupertinoPage(child: RoomAddView());
+                        }),
+                  ],
                 ),
               ],
             ),
@@ -96,10 +117,16 @@ GoRouter router(bool isLoggedIn) => GoRouter(
                               path: SingleLicenceView.routePath,
                               name: SingleLicenceView.routeName,
                               pageBuilder: (context, state) {
-                                final packageName = state.pathParameters["name"] as String;
-                                final package = allDependencies.firstWhereOrNull((element) => element.name == packageName);
+                                final packageName =
+                                    state.pathParameters["name"] as String;
+                                final package = allDependencies
+                                    .firstWhereOrNull((element) =>
+                                        element.name == packageName);
                                 return CupertinoPage(
-                                    child: SingleLicenceView(package: package, packageName: packageName,));
+                                    child: SingleLicenceView(
+                                  package: package,
+                                  packageName: packageName,
+                                ));
                               },
                             )
                           ])

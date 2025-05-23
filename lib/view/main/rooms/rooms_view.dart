@@ -2,6 +2,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart' as modal;
 import 'package:reorderable_staggered_scroll_view/reorderable_staggered_scroll_view.dart';
 import 'package:stacked/stacked.dart';
@@ -25,7 +26,7 @@ import '../items/add_complex/add_complex_item_selection_sheet.dart';
 import '../items/add_complex/add_complex_item_widget.dart';
 import '../items/general/item_widget.dart';
 import '../items/sensors/sensor_item_widget.dart';
-import 'add/room_add_sheet.dart';
+import 'add/room_add_view.dart';
 import 'rooms_viewmodel.dart';
 import 'sort/rooms_sort_sheet.dart';
 
@@ -62,6 +63,7 @@ class RoomsView extends StatelessWidget {
                           final selectedRoomColorScheme =
                               selectedRoom.getColorScheme(context);
                           return BaseScaffold(
+                              key: ValueKey(rooms.length),
                               colorScheme: selectedRoomColorScheme,
                               appBar: AppBar(
                                 title: Text(S.current.navigationRooms),
@@ -78,12 +80,26 @@ class RoomsView extends StatelessWidget {
                                             child: const Text('Reorder Items')),
                                       MenuItemButton(
                                           onPressed: () =>
-                                              showBarModalBottomSheet<int?>(
-                                                  context: context,
-                                                  builder: (context) =>
-                                                      RoomAddSheet(
-                                                        roomId: selectedRoom.id,
-                                                      )),
+                                              context.pushNamed<int?>(
+                                                RoomAddView.routeNameAdd,
+                                              ),
+                                          leadingIcon:
+                                              const Icon(LineIconsV5.plus),
+                                          child: const Text('Add Room')),
+                                      MenuItemButton(
+                                          onPressed: () {
+                                            context.pushNamed<int?>(
+                                                RoomAddView.routeNameEdit,
+                                                pathParameters: {
+                                                  "id":
+                                                      selectedRoom.id.toString()
+                                                }).then((result) {
+                                                  if (result == -1) {
+                                                    // room was deleted -> go to first room
+                                                    model.onRoomChange(0);
+                                                  }
+                                            });
+                                          },
                                           leadingIcon:
                                               const Icon(LineIconsV5.pencil_1),
                                           child: const Text('Edit Room')),
@@ -105,7 +121,8 @@ class RoomsView extends StatelessWidget {
                                             controller.open();
                                           }
                                         },
-                                        icon: const Icon(LineIconsV5.menu_kebab_1),
+                                        icon: const Icon(
+                                            LineIconsV5.menu_kebab_1),
                                       );
                                     },
                                   ),
@@ -224,7 +241,6 @@ class RoomsView extends StatelessWidget {
                     color: colorScheme.surfaceContainerHighest, width: 1))),
         child: Wrap(
           spacing: smallPadding,
-          runSpacing: smallPadding,
           children: allRooms
               .map((e) => Theme(
                   data: ThemeData.from(colorScheme: colorScheme),
@@ -457,9 +473,7 @@ class RoomsView extends StatelessWidget {
               maxWidth: 150,
               text: S.current.addRoomHeadline,
               onPressed: () {
-                showBarModalBottomSheet<int?>(
-                    context: context,
-                    builder: (context) => const RoomAddSheet());
+                context.pushNamed<int?>(RoomAddView.routeNameAdd);
               },
             ),
           ]),

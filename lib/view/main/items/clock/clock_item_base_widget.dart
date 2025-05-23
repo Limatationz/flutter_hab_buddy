@@ -66,7 +66,7 @@ class ClockItemBaseWidget extends MediumWidthItemWidget {
         });
   }
 
-  void onLongTap(BuildContext context) => ItemWidgetFactory.openEditSheet(
+  void onLongTap(BuildContext context) => ItemWidgetFactory.openEditView(
         context,
         item!,
       );

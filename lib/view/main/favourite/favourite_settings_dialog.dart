@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/database/favourites/favourites_view_settings.dart';
 import '../../../util/icons/icons.dart';
+import '../../util/constants.dart';
 import '../../util/form/base_form_dropdown.dart';
 import 'favourite_viewmodel.dart';
 
@@ -16,6 +17,7 @@ Future<void> showFavouriteSettingsDialog(
                       onPressed: Navigator.of(context).pop,
                       icon: const Icon(LineIconsV5.xmark))
                 ]),
+                contentPadding: const EdgeInsets.all(paddingScaffold),
                 children: [
                   BaseFormDropdown<FavouriteViewType>(
                       name: "viewType",

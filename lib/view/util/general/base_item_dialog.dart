@@ -106,7 +106,7 @@ class _BaseItemDialogState extends State<BaseItemDialog> {
                 IconButton(
                     color: widget.colorScheme.primary,
                     onPressed: () =>
-                        ItemWidgetFactory.openEditSheet(context, widget.item),
+                        ItemWidgetFactory.openEditView(context, widget.item),
                     visualDensity: VisualDensity.compact,
                     icon: const Icon(LineIconsFilled.pencil))
               ]),

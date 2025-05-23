@@ -560,6 +560,26 @@ class S {
     );
   }
 
+  /// `Delete room?`
+  String get deleteRoomDialogHeadline {
+    return Intl.message(
+      'Delete room?',
+      name: 'deleteRoomDialogHeadline',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Do you really want to delete room`
+  String get deleteRoomDialogText {
+    return Intl.message(
+      'Do you really want to delete room',
+      name: 'deleteRoomDialogText',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Advanced Player`
   String get itemTypeComplexPlayer {
     return Intl.message(
@@ -1825,6 +1845,16 @@ class S {
     return Intl.message(
       'Enable Wall Mount Mode',
       name: 'enableWallMountModeTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Room`
+  String get editRoomHeadline {
+    return Intl.message(
+      'Edit Room',
+      name: 'editRoomHeadline',
       desc: '',
       args: [],
     );

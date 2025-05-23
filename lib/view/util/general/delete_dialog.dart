@@ -29,3 +29,30 @@ Future<bool?> showDeleteItemDialog({
                     child: Text(S.of(context).confirm))
               ],
             ));
+
+Future<bool?> showDeleteRoomDialog({
+  required BuildContext context,
+  required String roomLabel,
+}) =>
+    showAdaptiveDialog<bool?>(
+        context: context,
+        builder: (context) => AlertDialog.adaptive(
+          title: Text(S.current.deleteRoomDialogHeadline),
+          content: Text.rich(TextSpan(children: [
+            TextSpan(text: S.current.deleteRoomDialogText),
+            TextSpan(
+                text: " $roomLabel",
+                style: const TextStyle(fontWeight: FontWeight.bold)),
+            const TextSpan(
+              text: "?",
+            ),
+          ])),
+          actions: [
+            AlertDialogAction(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text(S.of(context).cancel)),
+            AlertDialogAction(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text(S.of(context).confirm))
+          ],
+        ));
