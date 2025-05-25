@@ -5,8 +5,10 @@ import 'package:flutter/material.dart' hide ConnectionState;
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../../core/services/face_recognition_service.dart';
 import '../../../generated/l10n.dart';
 import '../../../repository/connectivity_manager.dart';
 import '../../../util/icons/icons.dart';
@@ -178,21 +180,49 @@ class SettingsView extends StatelessWidget {
                           );
                         },
                       ),
-                      SettingsTile.switchTile(
-                        title: Text(S.of(context).settings_wall_mount_mode),
-                        description:
-                            Text(S.of(context).settings_wall_mount_mode_description),
-                        descriptionInlineIos: true,
-                        initialValue: model.wallMountService.autoEnabled,
-                        onToggle: model.setWakeLockAutoEnabled,
-                        activeSwitchColor:
-                            Theme.of(context).colorScheme.primary,
-                      ),
                       SettingsTile.navigation(
                         title: Text(S.of(context).licences),
                         onPressed: (context) =>
                             context.goNamed(LicencesView.routeName),
                       ),
+                    ]),
+                SettingsSection(
+                    title: Text(
+                      S.of(context).settings_wall_mount_mode,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    tiles: [
+                      SettingsTile.switchTile(
+                        title: Text(S.of(context).settings_wall_mount_mode),
+                        description: Text(
+                            S.of(context).settings_wall_mount_mode_description),
+                        descriptionInlineIos: true,
+                        initialValue: model.wallMountService.autoEnabled,
+                        onToggle: model.setWallMountModeAutoEnabled,
+                        activeSwitchColor:
+                            Theme.of(context).colorScheme.primary,
+                      ),
+                      SettingsTile.switchTile(
+                        title: Text("Face Recognition"),
+                        description: Text(
+                            "Enables automatic brightness with face recognition."),
+                        descriptionInlineIos: true,
+                        initialValue: model
+                            .wallMountService.faceRecognitionService.isEnabled,
+                        onToggle: model.setWallMountModeFaceRecognitionEnabled,
+                        enabled: model.wallMountService.faceRecognitionService
+                                .error ==
+                            null,
+                        activeSwitchColor:
+                            Theme.of(context).colorScheme.primary,
+                      ),
+                      if (model.wallMountService.faceRecognitionService.error !=
+                          null)
+                        _buildWallMountModeFaceRecognitionError(
+                            context,
+                            model
+                                .wallMountService.faceRecognitionService.error!,
+                            model),
                     ]),
                 if (kDebugMode)
                   SettingsSection(
@@ -224,5 +254,41 @@ class SettingsView extends StatelessWidget {
         },
       ),
     );
+  }
+
+  AbstractSettingsTile _buildWallMountModeFaceRecognitionError(
+      BuildContext context,
+      FaceRecognitionServiceError error,
+      SettingsViewModel model) {
+    switch (error) {
+      case FaceRecognitionServiceError.cameraPermissionNotRequested:
+        return SettingsTile.navigation(
+          title: Text("Camera permission not requested"),
+          onPressed: (context) {
+            model.requestWallMountModeFaceRecognitionCameraPermission();
+          },
+        );
+      case FaceRecognitionServiceError.cameraPermissionDenied:
+        return SettingsTile.navigation(
+          title: Text("Camera permission denied"),
+          description:
+              Text("Please grant camera permission in the system settings."),
+          onPressed: (context) {
+            model.wallMountModeFaceRecognitionCameraPermissionOpenSettings();
+          },
+        );
+      case FaceRecognitionServiceError.faceRecognitionNotSupported:
+        return SettingsTile(
+          title: Text("Face recognition not supported"),
+        );
+      case FaceRecognitionServiceError.noFrontCamera:
+        return SettingsTile(
+          title: Text("No front camera found"),
+        );
+      case FaceRecognitionServiceError.imageStreamNotSupported:
+        return SettingsTile(
+          title: Text("Image stream not supported"),
+        );
+    }
   }
 }

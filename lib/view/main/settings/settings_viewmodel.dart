@@ -3,11 +3,13 @@ import 'package:collection/collection.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart' hide ConnectionState;
 import 'package:go_router/go_router.dart';
+import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../core/database/app_database.dart';
 import '../../../core/database/items/item_type.dart';
 import '../../../core/database/rooms/rooms_table.dart';
+import '../../../core/services/face_recognition_service.dart';
 import '../../../core/services/wall_mount_service.dart';
 import '../../../locator.dart';
 import '../../../main.dart';
@@ -58,8 +60,23 @@ class SettingsViewModel extends BaseViewModel {
     setSystemOverlay(theme);
   }
 
-  void setWakeLockAutoEnabled(bool enabled) {
+  void setWallMountModeAutoEnabled(bool enabled) {
     wallMountService.setAutoEnabled(enabled);
+    notifyListeners();
+  }
+
+  void setWallMountModeFaceRecognitionEnabled(bool enabled) {
+    wallMountService.faceRecognitionService.setEnabled(enabled);
+    notifyListeners();
+  }
+
+  Future<void> requestWallMountModeFaceRecognitionCameraPermission() async {
+    await wallMountService.faceRecognitionService.requestCameraPermission();
+    notifyListeners();
+  }
+
+  Future<void> wallMountModeFaceRecognitionCameraPermissionOpenSettings() async {
+    await FaceRecognitionService.openSettings();
     notifyListeners();
   }
 

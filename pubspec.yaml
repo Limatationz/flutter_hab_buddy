@@ -14,6 +14,8 @@ dependencies:
   badges: ^3.1.2
   cached_memory_image: ^1.5.0
   cached_network_image: ^3.4.1
+  camera: ^0.11.1
+  camera_android: ^0.10.10+3
   chopper: ^8.1.0
   color_palette_generator: ^2.0.1
   connectivity_plus: ^6.1.4
@@ -54,9 +56,10 @@ dependencies:
   geolocator: ^14.0.0
   get_it: ^8.0.3
   go_router: ^15.1.2
-  hive_ce: ^2.11.2
+  google_mlkit_face_detection: ^0.13.1
+  hive_ce: ^2.11.3
   hive_ce_flutter: ^2.3.1
-  home_widget: ^0.7.0+1
+  # home_widget: ^0.7.0+1
   http_parser: ^4.1.2
   in_date_utils: ^1.2.3
   internet_connection_checker_plus: ^2.7.2
@@ -74,6 +77,7 @@ dependencies:
   quiver: ^3.2.2
   rxdart: ^0.28.0
   flutter_settings_ui: ^3.0.1
+  screen_brightness: ^2.1.3
   shimmer: ^3.0.0
   smooth_page_indicator: ^1.2.1
   sprintf: 7.0.0
@@ -117,7 +121,7 @@ dev_dependencies:
   flutter_launcher_icons: ^0.14.3
   flutter_lints: ^5.0.0
   flutter_oss_licenses: ^3.0.4
-  hive_ce_generator: ^1.9.1
+  hive_ce_generator: ^1.9.2
   json_serializable: ^6.9.5
   pubspec_dependency_sorter: ^1.0.5
   swagger_dart_code_generator:

@@ -4,10 +4,13 @@ import 'package:rxdart/rxdart.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../../locator.dart';
+import 'face_recognition_service.dart';
 
 class WallMountService {
   static const prefsKey = "wallMountAutoEnabled";
   final RxSharedPreferences _prefs = locator<RxSharedPreferences>();
+  final FaceRecognitionService faceRecognitionService = FaceRecognitionService();
+
   final BehaviorSubject<bool> _enabledSubject = BehaviorSubject.seeded(false);
 
   Stream<bool> get enabledStream => _enabledSubject.stream;
@@ -33,6 +36,8 @@ class WallMountService {
     await SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: []);
 
+    await faceRecognitionService.enable();
+
     _enabledSubject.add(true);
   }
 
@@ -43,6 +48,8 @@ class WallMountService {
     // we show the status bar and navigation bar
     await SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
         overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+
+    await faceRecognitionService.disable();
 
     _enabledSubject.add(false);
   }
