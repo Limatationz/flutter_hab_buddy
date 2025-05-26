@@ -107,14 +107,17 @@ class ConnectivityManager {
 
       // Test connections in priority order
       if (await _testLocalConnection(loginData.localLoginData, testClient)) {
+        _log.d('Local Connection Test successful');
         return;
       }
       if (loginData.hasRemoteLogin &&
           await _testRemoteConnection(loginData.remoteLoginData!, testClient)) {
+        _log.d('Remote Connection Test successful');
         return;
       }
       if (loginData.hasCloudLogin &&
           await _testCloudConnection(loginData.cloudLoginData!, testClient)) {
+        _log.d('Cloud Connection Test successful');
         return;
       }
     }

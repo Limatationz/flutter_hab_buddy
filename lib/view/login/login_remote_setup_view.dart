@@ -35,8 +35,7 @@ class LoginRemoteSetupView extends StatefulWidget {
 
 class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
   final _loginRepository = locator<LoginRepository>();
-  final _cloudFormKey = GlobalKey<FormBuilderState>();
-  final _serverFormKey = GlobalKey<FormBuilderState>();
+  final formKey = GlobalKey<FormBuilderState>();
 
   final HttpClient _testClient = HttpClient();
 
@@ -78,15 +77,14 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Expanded(
-                child: ListView(children: [
+                child: FormBuilder(
+                    key: formKey,
+                    child: ListView(children: [
               Text("Step 2: Remote Setup",
                   style: Theme.of(context).textTheme.headlineLarge),
               const Gap(largePadding),
               if (widget.type != "cloud")
-                Flexible(
-                    child: FormBuilder(
-                        key: _serverFormKey,
-                        child: Column(children: [
+                ... [
                           Text("Step 2.1: Remote Server",
                               style: Theme.of(context).textTheme.headlineLarge),
                           const Gap(largePadding),
@@ -95,7 +93,7 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
                               style: Theme.of(context).textTheme.bodyLarge),
                           const Gap(extraLargePadding),
                           FormBuilderTextField(
-                            name: "url",
+                            name: "remote_url",
                             initialValue: "https://",
                             decoration: const InputDecoration(
                               label: Text("Url"),
@@ -112,7 +110,7 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
                           ),
                           const Gap(12),
                           FormBuilderTextField(
-                            name: "port",
+                            name: "remote_port",
                             decoration: const InputDecoration(
                               label: Text("Port"),
                             ),
@@ -122,7 +120,7 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
                           ),
                           const Gap(12),
                           FormBuilderSwitch(
-                              name: "basicAuthEnabled",
+                              name: "remote_basicAuthEnabled",
                               initialValue: showRemoteBasicAuth,
                               onChanged: (newValue) {
                                 if (newValue != null) {
@@ -142,12 +140,9 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
                             text: "Connect",
                           ),
                           const Gap(extraLargePadding),
-                        ]))),
+                        ],
               if (widget.type != "remote")
-                Flexible(
-                    child: FormBuilder(
-                        key: _cloudFormKey,
-                        child: Column(children: [
+                ... [
                           Text("Step 2.2: MyOpenHAB Cloud",
                               style: Theme.of(context).textTheme.headlineLarge),
                           const Gap(largePadding),
@@ -156,7 +151,7 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
                               style: Theme.of(context).textTheme.bodyLarge),
                           const Gap(extraLargePadding),
                           FormBuilderTextField(
-                            name: "username",
+                            name: "cloud_username",
                             decoration: InputDecoration(
                               label: Text(S.of(context).username),
                             ),
@@ -169,7 +164,7 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
                           ),
                           const Gap(12),
                           FormBuilderTextField(
-                            name: "password",
+                            name: "cloud_password",
                             decoration: InputDecoration(
                               label: Text(S.of(context).password),
                               suffixIcon: IconButton(
@@ -197,8 +192,8 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
                             onPressed: _testCloudConnection,
                             text: "Connect",
                           ),
-                        ]))),
-            ])),
+                        ],
+            ]))),
             if (widget.type != "cloud") const Gap(smallPadding),
             if (widget.type != "cloud")
             _buildRemoteConnectedServer(context),
@@ -267,13 +262,13 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
   }
 
   Future<void> _testCloudConnection() async {
-    if (!_cloudFormKey.currentState!.saveAndValidate() ||
+    if (!formKey.currentState!.saveAndValidate() ||
         localLoginData == null) {
       return;
     }
-    final Map<String, dynamic> values = _cloudFormKey.currentState!.value;
-    final String username = values['username'] as String;
-    final String password = values['password'] as String;
+    final Map<String, dynamic> values = formKey.currentState!.value;
+    final String username = values['cloud_username'] as String;
+    final String password = values['cloud_password'] as String;
 
     // Test connection
     final localApi = OpenHAB.create(
@@ -332,24 +327,24 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
   }
 
   Future<void> _testRemoteConnection() async {
-    if (!_serverFormKey.currentState!.saveAndValidate() ||
+    if (!formKey.currentState!.saveAndValidate() ||
         localLoginData == null) {
       return;
     }
-    final Map<String, dynamic> values = _serverFormKey.currentState!.value;
-    final String host = values['url'] as String;
+    final Map<String, dynamic> values = formKey.currentState!.value;
+    final String host = values['remote_url'] as String;
 
-    String? port = values['port'] as String?;
+    String? port = values['remote_port'] as String?;
     if (port?.isEmpty ?? true) {
       port = null;
     }
 
-    String? basicAuthUsername = values['basicAuthUsername'] as String?;
+    String? basicAuthUsername = values['remote_basicAuthUsername'] as String?;
     if (basicAuthUsername?.isEmpty ?? true) {
       basicAuthUsername = null;
     }
 
-    String? basicAuthPassword = values['basicAuthPassword'] as String?;
+    String? basicAuthPassword = values['remote_basicAuthPassword'] as String?;
     if (basicAuthPassword?.isEmpty ?? true) {
       basicAuthPassword = null;
     }
@@ -542,7 +537,7 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
           if (showRemoteBasicAuth) const Gap(mediumPadding),
           if (showRemoteBasicAuth)
             FormBuilderTextField(
-              name: "basicAuthUsername",
+              name: "remote_basicAuthUsername",
               decoration: InputDecoration(
                 label: Text(S.of(context).username),
               ),
@@ -551,7 +546,7 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
           if (showRemoteBasicAuth) const Gap(mediumPadding),
           if (showRemoteBasicAuth)
             FormBuilderTextField(
-              name: "basicAuthPassword",
+              name: "remote_basicAuthPassword",
               decoration: InputDecoration(
                 label: Text(S.of(context).password),
                 suffixIcon: IconButton(
