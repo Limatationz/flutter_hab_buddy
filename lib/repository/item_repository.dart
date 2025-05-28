@@ -293,8 +293,9 @@ class ItemRepository {
   // TODO!!!!
   Future<void> observeEvents() async {
     await _loginRepository.loginComplete.future;
+
     _loginRepository.connectivityManager.sseStateStream
-        .withLatestFrom(_itemsStore.watchAllOhNames(),
+        .withLatestFrom(_itemsStore.watchAllOhNames().startWith([]),
             (event, names) => Tuple2(event, names))
         .listen(
       (tuple) {

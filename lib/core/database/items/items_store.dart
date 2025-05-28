@@ -20,7 +20,9 @@ class ItemsStore extends DatabaseAccessor<AppDatabase> with _$ItemsStoreMixin {
 
   ItemsStore(super.database) {
     Hive.openBox<ItemState>('itemStatesBox')
-        .then((value) => _statesBox = value);
+        .then((value) {
+      _statesBox = value;
+    });
   }
 
   MultiSelectable<Item> all() => (select(itemsTable)

@@ -19,7 +19,7 @@ class ItemStateInjector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<ItemState?>(
-        stream: itemsStore.watchStateByName(itemName).distinct(),
+        stream: itemsStore.watchStateByName(itemName),
         builder: (context, snapshot) {
           if (snapshot.data == null) {
             return const SizedBox.shrink();
