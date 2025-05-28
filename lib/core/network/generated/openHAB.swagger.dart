@@ -1,13 +1,20 @@
 // ignore_for_file: type=lint
 
+import 'package:json_annotation/json_annotation.dart';
+import 'package:json_annotation/json_annotation.dart' as json;
+import 'package:collection/collection.dart';
+import 'dart:convert';
 
 import 'openHAB.models.swagger.dart';
+import '../overrides/general.dart';
 import 'package:chopper/chopper.dart';
 
 import 'client_mapping.dart';
 import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart' show MultipartFile;
 import 'package:chopper/chopper.dart' as chopper;
+import 'openHAB.enums.swagger.dart' as enums;
 export 'openHAB.enums.swagger.dart';
 export 'openHAB.models.swagger.dart';
 

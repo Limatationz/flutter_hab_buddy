@@ -33,5 +33,21 @@ Future<void> showFavouriteSettingsDialog(
                           value: type,
                           child: Text(type.name),
                         );
+                      }).toList()),
+                  mediumGap,
+                  BaseFormDropdown<FavouriteViewMode>(
+                      name: "mode",
+                      label: "Mode",
+                      initialValue: model.viewSettings.viewMode,
+                      onChanged: (newMode) {
+                        if (newMode != null) {
+                          model.onSettingsViewModeChanged(newMode);
+                        }
+                      },
+                      items: FavouriteViewMode.values.map((type) {
+                        return DropdownMenuItem(
+                          value: type,
+                          child: Text(type.name),
+                        );
                       }).toList())
                 ]));

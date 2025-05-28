@@ -7,22 +7,25 @@ part 'favourites_view_settings.g.dart';
 class FavouriteViewSettings {
   final FavouriteViewType viewType;
   final List<FavouriteViewManualSortOrder> manualRoomsSortOrder;
+  final FavouriteViewMode viewMode;
 
-  FavouriteViewSettings(this.viewType, this.manualRoomsSortOrder)
+  FavouriteViewSettings(this.viewType, this.manualRoomsSortOrder, this.viewMode)
       : assert(
             viewType != FavouriteViewType.auto || manualRoomsSortOrder.isEmpty);
 
-  static FavouriteViewSettings get defaultAutoSettings =>
-      FavouriteViewSettings(FavouriteViewType.auto, []);
+  static FavouriteViewSettings get defaultAutoSettings => FavouriteViewSettings(
+      FavouriteViewType.auto, [], FavouriteViewMode.normal);
 
   static FavouriteViewSettings getDefaultManualSettings(
-          Map<int, Tuple2<List<String>, List<String>>> currentSortOrder) =>
+          Map<int, Tuple2<List<String>, List<String>>> currentSortOrder,
+          FavouriteViewSettings settings) =>
       FavouriteViewSettings(
           FavouriteViewType.manual,
           currentSortOrder.entries
               .map((e) => FavouriteViewManualSortOrder(
                   e.key, e.value.item1, e.value.item2))
-              .toList());
+              .toList(),
+          settings.viewMode);
 
   factory FavouriteViewSettings.fromJson(Map<String, dynamic> json) =>
       _$FavouriteViewSettingsFromJson(json);
@@ -33,16 +36,22 @@ class FavouriteViewSettings {
   FavouriteViewSettings copyWith({
     FavouriteViewType? viewType,
     List<FavouriteViewManualSortOrder>? manualRoomsSortOrder,
+    FavouriteViewMode? viewMode,
   }) =>
       FavouriteViewSettings(
           viewType ?? this.viewType,
-          manualRoomsSortOrder ??
-              this.manualRoomsSortOrder); // ignore: prefer_collection_literals
+          manualRoomsSortOrder ?? this.manualRoomsSortOrder,
+          viewMode ?? this.viewMode); // ignore: prefer_collection_literals
 }
 
 enum FavouriteViewType {
   auto,
   manual;
+}
+
+enum FavouriteViewMode {
+  compact,
+  normal;
 }
 
 @JsonSerializable()
@@ -53,6 +62,8 @@ class FavouriteViewManualSortOrder {
 
   FavouriteViewManualSortOrder(this.roomId, this.sensorNames, this.itemNames);
 
-  factory FavouriteViewManualSortOrder.fromJson(Map<String, dynamic> json) => _$FavouriteViewManualSortOrderFromJson(json);
+  factory FavouriteViewManualSortOrder.fromJson(Map<String, dynamic> json) =>
+      _$FavouriteViewManualSortOrderFromJson(json);
+
   Map<String, dynamic> toJson() => _$FavouriteViewManualSortOrderToJson(this);
 }

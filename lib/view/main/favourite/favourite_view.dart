@@ -105,11 +105,12 @@ class FavouriteView extends StatelessWidget {
                                 roomsCrossAxisCount, itemWidgetsByRoomId);
 
                             return Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: paddingContainer),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: paddingContainer),
                                 child: StaggeredGrid.count(
                                   crossAxisCount: roomsCrossAxisCount,
-                                  crossAxisSpacing: paddingScaffold,
-                                  mainAxisSpacing: paddingScaffold,
+                                  crossAxisSpacing: model.viewSettings.viewMode == FavouriteViewMode.compact ? 0 : paddingScaffold,
+                                  mainAxisSpacing: model.viewSettings.viewMode == FavouriteViewMode.compact ? 0 : paddingScaffold,
                                   children: List.generate(
                                     layout.values.expand((list) => list).length,
                                     // Total number of rooms
@@ -133,30 +134,81 @@ class FavouriteView extends StatelessWidget {
                                                   Theme.of(context).brightness)
                                           : Theme.of(context).colorScheme;
 
-                                      return StaggeredGridTile.fit(
-                                        crossAxisCellCount: 1,
-                                        child: WidgetContainer(
-                                          backgroundColor: roomColorScheme
-                                              .primary
-                                              .withValues(alpha: 0.3),
-                                          onTap: () {
-                                            model.navigateToRoom(context, room);
-                                          },
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(room.name,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .headlineMedium),
-                                              const Gap(listSpacing),
-                                              _buildItemsView(realItems,
-                                                  sensors, roomColorScheme),
-                                            ],
-                                          ),
-                                        ),
-                                      );
+                                      switch (model.viewSettings.viewMode) {
+                                        case FavouriteViewMode.compact:
+                                          return StaggeredGridTile.fit(
+                                            crossAxisCellCount: 1,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(top: 30, left: paddingScaffold),
+                                              child: Stack(
+                                              clipBehavior: Clip.none, // Damit der Chip außerhalb des Stacks sichtbar ist
+                                              children: [
+                                                // Der eigentliche Container mit etwas Margin
+                                                WidgetContainer(
+                                                  backgroundColor: roomColorScheme
+                                                      .primary
+                                                      .withValues(alpha: 0.3),
+                                                  onTap: () {
+                                                    model.navigateToRoom(
+                                                        context, room);
+                                                  },
+                                                  child:
+                                                      _buildItemsView(realItems,
+                                                          sensors, roomColorScheme),
+
+
+                                                ),
+
+                                                // Der Chip-Tag oben links, überlappend
+                                                Positioned(
+                                                  top: 0,
+                                                  left: 0,
+                                                  child: Transform.translate(
+                                                    offset: const Offset(-12, -24), // Halb über dem Container
+                                                    child: Container(
+                                                      child: Text(room.name, style:Theme.of(context)
+                                                          .textTheme
+                                                          .headlineSmall?.copyWith(color: roomColorScheme.onSurface)),
+
+                                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                                      decoration: BoxDecoration(
+                                                        color: roomColorScheme.surfaceContainer,
+                                                        borderRadius: BorderRadius.circular(8),
+                                                        border: Border.all(color: roomColorScheme.onPrimary),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ));
+                                        case FavouriteViewMode.normal:
+                                          return StaggeredGridTile.fit(
+                                            crossAxisCellCount: 1,
+                                            child: WidgetContainer(
+                                              backgroundColor: roomColorScheme
+                                                  .primary
+                                                  .withValues(alpha: 0.3),
+                                              onTap: () {
+                                                model.navigateToRoom(
+                                                    context, room);
+                                              },
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(room.name,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .headlineMedium),
+                                                  const Gap(listSpacing),
+                                                  _buildItemsView(realItems,
+                                                      sensors, roomColorScheme),
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                      }
                                     },
                                   ),
                                 ));

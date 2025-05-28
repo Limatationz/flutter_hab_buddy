@@ -15,3 +15,14 @@ extension HiveRegistrar on HiveInterface {
     registerAdapter(StateOptionAdapter());
   }
 }
+
+extension IsolatedHiveRegistrar on IsolatedHiveInterface {
+  void registerAdapters() {
+    registerAdapter(CommandDescriptionAdapter());
+    registerAdapter(CommandOptionAdapter());
+    registerAdapter(ItemStateAdapter());
+    registerAdapter(SensorHistoryDataBeanAdapter());
+    registerAdapter(StateDescriptionAdapter());
+    registerAdapter(StateOptionAdapter());
+  }
+}

@@ -35,9 +35,9 @@ class WidgetContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final widget = Material(
         elevation: elevation,
-        borderRadius:
-            const BorderRadius.all(Radius.circular(borderRadiusContainer)),
-        child: ClipRRect(
+        shape: RoundedSuperellipseBorder(
+            borderRadius: BorderRadius.circular(borderRadiusContainer)),
+        child: ClipRSuperellipse(
             borderRadius:
                 const BorderRadius.all(Radius.circular(borderRadiusContainer)),
             child: Container(

@@ -14,6 +14,7 @@ FavouriteViewSettings _$FavouriteViewSettingsFromJson(
           .map((e) =>
               FavouriteViewManualSortOrder.fromJson(e as Map<String, dynamic>))
           .toList(),
+      $enumDecode(_$FavouriteViewModeEnumMap, json['viewMode']),
     );
 
 Map<String, dynamic> _$FavouriteViewSettingsToJson(
@@ -21,11 +22,17 @@ Map<String, dynamic> _$FavouriteViewSettingsToJson(
     <String, dynamic>{
       'viewType': _$FavouriteViewTypeEnumMap[instance.viewType]!,
       'manualRoomsSortOrder': instance.manualRoomsSortOrder,
+      'viewMode': _$FavouriteViewModeEnumMap[instance.viewMode]!,
     };
 
 const _$FavouriteViewTypeEnumMap = {
   FavouriteViewType.auto: 'auto',
   FavouriteViewType.manual: 'manual',
+};
+
+const _$FavouriteViewModeEnumMap = {
+  FavouriteViewMode.compact: 'compact',
+  FavouriteViewMode.normal: 'normal',
 };
 
 FavouriteViewManualSortOrder _$FavouriteViewManualSortOrderFromJson(

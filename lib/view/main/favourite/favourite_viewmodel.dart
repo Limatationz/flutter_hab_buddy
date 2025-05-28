@@ -189,6 +189,11 @@ class FavouriteViewModel extends BaseViewModel {
         queryParameters: {'roomId': room.id.toString()});
   }
 
+  Future<void> onSettingsViewModeChanged(FavouriteViewMode viewMode) async {
+    await _settingsStore.setSettings(viewSettings.copyWith(viewMode: viewMode));
+    notifyListeners();
+  }
+
   Future<void> onSettingsViewTypeChanged(FavouriteViewType viewType,
       {bool force = false}) async {
     // check for change from auto to manual
@@ -218,7 +223,7 @@ class FavouriteViewModel extends BaseViewModel {
       } else {
         await _settingsStore.setSettings(
             FavouriteViewSettings.getDefaultManualSettings(
-                splittedItemsByRoomId));
+                splittedItemsByRoomId, viewSettings));
       }
     } else {
       await _settingsStore

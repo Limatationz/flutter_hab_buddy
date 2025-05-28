@@ -8,7 +8,7 @@ part of 'hive_adapters.dart';
 
 class ItemStateAdapter extends TypeAdapter<ItemState> {
   @override
-  final int typeId = 0;
+  final typeId = 0;
 
   @override
   ItemState read(BinaryReader reader) {
@@ -57,7 +57,7 @@ class ItemStateAdapter extends TypeAdapter<ItemState> {
 
 class SensorHistoryDataBeanAdapter extends TypeAdapter<SensorHistoryDataBean> {
   @override
-  final int typeId = 1;
+  final typeId = 1;
 
   @override
   SensorHistoryDataBean read(BinaryReader reader) {
@@ -94,7 +94,7 @@ class SensorHistoryDataBeanAdapter extends TypeAdapter<SensorHistoryDataBean> {
 
 class StateDescriptionAdapter extends TypeAdapter<StateDescription> {
   @override
-  final int typeId = 2;
+  final typeId = 2;
 
   @override
   StateDescription read(BinaryReader reader) {
@@ -143,7 +143,7 @@ class StateDescriptionAdapter extends TypeAdapter<StateDescription> {
 
 class CommandDescriptionAdapter extends TypeAdapter<CommandDescription> {
   @override
-  final int typeId = 3;
+  final typeId = 3;
 
   @override
   CommandDescription read(BinaryReader reader) {
@@ -177,7 +177,7 @@ class CommandDescriptionAdapter extends TypeAdapter<CommandDescription> {
 
 class StateOptionAdapter extends TypeAdapter<StateOption> {
   @override
-  final int typeId = 4;
+  final typeId = 4;
 
   @override
   StateOption read(BinaryReader reader) {
@@ -214,7 +214,7 @@ class StateOptionAdapter extends TypeAdapter<StateOption> {
 
 class CommandOptionAdapter extends TypeAdapter<CommandOption> {
   @override
-  final int typeId = 5;
+  final typeId = 5;
 
   @override
   CommandOption read(BinaryReader reader) {
