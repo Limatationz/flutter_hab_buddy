@@ -109,7 +109,7 @@ class WeatherRepository {
   void _createService() {
     if (_weatherService == null) {
       final lang = _getWeatherLanguage();
-      _weatherService = WeatherService(weatherApiKey, language: lang);
+      _weatherService = WeatherService(weatherApiKey, language: lang, oneCallApi: OneCallApi.api_3_0);
       _geocodingService = GeocodingService(weatherApiKey);
     }
   }

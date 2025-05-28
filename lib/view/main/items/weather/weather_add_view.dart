@@ -129,7 +129,8 @@ class _WeatherAddViewState extends State<WeatherAddView> {
             onPressed: () {
               _save().then((value) {
                 if (value) {
-                  // Navigator.of(context).pop(widget.item);
+                   Navigator.of(context).pop(widget.item);
+                   // TODO: hier crash
                 }
               });
             }),
