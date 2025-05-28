@@ -4,6 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:tuple/tuple.dart';
 import 'package:weather_icons/weather_icons.dart';
 import 'package:weather_pack/weather_pack.dart';
@@ -13,6 +14,7 @@ import '../../../../../repository/weather_repository.dart';
 import '../../../../util/general/widget_container.dart';
 import '../../../../util/weather_icons.dart';
 import '../../general/item_state_injector.dart';
+import '../../general/item_state_null_injector.dart';
 import '../../general/item_widget.dart';
 import '../../general/item_widget_factory.dart';
 import '../weather_data.dart';
@@ -67,9 +69,15 @@ class WeatherForecastWidget extends LargeWidthItemWidget {
             });
       }
     } else if (!isMock) {
-      return ItemStateInjector(
+      return ItemStateNullInjector(
           itemName: item!.ohName,
           builder: (state) {
+            if (state == null) {
+              return WidgetContainer(
+                colorScheme: colorScheme,
+                child: const Center(child: AutoSizeText("No forecast available", style: TextStyle(fontSize: 24))),
+              );
+            }
             final json = jsonDecode(state.state) as Map<String, dynamic>;
             final type = WeatherRequestType.values
                 .firstWhere((e) => e.name == json["type"]);
@@ -77,7 +85,10 @@ class WeatherForecastWidget extends LargeWidthItemWidget {
               final data = WeatherOneCall.fromJson(json["data"]);
               return _buildWidget(context, data, config!.location);
             } else {
-              return const SizedBox.shrink();
+              return WidgetContainer(
+                colorScheme: colorScheme,
+                child: const Center(child: AutoSizeText("No forecast available", style: TextStyle(fontSize: 24))),
+              );
             }
           });
     }
@@ -98,6 +109,7 @@ class WeatherForecastWidget extends LargeWidthItemWidget {
                   )
               : null,
           disableTap: disableTap,
+          colorScheme: colorScheme,
           child: LayoutBuilder(builder: (context, constraints) {
             final width = constraints.maxWidth;
             final days = width ~/ dayWidgetWidth;

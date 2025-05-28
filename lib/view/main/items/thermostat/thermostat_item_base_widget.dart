@@ -55,16 +55,16 @@ class ThermostatItemBaseWidget extends MediumWidthItemWidget {
           }
           final setpointState = snapshots.snapshot1.data;
           final double currentSetpoint =
-              setpointState != null ? double.parse(setpointState.state) : 0;
+              setpointState?.doubleState ?? 0;
 
           final currentTempState = currentTemperatureStream != null
               ? snapshots.snapshot2.data
               : null;
-          final currentTemp = currentTempState?.itemState;
+          final currentTemp = currentTempState?.doubleStateWithUnit;
 
           final currentHumidity =
               currentHumidityStream != null ? snapshots.snapshot3.data : null;
-          final humidity = currentHumidity?.itemState;
+          final humidity = currentHumidity?.doubleState;
 
           final modeState =
               modeStream != null ? snapshots.snapshot4.data : null;
@@ -94,7 +94,7 @@ class ThermostatItemBaseWidget extends MediumWidthItemWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                setpointState?.itemState ??
+                                setpointState?.doubleStateWithUnit ??
                                     (isMock ? "20.0 °C" : "-"),
                                 style:
                                     Theme.of(context).textTheme.headlineLarge,
@@ -127,7 +127,7 @@ class ThermostatItemBaseWidget extends MediumWidthItemWidget {
                                   ),
                                   const Gap(6),
                                   Text(
-                                    humidity ?? (isMock ? "54 %" : "-"),
+                                    humidity != null ? "${humidity} %" :  (isMock ? "54 %" : "-"),
                                     style:
                                         Theme.of(context).textTheme.bodyLarge,
                                   )

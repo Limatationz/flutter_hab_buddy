@@ -2,10 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:tuple/tuple.dart';
 import 'package:weather_pack/weather_pack.dart';
 
+import '../core/database/app_database.dart';
 import '../core/database/items/item_type.dart';
 import '../core/hive/state/item_state.dart';
 import '../locator.dart';
@@ -14,10 +16,17 @@ import '../view/main/items/weather/weather_data.dart';
 import 'item_repository.dart';
 
 class WeatherRepository {
+  final _logger = Logger();
   final ItemRepository itemRepository = locator<ItemRepository>();
 
   WeatherService? _weatherService;
   GeocodingService? _geocodingService;
+
+  bool _isForecastAvailable = true;
+  bool get isForecastAvailable => _isForecastAvailable;
+
+  bool _isCurrentAvailable = true;
+  bool get isCurrentAvailable => _isCurrentAvailable;
 
   final BehaviorSubject<List<WeatherData>> _requestSubject = BehaviorSubject();
 
@@ -136,11 +145,21 @@ class WeatherRepository {
     // request from api
     if (request.location.lat != null && request.location.lon != null) {
       if (request.type == WeatherRequestType.current) {
-        current =
-            await _getCurrent(request.location.lat!, request.location.lon!);
+        try {
+          current =
+          await _getCurrent(request.location.lat!, request.location.lon!);
+        } catch (e, s) {
+          _isCurrentAvailable = false;
+          _logger.e("Error on fetching current weather", error: e, stackTrace: s);
+        }
       } else {
-        oneCall =
-            await _getOneCall(request.location.lat!, request.location.lon!);
+        try {
+          oneCall =
+          await _getOneCall(request.location.lat!, request.location.lon!);
+        } catch (e, s) {
+          _isForecastAvailable = false;
+          _logger.e("Error on fetching one call weather", error: e, stackTrace: s);
+        }
       }
     } else if (request.location.city != null) {
       double lat = 0;

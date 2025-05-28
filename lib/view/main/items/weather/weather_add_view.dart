@@ -55,6 +55,7 @@ class _WeatherAddViewState extends State<WeatherAddView> {
   bool isSearchingPosition = false;
   bool hasPosition = false;
   bool isForecast = false;
+  bool isFavorite = false;
 
   @override
   void initState() {
@@ -82,6 +83,20 @@ class _WeatherAddViewState extends State<WeatherAddView> {
                   ? (isAdd ? "Add Weather Forecast" : "Edit Weather Forecast")
                   : (isAdd ? "Add Weather" : "Edit Weather")),
           actions: [
+            if (!isAdd)
+              IconButton(
+                  onPressed: () {
+                    _itemsRepository
+                        .updateFavoriteByName(
+                        widget.item!.ohName, !widget.item!.isFavorite)
+                        .then((value) => setState(() {
+                      isFavorite = !isFavorite;
+                    }));
+                  },
+                  visualDensity: VisualDensity.compact,
+                  icon: Icon(
+                      isFavorite ? LineIconsFilled.heart : LineIcons.heart)),
+            if (!isAdd) const Gap(listSpacing),
             if (!isAdd)
               IconButton(
                   onPressed: () async {
@@ -114,7 +129,7 @@ class _WeatherAddViewState extends State<WeatherAddView> {
             onPressed: () {
               _save().then((value) {
                 if (value) {
-                  Navigator.of(context).pop(widget.item);
+                  // Navigator.of(context).pop(widget.item);
                 }
               });
             }),

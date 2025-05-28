@@ -99,6 +99,7 @@ class WeatherCurrentWidget extends MediumWidthItemWidget {
                   )
               : null,
           disableTap: disableTap,
+          colorScheme: colorScheme,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,7 +157,7 @@ class WeatherCurrentWidget extends MediumWidthItemWidget {
       WeatherIcons.fromString(convertWeatherCodeToIconName(weatherCode),
           fallback: WeatherIcons.na),
       size: 36,
-      color: Theme.of(context).colorScheme.onSurface);
+      color: colorScheme.onSurface);
 
   Widget _buildSunriseSunsetWidget(BuildContext context, WeatherCurrent data) =>
       data.sunrise != null && data.sunset != null

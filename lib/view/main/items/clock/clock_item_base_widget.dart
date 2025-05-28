@@ -1,4 +1,5 @@
 import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:multiple_stream_builder/multiple_stream_builder.dart';
@@ -39,11 +40,14 @@ class ClockItemBaseWidget extends MediumWidthItemWidget {
           final time = snapshot.snapshot1.data ?? DateTime.now();
           final format = config?.format ?? snapshot.snapshot2.data;
 
-          final clockWidget = AutoHyphenatingText(
+          final clockWidget = AutoSizeText(
               DateFormat(format ?? "HH:mm").format(time),
               maxLines: 3,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleLarge);
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge
+                  ?.copyWith(fontSize: 120));
 
           return WidgetContainer(
               key: ValueKey(time.toIso8601String()),
@@ -57,9 +61,7 @@ class ClockItemBaseWidget extends MediumWidthItemWidget {
                         Text(S.current.clock,
                             style: Theme.of(context).textTheme.titleMedium),
                         const SizedBox(height: 8),
-                        const Spacer(),
-                        Align(child: clockWidget),
-                        const Spacer()
+                        Expanded(child: Center(child: clockWidget)),
                       ],
                     )
                   : Center(child: clockWidget));

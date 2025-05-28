@@ -79,5 +79,27 @@ extension FormattedState on ItemState {
     return state;
   }
 
+  double? get doubleState {
+    // regex to match numbers with optional decimal point
+    final regex = RegExp(r'(-?\d+(?:[\.,]\d+)?)');
+
+    final match = regex.firstMatch(state);
+    if (match != null) {
+      // Ersetze , durch . für Dart-kompatibles Parsing
+      return double.tryParse(match.group(0)!.replaceAll(',', '.'));
+    }
+
+    return null;
+  }
+
+  String? get doubleStateWithUnit {
+    final doubleValue = doubleState;
+
+    if (doubleValue != null && ohUnitSymbol != null) {
+      return "$doubleValue $ohUnitSymbol";
+    }
+    return doubleValue?.toString();
+  }
+
   bool get isReadOnly => stateDescription?.readOnly ?? false;
 }

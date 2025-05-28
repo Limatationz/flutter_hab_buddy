@@ -368,7 +368,7 @@ class RoomsView extends StatelessWidget {
                                     spacing: listSpacing,
                                     runSpacing: listSpacing,
                                     children: sensors),
-                          if (sensors.isNotEmpty && items.isNotEmpty)
+                          if (sensors.isNotEmpty)
                             Padding(
                                 padding: const EdgeInsets.symmetric(
                                     vertical: smallListSpacing),
