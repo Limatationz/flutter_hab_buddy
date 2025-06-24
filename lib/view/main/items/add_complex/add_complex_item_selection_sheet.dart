@@ -55,7 +55,7 @@ class AddComplexItemSelectionSheet extends StatelessWidget {
                                             context, e.item1, roomId)
                                         .then((value) {
                                       if (value) {
-                                        context.pop();
+                                        Navigator.of(context).pop();
                                       }
                                     }),
                                 child: e.item2)))

@@ -4,7 +4,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:tuple/tuple.dart';
 import 'package:weather_icons/weather_icons.dart';
 import 'package:weather_pack/weather_pack.dart';
@@ -13,7 +12,6 @@ import '../../../../../../locator.dart';
 import '../../../../../repository/weather_repository.dart';
 import '../../../../util/general/widget_container.dart';
 import '../../../../util/weather_icons.dart';
-import '../../general/item_state_injector.dart';
 import '../../general/item_state_null_injector.dart';
 import '../../general/item_widget.dart';
 import '../../general/item_widget_factory.dart';
@@ -75,7 +73,14 @@ class WeatherForecastWidget extends LargeWidthItemWidget {
             if (state == null) {
               return WidgetContainer(
                 colorScheme: colorScheme,
-                child: const Center(child: AutoSizeText("No forecast available", style: TextStyle(fontSize: 24))),
+                onLongTap: !isMock
+                    ? () => onLongTap(
+                          context,
+                        )
+                    : null,
+                child: const Center(
+                    child: AutoSizeText("No forecast available",
+                        style: TextStyle(fontSize: 24))),
               );
             }
             final json = jsonDecode(state.state) as Map<String, dynamic>;
@@ -87,7 +92,14 @@ class WeatherForecastWidget extends LargeWidthItemWidget {
             } else {
               return WidgetContainer(
                 colorScheme: colorScheme,
-                child: const Center(child: AutoSizeText("No forecast available", style: TextStyle(fontSize: 24))),
+                onLongTap: !isMock
+                    ? () => onLongTap(
+                          context,
+                        )
+                    : null,
+                child: const Center(
+                    child: AutoSizeText("No forecast available",
+                        style: TextStyle(fontSize: 24))),
               );
             }
           });

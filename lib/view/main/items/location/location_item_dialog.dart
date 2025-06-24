@@ -84,11 +84,11 @@ class _LocationItemDialogState extends State<LocationItemDialog> {
                                                     color: widget.colorScheme
                                                         .onSurface)),
                                       if (location.nominatimResponse
-                                              ?.displayName?.isNotEmpty ==
+                                              ?.name?.isNotEmpty ==
                                           true)
                                         Text(
                                             location.nominatimResponse!
-                                                .displayName!,
+                                                .name!,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyLarge

@@ -9,7 +9,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hive_ce_flutter/adapters.dart';
 import 'package:logging/logging.dart';
-import 'package:nominatim_flutter/nominatim_flutter.dart';
 
 import 'core/hive/hive_registrar.g.dart';
 import 'core/routing/router.dart';
@@ -27,9 +26,6 @@ void main() async {
   // Hive
   await Hive.initFlutter();
   Hive.registerAdapters();
-
-  // Map
-  NominatimFlutter.instance.configureDioCache();
 
   _setupLogging();
   setupLocator();
