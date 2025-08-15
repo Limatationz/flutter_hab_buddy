@@ -5,7 +5,6 @@ import 'package:flutter/material.dart' hide ConnectionState;
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../core/services/face_recognition_service.dart';

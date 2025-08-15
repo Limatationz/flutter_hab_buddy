@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:intl/intl_standalone.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:logger/logger.dart';
 import 'package:geocoding/geocoding.dart';

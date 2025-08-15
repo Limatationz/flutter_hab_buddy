@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:alphabet_list_view/alphabet_list_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,6 @@ import '../../../core/database/app_database.dart';
 import '../../../generated/l10n.dart';
 import '../../../util/icons/icons.dart';
 import '../../util/constants.dart';
-import '../../util/general/bar_bottom_sheet.dart';
 import '../../util/general/base_alphabet_list_view.dart';
 import '../../util/general/headline_padding_box.dart';
 import 'add/inbox_entry_add_view.dart';

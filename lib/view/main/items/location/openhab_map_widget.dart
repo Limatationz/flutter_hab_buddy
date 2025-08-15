@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_map_cache/flutter_map_cache.dart';
 import 'package:flutter_map_marker_popup_plus/extension_api.dart';
 import 'package:flutter_map_marker_popup_plus/flutter_map_marker_popup_plus.dart';
-import 'package:http_cache_hive_store/http_cache_hive_store.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -52,13 +50,12 @@ class OpenhabMapWidget extends StatelessWidget {
               children: [
                 TileLayer(
                   urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  tileProvider: CachedTileProvider(
+                  userAgentPackageName: "de.limatation.openhab",
+                  tileProvider: NetworkTileProvider(
                     // maxStale keeps the tile cached for the given Duration and
                     // tries to revalidate the next time it gets requested
-                    maxStale: const Duration(days: 30),
-                    store: HiveCacheStore(
-                      future.data!,
-                      hiveBoxName: 'flutter_map_cache',
+                    cachingProvider: BuiltInMapCachingProvider.getOrCreateInstance(
+                      maxCacheSize: 10000000, // 10 MB is the default
                     ),
                   ),
                 ),

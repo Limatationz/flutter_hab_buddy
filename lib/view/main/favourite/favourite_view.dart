@@ -181,14 +181,6 @@ class FavouriteView extends StatelessWidget {
                                                             -12, -24),
                                                         // Halb über dem Container
                                                         child: Container(
-                                                          child: Text(room.name,
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .headlineSmall
-                                                                  ?.copyWith(
-                                                                      color: roomColorScheme
-                                                                          .onSurface)),
                                                           padding:
                                                               const EdgeInsets
                                                                   .symmetric(
@@ -206,6 +198,14 @@ class FavouriteView extends StatelessWidget {
                                                                 color: roomColorScheme
                                                                     .onPrimary),
                                                           ),
+                                                          child: Text(room.name,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .headlineSmall
+                                                                  ?.copyWith(
+                                                                      color: roomColorScheme
+                                                                          .onSurface)),
                                                         ),
                                                       ),
                                                     ),

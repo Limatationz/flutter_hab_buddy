@@ -1,14 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart'
-    show ModalScrollController;
 
 import '../../../../core/database/app_database.dart';
 import '../../../../core/database/items/item_type.dart';
 import '../../../../core/database/items/items_table.dart';
 import '../../../../core/database/items/oh_item_type.dart';
-import '../../../util/general/bar_bottom_sheet.dart';
 import '../../../util/general/base_item_dialog.dart';
 import '../clock/clock_add_view.dart';
 import '../clock/clock_item_widget.dart';

@@ -7,7 +7,6 @@ import 'package:rxdart/rxdart.dart';
 import 'package:tuple/tuple.dart';
 import 'package:weather_pack/weather_pack.dart';
 
-import '../core/database/app_database.dart';
 import '../core/database/items/item_type.dart';
 import '../core/hive/state/item_state.dart';
 import '../locator.dart';

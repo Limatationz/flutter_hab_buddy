@@ -3,7 +3,6 @@ import 'package:collection/collection.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart' hide ConnectionState;
 import 'package:go_router/go_router.dart';
-import 'package:google_mlkit_face_detection/google_mlkit_face_detection.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../core/database/app_database.dart';
