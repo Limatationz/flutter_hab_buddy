@@ -5,6 +5,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_client_sse/constants/sse_request_type_enum.dart';
 import 'package:flutter_client_sse/flutter_client_sse.dart';
+import 'package:flutter_client_sse/retry_options.dart';
 import 'package:logger/logger.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:http/io_client.dart' as http_io;
@@ -263,6 +264,13 @@ class ConnectivityManager {
               basicAuthPassword,
             )
           : {},
+      retryOptions: RetryOptions(
+        maxRetry: 10,
+        maxRetryTime: 10000,
+        limitReachedCallback: () async {
+          _log.w("Reached retry limit");
+        },
+      ),
     );
 
     _sseLastConnection.add(DateTime.now());
