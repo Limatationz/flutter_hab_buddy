@@ -58,7 +58,10 @@ class AppDatabase extends _$AppDatabase {
         onCreate: (Migrator m) async {
           await m.createAll();
         },
-        onUpgrade: (Migrator m, int from, int to) async {});
+        onUpgrade: (Migrator m, int from, int to) async {
+          // generate migration with:
+          // fvm dart run drift_dev make-migrations
+        });
   }
 
   Future<void> initScores() async {

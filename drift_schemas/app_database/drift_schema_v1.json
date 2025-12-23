@@ -1,0 +1,510 @@
+{
+  "_meta": {
+    "description": "This file contains a serialized version of schema entities for drift.",
+    "version": "1.3.0"
+  },
+  "options": {
+    "store_date_time_values_as_text": false
+  },
+  "entities": [
+    {
+      "id": 0,
+      "references": [],
+      "type": "table",
+      "data": {
+        "name": "rooms_table",
+        "was_declared_in_moor": false,
+        "columns": [
+          {
+            "name": "id",
+            "getter_name": "id",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "defaultConstraints": "PRIMARY KEY AUTOINCREMENT",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "PRIMARY KEY AUTOINCREMENT"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              "auto-increment"
+            ]
+          },
+          {
+            "name": "name",
+            "getter_name": "name",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "description",
+            "getter_name": "description",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "icon",
+            "getter_name": "icon",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const IconDataConverter()",
+              "dart_type_name": "IconData"
+            }
+          },
+          {
+            "name": "color",
+            "getter_name": "color",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "level",
+            "getter_name": "level",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "sort_key",
+            "getter_name": "sortKey",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "items_sort_option",
+            "getter_name": "itemsSortOption",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const EnumNameConverter<RoomItemsSortOption>(RoomItemsSortOption.values)",
+              "dart_type_name": "RoomItemsSortOption"
+            }
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": []
+      }
+    },
+    {
+      "id": 1,
+      "references": [
+        0
+      ],
+      "type": "table",
+      "data": {
+        "name": "items_table",
+        "was_declared_in_moor": false,
+        "columns": [
+          {
+            "name": "type",
+            "getter_name": "type",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const EnumNameConverter<ItemType>(ItemType.values)",
+              "dart_type_name": "ItemType"
+            }
+          },
+          {
+            "name": "oh_type",
+            "getter_name": "ohType",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const EnumNameConverter<OhItemType>(OhItemType.values)",
+              "dart_type_name": "OhItemType"
+            }
+          },
+          {
+            "name": "oh_name",
+            "getter_name": "ohName",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "oh_label",
+            "getter_name": "ohLabel",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "custom_label",
+            "getter_name": "customLabel",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "oh_category",
+            "getter_name": "ohCategory",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "oh_tags",
+            "getter_name": "ohTags",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const StringListConverter()",
+              "dart_type_name": "List<String>"
+            }
+          },
+          {
+            "name": "oh_groups",
+            "getter_name": "ohGroups",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const StringListConverter()",
+              "dart_type_name": "List<String>"
+            }
+          },
+          {
+            "name": "room_id",
+            "getter_name": "roomId",
+            "moor_type": "int",
+            "nullable": true,
+            "customConstraints": null,
+            "defaultConstraints": "REFERENCES rooms_table (id)",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "REFERENCES rooms_table (id)"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [
+              {
+                "foreign_key": {
+                  "to": {
+                    "table": "rooms_table",
+                    "column": "id"
+                  },
+                  "initially_deferred": false,
+                  "on_update": null,
+                  "on_delete": null
+                }
+              }
+            ]
+          },
+          {
+            "name": "is_favorite",
+            "getter_name": "isFavorite",
+            "moor_type": "bool",
+            "nullable": false,
+            "customConstraints": null,
+            "defaultConstraints": "CHECK (\"is_favorite\" IN (0, 1))",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "CHECK (\"is_favorite\" IN (0, 1))"
+            },
+            "default_dart": "const CustomExpression('0')",
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "icon",
+            "getter_name": "icon",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const IconDataConverter()",
+              "dart_type_name": "IconData"
+            }
+          },
+          {
+            "name": "score",
+            "getter_name": "score",
+            "moor_type": "double",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": "const CustomExpression('0.0')",
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "new_score",
+            "getter_name": "newScore",
+            "moor_type": "double",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": "const CustomExpression('0.0')",
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "manual_order_index",
+            "getter_name": "manualOrderIndex",
+            "moor_type": "int",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": "const CustomExpression('0')",
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "complex_json",
+            "getter_name": "complexJson",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const JsonConverter()",
+              "dart_type_name": "Map<String, dynamic>?"
+            }
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [],
+        "explicit_pk": [
+          "oh_name"
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "references": [],
+      "type": "table",
+      "data": {
+        "name": "rules_table",
+        "was_declared_in_moor": false,
+        "columns": [
+          {
+            "name": "uid",
+            "getter_name": "uid",
+            "moor_type": "string",
+            "nullable": false,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "name",
+            "getter_name": "name",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          },
+          {
+            "name": "tags",
+            "getter_name": "tags",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const StringListConverter()",
+              "dart_type_name": "List<String>"
+            }
+          },
+          {
+            "name": "status",
+            "getter_name": "status",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const StatusDTOConverter()",
+              "dart_type_name": "RuleStatusInfo?"
+            }
+          },
+          {
+            "name": "actions",
+            "getter_name": "actions",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const ActionsDTOListConverter()",
+              "dart_type_name": "List<ActionDTO>?"
+            }
+          },
+          {
+            "name": "conditions",
+            "getter_name": "conditions",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const ConditionDtoListConverter()",
+              "dart_type_name": "List<ConditionDTO>?"
+            }
+          },
+          {
+            "name": "configuration",
+            "getter_name": "configuration",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const JsonConverter()",
+              "dart_type_name": "Map<String, dynamic>?"
+            }
+          },
+          {
+            "name": "config_descriptions",
+            "getter_name": "configDescriptions",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const ConfigurationDtoListConverter()",
+              "dart_type_name": "List<ConfigDescriptionParameterDTO>?"
+            }
+          },
+          {
+            "name": "triggers",
+            "getter_name": "triggers",
+            "moor_type": "string",
+            "nullable": true,
+            "customConstraints": null,
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": [],
+            "type_converter": {
+              "dart_expr": "const RuleTriggerListConverter()",
+              "dart_type_name": "List<RuleTrigger>?"
+            }
+          },
+          {
+            "name": "editable",
+            "getter_name": "editable",
+            "moor_type": "bool",
+            "nullable": false,
+            "customConstraints": null,
+            "defaultConstraints": "CHECK (\"editable\" IN (0, 1))",
+            "dialectAwareDefaultConstraints": {
+              "sqlite": "CHECK (\"editable\" IN (0, 1))"
+            },
+            "default_dart": null,
+            "default_client_dart": null,
+            "dsl_features": []
+          }
+        ],
+        "is_virtual": false,
+        "without_rowid": false,
+        "constraints": [],
+        "explicit_pk": [
+          "uid"
+        ]
+      }
+    }
+  ],
+  "fixed_sql": [
+    {
+      "name": "rooms_table",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"rooms_table\" (\"id\" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, \"name\" TEXT NOT NULL, \"description\" TEXT NULL, \"icon\" TEXT NULL, \"color\" TEXT NULL, \"level\" INTEGER NULL, \"sort_key\" INTEGER NOT NULL, \"items_sort_option\" TEXT NOT NULL);"
+        }
+      ]
+    },
+    {
+      "name": "items_table",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"items_table\" (\"type\" TEXT NULL, \"oh_type\" TEXT NOT NULL, \"oh_name\" TEXT NOT NULL, \"oh_label\" TEXT NOT NULL, \"custom_label\" TEXT NULL, \"oh_category\" TEXT NULL, \"oh_tags\" TEXT NULL, \"oh_groups\" TEXT NULL, \"room_id\" INTEGER NULL REFERENCES rooms_table (id), \"is_favorite\" INTEGER NOT NULL DEFAULT 0 CHECK (\"is_favorite\" IN (0, 1)), \"icon\" TEXT NULL, \"score\" REAL NOT NULL DEFAULT 0.0, \"new_score\" REAL NOT NULL DEFAULT 0.0, \"manual_order_index\" INTEGER NOT NULL DEFAULT 0, \"complex_json\" TEXT NULL, PRIMARY KEY (\"oh_name\"));"
+        }
+      ]
+    },
+    {
+      "name": "rules_table",
+      "sql": [
+        {
+          "dialect": "sqlite",
+          "sql": "CREATE TABLE IF NOT EXISTS \"rules_table\" (\"uid\" TEXT NOT NULL, \"name\" TEXT NULL, \"tags\" TEXT NULL, \"status\" TEXT NULL, \"actions\" TEXT NULL, \"conditions\" TEXT NULL, \"configuration\" TEXT NULL, \"config_descriptions\" TEXT NULL, \"triggers\" TEXT NULL, \"editable\" INTEGER NOT NULL CHECK (\"editable\" IN (0, 1)), PRIMARY KEY (\"uid\"));"
+        }
+      ]
+    }
+  ]
+}

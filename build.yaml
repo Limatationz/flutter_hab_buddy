@@ -10,6 +10,9 @@ targets:
         enabled: true
         generate_for:
           - lib/core/database/**
+        options:
+          databases:
+            app_database: lib/core/database/app_database.dart
       chopper_generator:
         enabled: true
         generate_for:
