@@ -124,6 +124,9 @@ void main() async {
             supportedLocales: S.delegate.supportedLocales,
             theme: theme,
             darkTheme: darkTheme,
+            builder: (_, builder) => Overlay(
+              initialEntries: [OverlayEntry(builder: (_) => builder ?? const SizedBox.shrink())], // https://github.com/Stacked-Org/stacked/issues/1178
+            ),
           );
         });
   }));
