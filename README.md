@@ -1,4 +1,4 @@
-# flutter_openhab
+# flutter_hab_buddy
 
 A new Flutter project.
 

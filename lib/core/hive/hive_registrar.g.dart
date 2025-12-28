@@ -3,7 +3,7 @@
 // Check in to version control
 
 import 'package:hive_ce/hive.dart';
-import 'package:flutter_openhab/core/hive/hive_adapters.dart';
+import '../../core/hive/hive_adapters.dart';
 
 extension HiveRegistrar on HiveInterface {
   void registerAdapters() {

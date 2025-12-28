@@ -1,4 +1,4 @@
-package de.limatation.openhab
+package de.limatation.hab_buddy
 
 import io.flutter.embedding.android.FlutterActivity
 class MainActivity: FlutterActivity() {

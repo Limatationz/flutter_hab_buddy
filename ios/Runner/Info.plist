@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Flutter Openhab</string>
+	<string>HABBuddy</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -15,7 +15,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>flutter_openhab</string>
+	<string>flutter_hab_buddy</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -30,6 +30,8 @@
 	<array>
 		<string>_openhab._tcp</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>Camera permission is required for face detection in wall mount mode.</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>This app requires access to local network services to discover OpenHAB servers.</string>
 	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
@@ -60,7 +62,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSCameraUsageDescription</key>
-    <string>Camera permission is required for face detection in wall mount mode.</string>
 </dict>
 </plist>

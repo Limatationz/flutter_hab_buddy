@@ -113,7 +113,7 @@ void main() async {
 
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
-            title: "OpenHAB Home",
+            title: "HABBuddy",
             routerConfig: appRouter,
             localizationsDelegates: const [
               S.delegate,
@@ -125,7 +125,9 @@ void main() async {
             theme: theme,
             darkTheme: darkTheme,
             builder: (_, builder) => Overlay(
-              initialEntries: [OverlayEntry(builder: (_) => builder ?? const SizedBox.shrink())], // https://github.com/Stacked-Org/stacked/issues/1178
+              initialEntries: [
+                OverlayEntry(builder: (_) => builder ?? const SizedBox.shrink())
+              ], // https://github.com/Stacked-Org/stacked/issues/1178
             ),
           );
         });

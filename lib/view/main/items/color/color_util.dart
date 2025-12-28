@@ -6,7 +6,7 @@ import 'package:logger/logger.dart';
 import '../../../../generated/l10n.dart';
 import '../../../../util/icons/icons.dart';
 
-class OpenhabColorUtil {
+class AppColorUtil {
   static HsbColor parseColorState(String state) {
     final splitted = state.split(',');
     if (splitted.length == 3) {

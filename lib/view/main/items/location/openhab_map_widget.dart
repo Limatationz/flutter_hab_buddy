@@ -50,7 +50,7 @@ class OpenhabMapWidget extends StatelessWidget {
               children: [
                 TileLayer(
                   urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  userAgentPackageName: "de.limatation.openhab",
+                  userAgentPackageName: "de.limatation.flutter_hab_buddy",
                   tileProvider: NetworkTileProvider(
                     // maxStale keeps the tile cached for the given Duration and
                     // tries to revalidate the next time it gets requested

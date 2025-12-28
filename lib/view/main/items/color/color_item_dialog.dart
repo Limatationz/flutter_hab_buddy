@@ -59,7 +59,7 @@ class _ColorItemDialogState extends State<ColorItemDialog> {
     return ItemStateInjector(
         itemName: widget.itemName,
         builder: (itemState) {
-          final color = OpenhabColorUtil.parseColorState(itemState.state);
+          final color = AppColorUtil.parseColorState(itemState.state);
           return Column(children: [
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text(S.of(context).color,
@@ -71,7 +71,7 @@ class _ColorItemDialogState extends State<ColorItemDialog> {
                 width: 48,
                 onSelect: !itemState.isReadOnly
                     ? () async {
-                        final newColor = await OpenhabColorUtil.showColorPicker(
+                        final newColor = await AppColorUtil.showColorPicker(
                           context: context,
                           initialColor: color.toColor(),
                           colorScheme: widget.colorScheme,

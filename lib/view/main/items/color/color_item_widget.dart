@@ -26,7 +26,7 @@ class ColorItemWidget extends SmallItemWidget {
     return ItemStateInjector(
         itemName: item!.ohName,
         builder: (state) {
-          final colorValue = OpenhabColorUtil.parseColorState(state.state);
+          final colorValue = AppColorUtil.parseColorState(state.state);
           final dimmerState = colorValue.brightness.toDouble();
           final isOn = dimmerState > 0;
           return DimmableWidgetContainer(

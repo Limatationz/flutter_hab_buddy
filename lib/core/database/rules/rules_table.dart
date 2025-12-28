@@ -66,5 +66,5 @@ extension RuleDBExtension on Rule {
   }
 }
 
-const ruleAppTag = "openHabCompanionApp";
-const autoDeleteTag = "openHabCompanionAppAutoDeleteAfterDone";
+const ruleAppTag = "HABBuddy";
+const autoDeleteTag = "HABBuddyAutoDeleteAfterDone";
