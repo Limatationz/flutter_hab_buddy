@@ -121,6 +121,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "addRoomHeadline": MessageLookupByLibrary.simpleMessage("Add Room"),
     "addTrigger": MessageLookupByLibrary.simpleMessage("Add Trigger"),
     "and": MessageLookupByLibrary.simpleMessage("And"),
+    "app_feedback_type_bug": MessageLookupByLibrary.simpleMessage("Bug"),
+    "app_feedback_type_feature": MessageLookupByLibrary.simpleMessage(
+      "Feature",
+    ),
+    "app_feedback_type_translation": MessageLookupByLibrary.simpleMessage(
+      "Translation",
+    ),
     "automations": MessageLookupByLibrary.simpleMessage("Automations"),
     "automationsWith": m0,
     "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
@@ -227,6 +234,16 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "errorButtonHome": MessageLookupByLibrary.simpleMessage("Go to Home"),
     "errorHeadline": MessageLookupByLibrary.simpleMessage("An error occurred"),
+    "feedback": MessageLookupByLibrary.simpleMessage("Feedback"),
+    "feedback_choose_type_dialog": MessageLookupByLibrary.simpleMessage(
+      "What type of feedback do you want to send?",
+    ),
+    "feedback_result_error": MessageLookupByLibrary.simpleMessage(
+      "An error occurred while sending the feedback. Please try again later.",
+    ),
+    "feedback_result_success": MessageLookupByLibrary.simpleMessage(
+      "Feedback successfully sent.",
+    ),
     "feelsLike": m34,
     "finish": MessageLookupByLibrary.simpleMessage("Finish"),
     "icon": MessageLookupByLibrary.simpleMessage("Icon"),

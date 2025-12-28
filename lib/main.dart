@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:auto_hyphenating_text/auto_hyphenating_text.dart';
 import 'package:dynamic_color/dynamic_color.dart';
+import 'package:feedback_github/feedback_github.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -111,23 +112,25 @@ void main() async {
 
           setSystemOverlay(currentTheme);
 
-          return MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            title: "HABBuddy",
-            routerConfig: appRouter,
-            localizationsDelegates: const [
-              S.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: S.delegate.supportedLocales,
-            theme: theme,
-            darkTheme: darkTheme,
-            builder: (_, builder) => Overlay(
-              initialEntries: [
-                OverlayEntry(builder: (_) => builder ?? const SizedBox.shrink())
-              ], // https://github.com/Stacked-Org/stacked/issues/1178
+          return BetterFeedback(
+            child: MaterialApp.router(
+              debugShowCheckedModeBanner: false,
+              title: "HABBuddy",
+              routerConfig: appRouter,
+              localizationsDelegates: const [
+                S.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: S.delegate.supportedLocales,
+              theme: theme,
+              darkTheme: darkTheme,
+              builder: (_, builder) => Overlay(
+                initialEntries: [
+                  OverlayEntry(builder: (_) => builder ?? const SizedBox.shrink())
+                ], // https://github.com/Stacked-Org/stacked/issues/1178
+              ),
             ),
           );
         });

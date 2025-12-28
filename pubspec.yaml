@@ -4,7 +4,7 @@ version: 1.0.0+1
 publish_to: none
 
 environment:
-  sdk: ">=3.2.2 <4.0.0"
+  sdk: ">=3.10.0 <4.0.0"
 
 dependencies:
   adaptive_theme: ^3.7.2
@@ -25,7 +25,7 @@ dependencies:
   cupertino_http: ^2.4.0
   custom_refresh_indicator: ^4.0.1
   dart_date: ^1.5.3
-  device_info_plus: ^12.3.0
+  device_info_plus: ^11.2.1 # after upgrade of feedback_github
   dio: ^5.9.0
   drift: ^2.30.0
   drift_flutter: ^0.2.8
@@ -33,7 +33,9 @@ dependencies:
   dynamic_color: ^1.8.1
   equatable: ^2.0.7
   expandable_page_view: ^1.2.0
+  feedback_github: ^1.2.3
   fetch_client: ^1.2.0
+  firebase_storage: ^13.0.5
   fl_chart: ^1.1.1
   flex_color_picker: ^3.8.0
   flutter:

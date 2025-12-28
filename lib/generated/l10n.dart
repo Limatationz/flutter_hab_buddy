@@ -1858,6 +1858,71 @@ class S {
       args: [],
     );
   }
+
+  /// `Feedback`
+  String get feedback {
+    return Intl.message('Feedback', name: 'feedback', desc: '', args: []);
+  }
+
+  /// `Feedback successfully sent.`
+  String get feedback_result_success {
+    return Intl.message(
+      'Feedback successfully sent.',
+      name: 'feedback_result_success',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occurred while sending the feedback. Please try again later.`
+  String get feedback_result_error {
+    return Intl.message(
+      'An error occurred while sending the feedback. Please try again later.',
+      name: 'feedback_result_error',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `What type of feedback do you want to send?`
+  String get feedback_choose_type_dialog {
+    return Intl.message(
+      'What type of feedback do you want to send?',
+      name: 'feedback_choose_type_dialog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bug`
+  String get app_feedback_type_bug {
+    return Intl.message(
+      'Bug',
+      name: 'app_feedback_type_bug',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Feature`
+  String get app_feedback_type_feature {
+    return Intl.message(
+      'Feature',
+      name: 'app_feedback_type_feature',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Translation`
+  String get app_feedback_type_translation {
+    return Intl.message(
+      'Translation',
+      name: 'app_feedback_type_translation',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

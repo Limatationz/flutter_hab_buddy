@@ -410,5 +410,12 @@
   "wallMountModeDisabledSnackbar": "Wall Mount Mode disabled",
   "disableWallMoundModeTooltip": "Disable Wall Mount Mode",
   "enableWallMountModeTooltip": "Enable Wall Mount Mode",
-  "editRoomHeadline": "Edit Room"
+  "editRoomHeadline": "Edit Room",
+  "feedback": "Feedback",
+  "feedback_result_success": "Feedback successfully sent.",
+  "feedback_result_error": "An error occurred while sending the feedback. Please try again later.",
+  "feedback_choose_type_dialog": "What type of feedback do you want to send?",
+  "app_feedback_type_bug": "Bug",
+  "app_feedback_type_feature": "Feature",
+  "app_feedback_type_translation": "Translation"
 }
