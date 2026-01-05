@@ -221,6 +221,11 @@ class SettingsView extends StatelessWidget {
                         });
                       },
                     ),
+                    SettingsTile.switchTile(
+                      title: Text(S.of(context).settings_send_crash_reports),
+                      initialValue: model.isCrashlyticsEnabled,
+                      onToggle: model.onCrashlyticsSwitchToggled,
+                    ),
                   ],
                 ),
                 SettingsSection(
@@ -240,9 +245,9 @@ class SettingsView extends StatelessWidget {
                       activeSwitchColor: Theme.of(context).colorScheme.primary,
                     ),
                     SettingsTile.switchTile(
-                      title: Text("Face Recognition"),
+                      title: Text(S.of(context).settings_face_recognition),
                       description: Text(
-                        "Enables automatic brightness with face recognition.",
+                        S.of(context).settings_face_recognition_description,
                       ),
                       descriptionInlineIos: true,
                       initialValue: model

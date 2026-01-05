@@ -2,6 +2,7 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:collection/collection.dart';
 import 'package:drift/drift.dart';
 import 'package:feedback_github/feedback_github.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart' hide ConnectionState;
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
@@ -107,6 +108,15 @@ class SettingsViewModel extends BaseViewModel {
       queryParameters: {'type': "fromSettings"},
     );
     _automationRepository.fetchData();
+  }
+
+  bool get isCrashlyticsEnabled =>
+      FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled;
+
+  Future<void> onCrashlyticsSwitchToggled(bool newValue) {
+    return FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
+      newValue,
+    );
   }
 
   Future<void> logout(BuildContext context) async {

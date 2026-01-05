@@ -417,5 +417,8 @@
   "feedback_choose_type_dialog": "What type of feedback do you want to send?",
   "app_feedback_type_bug": "Bug",
   "app_feedback_type_feature": "Feature",
-  "app_feedback_type_translation": "Translation"
+  "app_feedback_type_translation": "Translation",
+  "settings_face_recognition": "Face Recognition",
+  "settings_face_recognition_description": "Automatically controls the brightness of the screen whether a face is recognized (on) or not (dimmed).",
+  "settings_send_crash_reports": "Send crash reports"
 }

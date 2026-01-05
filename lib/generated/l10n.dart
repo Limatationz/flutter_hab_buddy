@@ -1923,6 +1923,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Face Recognition`
+  String get settings_face_recognition {
+    return Intl.message(
+      'Face Recognition',
+      name: 'settings_face_recognition',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Automatically controls the brightness of the screen whether a face is recognized (on) or not (dimmed).`
+  String get settings_face_recognition_description {
+    return Intl.message(
+      'Automatically controls the brightness of the screen whether a face is recognized (on) or not (dimmed).',
+      name: 'settings_face_recognition_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Send crash reports`
+  String get settings_send_crash_reports {
+    return Intl.message(
+      'Send crash reports',
+      name: 'settings_send_crash_reports',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -398,6 +398,15 @@ class MessageLookup extends MessageLookupByLibrary {
     "settings_connection_update_title": MessageLookupByLibrary.simpleMessage(
       "Last Update",
     ),
+    "settings_face_recognition": MessageLookupByLibrary.simpleMessage(
+      "Face Recognition",
+    ),
+    "settings_face_recognition_description": MessageLookupByLibrary.simpleMessage(
+      "Automatically controls the brightness of the screen whether a face is recognized (on) or not (dimmed).",
+    ),
+    "settings_send_crash_reports": MessageLookupByLibrary.simpleMessage(
+      "Send crash reports",
+    ),
     "settings_theme": MessageLookupByLibrary.simpleMessage("Theme"),
     "settings_wall_mount_mode": MessageLookupByLibrary.simpleMessage(
       "Wall Mount Mode",
