@@ -1,0 +1,31 @@
+default_platform(:android)
+
+platform :android do
+  desc "Build and upload a new release to Google Play Internal track"
+  lane :deploy do
+    # 1. Build the Android App Bundle (AAB)
+    # We use a gradle command to ensure we are using the Flutter-generated build
+    sh "cd ../.. && fvm flutter build appbundle --release --no-tree-shake-icons"
+
+    # 2. Upload to Google Play
+    upload_to_play_store(
+      track: "internal",        # Upload to Internal Testing track first
+      aab: "../build/app/outputs/bundle/release/app-release.aab",
+      skip_upload_metadata: true, # Set to false later when you want to sync descriptions/images
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  desc "Upload a pre build release to Google Play Internal track"
+  lane :deploy_only do
+    upload_to_play_store(
+      track: "internal",        # Upload to Internal Testing track first
+      release_status: "draft", # Remove after publish
+      aab: "../build/app/outputs/bundle/release/app-release.aab",
+      skip_upload_metadata: true, # Set to false later when you want to sync descriptions/images
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+end
