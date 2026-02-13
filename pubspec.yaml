@@ -138,6 +138,7 @@ flutter:
     - res/
     - res/fonts/
     - res/images/
+    - res/images/workswith-openHAB-logo/
 
   fonts:
     - family: LineIconsFilled

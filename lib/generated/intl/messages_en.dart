@@ -414,9 +414,24 @@ class MessageLookup extends MessageLookupByLibrary {
     "settings_wall_mount_mode_description": MessageLookupByLibrary.simpleMessage(
       "Automatically enable wall mount mode. App bars and navigation bars will be hidden and the screen is kept on.",
     ),
+    "setupOrAddManually": MessageLookupByLibrary.simpleMessage(
+      "Or add manually",
+    ),
+    "setup_connect": MessageLookupByLibrary.simpleMessage("Connect"),
+    "setup_ipAddress": MessageLookupByLibrary.simpleMessage("IP Address"),
+    "setup_port": MessageLookupByLibrary.simpleMessage("Port"),
     "sliderCurrentHint": MessageLookupByLibrary.simpleMessage("current"),
     "sliderMaxHint": MessageLookupByLibrary.simpleMessage("max"),
     "sliderMinHint": MessageLookupByLibrary.simpleMessage("min"),
+    "startSetup": MessageLookupByLibrary.simpleMessage(
+      "Setup your OpenHAB connection",
+    ),
+    "step1Description": MessageLookupByLibrary.simpleMessage(
+      "Connect the App to your local OpenHAB server.",
+    ),
+    "step1Headline": MessageLookupByLibrary.simpleMessage(
+      "Step 1: Local Setup",
+    ),
     "stop": MessageLookupByLibrary.simpleMessage("Stop"),
     "systemStartTrigger100": MessageLookupByLibrary.simpleMessage(
       "100 - Startup complete",
@@ -468,5 +483,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "weather": MessageLookupByLibrary.simpleMessage("Weather"),
     "weatherForecast": MessageLookupByLibrary.simpleMessage("Weather Forecast"),
+    "welcome": MessageLookupByLibrary.simpleMessage("Welcome to HAB Buddy!"),
+    "welcomeDescription": MessageLookupByLibrary.simpleMessage(
+      "HAB Buddy is your companion app for your OpenHAB instance. Create a fancy wall mount display or create rules with an easy composer. The items and things have to be definied in OpenHAB first. Start by setting up the connection to your instance.",
+    ),
   };
 }

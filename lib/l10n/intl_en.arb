@@ -420,5 +420,14 @@
   "app_feedback_type_translation": "Translation",
   "settings_face_recognition": "Face Recognition",
   "settings_face_recognition_description": "Automatically controls the brightness of the screen whether a face is recognized (on) or not (dimmed).",
-  "settings_send_crash_reports": "Send crash reports"
+  "settings_send_crash_reports": "Send crash reports",
+  "welcome": "Welcome to HAB Buddy!",
+  "startSetup": "Setup your OpenHAB connection",
+  "welcomeDescription": "HAB Buddy is your companion app for your OpenHAB instance. Create a fancy wall mount display or create rules with an easy composer. The items and things have to be definied in OpenHAB first. Start by setting up the connection to your instance.",
+  "setup_connect": "Connect",
+  "setup_port": "Port",
+  "setup_ipAddress": "IP Address",
+  "setupOrAddManually": "Or add manually",
+  "step1Headline": "Step 1: Local Setup",
+  "step1Description": "Connect the App to your local OpenHAB server."
 }

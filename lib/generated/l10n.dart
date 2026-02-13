@@ -1953,6 +1953,86 @@ class S {
       args: [],
     );
   }
+
+  /// `Welcome to HAB Buddy!`
+  String get welcome {
+    return Intl.message(
+      'Welcome to HAB Buddy!',
+      name: 'welcome',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Setup your OpenHAB connection`
+  String get startSetup {
+    return Intl.message(
+      'Setup your OpenHAB connection',
+      name: 'startSetup',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `HAB Buddy is your companion app for your OpenHAB instance. Create a fancy wall mount display or create rules with an easy composer. The items and things have to be definied in OpenHAB first. Start by setting up the connection to your instance.`
+  String get welcomeDescription {
+    return Intl.message(
+      'HAB Buddy is your companion app for your OpenHAB instance. Create a fancy wall mount display or create rules with an easy composer. The items and things have to be definied in OpenHAB first. Start by setting up the connection to your instance.',
+      name: 'welcomeDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connect`
+  String get setup_connect {
+    return Intl.message('Connect', name: 'setup_connect', desc: '', args: []);
+  }
+
+  /// `Port`
+  String get setup_port {
+    return Intl.message('Port', name: 'setup_port', desc: '', args: []);
+  }
+
+  /// `IP Address`
+  String get setup_ipAddress {
+    return Intl.message(
+      'IP Address',
+      name: 'setup_ipAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Or add manually`
+  String get setupOrAddManually {
+    return Intl.message(
+      'Or add manually',
+      name: 'setupOrAddManually',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Step 1: Local Setup`
+  String get step1Headline {
+    return Intl.message(
+      'Step 1: Local Setup',
+      name: 'step1Headline',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connect the App to your local OpenHAB server.`
+  String get step1Description {
+    return Intl.message(
+      'Connect the App to your local OpenHAB server.',
+      name: 'step1Description',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

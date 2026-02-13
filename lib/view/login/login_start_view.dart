@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:logger/logger.dart';
 
+import '../../generated/l10n.dart';
 import '../../locator.dart';
 import '../../repository/item_repository.dart';
 import '../../repository/login_repository.dart';
@@ -37,48 +38,71 @@ class _LoginStartViewState extends State<LoginStartView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Padding(
-      padding: const EdgeInsets.all(paddingScaffold),
-      child: (Center(
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-        ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 200, maxHeight: 200),
-            child: Image.asset("res/images/logo.png")),
-        const Gap(extraLargePadding),
-        Text("Login Start View",
-            style: Theme.of(context).textTheme.headlineLarge),
-        const Gap(largePadding),
-        Text(
-          "This is the start view for the login process. Hier kommt Fancy Text hin. Vielleicht noch eine coole Animation.",
-          style: Theme.of(context).textTheme.bodyLarge,
-          textAlign: TextAlign.center,
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.all(paddingScaffold),
+          children: [
+            Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 250, maxHeight: 250),
+                child: Image.asset("res/images/logo.png"),
+              ),
+            ),
+            mediumGap,
+            Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 180),
+                child: Image.asset(
+                  "res/images/workswith-openHAB-logo/openHAB_workswith.png",
+                ),
+              ),
+            ),
+            extraLargeGap,
+            Text(
+              S.of(context).welcome,
+              style: Theme.of(context).textTheme.headlineLarge,
+              textAlign: TextAlign.center,
+            ),
+            const Gap(largePadding),
+            Text(
+              S.of(context).welcomeDescription,
+              style: Theme.of(context).textTheme.bodyLarge,
+              textAlign: TextAlign.center,
+            ),
+            const Gap(extraLargePadding),
+            BaseElevatedButton(
+              onPressed: () {
+                context.pushReplacementNamed(LoginLocalSetupView.routeName);
+              },
+              text: S.of(context).startSetup,
+            ),
+            if (kDebugMode) ...[
+              const Gap(extraLargePadding),
+              const Text("Demos in Debug Mode"),
+              const Gap(largePadding),
+              BaseElevatedButton(
+                onPressed: () => _demoMunich(context),
+                text: 'Demo Munich',
+              ),
+              const Gap(mediumPadding),
+              BaseElevatedButton(
+                onPressed: () => _demoHof(context),
+                text: 'Demo Hof',
+              ),
+            ],
+          ],
         ),
-        const Gap(extraLargePadding),
-        BaseElevatedButton(
-            onPressed: () {
-              context.pushReplacementNamed(LoginLocalSetupView.routeName);
-            },
-            text: 'Beginne mit dem Setup'),
-        if (kDebugMode) ...[
-          const Gap(extraLargePadding),
-          Text("Demos in Debug Mode"),
-          const Gap(largePadding),
-          BaseElevatedButton(
-              onPressed: () => _demoMunich(context), text: 'Demo Munich'),
-          const Gap(mediumPadding),
-          BaseElevatedButton(
-              onPressed: () => _demoHof(context), text: 'Demo Hof'),
-        ]
-      ]))),
-    ));
+      ),
+    );
   }
 
   Future<void> _demoMunich(BuildContext context) async {
     // login
     final loginRepository = locator<LoginRepository>();
 
-    final result =
-        await loginRepository.storeLoginData(loginData: munichLoginData);
+    final result = await loginRepository.storeLoginData(
+      loginData: munichLoginData,
+    );
 
     if (!result) {
       _log.e("Login failed for munich demo login");
@@ -102,8 +126,9 @@ class _LoginStartViewState extends State<LoginStartView> {
     // login
     final loginRepository = locator<LoginRepository>();
 
-    final result =
-        await loginRepository.storeLoginData(loginData: hofLoginData);
+    final result = await loginRepository.storeLoginData(
+      loginData: hofLoginData,
+    );
 
     if (!result) {
       _log.e("Login failed for hof demo login");

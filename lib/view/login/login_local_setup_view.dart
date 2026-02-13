@@ -10,6 +10,7 @@ import 'package:multicast_dns/multicast_dns.dart';
 import '../../core/database/login/login_data.dart';
 import '../../core/network/generated/openHAB.swagger.dart';
 import '../../core/services/snackbar_service.dart';
+import '../../generated/l10n.dart';
 import '../../locator.dart';
 import '../../repository/login_repository.dart';
 import '../../util/icons/icons.dart';
@@ -123,12 +124,12 @@ class _LoginLocalSetupViewState extends State<LoginLocalSetupView> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Expanded(child: ListView(children: [
-                Text("Step 1: Local Setup",
+                Text(S.of(context).step1Headline,
                     style: Theme.of(context).textTheme.headlineLarge),
-                const Gap(18),
-                Text("Connect the App to your local OpenHAB server.",
+                  largeGap,
+                Text(S.of(context).step1Description,
                     style: Theme.of(context).textTheme.bodyLarge),
-                const Gap(24),
+                largeGap,
                 BaseElevatedButton(
                   onPressed: !isScanning
                       ? () {
@@ -139,20 +140,20 @@ class _LoginLocalSetupViewState extends State<LoginLocalSetupView> {
                 ),
                 _buildScanningIndicator(context),
                 _buildServerSearchResults(context),
-                const Gap(12),
-                const Row(
+                  mediumGap,
+                 Row(
                   children: [
                     Expanded(child: Divider()),
-                    Gap(12),
-                    Text("Or add manually"),
-                    Gap(12),
+                    mediumGap,
+                    Text(S.of(context).setupOrAddManually),
+                    mediumGap,
                     Expanded(child: Divider())
                   ],
                 ),
-                const Gap(12),
+                  mediumGap,
                 FormBuilderTextField(
                   name: "ipAddress",
-                  decoration: const InputDecoration(labelText: "IP Address"),
+                  decoration:  InputDecoration(labelText: S.of(context).setup_ipAddress),
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(),
                     FormBuilderValidators.ip(),
@@ -163,7 +164,7 @@ class _LoginLocalSetupViewState extends State<LoginLocalSetupView> {
                 const Gap(8),
                 FormBuilderTextField(
                   name: "port",
-                  decoration: const InputDecoration(labelText: "Port"),
+                  decoration:  InputDecoration(labelText: S.of(context).setup_port),
                   initialValue: "8080",
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(),
@@ -175,18 +176,21 @@ class _LoginLocalSetupViewState extends State<LoginLocalSetupView> {
                 const Gap(8),
                 BaseElevatedButton(
                   onPressed: _testConnection,
-                  text: "Connect",
+                  text: S.of(context).setup_connect,
                 ),
                 ])),
                 _buildConnectedServer(context),
                 const Gap(16),
-                BaseElevatedButton(
-                  onPressed: localLoginData != null
-                      ? () {
-                          _onNextPressed(context);
-                        }
-                      : null,
-                  text: "Next",
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: BaseElevatedButton(
+                    onPressed: localLoginData != null
+                        ? () {
+                            _onNextPressed(context);
+                          }
+                        : null,
+                    text: S.of(context).next,
+                  ),
                 ),
               ],
             ),
