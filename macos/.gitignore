@@ -5,3 +5,9 @@
 # Xcode-related
 **/dgph
 **/xcuserdata/
+
+# fastlane
+fastlane/*
+/Gemfile.lock
+/flutter_hab_buddy.app.dSYM.zip
+/flutter_hab_buddy.app/

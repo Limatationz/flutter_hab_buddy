@@ -32,3 +32,10 @@ Runner/GeneratedPluginRegistrant.*
 !default.mode2v3
 !default.pbxuser
 !default.perspectivev3
+/Gemfile.lock
+
+# fastlane
+fastlane/**
+/Podfile.lock
+/Runner.app.dSYM.zip
+/Runner.ipa
