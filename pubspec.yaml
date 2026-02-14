@@ -1,6 +1,6 @@
 name: flutter_hab_buddy
 description: A Flutter app that serves as an alternative Frontend for OpenHAB
-version: 1.0.0+2
+version: 1.0.0+4
 publish_to: none
 
 environment:
@@ -81,7 +81,7 @@ dependencies:
   internet_connection_checker_plus: ^2.9.1+2
   intl: any
   intl_utils: ^2.8.14
-  jovial_svg: ^1.1.28
+  jovial_svg: ^1.1.29
   json_annotation: ^4.9.0
   latlong2: ^0.9.1
   logger: ^2.6.2

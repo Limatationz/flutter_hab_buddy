@@ -29,6 +29,8 @@ class LoginStartView extends StatefulWidget {
 class _LoginStartViewState extends State<LoginStartView> {
   final _log = Logger();
 
+  int pressesForDemo = 0;
+
   @override
   void initState() {
     FlutterNativeSplash.remove();
@@ -52,8 +54,11 @@ class _LoginStartViewState extends State<LoginStartView> {
             Center(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 180),
-                child: Image.asset(
-                  "res/images/workswith-openHAB-logo/openHAB_workswith.png",
+                child: GestureDetector(
+                  onTap: _increasePressesForDemo,
+                  child: Image.asset(
+                    "res/images/workswith-openHAB-logo/openHAB_workswith.png",
+                  ),
                 ),
               ),
             ),
@@ -81,6 +86,11 @@ class _LoginStartViewState extends State<LoginStartView> {
               const Text("Demos in Debug Mode"),
               const Gap(largePadding),
               BaseElevatedButton(
+                onPressed: () => _demo(context),
+                text: 'Demo',
+              ),
+              const Gap(mediumPadding),
+              BaseElevatedButton(
                 onPressed: () => _demoMunich(context),
                 text: 'Demo Munich',
               ),
@@ -94,6 +104,45 @@ class _LoginStartViewState extends State<LoginStartView> {
         ),
       ),
     );
+  }
+
+  void _increasePressesForDemo() {
+    setState(() {
+      pressesForDemo++;
+    });
+
+    if (pressesForDemo >= 5) {
+      _demo(context);
+      setState(() {
+        pressesForDemo = 0;
+      });
+    }
+  }
+
+  Future<void> _demo(BuildContext context) async {
+    // login
+    final loginRepository = locator<LoginRepository>();
+
+    final result = await loginRepository.storeLoginData(
+      loginData: demoLoginData,
+    );
+
+    if (!result) {
+      _log.e("Login failed for demo login");
+      return;
+    }
+
+    // wait for connection
+    await loginRepository.firstConnectionComplete.future;
+
+    // fetch data
+    await locator<ItemRepository>().fetchData();
+
+    // add dummy data
+    await SettingsViewModel.insertDummyDataDemo();
+
+    // navigate
+    context.pushReplacementNamed(FavouriteView.routeName);
   }
 
   Future<void> _demoMunich(BuildContext context) async {

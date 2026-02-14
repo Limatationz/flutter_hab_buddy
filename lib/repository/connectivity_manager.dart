@@ -245,6 +245,10 @@ class ConnectivityManager {
         firstConnectionComplete.isCompleted == false) {
       firstConnectionComplete.complete(true);
     }
+    if (newState == ServerConnectionState.offline) {
+      _sseStateStreamController.close();
+      _sseDataStream = null;
+    }
 
     _log.i("Updated Connection State to $newState");
   }

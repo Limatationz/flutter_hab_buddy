@@ -130,6 +130,9 @@ class SettingsViewModel extends BaseViewModel {
     await _itemsRepository.fetchData();
   }
 
+  static Future<void> insertDummyDataDemo() async {
+
+  }
   static Future<void> insertDummyDataMunich() async {
     final itemsRepository = locator<ItemRepository>();
     final db = locator<AppDatabase>();

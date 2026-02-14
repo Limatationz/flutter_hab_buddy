@@ -28,4 +28,32 @@ platform :android do
       skip_upload_screenshots: true
     )
   end
+
+  desc "Build and upload a new release to Google Play Alpha track"
+  lane :deploy_alpha do
+    # 1. Build the Android App Bundle (AAB)
+    # We use a gradle command to ensure we are using the Flutter-generated build
+    sh "cd ../.. && fvm flutter build appbundle --release --no-tree-shake-icons"
+
+    # 2. Upload to Google Play
+    upload_to_play_store(
+      track: "alpha",        # Upload to Alpha Testing track
+      aab: "../build/app/outputs/bundle/release/app-release.aab",
+      skip_upload_metadata: true, # Set to false later when you want to sync descriptions/images
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  desc "Upload a pre build release to Google Play Alpha track"
+  lane :deploy_only_alpha do
+    upload_to_play_store(
+      track: "alpha",        # Upload to Alpha Testing track first
+      release_status: "draft", # Remove after publish
+      aab: "../build/app/outputs/bundle/release/app-release.aab",
+      skip_upload_metadata: true, # Set to false later when you want to sync descriptions/images
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
 end

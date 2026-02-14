@@ -31,6 +31,22 @@ Build and upload a new release to Google Play Internal track
 
 Upload a pre build release to Google Play Internal track
 
+### android deploy_alpha
+
+```sh
+[bundle exec] fastlane android deploy_alpha
+```
+
+Build and upload a new release to Google Play Alpha track
+
+### android deploy_only_alpha
+
+```sh
+[bundle exec] fastlane android deploy_only_alpha
+```
+
+Upload a pre build release to Google Play Alpha track
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.
