@@ -1,0 +1,9 @@
+# fvm dart run flutter_native_splash:create
+
+flutter_native_splash:
+  color: "#ffffff"
+  color_dark: "#000000"
+  image: res/images/logo_round.png
+  android: true
+  ios: true
+  web: false
