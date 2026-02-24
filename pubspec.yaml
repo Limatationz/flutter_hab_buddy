@@ -1,6 +1,6 @@
 name: flutter_hab_buddy
 description: A Flutter app that serves as an alternative Frontend for OpenHAB
-version: 1.0.0+4
+version: 1.0.0+6
 publish_to: none
 
 environment:
@@ -15,13 +15,13 @@ dependencies:
   badges: ^3.1.2
   cached_memory_image: ^1.5.0
   cached_network_image: ^3.4.1
-  camera: ^0.11.3+1
+  camera: ^0.11.4
   chopper: ^8.5.0
   collection: any
   color_models: ^2.0.0
   color_palette_generator: ^2.0.1
   connectivity_plus: ^7.0.0
-  cronet_http: ^1.7.0
+  cronet_http: ^1.8.0
   cupertino_http: ^2.4.0
   custom_refresh_indicator: ^4.0.1
   dart_date: ^1.5.3
@@ -49,7 +49,7 @@ dependencies:
       ref: feat/retry
   flutter_code_editor: ^0.3.5
   flutter_expandable_fab: ^2.5.2
-  flutter_form_builder: ^10.3.0+1
+  flutter_form_builder: ^10.3.0+2
   flutter_iconpicker: ^4.0.3
   flutter_inappwebview: ^6.1.5
   flutter_local_notifications: ^20.1.0
@@ -82,7 +82,7 @@ dependencies:
   intl: any
   intl_utils: ^2.8.14
   jovial_svg: ^1.1.29
-  json_annotation: ^4.9.0
+  json_annotation: ^4.11.0
   latlong2: ^0.9.1
   logger: ^2.6.2
   modal_bottom_sheet: 3.0.0
@@ -107,7 +107,7 @@ dependencies:
   toggle_switch: ^2.3.0
   tuple: ^2.0.2
   url_launcher: ^6.3.2
-  uuid: ^4.5.2
+  uuid: ^4.5.3
   wakelock_plus: ^1.3.2
   weather_icons: ^3.0.0
   weather_pack: ^1.3.0
@@ -129,7 +129,7 @@ dev_dependencies:
 dependency_overrides:
   reorderable_staggered_scroll_view:
     git:
-      url: https://github.com/Phoenix-TU/reorderable_staggered_scroll_view.git
+      url: https://github.com/Limatationz/reorderable_staggered_scroll_view.git
       ref: main
 
 flutter:
@@ -159,10 +159,4 @@ flutter:
 flutter_intl:
   enabled: true
 
-flutter_native_splash:
-  color: "#ffffff"
-  color_dark: "#000000"
-  image: res/images/logo.png
-  android: true
-  ios: true
-  web: false
+
