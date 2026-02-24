@@ -71,8 +71,8 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(paddingScaffold),
+      body: SafeArea(
+        minimum: const EdgeInsets.all(paddingScaffold),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -85,18 +85,18 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
                       "Step 2: Remote Setup",
                       style: Theme.of(context).textTheme.headlineLarge,
                     ),
-                    const Gap(largePadding),
+                    largeGap,
                     if (widget.type != "cloud") ...[
                       Text(
                         "Step 2.1: Remote Server",
                         style: Theme.of(context).textTheme.headlineLarge,
                       ),
-                      const Gap(largePadding),
+                      largeGap,
                       Text(
                         "Add an url where your server can be accessed from the internet. The server must support the OpenHAB API.",
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
-                      const Gap(extraLargePadding),
+                      extraLargeGap,
                       FormBuilderTextField(
                         name: "remote_url",
                         initialValue: "https://",
@@ -113,7 +113,7 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
                         ]),
                         textInputAction: TextInputAction.next,
                       ),
-                      const Gap(12),
+                      smallGap,
                       FormBuilderTextField(
                         name: "remote_port",
                         decoration: const InputDecoration(label: Text("Port")),
@@ -122,7 +122,7 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
                         ),
                         textInputAction: TextInputAction.done,
                       ),
-                      const Gap(12),
+                      smallGap,
                       FormBuilderSwitch(
                         name: "remote_basicAuthEnabled",
                         initialValue: showRemoteBasicAuth,
@@ -139,24 +139,24 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
                         ),
                       ),
                       _serverBasicAuthInputView(context),
-                      const Gap(8),
+                      mediumGap,
                       BaseElevatedButton(
                         onPressed: _testRemoteConnection,
                         text: "Connect",
                       ),
-                      const Gap(extraLargePadding),
+                      extraLargeGap,
                     ],
                     if (widget.type != "remote") ...[
                       Text(
                         "Step 2.2: MyOpenHAB Cloud",
                         style: Theme.of(context).textTheme.headlineLarge,
                       ),
-                      const Gap(largePadding),
+                      largeGap,
                       Text(
                         "Add the credentials for the myOpenHAB Cloud to access your server remotely.",
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
-                      const Gap(extraLargePadding),
+                      extraLargeGap,
                       FormBuilderTextField(
                         name: "cloud_username",
                         decoration: InputDecoration(
@@ -169,7 +169,7 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
                         ]),
                         textInputAction: TextInputAction.next,
                       ),
-                      const Gap(12),
+                      smallGap,
                       FormBuilderTextField(
                         name: "cloud_password",
                         decoration: InputDecoration(
@@ -195,7 +195,7 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
                         validator: FormBuilderValidators.required(),
                         textInputAction: TextInputAction.done,
                       ),
-                      const Gap(8),
+                      mediumGap,
                       BaseElevatedButton(
                         onPressed: _testCloudConnection,
                         text: "Connect",
@@ -205,11 +205,11 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
                 ),
               ),
             ),
-            if (widget.type != "cloud") const Gap(smallPadding),
+            if (widget.type != "cloud") smallGap,
             if (widget.type != "cloud") _buildRemoteConnectedServer(context),
-            if (widget.type != "remote") const Gap(largePadding),
+            if (widget.type != "remote") mediumGap,
             if (widget.type != "remote") _buildCloudConnectedServer(context),
-            const Gap(16),
+            largeGap,
             BaseElevatedButton(
               onPressed: cloudLoginData != null || remoteLoginData != null
                   ? () {
@@ -220,7 +220,7 @@ class _LoginRemoteSetupViewState extends State<LoginRemoteSetupView> {
                   ? S.of(context).finish
                   : S.of(context).next,
             ),
-            const Gap(smallPadding),
+            smallGap,
             Row(
               children: [
                 Expanded(

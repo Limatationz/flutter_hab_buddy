@@ -48,7 +48,7 @@ class _LoginApiSetupViewState extends State<LoginApiSetupView> {
   @override
   void initState() {
     final localLoginData = _loginRepository.localLoginData;
-    if (localLoginData == null){
+    if (localLoginData == null) {
       // TODO: was machen wir hier?
     } else {
       this.localLoginData = localLoginData;
@@ -59,83 +59,87 @@ class _LoginApiSetupViewState extends State<LoginApiSetupView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Padding(
-      padding: const EdgeInsets.all(paddingScaffold),
-      child: Center(
-          child: FormBuilder(
-        key: formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Spacer(),
-            Text("Step 3: Api Setup",
-                style: Theme.of(context).textTheme.headlineLarge),
-            const Gap(18),
-            Text(
-                "To enable some features, we need more permissions. More text bla bla.",
-                style: Theme.of(context).textTheme.bodyLarge),
-            const Gap(24),
-            const Gap(12),
-            FormBuilderTextField(
-              name: "token",
-              decoration: const InputDecoration(
-                label: Text("Api Token"),
+      body: SafeArea(
+        minimum: const EdgeInsets.all(paddingScaffold),
+        child: FormBuilder(
+          key: formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: ListView(
+                  padding: .zero,
+                  children: [
+                    Text(
+                      "Step 3: Api Setup",
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                    largeGap,
+                    Text(
+                      "To enable some features, we need more permissions. More text bla bla.",
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    extraLargeGap,
+                    FormBuilderTextField(
+                      name: "token",
+                      decoration: const InputDecoration(label: Text("Api Token")),
+                      keyboardType: TextInputType.multiline,
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(),
+                      ]),
+                      textInputAction: TextInputAction.done,
+                    ),
+                    const Gap(8),
+                    BaseElevatedButton(onPressed: _testConnection, text: "Connect"),
+                  ],
+                ),
               ),
-              keyboardType: TextInputType.multiline,
-              validator: FormBuilderValidators.compose([
-                FormBuilderValidators.required(),
-              ]),
-              textInputAction: TextInputAction.done,
-            ),
-            const Gap(8),
-            BaseElevatedButton(
-              onPressed: _testConnection,
-              text: "Connect",
-            ),
-            const Spacer(),
-            _buildConnectedServer(context),
-            const Gap(16),
-            BaseElevatedButton(
-              onPressed: apiLoginData != null
-                  ? () {
-                      _onNextPressed(context);
-                    }
-                  : null,
-              text: widget.type != null ? S.of(context).finish : S.of(context).next,
-            ),
-            const Gap(smallPadding),
-            Row(
-              children: [
-                Expanded(
-                  child: BaseElevatedButton(
-                    onPressed: () {
-                      context.pop();
-                    },
-                    text: "Back",
+              _buildConnectedServer(context),
+              largeGap,
+              BaseElevatedButton(
+                onPressed: apiLoginData != null
+                    ? () {
+                        _onNextPressed(context);
+                      }
+                    : null,
+                text: widget.type != null
+                    ? S.of(context).finish
+                    : S.of(context).next,
+              ),
+              smallGap,
+              Row(
+                children: [
+                  Expanded(
+                    child: BaseElevatedButton(
+                      onPressed: () {
+                        context.pop();
+                      },
+                      text: "Back",
+                    ),
                   ),
-                ),
-                if (!popOnNext)
-                const Gap(smallPadding),
-                if (!popOnNext)
-                Expanded(
-                  child: BaseElevatedButton(
-                    onPressed: () {
-                      context.goNamed(FavouriteView.routeName);
-                    },
-                    text: "Skip",
-                  ),
-                ),
-              ],
-            )
-          ],
+                  if (!popOnNext) smallGap,
+                  if (!popOnNext)
+                    Expanded(
+                      child: BaseElevatedButton(
+                        onPressed: () {
+                          context.goNamed(FavouriteView.routeName);
+                        },
+                        text: "Skip",
+                      ),
+                    ),
+                ],
+              ),
+            ],
+          ),
         ),
-      )),
-    ));
+      ),
+    );
   }
 
   Future<void> _onNextPressed(BuildContext context) async {
     final result = await _loginRepository.storeApiToken(
-        apiLoginData: apiLoginData!);
+      apiLoginData: apiLoginData!,
+    );
     if (result) {
       if (popOnNext) {
         // if we only want to add the token afterwards we came from the settings and just want to pop
@@ -145,8 +149,9 @@ class _LoginApiSetupViewState extends State<LoginApiSetupView> {
       }
     } else {
       locator<SnackbarService>().showSnackbar(
-          message: "Failed to store api data. Please try again.",
-          type: SnackbarType.error);
+        message: "Failed to store api data. Please try again.",
+        type: SnackbarType.error,
+      );
     }
   }
 
@@ -159,9 +164,11 @@ class _LoginApiSetupViewState extends State<LoginApiSetupView> {
 
     // Test connection
     final localApi = OpenHAB.create(
-        baseUrl: Uri.parse(
-            "http://${localLoginData!.host}:${localLoginData!.port}/rest"),
-        interceptors: [ApiInterceptor(apiToken)]);
+      baseUrl: Uri.parse(
+        "http://${localLoginData!.host}:${localLoginData!.port}/rest",
+      ),
+      interceptors: [ApiInterceptor(apiToken)],
+    );
 
     setState(() {
       checkingConnection = true;
@@ -175,12 +182,16 @@ class _LoginApiSetupViewState extends State<LoginApiSetupView> {
       });
     } else {
       if (result.statusCode == 401) {
-        locator<SnackbarService>()
-            .showSnackbar(message: "Token invalid", type: SnackbarType.error);
+        locator<SnackbarService>().showSnackbar(
+          message: "Token invalid",
+          type: SnackbarType.error,
+        );
         // formKey.currentState?.reset();
       } else {
         locator<SnackbarService>().showSnackbar(
-            message: "Connection failed.", type: SnackbarType.error);
+          message: "Connection failed.",
+          type: SnackbarType.error,
+        );
       }
 
       setState(() {
@@ -195,35 +206,37 @@ class _LoginApiSetupViewState extends State<LoginApiSetupView> {
 
   Widget _buildConnectedServer(BuildContext context) {
     return WidgetContainer(
-        width: double.infinity,
-        padding: const EdgeInsets.all(paddingContainer),
-        child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          Icon(
-            cloudIcon,
-            color: cloudColor,
-            size: 28,
-          ),
+      width: double.infinity,
+      padding: const EdgeInsets.all(paddingContainer),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(cloudIcon, color: cloudColor, size: 28),
           const Gap(12),
-          Builder(builder: (context) {
-            if (checkingConnection) {
-              return Text(
-                "Checking Connection...",
-                style: Theme.of(context).textTheme.bodyLarge,
-              );
-            }
-            if (apiLoginData == null) {
-              return Text(
-                "No Api token",
-                style: Theme.of(context).textTheme.bodyLarge,
-              );
-            } else {
-              return Text(
-                "Api Token valid",
-                style: Theme.of(context).textTheme.bodyLarge,
-              );
-            }
-          }),
-        ]));
+          Builder(
+            builder: (context) {
+              if (checkingConnection) {
+                return Text(
+                  "Checking Connection...",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                );
+              }
+              if (apiLoginData == null) {
+                return Text(
+                  "No Api token",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                );
+              } else {
+                return Text(
+                  "Api Token valid",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                );
+              }
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   IconData get cloudIcon {

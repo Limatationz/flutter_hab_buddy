@@ -56,17 +56,20 @@ class _LoginLocalSetupViewState extends State<LoginLocalSetupView> {
       await client.start();
 
       // Query for OpenHAB servers (_openhab-server._tcp.local.)
-      await for (final PtrResourceRecord ptr in client.lookup<
-              PtrResourceRecord>(
-          ResourceRecordQuery.serverPointer('_openhab-server._tcp.local'))) {
+      await for (final PtrResourceRecord ptr
+          in client.lookup<PtrResourceRecord>(
+            ResourceRecordQuery.serverPointer('_openhab-server._tcp.local'),
+          )) {
         // Get additional information about the service
         await for (final SrvResourceRecord srv
             in client.lookup<SrvResourceRecord>(
-                ResourceRecordQuery.service(ptr.domainName))) {
+              ResourceRecordQuery.service(ptr.domainName),
+            )) {
           // Retrieve the IP address for the host
           await for (final IPAddressResourceRecord ip
               in client.lookup<IPAddressResourceRecord>(
-                  ResourceRecordQuery.addressIPv4(srv.target))) {
+                ResourceRecordQuery.addressIPv4(srv.target),
+              )) {
             print('Found OpenHAB server: ${ip.address}:${srv.port}');
             servers.add((ip.address.host, srv.port.toString()));
           }
@@ -75,9 +78,10 @@ class _LoginLocalSetupViewState extends State<LoginLocalSetupView> {
     } catch (e) {
       print('Error: $e');
       locator<SnackbarService>().showSnackbar(
-          message:
-              "An Error occurred while scanning. Please try the manual setup.",
-          type: SnackbarType.error);
+        message:
+            "An Error occurred while scanning. Please try the manual setup.",
+        type: SnackbarType.error,
+      );
     } finally {
       // Stop the client
       client.stop();
@@ -93,8 +97,9 @@ class _LoginLocalSetupViewState extends State<LoginLocalSetupView> {
           final result = await client.get();
           if (result.isSuccessful && result.body != null) {
             setState(() {
-              scanResults
-                  .add(ServerScanResult(server.$1, server.$2, result.body!));
+              scanResults.add(
+                ServerScanResult(server.$1, server.$2, result.body!),
+              );
             });
           }
         } catch (e) {
@@ -104,8 +109,9 @@ class _LoginLocalSetupViewState extends State<LoginLocalSetupView> {
     } else {
       // no servers found
       locator<SnackbarService>().showSnackbar(
-          message: "No OpenHAB servers found. Please try the manual setup.",
-          type: SnackbarType.error);
+        message: "No OpenHAB servers found. Please try the manual setup.",
+        type: SnackbarType.error,
+      );
     }
 
     setState(() {
@@ -116,85 +122,99 @@ class _LoginLocalSetupViewState extends State<LoginLocalSetupView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-          padding: const EdgeInsets.all(paddingScaffold),
-          child: FormBuilder(
-            key: formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Expanded(child: ListView(children: [
-                Text(S.of(context).step1Headline,
-                    style: Theme.of(context).textTheme.headlineLarge),
-                  largeGap,
-                Text(S.of(context).step1Description,
-                    style: Theme.of(context).textTheme.bodyLarge),
-                largeGap,
-                BaseElevatedButton(
-                  onPressed: !isScanning
-                      ? () {
-                          discoverOpenHABServers();
-                        }
-                      : null,
-                  text: "Scan Network",
-                ),
-                _buildScanningIndicator(context),
-                _buildServerSearchResults(context),
-                  mediumGap,
-                 Row(
+      body: SafeArea(
+        minimum: const EdgeInsets.all(paddingScaffold),
+        child: FormBuilder(
+          key: formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: ListView(
+                  padding: .zero,
                   children: [
-                    Expanded(child: Divider()),
+                    Text(
+                      S.of(context).step1Headline,
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                    largeGap,
+                    Text(
+                      S.of(context).step1Description,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    extraLargeGap,
+                    BaseElevatedButton(
+                      onPressed: !isScanning
+                          ? () {
+                              discoverOpenHABServers();
+                            }
+                          : null,
+                      text: "Scan Network",
+                    ),
+                    _buildScanningIndicator(context),
+                    _buildServerSearchResults(context),
                     mediumGap,
-                    Text(S.of(context).setupOrAddManually),
+                    Row(
+                      children: [
+                        const Expanded(child: Divider()),
+                        mediumGap,
+                        Text(S.of(context).setupOrAddManually),
+                        mediumGap,
+                        const Expanded(child: Divider()),
+                      ],
+                    ),
                     mediumGap,
-                    Expanded(child: Divider())
+                    FormBuilderTextField(
+                      name: "ipAddress",
+                      decoration: InputDecoration(
+                        labelText: S.of(context).setup_ipAddress,
+                      ),
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(),
+                        FormBuilderValidators.ip(),
+                      ]),
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.next,
+                    ),
+                    smallGap,
+                    FormBuilderTextField(
+                      name: "port",
+                      decoration: InputDecoration(
+                        labelText: S.of(context).setup_port,
+                      ),
+                      initialValue: "8080",
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(),
+                        FormBuilderValidators.numeric(),
+                      ]),
+                      keyboardType: TextInputType.number,
+                      textInputAction: TextInputAction.done,
+                    ),
+                    smallGap,
+                    BaseElevatedButton(
+                      onPressed: _testConnection,
+                      text: S.of(context).setup_connect,
+                    ),
                   ],
                 ),
-                  mediumGap,
-                FormBuilderTextField(
-                  name: "ipAddress",
-                  decoration:  InputDecoration(labelText: S.of(context).setup_ipAddress),
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(),
-                    FormBuilderValidators.ip(),
-                  ]),
-                  keyboardType: TextInputType.number,
-                  textInputAction: TextInputAction.next,
+              ),
+              _buildConnectedServer(context),
+              largeGap,
+              Align(
+                alignment: Alignment.centerRight,
+                child: BaseElevatedButton(
+                  onPressed: localLoginData != null
+                      ? () {
+                          _onNextPressed(context);
+                        }
+                      : null,
+                  text: S.of(context).next,
                 ),
-                const Gap(8),
-                FormBuilderTextField(
-                  name: "port",
-                  decoration:  InputDecoration(labelText: S.of(context).setup_port),
-                  initialValue: "8080",
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(),
-                    FormBuilderValidators.numeric(),
-                  ]),
-                  keyboardType: TextInputType.number,
-                  textInputAction: TextInputAction.done,
-                ),
-                const Gap(8),
-                BaseElevatedButton(
-                  onPressed: _testConnection,
-                  text: S.of(context).setup_connect,
-                ),
-                ])),
-                _buildConnectedServer(context),
-                const Gap(16),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: BaseElevatedButton(
-                    onPressed: localLoginData != null
-                        ? () {
-                            _onNextPressed(context);
-                          }
-                        : null,
-                    text: S.of(context).next,
-                  ),
-                ),
-              ],
-            ),
-          )),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -223,7 +243,9 @@ class _LoginLocalSetupViewState extends State<LoginLocalSetupView> {
         });
       } else {
         locator<SnackbarService>().showSnackbar(
-            message: "Connection failed.", type: SnackbarType.error);
+          message: "Connection failed.",
+          type: SnackbarType.error,
+        );
 
         setState(() {
           localLoginData = null;
@@ -233,17 +255,20 @@ class _LoginLocalSetupViewState extends State<LoginLocalSetupView> {
     } on HandshakeException catch (e) {
       // was an SSL error
       locator<SnackbarService>().showSnackbar(
-          message: "Connection failed. Try the not ssl protected port.",
-          type: SnackbarType.error);
+        message: "Connection failed. Try the not ssl protected port.",
+        type: SnackbarType.error,
+      );
     } catch (e) {
       if (port == "8443") {
         locator<SnackbarService>().showSnackbar(
-            message: "Connection failed. Try the not ssl protected port.",
-            type: SnackbarType.error);
+          message: "Connection failed. Try the not ssl protected port.",
+          type: SnackbarType.error,
+        );
       } else {
         locator<SnackbarService>().showSnackbar(
-            message: "Connection failed. Please try again.",
-            type: SnackbarType.error);
+          message: "Connection failed. Please try again.",
+          type: SnackbarType.error,
+        );
       }
     }
 
@@ -253,41 +278,41 @@ class _LoginLocalSetupViewState extends State<LoginLocalSetupView> {
   }
 
   Future<void> _onNextPressed(BuildContext context) async {
-    final result =
-        await _loginRepository.storeLocalLogin(localLoginData: localLoginData!);
+    final result = await _loginRepository.storeLocalLogin(
+      localLoginData: localLoginData!,
+    );
     if (result) {
       context.pushNamed(LoginRemoteSetupView.routeName);
     } else {
       locator<SnackbarService>().showSnackbar(
-          message: "Failed to store local data. Please try again.",
-          type: SnackbarType.error);
+        message: "Failed to store local data. Please try again.",
+        type: SnackbarType.error,
+      );
     }
   }
 
   Widget _buildConnectedServer(BuildContext context) {
     return WidgetContainer(
-        width: double.infinity,
-        child: Row(children: [
-          Icon(
-            serverIcon,
-            color: serverColor,
-            size: 28,
-          ),
+      width: double.infinity,
+      child: Row(
+        children: [
+          Icon(serverIcon, color: serverColor, size: 28),
           const Gap(12),
-          Builder(builder: (context) {
-            if (checkingConnection) {
-              return Text(
-                "Checking Connection...",
-                style: Theme.of(context).textTheme.bodyLarge,
-              );
-            }
-            if (localLoginData == null) {
-              return Text(
-                "No Server connected",
-                style: Theme.of(context).textTheme.bodyLarge,
-              );
-            } else {
-              return Column(
+          Builder(
+            builder: (context) {
+              if (checkingConnection) {
+                return Text(
+                  "Checking Connection...",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                );
+              }
+              if (localLoginData == null) {
+                return Text(
+                  "No Server connected",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                );
+              } else {
+                return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -297,11 +322,16 @@ class _LoginLocalSetupViewState extends State<LoginLocalSetupView> {
                     ),
                     if (rootBean != null)
                       Text(
-                          "Version: ${rootBean?.runtimeInfo?.version} (${rootBean?.runtimeInfo?.buildString ?? "-"})")
-                  ]);
-            }
-          }),
-        ]));
+                        "Version: ${rootBean?.runtimeInfo?.version} (${rootBean?.runtimeInfo?.buildString ?? "-"})",
+                      ),
+                  ],
+                );
+              }
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   IconData get serverIcon {
@@ -333,58 +363,65 @@ class _LoginLocalSetupViewState extends State<LoginLocalSetupView> {
       return Container();
     } else {
       return Padding(
-          padding: const EdgeInsets.only(top: listSpacing),
-          child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              spacing: listSpacing,
-              children: scanResults
-                  .map((server) => Builder(builder: (context) {
-                        final isSelected =
-                            server.host == localLoginData?.host &&
-                                server.port == localLoginData?.port;
-                        return GestureDetector(
-                            onTap: isSelected
-                                ? null
-                                : () {
-                                    _onServerSelected(context, server);
-                                  },
-                            child: WidgetContainer(
-                                padding: const EdgeInsets.all(12),
-                                child: Row(children: [
-                                  Icon(
-                                    isSelected
-                                        ? LineIconsV5.server_check_circle
-                                        : LineIconsV5.server_question,
-                                    color: isSelected ? Colors.green : null,
-                                    size: 28,
+        padding: const EdgeInsets.only(top: listSpacing),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: listSpacing,
+          children: scanResults
+              .map(
+                (server) => Builder(
+                  builder: (context) {
+                    final isSelected =
+                        server.host == localLoginData?.host &&
+                        server.port == localLoginData?.port;
+                    return GestureDetector(
+                      onTap: isSelected
+                          ? null
+                          : () {
+                              _onServerSelected(context, server);
+                            },
+                      child: WidgetContainer(
+                        padding: const EdgeInsets.all(12),
+                        child: Row(
+                          children: [
+                            Icon(
+                              isSelected
+                                  ? LineIconsV5.server_check_circle
+                                  : LineIconsV5.server_question,
+                              color: isSelected ? Colors.green : null,
+                              size: 28,
+                            ),
+                            const Gap(12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "${server.host} : ${server.port}",
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.bodyLarge,
+                                    overflow: TextOverflow.fade,
                                   ),
-                                  const Gap(12),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "${server.host} : ${server.port}",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge,
-                                          overflow: TextOverflow.fade,
-                                        ),
-                                        Text(
-                                            "Version: ${server.rootBean.runtimeInfo?.version} (${server.rootBean.runtimeInfo?.buildString ?? "-"})")
-                                      ],
-                                    ),
+                                  Text(
+                                    "Version: ${server.rootBean.runtimeInfo?.version} (${server.rootBean.runtimeInfo?.buildString ?? "-"})",
                                   ),
-                                  if (!isSelected)
-                                    const Icon(
-                                      LineIconsV5.chevron_right,
-                                      size: 28,
-                                    )
-                                ])));
-                      }))
-                  .toList()));
+                                ],
+                              ),
+                            ),
+                            if (!isSelected)
+                              const Icon(LineIconsV5.chevron_right, size: 28),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              )
+              .toList(),
+        ),
+      );
     }
   }
 
@@ -392,7 +429,7 @@ class _LoginLocalSetupViewState extends State<LoginLocalSetupView> {
     if (!isScanning) return Container();
     return Container(
       alignment: Alignment.center,
-      padding: EdgeInsets.all(12),
+      padding: const EdgeInsets.all(12),
       child: const CircularProgressIndicator(),
     );
   }

@@ -70,8 +70,10 @@ class SettingsView extends StatelessWidget {
                       title: Text(
                         S.of(context).settings_connection_status_title,
                       ),
-                      description: Text(
-                        S.of(context).settings_connection_status_description,
+                      description: Flexible(
+                        child: Text(
+                          S.of(context).settings_connection_status_description,
+                        ),
                       ),
                       descriptionInlineIos: true,
                       trailing: StreamBuilder<ServerConnectionState>(
@@ -89,8 +91,10 @@ class SettingsView extends StatelessWidget {
                       title: Text(
                         S.of(context).settings_connection_start_title,
                       ),
-                      description: Text(
-                        S.of(context).settings_connection_start_description,
+                      description: Flexible(
+                        child: Text(
+                          S.of(context).settings_connection_start_description,
+                        ),
                       ),
                       descriptionInlineIos: true,
                       trailing: StreamBuilder<DateTime?>(
@@ -110,8 +114,10 @@ class SettingsView extends StatelessWidget {
                       title: Text(
                         S.of(context).settings_connection_update_title,
                       ),
-                      description: Text(
-                        S.of(context).settings_connection_update_description,
+                      description: Flexible(
+                        child: Text(
+                          S.of(context).settings_connection_update_description,
+                        ),
                       ),
                       descriptionInlineIos: true,
                       trailing: StreamBuilder<DateTime?>(
@@ -236,8 +242,10 @@ class SettingsView extends StatelessWidget {
                   tiles: [
                     SettingsTile.switchTile(
                       title: Text(S.of(context).settings_wall_mount_mode),
-                      description: Text(
-                        S.of(context).settings_wall_mount_mode_description,
+                      description: Flexible(
+                        child: Text(
+                          S.of(context).settings_wall_mount_mode_description,
+                        ),
                       ),
                       descriptionInlineIos: true,
                       initialValue: model.wallMountService.autoEnabled,
@@ -246,8 +254,10 @@ class SettingsView extends StatelessWidget {
                     ),
                     SettingsTile.switchTile(
                       title: Text(S.of(context).settings_face_recognition),
-                      description: Text(
-                        S.of(context).settings_face_recognition_description,
+                      description: Flexible(
+                        child: Text(
+                          S.of(context).settings_face_recognition_description,
+                        ),
                       ),
                       descriptionInlineIos: true,
                       initialValue: model
@@ -312,27 +322,29 @@ class SettingsView extends StatelessWidget {
     switch (error) {
       case FaceRecognitionServiceError.cameraPermissionNotRequested:
         return SettingsTile.navigation(
-          title: Text("Camera permission not requested"),
+          title: const Text("Camera permission not requested"),
           onPressed: (context) {
             model.requestWallMountModeFaceRecognitionCameraPermission();
           },
         );
       case FaceRecognitionServiceError.cameraPermissionDenied:
         return SettingsTile.navigation(
-          title: Text("Camera permission denied"),
-          description: Text(
-            "Please grant camera permission in the system settings.",
+          title: const Text("Camera permission denied"),
+          description: const Flexible(
+            child: Text(
+              "Please grant camera permission in the system settings.",
+            ),
           ),
           onPressed: (context) {
             model.wallMountModeFaceRecognitionCameraPermissionOpenSettings();
           },
         );
       case FaceRecognitionServiceError.faceRecognitionNotSupported:
-        return SettingsTile(title: Text("Face recognition not supported"));
+        return SettingsTile(title: const Text("Face recognition not supported"));
       case FaceRecognitionServiceError.noFrontCamera:
-        return SettingsTile(title: Text("No front camera found"));
+        return SettingsTile(title: const Text("No front camera found"));
       case FaceRecognitionServiceError.imageStreamNotSupported:
-        return SettingsTile(title: Text("Image stream not supported"));
+        return SettingsTile(title: const Text("Image stream not supported"));
     }
   }
 }

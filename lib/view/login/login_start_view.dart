@@ -47,10 +47,15 @@ class _LoginStartViewState extends State<LoginStartView> {
             Center(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 250, maxHeight: 250),
-                child: Image.asset("res/images/logo.png"),
+                child: Material(
+                  elevation: 5,
+                  borderRadius: BorderRadius.circular(32),
+                  clipBehavior: .hardEdge,
+                  child: Image.asset("res/images/logo.png"),
+                ),
               ),
             ),
-            mediumGap,
+            largeGap,
             Center(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 180),
@@ -85,10 +90,7 @@ class _LoginStartViewState extends State<LoginStartView> {
               const Gap(extraLargePadding),
               const Text("Demos in Debug Mode"),
               const Gap(largePadding),
-              BaseElevatedButton(
-                onPressed: () => _demo(context),
-                text: 'Demo',
-              ),
+              BaseElevatedButton(onPressed: () => _demo(context), text: 'Demo'),
               const Gap(mediumPadding),
               BaseElevatedButton(
                 onPressed: () => _demoMunich(context),
