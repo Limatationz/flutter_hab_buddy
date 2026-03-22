@@ -1,4 +1,3 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:gap/gap.dart';
@@ -252,54 +251,6 @@ class RoomsView extends StatelessWidget {
                   )))
               .toList(),
         ));
-  }
-
-  Widget _buildRoomSelectionOld(
-      BuildContext context,
-      Room selectedRoom,
-      ColorScheme colorScheme,
-      List<Room> allRooms,
-      Function(int) onRoomChange) {
-    return Container(
-        decoration: BoxDecoration(
-            color: colorScheme.surface,
-            border: Border(
-                bottom: BorderSide(
-                    color: colorScheme.surfaceContainerHighest, width: 3))),
-        child: DropdownButtonHideUnderline(
-            child: DropdownButton2<Room>(
-          value: selectedRoom,
-          isExpanded: true,
-          items: allRooms
-              .map((e) => DropdownMenuItem(
-                  value: e,
-                  child: Text(e.name,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyLarge
-                          ?.copyWith(color: colorScheme.onSurfaceVariant))))
-              .toList(),
-          onChanged: (room) {
-            if (room != null) {
-              final index = allRooms.indexOf(room);
-              onRoomChange(index);
-            }
-          },
-          dropdownStyleData: DropdownStyleData(
-            decoration: BoxDecoration(
-              color: colorScheme.surfaceContainerHighest,
-            ),
-          ),
-          buttonStyleData: const ButtonStyleData(
-            padding: EdgeInsets.only(right: 12),
-          ),
-          iconStyleData: IconStyleData(
-            icon: Icon(LineIcons.chevron_down,
-                size: 18, color: colorScheme.primary),
-            openMenuIcon: Icon(LineIcons.chevron_up,
-                size: 18, color: colorScheme.primary),
-          ),
-        )));
   }
 
   Widget _buildItemsView(
