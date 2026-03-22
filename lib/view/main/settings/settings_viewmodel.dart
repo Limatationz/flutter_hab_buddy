@@ -45,7 +45,9 @@ class SettingsViewModel extends BaseViewModel {
       _loginRepository.connectivityManager.sseLastMessage;
 
   AdaptiveThemeMode getThemeMode(BuildContext context) {
-    return AdaptiveTheme.of(context).mode;
+    return AdaptiveTheme
+        .of(context)
+        .mode;
   }
 
   bool get missingRemoteSetup => !_loginRepository.hasRemoteLoginData;
@@ -63,7 +65,9 @@ class SettingsViewModel extends BaseViewModel {
 
   void setTheme(BuildContext context, AdaptiveThemeMode newMode) {
     AdaptiveTheme.of(context).setThemeMode(newMode);
-    final theme = AdaptiveTheme.of(context).theme;
+    final theme = AdaptiveTheme
+        .of(context)
+        .theme;
     setSystemOverlay(theme);
   }
 
@@ -131,8 +135,230 @@ class SettingsViewModel extends BaseViewModel {
   }
 
   static Future<void> insertDummyDataDemo() async {
+    final log = Logger();
+    final itemsRepository = locator<ItemRepository>();
+    final db = locator<AppDatabase>();
+    await itemsRepository.fetchData();
 
+    // 1. Create Rooms
+    final roomStore = db.roomsStore;
+
+    final rooms = [
+      RoomsTableCompanion.insert(
+        name: "Entrance",
+        description: Value("Ground Floor"),
+        icon: Value(Icons.meeting_room),
+        color: Value("#4062BB"),
+        sortKey: 0,
+        itemsSortOption: RoomItemsSortOption.manual,
+      ),
+      RoomsTableCompanion.insert(
+        name: "Kitchen",
+        description: Value("Ground Floor"),
+        icon: Value(Icons.kitchen),
+        color: Value("#EE964B"),
+        sortKey: 1,
+        itemsSortOption: RoomItemsSortOption.byScore,
+      ),
+      RoomsTableCompanion.insert(
+        name: "Living Room",
+        description: Value("Ground Floor"),
+        icon: Value(Icons.weekend),
+        color: Value("#CEFDFF"),
+        sortKey: 2,
+        itemsSortOption: RoomItemsSortOption.manual,
+      ),
+      RoomsTableCompanion.insert(
+        name: "Bathrooms",
+        description: Value("Bath 0 & 1"),
+        icon: Value(Icons.bathtub),
+        color: Value("#00FF00"),
+        sortKey: 3,
+        itemsSortOption: RoomItemsSortOption.manual,
+      ),
+      RoomsTableCompanion.insert(
+        name: "Master Bedroom",
+        description: Value("First Floor"),
+        icon: Value(Icons.bed),
+        color: Value("#8A2BE2"),
+        sortKey: 4,
+        itemsSortOption: RoomItemsSortOption.byScore,
+      ),
+      RoomsTableCompanion.insert(
+        name: "Outdoor & Energy",
+        description: Value("Garage, Patio, Solar"),
+        icon: Value(Icons.garage),
+        color: Value("#FFD700"),
+        sortKey: 5,
+        itemsSortOption: RoomItemsSortOption.manual,
+      ),
+    ];
+
+    // Insert rooms and store their generated IDs
+    final entranceRoom = await roomStore.insertOrUpdateSingleWithId(rooms[0]);
+    final kitchenRoom = await roomStore.insertOrUpdateSingleWithId(rooms[1]);
+    final livingRoom = await roomStore.insertOrUpdateSingleWithId(rooms[2]);
+    final bathRoom = await roomStore.insertOrUpdateSingleWithId(rooms[3]);
+    final masterBedroom = await roomStore.insertOrUpdateSingleWithId(rooms[4]);
+    final outdoorRoom = await roomStore.insertOrUpdateSingleWithId(rooms[5]);
+
+    final itemsStore = db.itemsStore;
+    final items = await itemsStore.inbox().get();
+
+    // Helper function to keep code clean
+    Future<void> tryAddItem(String ohName,
+        ItemType type,
+        int roomId, {
+          bool isFavorite = false,
+        }) async {
+      final item = items.firstWhereOrNull(
+            (element) => element.ohName == ohName,
+      );
+      if (item != null) {
+        final result = await itemsRepository.addItemFromInbox(
+          item: item,
+          type: type,
+          roomId: roomId,
+          isFavorite: isFavorite,
+        );
+        if (!result) {
+          log.e("Failed to add item $ohName");
+        }
+      }
+    }
+
+    // --- Entrance Items ---
+    await tryAddItem(
+      "Entrance_Light_Power",
+      ItemType.light,
+      entranceRoom,
+      isFavorite: true,
+    );
+    await tryAddItem(
+      "Entrance_MotionSensor_Presence",
+      ItemType.presence,
+      entranceRoom,
+    );
+    await tryAddItem(
+      "Entrance_Door_Contact",
+      ItemType.windowContact,
+      entranceRoom,
+      isFavorite: true,
+    );
+
+    // --- Kitchen Items ---
+    await tryAddItem(
+      "Kitchen_Light_Ceiling_Power",
+      ItemType.light,
+      kitchenRoom,
+      isFavorite: true,
+    );
+    await tryAddItem(
+      "Kitchen_Climate_Temperature",
+      ItemType.temperature,
+      kitchenRoom,
+    );
+    await tryAddItem(
+      "Kitchen_Window_Rollershutter",
+      ItemType.rollerShutter,
+      kitchenRoom,
+      isFavorite: true,
+    );
+
+    // --- Living Room Items ---
+    await tryAddItem(
+      "LivingRoom_Light_Ceiling_Power",
+      ItemType.light,
+      livingRoom,
+      isFavorite: true,
+    );
+    await tryAddItem(
+      "LivingRoom_Light_Ambilight_Power",
+      ItemType.light,
+      livingRoom,
+    );
+    await tryAddItem(
+      "LivingRoom_Thermostat_Temperature",
+      ItemType.temperature,
+      livingRoom,
+      isFavorite: true,
+    );
+    await tryAddItem(
+      "LivingRoom_AirQuality_CO2",
+      ItemType.airQuality,
+      livingRoom,
+    );
+    await tryAddItem(
+      "LivingRoom_Window_Left_Rollershutter",
+      ItemType.rollerShutter,
+      livingRoom,
+      isFavorite: true,
+    );
+
+    // --- Bathroom Items (Mixing Bath 0 and Bath 1) ---
+    await tryAddItem(
+      "Bathroom0_Light_Ceiling_Power",
+      ItemType.light,
+      bathRoom,
+      isFavorite: true,
+    );
+    await tryAddItem(
+      "Bathroom1_Climate_Humidity",
+      ItemType.humidity,
+      bathRoom,
+      isFavorite: true,
+    );
+    await tryAddItem(
+      "Bathroom0_WashingMachine_Power",
+      ItemType.light,
+      bathRoom,
+    ); // Assuming plug falls back to switch/light in your UI
+
+    // --- Master Bedroom Items ---
+    await tryAddItem(
+      "MasterBedroom_Light_Bed_Power",
+      ItemType.light,
+      masterBedroom,
+      isFavorite: true,
+    );
+    await tryAddItem(
+      "MasterBedroom_Thermostat_Temperature",
+      ItemType.temperature,
+      masterBedroom,
+      isFavorite: true,
+    );
+    await tryAddItem(
+      "MasterBedroom_Button_Left_Action",
+      ItemType.button,
+      masterBedroom,
+    );
+    await tryAddItem(
+      "MasterBedroom_Window_Left_Rollershutter",
+      ItemType.rollerShutter,
+      masterBedroom,
+      isFavorite: true,
+    );
+
+    // --- Outdoor & Energy Items ---
+    await tryAddItem(
+      "Garage_Door_Contact",
+      ItemType.windowContact,
+      outdoorRoom,
+      isFavorite: true,
+    );
+    await tryAddItem(
+      "Outdoor_Weather_Temperature",
+      ItemType.temperature,
+      outdoorRoom,
+      isFavorite: true,
+    );
+    await tryAddItem(
+      "Solar_House_TotalPower",
+      ItemType.temperature,
+      outdoorRoom,
+    ); // Mapped to a number/temp card for display purposes
   }
+
   static Future<void> insertDummyDataMunich() async {
     final itemsRepository = locator<ItemRepository>();
     final db = locator<AppDatabase>();
@@ -192,7 +418,7 @@ class SettingsViewModel extends BaseViewModel {
 
     // create items
     final lampeBadItem = items.firstWhereOrNull(
-      (element) => element.ohName == "Lampe_Bad",
+          (element) => element.ohName == "Lampe_Bad",
     );
     if (lampeBadItem != null) {
       await itemsRepository.addItemFromInbox(
@@ -204,7 +430,7 @@ class SettingsViewModel extends BaseViewModel {
     }
 
     final rolloTuerItem = items.firstWhereOrNull(
-      (element) => element.ohName == "Rollo_Tuer",
+          (element) => element.ohName == "Rollo_Tuer",
     );
     if (rolloTuerItem != null) {
       await itemsRepository.addItemFromInbox(
@@ -216,7 +442,7 @@ class SettingsViewModel extends BaseViewModel {
     }
 
     final rollosFensterItem = items.firstWhereOrNull(
-      (element) => element.ohName == "Rollos_Fenster",
+          (element) => element.ohName == "Rollos_Fenster",
     );
     if (rollosFensterItem != null) {
       await itemsRepository.addItemFromInbox(
@@ -228,7 +454,7 @@ class SettingsViewModel extends BaseViewModel {
     }
 
     final lampeWohnzimmerItem = items.firstWhereOrNull(
-      (element) => element.ohName == "Lampe_Wohnzimmer",
+          (element) => element.ohName == "Lampe_Wohnzimmer",
     );
     if (lampeWohnzimmerItem != null) {
       await itemsRepository.addItemFromInbox(
@@ -240,7 +466,7 @@ class SettingsViewModel extends BaseViewModel {
     }
 
     final thermometerBadTemperaturItem = items.firstWhereOrNull(
-      (element) => element.ohName == "Thermometer_Bad_Temperatur",
+          (element) => element.ohName == "Thermometer_Bad_Temperatur",
     );
     if (thermometerBadTemperaturItem != null) {
       await itemsRepository.addItemFromInbox(
@@ -252,7 +478,7 @@ class SettingsViewModel extends BaseViewModel {
     }
 
     final thermometerBadLuftfeuchtigkeitItem = items.firstWhereOrNull(
-      (element) => element.ohName == "Thermometer_Bad_Luftfeuchtigkeit",
+          (element) => element.ohName == "Thermometer_Bad_Luftfeuchtigkeit",
     );
     if (thermometerBadLuftfeuchtigkeitItem != null) {
       await itemsRepository.addItemFromInbox(
@@ -263,7 +489,7 @@ class SettingsViewModel extends BaseViewModel {
     }
 
     final thermometerSchlafzimmerTemperaturItem = items.firstWhereOrNull(
-      (element) => element.ohName == "Thermometer_Schlafzimmer_Temperatur",
+          (element) => element.ohName == "Thermometer_Schlafzimmer_Temperatur",
     );
     if (thermometerSchlafzimmerTemperaturItem != null) {
       await itemsRepository.addItemFromInbox(
@@ -275,7 +501,7 @@ class SettingsViewModel extends BaseViewModel {
     }
 
     final co2SensorCo2Item = items.firstWhereOrNull(
-      (element) => element.ohName == "CO2Sensor_CO2",
+          (element) => element.ohName == "CO2Sensor_CO2",
     );
     if (co2SensorCo2Item != null) {
       await itemsRepository.addItemFromInbox(
@@ -287,7 +513,7 @@ class SettingsViewModel extends BaseViewModel {
     }
 
     final szeneTvItem = items.firstWhereOrNull(
-      (element) => element.ohName == "Szene_Tv",
+          (element) => element.ohName == "Szene_Tv",
     );
     if (szeneTvItem != null) {
       await itemsRepository.addItemFromInbox(
@@ -299,7 +525,7 @@ class SettingsViewModel extends BaseViewModel {
     }
 
     final lampeKuecheItem = items.firstWhereOrNull(
-      (element) => element.ohName == "Lampe_Kueche",
+          (element) => element.ohName == "Lampe_Kueche",
     );
     if (lampeKuecheItem != null) {
       await itemsRepository.addItemFromInbox(
@@ -311,7 +537,7 @@ class SettingsViewModel extends BaseViewModel {
     }
 
     final bewegungsmelderKuecheBewegungItem = items.firstWhereOrNull(
-      (element) => element.ohName == "Bewegungsmelder_Kueche_Bewegung",
+          (element) => element.ohName == "Bewegungsmelder_Kueche_Bewegung",
     );
     if (bewegungsmelderKuecheBewegungItem != null) {
       await itemsRepository.addItemFromInbox(
@@ -323,7 +549,7 @@ class SettingsViewModel extends BaseViewModel {
     }
 
     final lampeFlurItem = items.firstWhereOrNull(
-      (element) => element.ohName == "Lampe_Flur",
+          (element) => element.ohName == "Lampe_Flur",
     );
     if (lampeFlurItem != null) {
       await itemsRepository.addItemFromInbox(
@@ -335,7 +561,7 @@ class SettingsViewModel extends BaseViewModel {
     }
 
     final bewegungsmelderFlurBewegungItem = items.firstWhereOrNull(
-      (element) => element.ohName == "Bewegungsmelder_Flur_Bewegung",
+          (element) => element.ohName == "Bewegungsmelder_Flur_Bewegung",
     );
     if (bewegungsmelderFlurBewegungItem != null) {
       await itemsRepository.addItemFromInbox(
@@ -403,7 +629,7 @@ class SettingsViewModel extends BaseViewModel {
     // create items
     // Erik
     final erikPos3Item = items.firstWhereOrNull(
-      (element) => element.ohName == "Erik_pos3",
+          (element) => element.ohName == "Erik_pos3",
     );
     if (erikPos3Item != null) {
       await itemsRepository.addItemFromInbox(
@@ -415,7 +641,7 @@ class SettingsViewModel extends BaseViewModel {
     }
 
     final stripeErikBrightnessItem = items.firstWhereOrNull(
-      (element) => element.ohName == "stripe_erik_brightness",
+          (element) => element.ohName == "stripe_erik_brightness",
     );
     if (stripeErikBrightnessItem != null) {
       await itemsRepository.addItemFromInbox(
@@ -427,7 +653,7 @@ class SettingsViewModel extends BaseViewModel {
     }
 
     final thermostatErikTemperatureItem = items.firstWhereOrNull(
-      (element) => element.ohName == "Thermostat_Erik_Temperature",
+          (element) => element.ohName == "Thermostat_Erik_Temperature",
     );
     if (thermostatErikTemperatureItem != null) {
       await itemsRepository.addItemFromInbox(
@@ -439,7 +665,7 @@ class SettingsViewModel extends BaseViewModel {
     }
 
     final thermostatErikActualHumidityItem = items.firstWhereOrNull(
-      (element) => element.ohName == "Thermostat_Erik_Actual_Humidity",
+          (element) => element.ohName == "Thermostat_Erik_Actual_Humidity",
     );
     if (thermostatErikActualHumidityItem != null) {
       await itemsRepository.addItemFromInbox(
@@ -452,7 +678,7 @@ class SettingsViewModel extends BaseViewModel {
 
     // Malte
     final erikPos3Item2 = items.firstWhereOrNull(
-      (element) => element.ohName == "Erik_pos3",
+          (element) => element.ohName == "Erik_pos3",
     );
     if (erikPos3Item2 != null) {
       await itemsRepository.addItemFromInbox(
@@ -464,7 +690,7 @@ class SettingsViewModel extends BaseViewModel {
     }
 
     final lampeMalteItem = items.firstWhereOrNull(
-      (element) => element.ohName == "Lampe_Malte",
+          (element) => element.ohName == "Lampe_Malte",
     );
     if (lampeMalteItem != null) {
       await itemsRepository.addItemFromInbox(
@@ -476,7 +702,7 @@ class SettingsViewModel extends BaseViewModel {
     }
 
     final thermostatMalteTemperatureItem = items.firstWhereOrNull(
-      (element) => element.ohName == "Thermostat_Malte_Temperature",
+          (element) => element.ohName == "Thermostat_Malte_Temperature",
     );
     if (thermostatMalteTemperatureItem != null) {
       await itemsRepository.addItemFromInbox(
@@ -488,7 +714,7 @@ class SettingsViewModel extends BaseViewModel {
     }
 
     final thermostatMalteActualHumidityItem = items.firstWhereOrNull(
-      (element) => element.ohName == "Thermostat_Malte_Actual_Humidity",
+          (element) => element.ohName == "Thermostat_Malte_Actual_Humidity",
     );
     if (thermostatMalteActualHumidityItem != null) {
       await itemsRepository.addItemFromInbox(
@@ -501,7 +727,8 @@ class SettingsViewModel extends BaseViewModel {
 
     // livingRoom
     final thermostatWohnzimmerActualTemperatureItem = items.firstWhereOrNull(
-      (element) => element.ohName == "Thermostat_Wohnzimmer_Actual_Temperature",
+          (element) =>
+      element.ohName == "Thermostat_Wohnzimmer_Actual_Temperature",
     );
     if (thermostatWohnzimmerActualTemperatureItem != null) {
       await itemsRepository.addItemFromInbox(
@@ -513,7 +740,8 @@ class SettingsViewModel extends BaseViewModel {
     }
 
     final thermostatWohnzimmerActualHumidityItem = items.firstWhereOrNull(
-      (element) => element.ohName == "Thermostat_Wohnzimmer_Actual_Humidity",
+          (element) =>
+      element.ohName == "Thermostat_Wohnzimmer_Actual_Humidity",
     );
     if (thermostatWohnzimmerActualHumidityItem != null) {
       await itemsRepository.addItemFromInbox(
@@ -525,7 +753,7 @@ class SettingsViewModel extends BaseViewModel {
 
     // Bathroom
     final thermostatBadEgActualHumidityItem = items.firstWhereOrNull(
-      (element) => element.ohName == "Thermostat_Bad_EG_Actual_Humidity",
+          (element) => element.ohName == "Thermostat_Bad_EG_Actual_Humidity",
     );
     if (thermostatBadEgActualHumidityItem != null) {
       await itemsRepository.addItemFromInbox(
@@ -537,7 +765,7 @@ class SettingsViewModel extends BaseViewModel {
     }
 
     final thermostatBadEgActualTemperatureItem = items.firstWhereOrNull(
-      (element) => element.ohName == "Thermostat_Bad_EG_Actual_Temperature",
+          (element) => element.ohName == "Thermostat_Bad_EG_Actual_Temperature",
     );
     if (thermostatBadEgActualTemperatureItem != null) {
       await itemsRepository.addItemFromInbox(
@@ -549,7 +777,7 @@ class SettingsViewModel extends BaseViewModel {
     }
 
     final fensterSensorBadFensterkontaktItem = items.firstWhereOrNull(
-      (element) => element.ohName == "Fenster_Sensor_Bad_Fensterkontakt",
+          (element) => element.ohName == "Fenster_Sensor_Bad_Fensterkontakt",
     );
     if (fensterSensorBadFensterkontaktItem != null) {
       await itemsRepository.addItemFromInbox(
@@ -572,14 +800,18 @@ class SettingsViewModel extends BaseViewModel {
       // labels to add to the issue
       onSucces: (issue) {
         locator<SnackbarService>().showSnackbar(
-          message: S.of(context).feedback_result_success,
+          message: S
+              .of(context)
+              .feedback_result_success,
           type: .success,
         );
       },
       onError: (error) {
         _log.e("Error while sending feedback.", error: error);
         locator<SnackbarService>().showSnackbar(
-          message: S.of(context).feedback_result_error,
+          message: S
+              .of(context)
+              .feedback_result_error,
           type: .error,
         );
       },

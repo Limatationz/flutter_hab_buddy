@@ -261,7 +261,7 @@ class ConnectivityManager {
     _sseDataStream = SSEClient.subscribeToSSE(
       method: SSERequestType.GET,
       url: '$baseUrl/events?topics=*/items/*/statechanged',
-      oldStreamController: _sseStateStreamController,
+     // oldStreamController: _sseStateStreamController,
       header: basicAuthUsername != null && basicAuthPassword != null
           ? generateBasicAuth(
               basicAuthUsername,

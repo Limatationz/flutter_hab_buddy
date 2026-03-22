@@ -230,7 +230,7 @@ class RoomsView extends StatelessWidget {
       Function(int) onRoomChange) {
     return Container(
         width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: paddingScaffold),
+        padding: const EdgeInsets.symmetric(horizontal: paddingScaffold, vertical: smallPadding),
         decoration: BoxDecoration(
             color: colorScheme.surface,
             border: Border(
@@ -238,6 +238,7 @@ class RoomsView extends StatelessWidget {
                     color: colorScheme.surfaceContainerHighest, width: 1))),
         child: Wrap(
           spacing: smallPadding,
+          runSpacing: smallPadding,
           children: allRooms
               .map((e) => Theme(
                   data: ThemeData.from(colorScheme: colorScheme),

@@ -26,7 +26,7 @@ class LoginRepository {
 
   ConnectivityManager get connectivityManager => _connectivityManager;
 
-  final Completer<bool> firstConnectionComplete = Completer();
+  Completer<bool> firstConnectionComplete = Completer();
 
   LoginRepository() {
     _connectivityManager = ConnectivityManager(loginData, firstConnectionComplete);
@@ -188,6 +188,8 @@ class LoginRepository {
     await _secureStorage.delete(key: _secureStorageKey);
     _loggedIn.add(false);
     _loginData.add(null);
+    loginComplete = Completer();
+    firstConnectionComplete = Completer();
     connectivityManager.reset();
   }
 }
